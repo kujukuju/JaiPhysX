@@ -14,8 +14,9 @@
 
     array_add(*libnames, "physx_sys");
 
-    array_add(*include_paths, "physx/bindings/windows");
-    array_add(*include_paths, "physx/bindings/physx/physx/include");
+    array_add(*include_paths, "physx/physx-sys/src/generated/x86_64-pc-windows-msvc/");
+    array_add(*include_paths, "physx/physx-sys/src/");
+    array_add(*include_paths, "physx/physx-sys/physx/physx/include/");
 
     array_add(*extra_clang_arguments, "-DNDEBUG");
     // array_add(*extra_clang_arguments, "-DPX_SSE2=1");
@@ -34,10 +35,10 @@
     // array_add(*system_include_paths, "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.31.31103/include\"");
     array_add(*system_include_paths, "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/lib/clang/17/include\"");
 
-    array_add(*source_files, "physx/bindings/physx/physx/include/PxPhysicsAPI.h");
+    array_add(*source_files, "physx/physx-sys/physx/physx/include/PxPhysicsAPI.h");
 
     // array_add(*source_files, "physx/bindings/windows/structgen_out.hpp");
-    array_add(*source_files, "physx/bindings/physx_generated.hpp");
+    array_add(*source_files, "physx/physx-sys/src/physx_generated.hpp");
 
     array_add(*extra_clang_arguments, "-x", "c++");
     generate_compile_time_struct_checks = false;
@@ -47,7 +48,7 @@
         defer clang_disposeString(filename_clang);
         filename := to_lower_copy_new(to_string(clang_getCString(filename_clang)),, temp);
 
-        if contains(filename, "bindings/physx/") {
+        if contains(filename, "physx/physx/") {
             decl.decl_flags = .OMIT_FROM_OUTPUT;
             return .STOP;
         }
