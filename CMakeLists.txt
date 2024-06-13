@@ -1,0 +1,73 @@
+
+cmake_minimum_required(VERSION 3.10)
+
+# Set the project name
+project(JaiPhysX)
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(TARGET_BUILD_PLATFORM "windows")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(TARGET_BUILD_PLATFORM "linux")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(TARGET_BUILD_PLATFORM "mac")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Switch")
+    set(TARGET_BUILD_PLATFORM "switch")
+else()
+    message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}")
+endif()
+
+include_directories("${CMAKE_CURRENT_LIST_DIR}/PhysX/physx/include")
+
+# set(PUBLIC_RELEASE 0)
+set(PX_GENERATE_SOURCE_DISTRO 1)
+set(PX_GENERATE_STATIC_LIBRARIES 1)
+
+add_definitions(-DPX_PHYSX_CORE_EXPORTS)
+add_definitions(-DPX_BUILDSNIPPETS=FALSE)
+add_definitions(-DPX_BUILDPUBLICSAMPLES=FALSE)
+add_definitions(-DNV_USE_STATIC_WINCRT=TRUE)
+add_definitions(-DNV_USE_DEBUG_WINCRT=FALSE)
+add_definitions(-DPX_FLOAT_POINT_PRECISE_MATH=FALSE)
+
+set(PHYSX_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/PhysX/physx")
+set(PROJECT_CMAKE_FILES_DIR "source/compiler/cmake")
+
+set(PX_OUTPUT_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake-build")
+set(PX_OUTPUT_BIN_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake-build")
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PHYSX_ROOT_DIR}/${PROJECT_CMAKE_FILES_DIR}/modules")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PHYSX_ROOT_DIR}/${PROJECT_CMAKE_FILES_DIR}/${TARGET_BUILD_PLATFORM}")
+
+#set(PX_OUTPUT_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake-build")
+#set(PX_OUTPUT_BIN_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake-build")
+
+
+# INCLUDE(PhysXFoundation)
+#     INCLUDE(LowLevel)
+
+# INCLUDE(LowLevelAABB)
+# INCLUDE(LowLevelDynamics)
+# INCLUDE(PhysX)
+# INCLUDE(PhysXCharacterKinematic)
+# INCLUDE(PhysXCommon)
+# INCLUDE(PhysXCooking)
+# INCLUDE(PhysXExtensions)
+# INCLUDE(PhysXPvdSDK)
+# INCLUDE(PhysXTask)
+# INCLUDE(PhysXVehicle)
+# INCLUDE(PhysXVehicle2)
+# INCLUDE(SceneQuery)
+# INCLUDE(SimulationController)
+
+# INCLUDE(${PHYSX_ROOT_DIR}/${PROJECT_CMAKE_FILES_DIR}/${TARGET_BUILD_PLATFORM}/CMakeLists.txt)
+add_subdirectory(${PHYSX_ROOT_DIR}/${PROJECT_CMAKE_FILES_DIR})
+
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXFoundation_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXCharacterKinematic_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXCommon_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXCooking_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXPvdSDK_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysX_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXVehicle_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXExtensions_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
+FILE(COPY "${PX_OUTPUT_LIB_DIR}/bin/win.x86_64.vc143.md/release/PhysXVehicle2_static.lib" DESTINATION "${CMAKE_CURRENT_LIST_DIR}/${TARGET_BUILD_PLATFORM}")
