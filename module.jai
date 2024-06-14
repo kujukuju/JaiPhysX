@@ -3,7 +3,455 @@
 //
 // jai ../ generate.jai
 //
-physx_PxPairFlags :: enum_flags u16 {
+
+PxEMPTY :: enum s32 {
+    PxEmpty :: 0;
+}
+
+PxZERO :: enum s32 {
+    PxZero :: 0;
+}
+
+PxIDENTITY :: enum s32 {
+    PxIdentity :: 0;
+}
+
+PxErrorCode :: enum_flags s32 {
+    NoError :: 0;
+    DebugInfo :: 1;
+    DebugWarning :: 2;
+    InvalidParameter :: 4;
+    InvalidOperation :: 8;
+    OutOfMemory :: 16;
+    InternalError :: 32;
+    Abort :: 64;
+    PerfWarning :: 128;
+    MaskAll :: -1;
+}
+
+PxThreadPriority :: enum u32 {
+    High :: 0;
+    AboveNormal :: 1;
+    Normal :: 2;
+    BelowNormal :: 3;
+    Low :: 4;
+    ForceDword :: 4294967295;
+}
+
+PxDebugColor :: enum u32 {
+    ArgbBlack :: 4278190080;
+    ArgbRed :: 4294901760;
+    ArgbGreen :: 4278255360;
+    ArgbBlue :: 4278190335;
+    ArgbYellow :: 4294967040;
+    ArgbMagenta :: 4294902015;
+    ArgbCyan :: 4278255615;
+    ArgbWhite :: 4294967295;
+    ArgbGrey :: 4286611584;
+    ArgbDarkred :: 4287102976;
+    ArgbDarkgreen :: 4278224896;
+    ArgbDarkblue :: 4278190216;
+}
+
+PxConcreteType :: enum s32 {
+    Undefined :: 0;
+    Heightfield :: 1;
+    ConvexMesh :: 2;
+    TriangleMeshBvh33 :: 3;
+    TriangleMeshBvh34 :: 4;
+    TetrahedronMesh :: 5;
+    SoftbodyMesh :: 6;
+    RigidDynamic :: 7;
+    RigidStatic :: 8;
+    Shape :: 9;
+    Material :: 10;
+    SoftbodyMaterial :: 11;
+    ClothMaterial :: 12;
+    PbdMaterial :: 13;
+    FlipMaterial :: 14;
+    MpmMaterial :: 15;
+    CustomMaterial :: 16;
+    Constraint :: 17;
+    Aggregate :: 18;
+    ArticulationReducedCoordinate :: 19;
+    ArticulationLink :: 20;
+    ArticulationJointReducedCoordinate :: 21;
+    ArticulationSensor :: 22;
+    ArticulationSpatialTendon :: 23;
+    ArticulationFixedTendon :: 24;
+    ArticulationAttachment :: 25;
+    ArticulationTendonJoint :: 26;
+    PruningStructure :: 27;
+    Bvh :: 28;
+    SoftBody :: 29;
+    SoftBodyState :: 30;
+    PbdParticlesystem :: 31;
+    FlipParticlesystem :: 32;
+    MpmParticlesystem :: 33;
+    CustomParticlesystem :: 34;
+    FemCloth :: 35;
+    HairSystem :: 36;
+    ParticleBuffer :: 37;
+    ParticleDiffuseBuffer :: 38;
+    ParticleClothBuffer :: 39;
+    ParticleRigidBuffer :: 40;
+    PhysxCoreCount :: 41;
+    FirstPhysxExtension :: 256;
+    FirstVehicleExtension :: 512;
+    FirstUserExtension :: 1024;
+}
+
+PxBaseFlags :: enum_flags u16 {
+    OwnsMemory :: 1 << 0;
+    IsReleasable :: 1 << 1;
+}
+
+PxMetaDataFlag :: enum_flags s32 {
+    Class :: 1;
+    Virtual :: 2;
+    Typedef :: 4;
+    Ptr :: 8;
+    Handle :: 16;
+    ExtraData :: 32;
+    ExtraItem :: 64;
+    ExtraItems :: 128;
+    ExtraName :: 256;
+    Union :: 512;
+    Padding :: 1024;
+    Alignment :: 2048;
+    CountMaskMsb :: 4096;
+    CountSkipIfOne :: 8192;
+    ControlFlip :: 16384;
+    ControlMask :: 32768;
+    ControlMaskRange :: 255;
+    ForceDword :: 2147483647;
+}
+
+PxTaskType :: enum s32 {
+    Cpu :: 0;
+    NotPresent :: 1;
+    Completed :: 2;
+}
+
+PxGeometryType :: enum s32 {
+    Sphere :: 0;
+    Plane :: 1;
+    Capsule :: 2;
+    Box :: 3;
+    Convexmesh :: 4;
+    Particlesystem :: 5;
+    Tetrahedronmesh :: 6;
+    Trianglemesh :: 7;
+    Heightfield :: 8;
+    Hairsystem :: 9;
+    Custom :: 10;
+    GeometryCount :: 11;
+    Invalid :: -1;
+}
+
+PxGeometryQueryFlags :: enum_flags u32 {
+    SimdGuard :: 1 << 0;
+}
+
+PxBVHBuildStrategy :: enum s32 {
+    Fast :: 0;
+    Default :: 1;
+    Sah :: 2;
+    Last :: 3;
+}
+
+PxConvexMeshGeometryFlags :: enum_flags u8 {
+    TightBounds :: 1 << 0;
+}
+
+PxMeshGeometryFlags :: enum_flags u8 {
+    TightBounds :: 1 << 0;
+    DoubleSided :: 1 << 1;
+}
+
+PxParticleSolverType :: enum_flags s32 {
+    Pbd :: 1;
+    Flip :: 2;
+    Mpm :: 4;
+    Custom :: 8;
+}
+
+PxHitFlags :: enum_flags u16 {
+    Position :: 1 << 0;
+    Normal :: 1 << 1;
+    Uv :: 1 << 3;
+    AssumeNoInitialOverlap :: 1 << 4;
+    AnyHit :: 1 << 5;
+    MeshMultiple :: 1 << 6;
+    MeshBothSides :: 1 << 7;
+    PreciseSweep :: 1 << 8;
+    Mtd :: 1 << 9;
+    FaceIndex :: 1 << 10;
+    Default :: PxHitFlags.Position | PxHitFlags.Normal | PxHitFlags.FaceIndex;
+    ModifiableFlags :: PxHitFlags.AssumeNoInitialOverlap | PxHitFlags.MeshMultiple | PxHitFlags.MeshBothSides | PxHitFlags.PreciseSweep;
+}
+
+PxHeightFieldFormat :: enum s32 {
+    S16Tm :: 1;
+}
+
+PxHeightFieldTessFlag :: enum_flags s32 {
+    E0ThVertexShared :: 1;
+}
+
+PxHeightFieldFlags :: enum_flags u16 {
+    NoBoundaryEdges :: 1 << 0;
+}
+
+PxHeightFieldMaterial :: enum s32 {
+    Hole :: 127;
+}
+
+PxMeshMeshQueryFlags :: enum_flags u32 {
+    Default :: 0;
+    DiscardCoplanar :: 1 << 0;
+}
+
+PxMeshFlags :: enum_flags u16 {
+    Flipnormals :: 1 << 0;
+    E16BitIndices :: 1 << 1;
+}
+
+PxMeshMidPhase :: enum s32 {
+    Bvh33 :: 0;
+    Bvh34 :: 1;
+    Last :: 2;
+}
+
+PxTriangleMeshFlags :: enum_flags u8 {
+    E16BitIndices :: 1 << 1;
+    AdjacencyInfo :: 1 << 2;
+    PreferNoSdfProj :: 1 << 3;
+}
+
+PxTetrahedronMeshFlags :: enum_flags u8 {
+    E16BitIndices :: 1 << 1;
+}
+
+PxActorFlags :: enum_flags u8 {
+    Visualization :: 1 << 0;
+    DisableGravity :: 1 << 1;
+    SendSleepNotifies :: 1 << 2;
+    DisableSimulation :: 1 << 3;
+}
+
+PxActorType :: enum s32 {
+    RigidStatic :: 0;
+    RigidDynamic :: 1;
+    ArticulationLink :: 2;
+}
+
+PxAggregateType :: enum s32 {
+    Generic :: 0;
+    Static :: 1;
+    Kinematic :: 2;
+}
+
+Px1DConstraintFlags :: enum_flags u16 {
+    Spring :: 1 << 0;
+    AccelerationSpring :: 1 << 1;
+    Restitution :: 1 << 2;
+    Keepbias :: 1 << 3;
+    OutputForce :: 1 << 4;
+    HasDriveLimit :: 1 << 5;
+    AngularConstraint :: 1 << 6;
+    DriveRow :: 1 << 7;
+}
+
+PxConstraintSolveHint :: enum s32 {
+    None :: 0;
+    Acceleration1 :: 256;
+    SlerpSpring :: 258;
+    Acceleration2 :: 512;
+    Acceleration3 :: 768;
+    RotationalEquality :: 1024;
+    RotationalInequality :: 1025;
+    Equality :: 2048;
+    Inequality :: 2049;
+}
+
+PxConstraintVisualizationFlag :: enum_flags s32 {
+    LocalFrames :: 1;
+    Limits :: 2;
+}
+
+PxPvdUpdateType :: enum s32 {
+    CreateInstance :: 0;
+    ReleaseInstance :: 1;
+    UpdateAllProperties :: 2;
+    UpdateSimProperties :: 3;
+}
+
+ConstraintType :: enum s32 {
+    ContactConstraint :: 0;
+    JointConstraint :: 1;
+}
+
+BodyState :: enum_flags s32 {
+    DynamicBody :: 1;
+    StaticBody :: 2;
+    KinematicBody :: 4;
+    Articulation :: 8;
+}
+
+PxArticulationAxis :: enum s32 {
+    Twist :: 0;
+    Swing1 :: 1;
+    Swing2 :: 2;
+    X :: 3;
+    Y :: 4;
+    Z :: 5;
+    Count :: 6;
+}
+
+PxArticulationMotions :: enum_flags u8 {
+    Locked :: 0;
+    Limited :: 1 << 0;
+    Free :: 1 << 1;
+}
+
+PxArticulationJointType :: enum s32 {
+    Fix :: 0;
+    Prismatic :: 1;
+    Revolute :: 2;
+    RevoluteUnwrapped :: 3;
+    Spherical :: 4;
+    Undefined :: 5;
+}
+
+PxArticulationFlags :: enum_flags u8 {
+    FixBase :: 1 << 0;
+    DriveLimitsAreForces :: 1 << 1;
+    DisableSelfCollision :: 1 << 2;
+    ComputeJointForces :: 1 << 3;
+}
+
+PxArticulationDriveType :: enum s32 {
+    Force :: 0;
+    Acceleration :: 1;
+    Target :: 2;
+    Velocity :: 3;
+    None :: 4;
+}
+
+PxArticulationGpuDataType :: enum s32 {
+    JointPosition :: 0;
+    JointVelocity :: 1;
+    JointAcceleration :: 2;
+    JointForce :: 3;
+    JointSolverForce :: 4;
+    JointTargetVelocity :: 5;
+    JointTargetPosition :: 6;
+    SensorForce :: 7;
+    RootTransform :: 8;
+    RootVelocity :: 9;
+    LinkTransform :: 10;
+    LinkVelocity :: 11;
+    LinkForce :: 12;
+    LinkTorque :: 13;
+    FixedTendon :: 14;
+    FixedTendonJoint :: 15;
+    SpatialTendon :: 16;
+    SpatialTendonAttachment :: 17;
+}
+
+PxArticulationCacheFlags :: enum_flags u32 {
+    Velocity :: 1 << 0;
+    Acceleration :: 1 << 1;
+    Position :: 1 << 2;
+    Force :: 1 << 3;
+    LinkVelocity :: 1 << 4;
+    LinkAcceleration :: 1 << 5;
+    RootTransform :: 1 << 6;
+    RootVelocities :: 1 << 7;
+    SensorForces :: 1 << 8;
+    JointSolverForces :: 1 << 9;
+    All :: PxArticulationCacheFlags.Velocity | PxArticulationCacheFlags.Acceleration | PxArticulationCacheFlags.Position | PxArticulationCacheFlags.LinkVelocity | PxArticulationCacheFlags.LinkAcceleration | PxArticulationCacheFlags.RootTransform | PxArticulationCacheFlags.RootVelocities;
+}
+
+PxArticulationSensorFlags :: enum_flags u8 {
+    ForwardDynamicsForces :: 1 << 0;
+    ConstraintSolverForces :: 1 << 1;
+    WorldFrame :: 1 << 2;
+}
+
+PxArticulationKinematicFlags :: enum_flags u8 {
+    Position :: 1 << 0;
+    Velocity :: 1 << 1;
+}
+
+PxShapeFlags :: enum_flags u8 {
+    SimulationShape :: 1 << 0;
+    SceneQueryShape :: 1 << 1;
+    TriggerShape :: 1 << 2;
+    Visualization :: 1 << 3;
+}
+
+PxForceMode :: enum s32 {
+    Force :: 0;
+    Impulse :: 1;
+    VelocityChange :: 2;
+    Acceleration :: 3;
+}
+
+PxRigidBodyFlags :: enum_flags u16 {
+    Kinematic :: 1 << 0;
+    UseKinematicTargetForSceneQueries :: 1 << 1;
+    EnableCcd :: 1 << 2;
+    EnableCcdFriction :: 1 << 3;
+    EnableSpeculativeCcd :: 1 << 4;
+    EnablePoseIntegrationPreview :: 1 << 5;
+    EnableCcdMaxContactImpulse :: 1 << 6;
+    RetainAccelerations :: 1 << 7;
+    ForceKineKineNotifications :: 1 << 8;
+    ForceStaticKineNotifications :: 1 << 9;
+    EnableGyroscopicForces :: 1 << 10;
+}
+
+PxConstraintFlags :: enum_flags u16 {
+    Broken :: 1 << 0;
+    ProjectToActor0 :: 1 << 1;
+    ProjectToActor1 :: 1 << 2;
+    Projection :: PxConstraintFlags.ProjectToActor0 | PxConstraintFlags.ProjectToActor1;
+    CollisionEnabled :: 1 << 3;
+    Visualization :: 1 << 4;
+    DriveLimitsAreForces :: 1 << 5;
+    ImprovedSlerp :: 1 << 7;
+    DisablePreprocessing :: 1 << 8;
+    EnableExtendedLimits :: 1 << 9;
+    GpuCompatible :: 1 << 10;
+    AlwaysUpdate :: 1 << 11;
+    DisableConstraint :: 1 << 12;
+}
+
+PxContactPatchFlags :: enum_flags s32 {
+    HasFaceIndices :: 1;
+    Modifiable :: 2;
+    ForceNoResponse :: 4;
+    HasModifiedMassRatios :: 8;
+    HasTargetVelocity :: 16;
+    HasMaxImpulse :: 32;
+    RegeneratePatches :: 64;
+    CompressedModifiedContact :: 128;
+}
+
+StreamFormat :: enum s32 {
+    SimpleStream :: 0;
+    ModifiableStream :: 1;
+    CompressedModifiableStream :: 2;
+}
+
+PxDeletionEventFlags :: enum_flags u8 {
+    UserRelease :: 1 << 0;
+    MemoryRelease :: 1 << 1;
+}
+
+PxPairFlags :: enum_flags u16 {
     SolveContact :: 1 << 0;
     ModifyContacts :: 1 << 1;
     NotifyTouchFound :: 1 << 2;
@@ -20,72 +468,91 @@ physx_PxPairFlags :: enum_flags u16 {
     PostSolverVelocity :: 1 << 13;
     ContactEventPose :: 1 << 14;
     NextFree :: 1 << 15;
-    ContactDefault :: SolveContact | DetectDiscreteContact;
-    TriggerDefault :: NotifyTouchFound | NotifyTouchLost | DetectDiscreteContact;
+    ContactDefault :: PxPairFlags.SolveContact | PxPairFlags.DetectDiscreteContact;
+    TriggerDefault :: PxPairFlags.NotifyTouchFound | PxPairFlags.NotifyTouchLost | PxPairFlags.DetectDiscreteContact;
 }
 
-physx_PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
-    WaitForWork :: 0;
-    YieldThread :: 1;
-    YieldProcessor :: 2;
+PxFilterFlags :: enum_flags u16 {
+    Kill :: 1 << 0;
+    Suppress :: 1 << 1;
+    Callback :: 1 << 2;
+    Notify :: PxFilterFlags.Callback;
 }
 
-physx_PxConvexMeshCookingType :: enum s32 {
-    Quickhull :: 0;
+PxFilterObjectType :: enum s32 {
+    RigidStatic :: 0;
+    RigidDynamic :: 1;
+    Articulation :: 2;
+    Particlesystem :: 3;
+    Softbody :: 4;
+    Femcloth :: 5;
+    Hairsystem :: 6;
+    MaxTypeCount :: 16;
+    Undefined :: 15;
 }
 
-physx_PxConvexFlag :: enum_flags s32 {
-    /// Denotes the use of 16-bit vertex indices in PxConvexMeshDesc::triangles or PxConvexMeshDesc::polygons.
-    /// (otherwise, 32-bit indices are assumed)
-    E16BitIndices :: 1;
-    /// Automatically recomputes the hull from the vertices. If this flag is not set, you must provide the entire geometry manually.
-    ///
-    /// There are two different algorithms for hull computation, please see PxConvexMeshCookingType.
-    ComputeConvex :: 2;
-    /// Checks and removes almost zero-area triangles during convex hull computation.
-    /// The rejected area size is specified in PxCookingParams::areaTestEpsilon
-    ///
-    /// This flag is only used in combination with eCOMPUTE_CONVEX.
-    CheckZeroAreaTriangles :: 4;
-    /// Quantizes the input vertices using the k-means clustering
-    ///
-    /// The input vertices are quantized to PxConvexMeshDesc::quantizedCount
-    /// see http://en.wikipedia.org/wiki/K-means_clustering
-    QuantizeInput :: 8;
-    /// Disables the convex mesh validation to speed-up hull creation. Please use separate validation
-    /// function in checked/debug builds. Creating a convex mesh with invalid input data without prior validation
-    /// may result in undefined behavior.
-    DisableMeshValidation :: 16;
-    /// Enables plane shifting vertex limit algorithm.
-    ///
-    /// Plane shifting is an alternative algorithm for the case when the computed hull has more vertices
-    /// than the specified vertex limit.
-    ///
-    /// The default algorithm computes the full hull, and an OBB around the input vertices. This OBB is then sliced
-    /// with the hull planes until the vertex limit is reached.The default algorithm requires the vertex limit
-    /// to be set to at least 8, and typically produces results that are much better quality than are produced
-    /// by plane shifting.
-    ///
-    /// When plane shifting is enabled, the hull computation stops when vertex limit is reached. The hull planes
-    /// are then shifted to contain all input vertices, and the new plane intersection points are then used to
-    /// generate the final hull with the given vertex limit.Plane shifting may produce sharp edges to vertices
-    /// very far away from the input cloud, and does not guarantee that all input vertices are inside the resulting
-    /// hull.However, it can be used with a vertex limit as low as 4.
-    PlaneShifting :: 32;
-    /// Inertia tensor computation is faster using SIMD code, but the precision is lower, which may result
-    /// in incorrect inertia for very thin hulls.
-    FastInertiaComputation :: 64;
-    /// Convex hulls are created with respect to GPU simulation limitations. Vertex limit and polygon limit
-    /// is set to 64 and vertex limit per face is internally set to 32.
-    ///
-    /// Can be used only with eCOMPUTE_CONVEX flag.
-    GpuCompatible :: 128;
-    /// Convex hull input vertices are shifted to be around origin to provide better computation stability.
-    /// It is recommended to provide input vertices around the origin, otherwise use this flag to improve
-    /// numerical stability.
-    ///
-    /// Is used only with eCOMPUTE_CONVEX flag.
-    ShiftVertices :: 256;
+PxFilterObjectFlag :: enum_flags s32 {
+    Kinematic :: 16;
+    Trigger :: 32;
+}
+
+PxPairFilteringMode :: enum s32 {
+    Keep :: 0;
+    Suppress :: 1;
+    Kill :: 2;
+}
+
+PxDataAccessFlags :: enum_flags u8 {
+    Readable :: 1 << 0;
+    Writable :: 1 << 1;
+    Device :: 1 << 2;
+}
+
+PxMaterialFlags :: enum_flags u16 {
+    DisableFriction :: 1 << 0;
+    DisableStrongFriction :: 1 << 1;
+    ImprovedPatchFriction :: 1 << 2;
+    CompliantContact :: 1 << 3;
+}
+
+PxRigidDynamicLockFlags :: enum_flags u8 {
+    LockLinearX :: 1 << 0;
+    LockLinearY :: 1 << 1;
+    LockLinearZ :: 1 << 2;
+    LockAngularX :: 1 << 3;
+    LockAngularY :: 1 << 4;
+    LockAngularZ :: 1 << 5;
+}
+
+PxSceneFlags :: enum_flags u32 {
+    EnableActiveActors :: 1 << 0;
+    EnableCcd :: 1 << 1;
+    DisableCcdResweep :: 1 << 2;
+    EnablePcm :: 1 << 6;
+    DisableContactReportBufferResize :: 1 << 7;
+    DisableContactCache :: 1 << 8;
+    RequireRwLock :: 1 << 9;
+    EnableStabilization :: 1 << 10;
+    EnableAveragePoint :: 1 << 11;
+    ExcludeKinematicsFromActiveActors :: 1 << 12;
+    EnableGpuDynamics :: 1 << 13;
+    EnableEnhancedDeterminism :: 1 << 14;
+    EnableFrictionEveryIteration :: 1 << 15;
+    SuppressReadback :: 1 << 16;
+    ForceReadback :: 1 << 17;
+    MutableFlags :: EnableActiveActors | ExcludeKinematicsFromActiveActors | SuppressReadback;
+}
+
+PxConvexFlags :: enum_flags u16 {
+    E16BitIndices :: 1 << 0;
+    ComputeConvex :: 1 << 1;
+    CheckZeroAreaTriangles :: 1 << 2;
+    QuantizeInput :: 1 << 3;
+    DisableMeshValidation :: 1 << 4;
+    PlaneShifting :: 1 << 5;
+    FastInertiaComputation :: 1 << 6;
+    GpuCompatible :: 1 << 7;
+    ShiftVertices :: 1 << 8;
 }
 
 PxConvexMeshCookingResult :: enum s32 {
@@ -105,142 +572,142 @@ PxConvexMeshCookingResult :: enum s32 {
 
 NDEBUG :: 1;
 _MSC_VER :: 1939;
-physx_PxMat34 :: struct {}
+PxMat34 :: struct {}
 
-physx_PxAllocatorCallback :: struct {
+PxAllocatorCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxAssertHandler :: struct {
+PxAssertHandler :: struct {
     vtable_: *void;
 }
 
-physx_PxFoundation :: struct {
+PxFoundation :: struct {
     vtable_: *void;
 }
 
-physx_PxAllocator :: struct {
+PxAllocator :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxRawAllocator :: struct {
+PxRawAllocator :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxVirtualAllocatorCallback :: struct {
+PxVirtualAllocatorCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxVirtualAllocator :: struct {
+PxVirtualAllocator :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxUserAllocated :: struct {
+PxUserAllocated :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxTempAllocatorChunk :: union {
-    mNext:  *physx_PxTempAllocatorChunk;
+PxTempAllocatorChunk :: union {
+    mNext:  *PxTempAllocatorChunk;
     mIndex: u32;
     mPad:   [16] u8;
 }
 
-physx_PxTempAllocator :: struct {
+PxTempAllocator :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxLogTwo :: struct {}
-physx_PxUnConst :: struct {}
-physx_PxBitAndByte :: struct {
+PxLogTwo :: struct {}
+PxUnConst :: struct {}
+PxBitAndByte :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxBitMap :: struct {
+PxBitMap :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxVec3Padded :: struct {
+PxVec3Padded :: struct {
     x:       float;
     y:       float;
     z:       float;
     padding: u32;
 }
 
-physx_PxTransform :: struct {
+PxTransform :: struct {
     q: Quaternion;
     p: Vector3;
 }
 
-physx_PxTransformPadded :: struct {
-    transform: physx_PxTransform;
+PxTransformPadded :: struct {
+    transform: PxTransform;
     padding:   u32;
 }
 
-physx_PxMat33 :: struct {
+PxMat33 :: struct {
     column0: Vector3;
     column1: Vector3;
     column2: Vector3;
 }
 
-physx_PxBounds3 :: struct {
+PxBounds3 :: struct {
     minimum: Vector3;
     maximum: Vector3;
 }
 
-physx_PxErrorCallback :: struct {
+PxErrorCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxAllocationListener :: struct {
+PxAllocationListener :: struct {
     vtable_: *void;
 }
 
-physx_PxBroadcastingAllocator :: struct {
+PxBroadcastingAllocator :: struct {
     structgen_pad0: [176] u8;
 }
 
-physx_PxBroadcastingErrorCallback :: struct {
+PxBroadcastingErrorCallback :: struct {
     structgen_pad0: [160] u8;
 }
 
-physx_PxHash :: struct {}
-physx_PxInputStream :: struct {
+PxHash :: struct {}
+PxInputStream :: struct {
     vtable_: *void;
 }
 
-physx_PxInputData :: struct {
+PxInputData :: struct {
     vtable_: *void;
 }
 
-physx_PxOutputStream :: struct {
+PxOutputStream :: struct {
     vtable_: *void;
 }
 
-physx_PxMat44 :: struct {
+PxMat44 :: struct {
     column0: Vector4;
     column1: Vector4;
     column2: Vector4;
     column3: Vector4;
 }
 
-physx_Interpolation :: struct {
+Interpolation :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxMutexImpl :: struct {
+PxMutexImpl :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxReadWriteLock :: struct {
+PxReadWriteLock :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxProfilerCallback :: struct {
+PxProfilerCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxProfileScoped :: struct {
-    mCallback:      *physx_PxProfilerCallback;
+PxProfileScoped :: struct {
+    mCallback:      *PxProfilerCallback;
     mEventName:     *u8;
     mProfilerData:  *void;
     mContextId:     u64;
@@ -248,38 +715,38 @@ physx_PxProfileScoped :: struct {
     structgen_pad0: [7] u8;
 }
 
-physx_PxSListEntry :: struct {
+PxSListEntry :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxSListImpl :: struct {
+PxSListImpl :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxSyncImpl :: struct {
+PxSyncImpl :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxRunnable :: struct {
+PxRunnable :: struct {
     vtable_: *void;
 }
 
-physx_PxCounterFrequencyToTensOfNanos :: struct {
+PxCounterFrequencyToTensOfNanos :: struct {
     mNumerator:   u64;
     mDenominator: u64;
 }
 
-physx_PxTime :: struct {
+PxTime :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxStridedData :: struct {
+PxStridedData :: struct {
     stride:         u32;
     structgen_pad0: [4] u8;
     data:           *void;
 }
 
-physx_PxBoundedData :: struct {
+PxBoundedData :: struct {
     stride:         u32;
     structgen_pad0: [4] u8;
     data:           *void;
@@ -287,19 +754,19 @@ physx_PxBoundedData :: struct {
     structgen_pad1: [4] u8;
 }
 
-physx_PxDebugPoint :: struct {
+PxDebugPoint :: struct {
     pos:   Vector3;
     color: u32;
 }
 
-physx_PxDebugLine :: struct {
+PxDebugLine :: struct {
     pos0:   Vector3;
     color0: u32;
     pos1:   Vector3;
     color1: u32;
 }
 
-physx_PxDebugTriangle :: struct {
+PxDebugTriangle :: struct {
     pos0:   Vector3;
     color0: u32;
     pos1:   Vector3;
@@ -308,7 +775,7 @@ physx_PxDebugTriangle :: struct {
     color2: u32;
 }
 
-physx_PxDebugText :: struct {
+PxDebugText :: struct {
     position:       Vector3;
     size:           float;
     color:          u32;
@@ -316,75 +783,75 @@ physx_PxDebugText :: struct {
     _string:        *u8;
 }
 
-physx_PxRenderBuffer :: struct {
+PxRenderBuffer :: struct {
     vtable_: *void;
 }
 
-physx_PxProcessPxBaseCallback :: struct {
+PxProcessPxBaseCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxSerializationContext :: struct {
+PxSerializationContext :: struct {
     vtable_: *void;
 }
 
-physx_PxDeserializationContext :: struct {
+PxDeserializationContext :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxSerializationRegistry :: struct {
+PxSerializationRegistry :: struct {
     vtable_: *void;
 }
 
-physx_PxCollection :: struct {
+PxCollection :: struct {
     vtable_: *void;
 }
 
-physx_PxTypeInfo :: struct {}
+PxTypeInfo :: struct {}
 
-physx_PxFEMSoftBodyMaterial :: struct {}
-physx_PxFEMClothMaterial :: struct {}
-physx_PxPBDMaterial :: struct {}
-physx_PxFLIPMaterial :: struct {}
-physx_PxMPMMaterial :: struct {}
-physx_PxCustomMaterial :: struct {}
+PxFEMSoftBodyMaterial :: struct {}
+PxFEMClothMaterial :: struct {}
+PxPBDMaterial :: struct {}
+PxFLIPMaterial :: struct {}
+PxMPMMaterial :: struct {}
+PxCustomMaterial :: struct {}
 
-physx_PxBVH33TriangleMesh :: struct {}
+PxBVH33TriangleMesh :: struct {}
 
-physx_PxParticleSystem :: struct {}
-physx_PxPBDParticleSystem :: struct {}
-physx_PxFLIPParticleSystem :: struct {}
-physx_PxMPMParticleSystem :: struct {}
-physx_PxCustomParticleSystem :: struct {}
-physx_PxSoftBody :: struct {}
-physx_PxFEMCloth :: struct {}
-physx_PxHairSystem :: struct {}
-physx_PxParticleBuffer :: struct {}
-physx_PxParticleAndDiffuseBuffer :: struct {}
-physx_PxParticleClothBuffer :: struct {}
-physx_PxParticleRigidBuffer :: struct {}
-physx_PxBase :: struct {
+PxParticleSystem :: struct {}
+PxPBDParticleSystem :: struct {}
+PxFLIPParticleSystem :: struct {}
+PxMPMParticleSystem :: struct {}
+PxCustomParticleSystem :: struct {}
+PxSoftBody :: struct {}
+PxFEMCloth :: struct {}
+PxHairSystem :: struct {}
+PxParticleBuffer :: struct {}
+PxParticleAndDiffuseBuffer :: struct {}
+PxParticleClothBuffer :: struct {}
+PxParticleRigidBuffer :: struct {}
+PxBase :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxRefCounted :: struct {
+PxRefCounted :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxTolerancesScale :: struct {
+PxTolerancesScale :: struct {
     length: float;
     speed:  float;
 }
 
-physx_PxStringTable :: struct {
+PxStringTable :: struct {
     vtable_: *void;
 }
 
-physx_PxSerializer :: struct {
+PxSerializer :: struct {
     vtable_: *void;
 }
 
-physx_PxMetaDataEntry :: struct {
+PxMetaDataEntry :: struct {
     type:       *u8;
     name:       *u8;
     offset:     u32;
@@ -395,142 +862,152 @@ physx_PxMetaDataEntry :: struct {
     alignment:  u32;
 }
 
-physx_PxInsertionCallback :: struct {
+PxInsertionCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxTaskManager :: struct {
+PxTaskManager :: struct {
     vtable_: *void;
 }
 
-physx_PxCpuDispatcher :: struct {
+PxCpuDispatcher :: struct {
     vtable_: *void;
 }
 
-physx_PxBaseTask :: struct {
+PxBaseTask :: struct {
     structgen_pad0: [24] u8;
 }
 
-physx_PxTask :: struct {
+PxTask :: struct {
     structgen_pad0: [32] u8;
 }
 
-physx_PxLightCpuTask :: struct {
+PxLightCpuTask :: struct {
     structgen_pad0: [40] u8;
 }
 
-physx_PxGeometry :: struct {
+PxGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
 }
 
-physx_PxBoxGeometry :: struct {
+PxBoxGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     halfExtents:    Vector3;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxBVHRaycastCallback :: struct {
+PxBVHRaycastCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxBVHOverlapCallback :: struct {
+PxBVHOverlapCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxBVHTraversalCallback :: struct {
+PxBVHTraversalCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxBVH :: struct {
+PxBVH :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxCapsuleGeometry :: struct {
+PxCapsuleGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     radius:         float;
     halfHeight:     float;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxHullPolygon :: struct {
+PxHullPolygon :: struct {
     mPlane:     [4] float;
     mNbVerts:   u16;
     mIndexBase: u16;
 }
 
-physx_PxConvexMesh :: struct {
+PxConvexMesh :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxMeshScale :: struct {
+PxMeshScale :: struct {
     scale:    Vector3;
     rotation: Quaternion;
 }
 
-physx_PxConvexMeshGeometry :: struct {
+PxConvexMeshGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
-    scale:          physx_PxMeshScale;
+    scale:          PxMeshScale;
     structgen_pad1: [4] u8;
-    convexMesh:     *physx_PxConvexMesh;
+    convexMesh:     *PxConvexMesh;
     meshFlags:      u8;
     structgen_pad2: [7] u8;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxSphereGeometry :: struct {
+PxSphereGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     radius:         float;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxPlaneGeometry :: struct {
+PxPlaneGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxTriangleMeshGeometry :: struct {
+PxTriangleMeshGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
-    scale:          physx_PxMeshScale;
+    scale:          PxMeshScale;
     meshFlags:      u8;
     structgen_pad1: [3] u8;
-    triangleMesh:   *physx_PxTriangleMesh;
+    triangleMesh:   *PxTriangleMesh;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxHeightFieldGeometry :: struct {
+PxHeightFieldGeometry :: struct {
     structgen_pad0:   [4] u8;
     mTypePadding:     float;
-    heightField:      *physx_PxHeightField;
+    heightField:      *PxHeightField;
     heightScale:      float;
     rowScale:         float;
     columnScale:      float;
     heightFieldFlags: u8;
     structgen_pad1:   [3] u8;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxParticleSystemGeometry :: struct {
+PxParticleSystemGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     mSolverType:    s32;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxHairSystemGeometry :: struct {
+PxHairSystemGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxTetrahedronMeshGeometry :: struct {
+PxTetrahedronMeshGeometry :: struct {
     structgen_pad0:  [4] u8;
     mTypePadding:    float;
-    tetrahedronMesh: *physx_PxTetrahedronMesh;
+    tetrahedronMesh: *PxTetrahedronMesh;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxQueryHit :: struct {
+PxQueryHit :: struct {
     faceIndex: u32;
 }
 
-physx_PxLocationHit :: struct {
+PxLocationHit :: struct {
     faceIndex:      u32;
     flags:          u16;
     structgen_pad0: [2] u8;
@@ -539,7 +1016,7 @@ physx_PxLocationHit :: struct {
     distance:       float;
 }
 
-physx_PxGeomRaycastHit :: struct {
+PxGeomRaycastHit :: struct {
     faceIndex:      u32;
     flags:          u16;
     structgen_pad0: [2] u8;
@@ -550,11 +1027,11 @@ physx_PxGeomRaycastHit :: struct {
     v:              float;
 }
 
-physx_PxGeomOverlapHit :: struct {
+PxGeomOverlapHit :: struct {
     faceIndex: u32;
 }
 
-physx_PxGeomSweepHit :: struct {
+PxGeomSweepHit :: struct {
     faceIndex:      u32;
     flags:          u16;
     structgen_pad0: [2] u8;
@@ -563,157 +1040,158 @@ physx_PxGeomSweepHit :: struct {
     distance:       float;
 }
 
-physx_PxGeomIndexPair :: struct {
+PxGeomIndexPair :: struct {
     id0: u32;
     id1: u32;
 }
 
-physx_PxQueryThreadContext :: struct {
+PxQueryThreadContext :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxContactBuffer :: struct {}
-physx_PxRenderOutput :: struct {}
+PxContactBuffer :: struct {}
+PxRenderOutput :: struct {}
 
-physx_PxCustomGeometryType :: struct {
+PxCustomGeometryType :: struct {
     structgen_pad0: [4] u8;
 }
 
-physx_PxCustomGeometryCallbacks :: struct {
+PxCustomGeometryCallbacks :: struct {
     vtable_: *void;
 }
 
-physx_PxCustomGeometry :: struct {
+PxCustomGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
-    callbacks:      *physx_PxCustomGeometryCallbacks;
+    callbacks:      *PxCustomGeometryCallbacks;
+#place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
-physx_PxGeometryHolder :: struct {
+PxGeometryHolder :: struct {
     structgen_pad0: [56] u8;
 }
 
-physx_PxGeometryQuery :: struct {
+PxGeometryQuery :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxHeightFieldSample :: struct {
+PxHeightFieldSample :: struct {
     height:         s16;
-    materialIndex0: physx_PxBitAndByte;
-    materialIndex1: physx_PxBitAndByte;
+    materialIndex0: PxBitAndByte;
+    materialIndex1: PxBitAndByte;
 }
 
-physx_PxHeightField :: struct {
+PxHeightField :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxHeightFieldDesc :: struct {
+PxHeightFieldDesc :: struct {
     nbRows:              u32;
     nbColumns:           u32;
     format:              s32;
     structgen_pad0:      [4] u8;
-    samples:             physx_PxStridedData;
+    samples:             PxStridedData;
     convexEdgeThreshold: float;
     flags:               u16;
     structgen_pad1:      [2] u8;
 }
 
-physx_PxMeshQuery :: struct {
+PxMeshQuery :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxSimpleTriangleMesh :: struct {
-    points:         physx_PxBoundedData;
-    triangles:      physx_PxBoundedData;
+PxSimpleTriangleMesh :: struct {
+    points:         PxBoundedData;
+    triangles:      PxBoundedData;
     flags:          u16;
     structgen_pad0: [6] u8;
 }
 
-physx_PxTriangle :: struct {
+PxTriangle :: struct {
     verts: [3] Vector3;
 }
 
-physx_PxTrianglePadded :: struct {
+PxTrianglePadded :: struct {
     verts:   [3] Vector3;
     padding: u32;
 }
 
-physx_PxTriangleMesh :: struct {
+PxTriangleMesh :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxBVH34TriangleMesh :: struct {
+PxBVH34TriangleMesh :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxTetrahedron :: struct {
+PxTetrahedron :: struct {
     verts: [4] Vector3;
 }
 
-physx_PxSoftBodyAuxData :: struct {
+PxSoftBodyAuxData :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxTetrahedronMesh :: struct {
+PxTetrahedronMesh :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxSoftBodyMesh :: struct {
+PxSoftBodyMesh :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxCollisionMeshMappingData :: struct {
+PxCollisionMeshMappingData :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxSoftBodyCollisionData :: struct {
+PxSoftBodyCollisionData :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxTetrahedronMeshData :: struct {
+PxTetrahedronMeshData :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxSoftBodySimulationData :: struct {
+PxSoftBodySimulationData :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxCollisionTetrahedronMeshData :: struct {
+PxCollisionTetrahedronMeshData :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxSimulationTetrahedronMeshData :: struct {
+PxSimulationTetrahedronMeshData :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxActor :: struct {
+PxActor :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxAggregate :: struct {
+PxAggregate :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxSpringModifiers :: struct {
+PxSpringModifiers :: struct {
     stiffness:      float;
     damping:        float;
     structgen_pad0: [8] u8;
 }
 
-physx_PxRestitutionModifiers :: struct {
+PxRestitutionModifiers :: struct {
     restitution:       float;
     velocityThreshold: float;
     structgen_pad0:    [8] u8;
 }
 
-physx_Px1DConstraintMods :: union {
-    spring: physx_PxSpringModifiers;
-    bounce: physx_PxRestitutionModifiers;
+Px1DConstraintMods :: union {
+    spring: PxSpringModifiers;
+    bounce: PxRestitutionModifiers;
 }
 
-physx_Px1DConstraint :: struct {
+Px1DConstraint :: struct {
     linear0:        Vector3;
     geometricError: float;
     angular0:       Vector3;
@@ -722,29 +1200,29 @@ physx_Px1DConstraint :: struct {
     minImpulse:     float;
     angular1:       Vector3;
     maxImpulse:     float;
-    mods:           physx_Px1DConstraintMods;
+    mods:           Px1DConstraintMods;
     forInternalUse: float;
     flags:          u16;
     solveHint:      u16;
     structgen_pad0: [8] u8;
 }
 
-physx_PxConstraintInvMassScale :: struct {
+PxConstraintInvMassScale :: struct {
     linear0:  float;
     angular0: float;
     linear1:  float;
     angular1: float;
 }
 
-physx_PxConstraintVisualizer :: struct {
+PxConstraintVisualizer :: struct {
     vtable_: *void;
 }
 
-physx_PxConstraintConnector :: struct {
+PxConstraintConnector :: struct {
     vtable_: *void;
 }
 
-physx_PxContactPoint :: struct {
+PxContactPoint :: struct {
     normal:             Vector3;
     separation:         float;
     point:              Vector3;
@@ -760,7 +1238,7 @@ physx_PxContactPoint :: struct {
     structgen_pad1:     [12] u8;
 }
 
-physx_PxSolverBody :: struct {
+PxSolverBody :: struct {
     linearVelocity:            Vector3;
     maxSolverNormalProgress:   u16;
     maxSolverFrictionProgress: u16;
@@ -768,27 +1246,27 @@ physx_PxSolverBody :: struct {
     solverProgress:            u32;
 }
 
-physx_PxSolverBodyData :: struct {
+PxSolverBodyData :: struct {
     linearVelocity:    Vector3;
     invMass:           float;
     angularVelocity:   Vector3;
     reportThreshold:   float;
-    sqrtInvInertia:    physx_PxMat33;
+    sqrtInvInertia:    PxMat33;
     penBiasClamp:      float;
     nodeIndex:         u32;
     maxContactImpulse: float;
-    body2World:        physx_PxTransform;
+    body2World:        PxTransform;
     pad:               u16;
     structgen_pad0:    [2] u8;
 }
 
-physx_PxConstraintBatchHeader :: struct {
+PxConstraintBatchHeader :: struct {
     startIndex:     u32;
     stride:         u16;
     constraintType: u16;
 }
 
-physx_PxSolverConstraintDesc :: struct {
+PxSolverConstraintDesc :: struct {
     structgen_pad0:         [16] u8;
     bodyADataIndex:         u32;
     bodyBDataIndex:         u32;
@@ -802,33 +1280,33 @@ physx_PxSolverConstraintDesc :: struct {
     padding:                [10] u8;
 }
 
-physx_PxSolverConstraintPrepDescBase :: struct {
-    invMassScales:  physx_PxConstraintInvMassScale;
-    desc:           *physx_PxSolverConstraintDesc;
-    body0:          *physx_PxSolverBody;
-    body1:          *physx_PxSolverBody;
-    data0:          *physx_PxSolverBodyData;
-    data1:          *physx_PxSolverBodyData;
-    bodyFrame0:     physx_PxTransform;
-    bodyFrame1:     physx_PxTransform;
+PxSolverConstraintPrepDescBase :: struct {
+    invMassScales:  PxConstraintInvMassScale;
+    desc:           *PxSolverConstraintDesc;
+    body0:          *PxSolverBody;
+    body1:          *PxSolverBody;
+    data0:          *PxSolverBodyData;
+    data1:          *PxSolverBodyData;
+    bodyFrame0:     PxTransform;
+    bodyFrame1:     PxTransform;
     bodyState0:     s32;
     bodyState1:     s32;
     structgen_pad0: [8] u8;
 }
 
-physx_PxSolverConstraintPrepDesc :: struct {
-    invMassScales:        physx_PxConstraintInvMassScale;
-    desc:                 *physx_PxSolverConstraintDesc;
-    body0:                *physx_PxSolverBody;
-    body1:                *physx_PxSolverBody;
-    data0:                *physx_PxSolverBodyData;
-    data1:                *physx_PxSolverBodyData;
-    bodyFrame0:           physx_PxTransform;
-    bodyFrame1:           physx_PxTransform;
+PxSolverConstraintPrepDesc :: struct {
+    invMassScales:        PxConstraintInvMassScale;
+    desc:                 *PxSolverConstraintDesc;
+    body0:                *PxSolverBody;
+    body1:                *PxSolverBody;
+    data0:                *PxSolverBodyData;
+    data1:                *PxSolverBodyData;
+    bodyFrame0:           PxTransform;
+    bodyFrame1:           PxTransform;
     bodyState0:           s32;
     bodyState1:           s32;
     structgen_pad0:       [8] u8;
-    rows:                 *physx_Px1DConstraint;
+    rows:                 *Px1DConstraint;
     numRows:              u32;
     linBreakForce:        float;
     angBreakForce:        float;
@@ -840,24 +1318,24 @@ physx_PxSolverConstraintPrepDesc :: struct {
     extendedLimits:       bool;
     disableConstraint:    bool;
     structgen_pad1:       [3] u8;
-    body0WorldOffset:     physx_PxVec3Padded;
+    body0WorldOffset:     PxVec3Padded;
     structgen_pad2:       [8] u8;
 }
 
-physx_PxSolverContactDesc :: struct {
-    invMassScales:           physx_PxConstraintInvMassScale;
-    desc:                    *physx_PxSolverConstraintDesc;
-    body0:                   *physx_PxSolverBody;
-    body1:                   *physx_PxSolverBody;
-    data0:                   *physx_PxSolverBodyData;
-    data1:                   *physx_PxSolverBodyData;
-    bodyFrame0:              physx_PxTransform;
-    bodyFrame1:              physx_PxTransform;
+PxSolverContactDesc :: struct {
+    invMassScales:           PxConstraintInvMassScale;
+    desc:                    *PxSolverConstraintDesc;
+    body0:                   *PxSolverBody;
+    body1:                   *PxSolverBody;
+    data0:                   *PxSolverBodyData;
+    data1:                   *PxSolverBodyData;
+    bodyFrame0:              PxTransform;
+    bodyFrame1:              PxTransform;
     bodyState0:              s32;
     bodyState1:              s32;
     structgen_pad0:          [8] u8;
     shapeInteraction:        *void;
-    contacts:                *physx_PxContactPoint;
+    contacts:                *PxContactPoint;
     numContacts:             u32;
     hasMaxImpulse:           bool;
     disableStrongFriction:   bool;
@@ -878,23 +1356,23 @@ physx_PxSolverContactDesc :: struct {
     structgen_pad3:          [4] u8;
 }
 
-physx_PxConstraintAllocator :: struct {
+PxConstraintAllocator :: struct {
     vtable_: *void;
 }
 
-physx_PxArticulationLimit :: struct {
+PxArticulationLimit :: struct {
     low:  float;
     high: float;
 }
 
-physx_PxArticulationDrive :: struct {
+PxArticulationDrive :: struct {
     stiffness: float;
     damping:   float;
     maxForce:  float;
     driveType: s32;
 }
 
-physx_PxTGSSolverBodyVel :: struct {
+PxTGSSolverBodyVel :: struct {
     linearVelocity:       Vector3;
     nbStaticInteractions: u16;
     maxDynamicPartition:  u16;
@@ -908,12 +1386,12 @@ physx_PxTGSSolverBodyVel :: struct {
     pad:                  u8;
 }
 
-physx_PxTGSSolverBodyTxInertia :: struct {
-    deltaBody2World: physx_PxTransform;
-    sqrtInvInertia:  physx_PxMat33;
+PxTGSSolverBodyTxInertia :: struct {
+    deltaBody2World: PxTransform;
+    sqrtInvInertia:  PxMat33;
 }
 
-physx_PxTGSSolverBodyData :: struct {
+PxTGSSolverBodyData :: struct {
     originalLinearVelocity:  Vector3;
     maxContactImpulse:       float;
     originalAngularVelocity: Vector3;
@@ -924,37 +1402,37 @@ physx_PxTGSSolverBodyData :: struct {
     pad:                     u32;
 }
 
-physx_PxTGSSolverConstraintPrepDescBase :: struct {
-    invMassScales:  physx_PxConstraintInvMassScale;
-    desc:           *physx_PxSolverConstraintDesc;
-    body0:          *physx_PxTGSSolverBodyVel;
-    body1:          *physx_PxTGSSolverBodyVel;
-    body0TxI:       *physx_PxTGSSolverBodyTxInertia;
-    body1TxI:       *physx_PxTGSSolverBodyTxInertia;
-    bodyData0:      *physx_PxTGSSolverBodyData;
-    bodyData1:      *physx_PxTGSSolverBodyData;
-    bodyFrame0:     physx_PxTransform;
-    bodyFrame1:     physx_PxTransform;
+PxTGSSolverConstraintPrepDescBase :: struct {
+    invMassScales:  PxConstraintInvMassScale;
+    desc:           *PxSolverConstraintDesc;
+    body0:          *PxTGSSolverBodyVel;
+    body1:          *PxTGSSolverBodyVel;
+    body0TxI:       *PxTGSSolverBodyTxInertia;
+    body1TxI:       *PxTGSSolverBodyTxInertia;
+    bodyData0:      *PxTGSSolverBodyData;
+    bodyData1:      *PxTGSSolverBodyData;
+    bodyFrame0:     PxTransform;
+    bodyFrame1:     PxTransform;
     bodyState0:     s32;
     bodyState1:     s32;
     structgen_pad0: [8] u8;
 }
 
-physx_PxTGSSolverConstraintPrepDesc :: struct {
-    invMassScales:        physx_PxConstraintInvMassScale;
-    desc:                 *physx_PxSolverConstraintDesc;
-    body0:                *physx_PxTGSSolverBodyVel;
-    body1:                *physx_PxTGSSolverBodyVel;
-    body0TxI:             *physx_PxTGSSolverBodyTxInertia;
-    body1TxI:             *physx_PxTGSSolverBodyTxInertia;
-    bodyData0:            *physx_PxTGSSolverBodyData;
-    bodyData1:            *physx_PxTGSSolverBodyData;
-    bodyFrame0:           physx_PxTransform;
-    bodyFrame1:           physx_PxTransform;
+PxTGSSolverConstraintPrepDesc :: struct {
+    invMassScales:        PxConstraintInvMassScale;
+    desc:                 *PxSolverConstraintDesc;
+    body0:                *PxTGSSolverBodyVel;
+    body1:                *PxTGSSolverBodyVel;
+    body0TxI:             *PxTGSSolverBodyTxInertia;
+    body1TxI:             *PxTGSSolverBodyTxInertia;
+    bodyData0:            *PxTGSSolverBodyData;
+    bodyData1:            *PxTGSSolverBodyData;
+    bodyFrame0:           PxTransform;
+    bodyFrame1:           PxTransform;
     bodyState0:           s32;
     bodyState1:           s32;
     structgen_pad0:       [8] u8;
-    rows:                 *physx_Px1DConstraint;
+    rows:                 *Px1DConstraint;
     numRows:              u32;
     linBreakForce:        float;
     angBreakForce:        float;
@@ -966,28 +1444,28 @@ physx_PxTGSSolverConstraintPrepDesc :: struct {
     extendedLimits:       bool;
     disableConstraint:    bool;
     structgen_pad1:       [3] u8;
-    body0WorldOffset:     physx_PxVec3Padded;
-    cA2w:                 physx_PxVec3Padded;
-    cB2w:                 physx_PxVec3Padded;
+    body0WorldOffset:     PxVec3Padded;
+    cA2w:                 PxVec3Padded;
+    cB2w:                 PxVec3Padded;
     structgen_pad2:       [8] u8;
 }
 
-physx_PxTGSSolverContactDesc :: struct {
-    invMassScales:           physx_PxConstraintInvMassScale;
-    desc:                    *physx_PxSolverConstraintDesc;
-    body0:                   *physx_PxTGSSolverBodyVel;
-    body1:                   *physx_PxTGSSolverBodyVel;
-    body0TxI:                *physx_PxTGSSolverBodyTxInertia;
-    body1TxI:                *physx_PxTGSSolverBodyTxInertia;
-    bodyData0:               *physx_PxTGSSolverBodyData;
-    bodyData1:               *physx_PxTGSSolverBodyData;
-    bodyFrame0:              physx_PxTransform;
-    bodyFrame1:              physx_PxTransform;
+PxTGSSolverContactDesc :: struct {
+    invMassScales:           PxConstraintInvMassScale;
+    desc:                    *PxSolverConstraintDesc;
+    body0:                   *PxTGSSolverBodyVel;
+    body1:                   *PxTGSSolverBodyVel;
+    body0TxI:                *PxTGSSolverBodyTxInertia;
+    body1TxI:                *PxTGSSolverBodyTxInertia;
+    bodyData0:               *PxTGSSolverBodyData;
+    bodyData1:               *PxTGSSolverBodyData;
+    bodyFrame0:              PxTransform;
+    bodyFrame1:              PxTransform;
     bodyState0:              s32;
     bodyState1:              s32;
     structgen_pad0:          [8] u8;
     shapeInteraction:        *void;
-    contacts:                *physx_PxContactPoint;
+    contacts:                *PxContactPoint;
     numContacts:             u32;
     hasMaxImpulse:           bool;
     disableStrongFriction:   bool;
@@ -1011,60 +1489,60 @@ physx_PxTGSSolverContactDesc :: struct {
     structgen_pad3:          [8] u8;
 }
 
-physx_PxArticulationTendonLimit :: struct {
+PxArticulationTendonLimit :: struct {
     lowLimit:  float;
     highLimit: float;
 }
 
-physx_PxArticulationAttachment :: struct {
+PxArticulationAttachment :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationTendonJoint :: struct {
+PxArticulationTendonJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationTendon :: struct {
+PxArticulationTendon :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationSpatialTendon :: struct {
+PxArticulationSpatialTendon :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationFixedTendon :: struct {
+PxArticulationFixedTendon :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxSpatialForce :: struct {
+PxSpatialForce :: struct {
     force:  Vector3;
     pad0:   float;
     torque: Vector3;
     pad1:   float;
 }
 
-physx_PxSpatialVelocity :: struct {
+PxSpatialVelocity :: struct {
     linear:  Vector3;
     pad0:    float;
     angular: Vector3;
     pad1:    float;
 }
 
-physx_PxArticulationRootLinkData :: struct {
-    transform:     physx_PxTransform;
+PxArticulationRootLinkData :: struct {
+    transform:     PxTransform;
     worldLinVel:   Vector3;
     worldAngVel:   Vector3;
     worldLinAccel: Vector3;
     worldAngAccel: Vector3;
 }
 
-physx_PxArticulationCache :: struct {
-    externalForces:    *physx_PxSpatialForce;
+PxArticulationCache :: struct {
+    externalForces:    *PxSpatialForce;
     denseJacobian:     *float;
     massMatrix:        *float;
     jointVelocity:     *float;
@@ -1072,10 +1550,10 @@ physx_PxArticulationCache :: struct {
     jointPosition:     *float;
     jointForce:        *float;
     jointSolverForces: *float;
-    linkVelocity:      *physx_PxSpatialVelocity;
-    linkAcceleration:  *physx_PxSpatialVelocity;
-    rootLinkData:      *physx_PxArticulationRootLinkData;
-    sensorForces:      *physx_PxSpatialForce;
+    linkVelocity:      *PxSpatialVelocity;
+    linkAcceleration:  *PxSpatialVelocity;
+    rootLinkData:      *PxArticulationRootLinkData;
+    sensorForces:      *PxSpatialForce;
     coefficientMatrix: *float;
     lambda:            *float;
     scratchMemory:     *void;
@@ -1084,58 +1562,58 @@ physx_PxArticulationCache :: struct {
     structgen_pad0:    [4] u8;
 }
 
-physx_PxArticulationSensor :: struct {
+PxArticulationSensor :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationReducedCoordinate :: struct {
+PxArticulationReducedCoordinate :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationJointReducedCoordinate :: struct {
+PxArticulationJointReducedCoordinate :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxShape :: struct {
+PxShape :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxRigidActor :: struct {
+PxRigidActor :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxNodeIndex :: struct {
+PxNodeIndex :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxRigidBody :: struct {
+PxRigidBody :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxArticulationLink :: struct {
+PxArticulationLink :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxConeLimitedConstraint :: struct {
+PxConeLimitedConstraint :: struct {
     mAxis:      Vector3;
     mAngle:     float;
     mLowLimit:  float;
     mHighLimit: float;
 }
 
-physx_PxConeLimitParams :: struct {
+PxConeLimitParams :: struct {
     lowHighLimits: Vector4;
     axisAngle:     Vector4;
 }
 
-physx_PxConstraintShaderTable :: struct {
+PxConstraintShaderTable :: struct {
     solverPrep:     *void;
     structgen_pad0: [8] u8;
     visualize:      *void;
@@ -1143,20 +1621,20 @@ physx_PxConstraintShaderTable :: struct {
     structgen_pad1: [4] u8;
 }
 
-physx_PxConstraint :: struct {
+PxConstraint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxMassModificationProps :: struct {
+PxMassModificationProps :: struct {
     mInvMassScale0:    float;
     mInvInertiaScale0: float;
     mInvMassScale1:    float;
     mInvInertiaScale1: float;
 }
 
-physx_PxContactPatch :: struct {
-    mMassModification: physx_PxMassModificationProps;
+PxContactPatch :: struct {
+    mMassModification: PxMassModificationProps;
     normal:            Vector3;
     restitution:       float;
     dynamicFriction:   float;
@@ -1171,19 +1649,19 @@ physx_PxContactPatch :: struct {
     pad:               [5] u16;
 }
 
-physx_PxContact :: struct {
+PxContact :: struct {
     contact:    Vector3;
     separation: float;
 }
 
-physx_PxExtendedContact :: struct {
+PxExtendedContact :: struct {
     contact:        Vector3;
     separation:     float;
     targetVelocity: Vector3;
     maxImpulse:     float;
 }
 
-physx_PxModifiableContact :: struct {
+PxModifiableContact :: struct {
     contact:         Vector3;
     separation:      float;
     targetVelocity:  Vector3;
@@ -1197,11 +1675,11 @@ physx_PxModifiableContact :: struct {
     dynamicFriction: float;
 }
 
-physx_PxContactStreamIterator :: struct {
+PxContactStreamIterator :: struct {
     zero:                   Vector3;
     structgen_pad0:         [4] u8;
-    patch:                  *physx_PxContactPatch;
-    contact:                *physx_PxContact;
+    patch:                  *PxContactPatch;
+    contact:                *PxContact;
     faceIndice:             *u32;
     totalPatches:           u32;
     totalContacts:          u32;
@@ -1216,93 +1694,93 @@ physx_PxContactStreamIterator :: struct {
     hasFaceIndices:         u32;
 }
 
-physx_PxGpuContactPair :: struct {
+PxGpuContactPair :: struct {
     contactPatches:     *u8;
     contactPoints:      *u8;
     contactForces:      *float;
     transformCacheRef0: u32;
     transformCacheRef1: u32;
-    nodeIndex0:         physx_PxNodeIndex;
-    nodeIndex1:         physx_PxNodeIndex;
-    actor0:             *physx_PxActor;
-    actor1:             *physx_PxActor;
+    nodeIndex0:         PxNodeIndex;
+    nodeIndex1:         PxNodeIndex;
+    actor0:             *PxActor;
+    actor1:             *PxActor;
     nbContacts:         u16;
     nbPatches:          u16;
     structgen_pad0:     [4] u8;
 }
 
-physx_PxContactSet :: struct {
+PxContactSet :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxContactModifyPair :: struct {
-    actor:     [2] *physx_PxRigidActor;
-    shape:     [2] *physx_PxShape;
-    transform: [2] physx_PxTransform;
-    contacts:  physx_PxContactSet;
+PxContactModifyPair :: struct {
+    actor:     [2] *PxRigidActor;
+    shape:     [2] *PxShape;
+    transform: [2] PxTransform;
+    contacts:  PxContactSet;
 }
 
-physx_PxContactModifyCallback :: struct {
+PxContactModifyCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxCCDContactModifyCallback :: struct {
+PxCCDContactModifyCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxDeletionListener :: struct {
+PxDeletionListener :: struct {
     vtable_: *void;
 }
 
-physx_PxBaseMaterial :: struct {
-    structgen_pad0: [16] u8;
-    userData:       *void;
-}
-
-physx_PxFEMMaterial :: struct {
+PxBaseMaterial :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxFilterData :: struct {
+PxFEMMaterial :: struct {
+    structgen_pad0: [16] u8;
+    userData:       *void;
+}
+
+PxFilterData :: struct {
     word0: u32;
     word1: u32;
     word2: u32;
     word3: u32;
 }
 
-physx_PxSimulationFilterCallback :: struct {
+PxSimulationFilterCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxParticleRigidFilterPair :: struct {
+PxParticleRigidFilterPair :: struct {
     mID0: u64;
     mID1: u64;
 }
 
-physx_PxLockedData :: struct {
+PxLockedData :: struct {
     vtable_: *void;
 }
 
-physx_PxMaterial :: struct {
+PxMaterial :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxGpuParticleBufferIndexPair :: struct {
+PxGpuParticleBufferIndexPair :: struct {
     systemIndex: u32;
     bufferIndex: u32;
 }
 
-physx_PxCudaContextManager :: struct {}
-physx_PxParticleRigidAttachment :: struct {}
-physx_PxParticleVolume :: struct {
-    bound:                 physx_PxBounds3;
+PxCudaContextManager :: struct {}
+PxParticleRigidAttachment :: struct {}
+PxParticleVolume :: struct {
+    bound:                 PxBounds3;
     particleIndicesOffset: u32;
     numParticles:          u32;
 }
 
-physx_PxDiffuseParticleParams :: struct {
+PxDiffuseParticleParams :: struct {
     threshold:           float;
     lifetime:            float;
     airDrag:             float;
@@ -1316,7 +1794,7 @@ physx_PxDiffuseParticleParams :: struct {
     structgen_pad0:      [3] u8;
 }
 
-physx_PxParticleSpring :: struct {
+PxParticleSpring :: struct {
     ind0:      u32;
     ind1:      u32;
     length:    float;
@@ -1325,22 +1803,22 @@ physx_PxParticleSpring :: struct {
     pad:       float;
 }
 
-physx_PxParticleMaterial :: struct {
+PxParticleMaterial :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxOmniPvd :: struct {}
-physx_PxPhysics :: struct {
+PxOmniPvd :: struct {}
+PxPhysics :: struct {
     vtable_: *void;
 }
 
-physx_PxActorShape :: struct {
-    actor: *physx_PxRigidActor;
-    shape: *physx_PxShape;
+PxActorShape :: struct {
+    actor: *PxRigidActor;
+    shape: *PxShape;
 }
 
-physx_PxRaycastHit :: struct {
+PxRaycastHit :: struct {
     faceIndex:      u32;
     flags:          u16;
     structgen_pad0: [2] u8;
@@ -1350,18 +1828,18 @@ physx_PxRaycastHit :: struct {
     u:              float;
     v:              float;
     structgen_pad1: [4] u8;
-    actor:          *physx_PxRigidActor;
-    shape:          *physx_PxShape;
+    actor:          *PxRigidActor;
+    shape:          *PxShape;
 }
 
-physx_PxOverlapHit :: struct {
+PxOverlapHit :: struct {
     faceIndex:      u32;
     structgen_pad0: [4] u8;
-    actor:          *physx_PxRigidActor;
-    shape:          *physx_PxShape;
+    actor:          *PxRigidActor;
+    shape:          *PxShape;
 }
 
-physx_PxSweepHit :: struct {
+PxSweepHit :: struct {
     faceIndex:      u32;
     flags:          u16;
     structgen_pad0: [2] u8;
@@ -1369,98 +1847,98 @@ physx_PxSweepHit :: struct {
     normal:         Vector3;
     distance:       float;
     structgen_pad1: [4] u8;
-    actor:          *physx_PxRigidActor;
-    shape:          *physx_PxShape;
+    actor:          *PxRigidActor;
+    shape:          *PxShape;
 }
 
-physx_PxRaycastCallback :: struct {
+PxRaycastCallback :: struct {
     structgen_pad0: [8] u8;
-    block:          physx_PxRaycastHit;
+    block:          PxRaycastHit;
     hasBlock:       bool;
     structgen_pad1: [7] u8;
-    touches:        *physx_PxRaycastHit;
+    touches:        *PxRaycastHit;
     maxNbTouches:   u32;
     nbTouches:      u32;
 }
 
-physx_PxOverlapCallback :: struct {
+PxOverlapCallback :: struct {
     structgen_pad0: [8] u8;
-    block:          physx_PxOverlapHit;
+    block:          PxOverlapHit;
     hasBlock:       bool;
     structgen_pad1: [7] u8;
-    touches:        *physx_PxOverlapHit;
+    touches:        *PxOverlapHit;
     maxNbTouches:   u32;
     nbTouches:      u32;
 }
 
-physx_PxSweepCallback :: struct {
+PxSweepCallback :: struct {
     structgen_pad0: [8] u8;
-    block:          physx_PxSweepHit;
+    block:          PxSweepHit;
     hasBlock:       bool;
     structgen_pad1: [7] u8;
-    touches:        *physx_PxSweepHit;
+    touches:        *PxSweepHit;
     maxNbTouches:   u32;
     nbTouches:      u32;
 }
 
-physx_PxRaycastBuffer :: struct {
+PxRaycastBuffer :: struct {
     structgen_pad0: [8] u8;
-    block:          physx_PxRaycastHit;
+    block:          PxRaycastHit;
     hasBlock:       bool;
     structgen_pad1: [7] u8;
-    touches:        *physx_PxRaycastHit;
+    touches:        *PxRaycastHit;
     maxNbTouches:   u32;
     nbTouches:      u32;
 }
 
-physx_PxOverlapBuffer :: struct {
+PxOverlapBuffer :: struct {
     structgen_pad0: [8] u8;
-    block:          physx_PxOverlapHit;
+    block:          PxOverlapHit;
     hasBlock:       bool;
     structgen_pad1: [7] u8;
-    touches:        *physx_PxOverlapHit;
+    touches:        *PxOverlapHit;
     maxNbTouches:   u32;
     nbTouches:      u32;
 }
 
-physx_PxSweepBuffer :: struct {
+PxSweepBuffer :: struct {
     structgen_pad0: [8] u8;
-    block:          physx_PxSweepHit;
+    block:          PxSweepHit;
     hasBlock:       bool;
     structgen_pad1: [7] u8;
-    touches:        *physx_PxSweepHit;
+    touches:        *PxSweepHit;
     maxNbTouches:   u32;
     nbTouches:      u32;
 }
 
-physx_PxQueryCache :: struct {
-    shape:          *physx_PxShape;
-    actor:          *physx_PxRigidActor;
+PxQueryCache :: struct {
+    shape:          *PxShape;
+    actor:          *PxRigidActor;
     faceIndex:      u32;
     structgen_pad0: [4] u8;
 }
 
-physx_PxQueryFilterData :: struct {
-    data:           physx_PxFilterData;
+PxQueryFilterData :: struct {
+    data:           PxFilterData;
     flags:          u16;
     structgen_pad0: [2] u8;
 }
 
-physx_PxQueryFilterCallback :: struct {
+PxQueryFilterCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxRigidDynamic :: struct {
+PxRigidDynamic :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxRigidStatic :: struct {
+PxRigidStatic :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxSceneQueryDesc :: struct {
+PxSceneQueryDesc :: struct {
     staticStructure:            s32;
     dynamicStructure:           s32;
     dynamicTreeRebuildRateHint: u32;
@@ -1472,25 +1950,25 @@ physx_PxSceneQueryDesc :: struct {
     sceneQueryUpdateMode:       s32;
 }
 
-physx_PxSceneQuerySystemBase :: struct {
+PxSceneQuerySystemBase :: struct {
     vtable_: *void;
 }
 
-physx_PxSceneSQSystem :: struct {
+PxSceneSQSystem :: struct {
     vtable_: *void;
 }
 
-physx_PxSceneQuerySystem :: struct {
+PxSceneQuerySystem :: struct {
     vtable_: *void;
 }
 
-physx_PxBroadPhaseRegion :: struct {
-    mBounds:   physx_PxBounds3;
+PxBroadPhaseRegion :: struct {
+    mBounds:   PxBounds3;
     mUserData: *void;
 }
 
-physx_PxBroadPhaseRegionInfo :: struct {
-    mRegion:           physx_PxBroadPhaseRegion;
+PxBroadPhaseRegionInfo :: struct {
+    mRegion:           PxBroadPhaseRegion;
     mNbStaticObjects:  u32;
     mNbDynamicObjects: u32;
     mActive:           bool;
@@ -1498,11 +1976,11 @@ physx_PxBroadPhaseRegionInfo :: struct {
     structgen_pad0:    [6] u8;
 }
 
-physx_PxBroadPhaseCaps :: struct {
+PxBroadPhaseCaps :: struct {
     mMaxNbRegions: u32;
 }
 
-physx_PxBroadPhaseDesc :: struct {
+PxBroadPhaseDesc :: struct {
     mType:                        s32;
     structgen_pad0:               [4] u8;
     mContextID:                   u64;
@@ -1513,7 +1991,7 @@ physx_PxBroadPhaseDesc :: struct {
     structgen_pad2:               [2] u8;
 }
 
-physx_PxBroadPhaseUpdateData :: struct {
+PxBroadPhaseUpdateData :: struct {
     mCreated:       *u32;
     mNbCreated:     u32;
     structgen_pad0: [4] u8;
@@ -1523,40 +2001,40 @@ physx_PxBroadPhaseUpdateData :: struct {
     mRemoved:       *u32;
     mNbRemoved:     u32;
     structgen_pad2: [4] u8;
-    mBounds:        *physx_PxBounds3;
+    mBounds:        *PxBounds3;
     mGroups:        *u32;
     mDistances:     *float;
     mCapacity:      u32;
     structgen_pad3: [4] u8;
 }
 
-physx_PxBroadPhasePair :: struct {
+PxBroadPhasePair :: struct {
     mID0: u32;
     mID1: u32;
 }
 
-physx_PxBroadPhaseResults :: struct {
+PxBroadPhaseResults :: struct {
     mNbCreatedPairs: u32;
     structgen_pad0:  [4] u8;
-    mCreatedPairs:   *physx_PxBroadPhasePair;
+    mCreatedPairs:   *PxBroadPhasePair;
     mNbDeletedPairs: u32;
     structgen_pad1:  [4] u8;
-    mDeletedPairs:   *physx_PxBroadPhasePair;
+    mDeletedPairs:   *PxBroadPhasePair;
 }
 
-physx_PxBroadPhaseRegions :: struct {
+PxBroadPhaseRegions :: struct {
     vtable_: *void;
 }
 
-physx_PxBroadPhase :: struct {
+PxBroadPhase :: struct {
     vtable_: *void;
 }
 
-physx_PxAABBManager :: struct {
+PxAABBManager :: struct {
     vtable_: *void;
 }
 
-physx_PxSceneLimits :: struct {
+PxSceneLimits :: struct {
     maxNbActors:             u32;
     maxNbBodies:             u32;
     maxNbStaticShapes:       u32;
@@ -1567,7 +2045,7 @@ physx_PxSceneLimits :: struct {
     maxNbBroadPhaseOverlaps: u32;
 }
 
-physx_PxgDynamicsMemoryConfig :: struct {
+PxgDynamicsMemoryConfig :: struct {
     tempBufferCapacity:              u32;
     maxRigidContactCount:            u32;
     maxRigidPatchCount:              u32;
@@ -1582,7 +2060,7 @@ physx_PxgDynamicsMemoryConfig :: struct {
     maxHairContacts:                 u32;
 }
 
-physx_PxSceneDesc :: struct {
+PxSceneDesc :: struct {
     staticStructure:               s32;
     dynamicStructure:              s32;
     dynamicTreeRebuildRateHint:    u32;
@@ -1593,27 +2071,27 @@ physx_PxSceneDesc :: struct {
     dynamicNbObjectsPerNode:       u32;
     sceneQueryUpdateMode:          s32;
     gravity:                       Vector3;
-    simulationEventCallback:       *physx_PxSimulationEventCallback;
-    contactModifyCallback:         *physx_PxContactModifyCallback;
-    ccdContactModifyCallback:      *physx_PxCCDContactModifyCallback;
+    simulationEventCallback:       *PxSimulationEventCallback;
+    contactModifyCallback:         *PxContactModifyCallback;
+    ccdContactModifyCallback:      *PxCCDContactModifyCallback;
     filterShaderData:              *void;
     filterShaderDataSize:          u32;
     structgen_pad0:                [4] u8;
     filterShader:                  *void;
-    filterCallback:                *physx_PxSimulationFilterCallback;
+    filterCallback:                *PxSimulationFilterCallback;
     kineKineFilteringMode:         s32;
     staticKineFilteringMode:       s32;
     broadPhaseType:                s32;
     structgen_pad1:                [4] u8;
-    broadPhaseCallback:            *physx_PxBroadPhaseCallback;
-    limits:                        physx_PxSceneLimits;
+    broadPhaseCallback:            *PxBroadPhaseCallback;
+    limits:                        PxSceneLimits;
     frictionType:                  s32;
     solverType:                    s32;
     bounceThresholdVelocity:       float;
     frictionOffsetThreshold:       float;
     frictionCorrelationDistance:   float;
     flags:                         u32;
-    cpuDispatcher:                 *physx_PxCpuDispatcher;
+    cpuDispatcher:                 *PxCpuDispatcher;
     structgen_pad2:                [8] u8;
     userData:                      *void;
     solverBatchSize:               u32;
@@ -1626,17 +2104,17 @@ physx_PxSceneDesc :: struct {
     ccdThreshold:                  float;
     ccdMaxSeparation:              float;
     wakeCounterResetValue:         float;
-    sanityBounds:                  physx_PxBounds3;
-    gpuDynamicsConfig:             physx_PxgDynamicsMemoryConfig;
+    sanityBounds:                  PxBounds3;
+    gpuDynamicsConfig:             PxgDynamicsMemoryConfig;
     gpuMaxNumPartitions:           u32;
     gpuMaxNumStaticPartitions:     u32;
     gpuComputeVersion:             u32;
     contactPairSlabSize:           u32;
-    sceneQuerySystem:              *physx_PxSceneQuerySystem;
+    sceneQuerySystem:              *PxSceneQuerySystem;
     structgen_pad3:                [8] u8;
 }
 
-physx_PxSimulationStatistics :: struct {
+PxSimulationStatistics :: struct {
     nbActiveConstraints:                 u32;
     nbActiveDynamicBodies:               u32;
     nbActiveKinematicBodies:             u32;
@@ -1687,96 +2165,96 @@ physx_PxSimulationStatistics :: struct {
     nbTriggerPairs:                      [11] [11] u32;
 }
 
-physx_PxGpuBodyData :: struct {
+PxGpuBodyData :: struct {
     quat:   Quaternion;
     pos:    Vector4;
     linVel: Vector4;
     angVel: Vector4;
 }
 
-physx_PxGpuActorPair :: struct {
+PxGpuActorPair :: struct {
     srcIndex:       u32;
     structgen_pad0: [4] u8;
-    nodeIndex:      physx_PxNodeIndex;
+    nodeIndex:      PxNodeIndex;
 }
 
-physx_PxIndexDataPair :: struct {
+PxIndexDataPair :: struct {
     index:          u32;
     structgen_pad0: [4] u8;
     data:           *void;
 }
 
-physx_PxPvdSceneClient :: struct {
+PxPvdSceneClient :: struct {
     vtable_: *void;
 }
 
-physx_PxDominanceGroupPair :: struct {
+PxDominanceGroupPair :: struct {
     dominance0: u8;
     dominance1: u8;
 }
 
-physx_PxBroadPhaseCallback :: struct {
+PxBroadPhaseCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxScene :: struct {
+PxScene :: struct {
     structgen_pad0: [8] u8;
     userData:       *void;
 }
 
-physx_PxSceneReadLock :: struct {
+PxSceneReadLock :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxSceneWriteLock :: struct {
+PxSceneWriteLock :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxContactPairExtraDataItem :: struct {
+PxContactPairExtraDataItem :: struct {
     type: u8;
 }
 
-physx_PxContactPairVelocity :: struct {
+PxContactPairVelocity :: struct {
     type:            u8;
     structgen_pad0:  [3] u8;
     linearVelocity:  [2] Vector3;
     angularVelocity: [2] Vector3;
 }
 
-physx_PxContactPairPose :: struct {
+PxContactPairPose :: struct {
     type:           u8;
     structgen_pad0: [3] u8;
-    globalPose:     [2] physx_PxTransform;
+    globalPose:     [2] PxTransform;
 }
 
-physx_PxContactPairIndex :: struct {
+PxContactPairIndex :: struct {
     type:           u8;
     structgen_pad0: [1] u8;
     index:          u16;
 }
 
-physx_PxContactPairExtraDataIterator :: struct {
+PxContactPairExtraDataIterator :: struct {
     currPtr:            *u8;
     endPtr:             *u8;
-    preSolverVelocity:  *physx_PxContactPairVelocity;
-    postSolverVelocity: *physx_PxContactPairVelocity;
-    eventPose:          *physx_PxContactPairPose;
+    preSolverVelocity:  *PxContactPairVelocity;
+    postSolverVelocity: *PxContactPairVelocity;
+    eventPose:          *PxContactPairPose;
     contactPairIndex:   u32;
     structgen_pad0:     [4] u8;
 }
 
-physx_PxContactPairHeader :: struct {
-    actors:              [2] *physx_PxActor;
+PxContactPairHeader :: struct {
+    actors:              [2] *PxActor;
     extraDataStream:     *u8;
     extraDataStreamSize: u16;
     flags:               u16;
     structgen_pad0:      [4] u8;
-    pairs:               *physx_PxContactPair;
+    pairs:               *PxContactPair;
     nbPairs:             u32;
     structgen_pad1:      [4] u8;
 }
 
-physx_PxContactPairPoint :: struct {
+PxContactPairPoint :: struct {
     position:           Vector3;
     separation:         float;
     normal:             Vector3;
@@ -1785,8 +2263,8 @@ physx_PxContactPairPoint :: struct {
     internalFaceIndex1: u32;
 }
 
-physx_PxContactPair :: struct {
-    shapes:             [2] *physx_PxShape;
+PxContactPair :: struct {
+    shapes:             [2] *PxShape;
     contactPatches:     *u8;
     contactPoints:      *u8;
     contactImpulses:    *float;
@@ -1800,28 +2278,28 @@ physx_PxContactPair :: struct {
     structgen_pad0:     [4] u8;
 }
 
-physx_PxTriggerPair :: struct {
-    triggerShape:   *physx_PxShape;
-    triggerActor:   *physx_PxActor;
-    otherShape:     *physx_PxShape;
-    otherActor:     *physx_PxActor;
+PxTriggerPair :: struct {
+    triggerShape:   *PxShape;
+    triggerActor:   *PxActor;
+    otherShape:     *PxShape;
+    otherActor:     *PxActor;
     status:         s32;
     flags:          u8;
     structgen_pad0: [3] u8;
 }
 
-physx_PxConstraintInfo :: struct {
-    constraint:        *physx_PxConstraint;
+PxConstraintInfo :: struct {
+    constraint:        *PxConstraint;
     externalReference: *void;
     type:              u32;
     structgen_pad0:    [4] u8;
 }
 
-physx_PxSimulationEventCallback :: struct {
+PxSimulationEventCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxFEMParameters :: struct {
+PxFEMParameters :: struct {
     velocityDamping:              float;
     settlingThreshold:            float;
     sleepThreshold:               float;
@@ -1830,50 +2308,50 @@ physx_PxFEMParameters :: struct {
     selfCollisionStressTolerance: float;
 }
 
-physx_PxPruningStructure :: struct {
+PxPruningStructure :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxExtendedVec3 :: struct {
+PxExtendedVec3 :: struct {
     x: float64;
     y: float64;
     z: float64;
 }
 
-physx_PxObstacle :: struct {
+PxObstacle :: struct {
     structgen_pad0: [8] u8;
     mUserData:      *void;
-    mPos:           physx_PxExtendedVec3;
+    mPos:           PxExtendedVec3;
     mRot:           Quaternion;
 }
 
-physx_PxBoxObstacle :: struct {
+PxBoxObstacle :: struct {
     structgen_pad0: [8] u8;
     mUserData:      *void;
-    mPos:           physx_PxExtendedVec3;
+    mPos:           PxExtendedVec3;
     mRot:           Quaternion;
     mHalfExtents:   Vector3;
     structgen_pad1: [4] u8;
 }
 
-physx_PxCapsuleObstacle :: struct {
+PxCapsuleObstacle :: struct {
     structgen_pad0: [8] u8;
     mUserData:      *void;
-    mPos:           physx_PxExtendedVec3;
+    mPos:           PxExtendedVec3;
     mRot:           Quaternion;
     mHalfHeight:    float;
     mRadius:        float;
 }
 
-physx_PxObstacleContext :: struct {
+PxObstacleContext :: struct {
     vtable_: *void;
 }
 
-physx_PxControllerState :: struct {
+PxControllerState :: struct {
     deltaXP:               Vector3;
     structgen_pad0:        [4] u8;
-    touchedShape:          *physx_PxShape;
-    touchedActor:          *physx_PxRigidActor;
+    touchedShape:          *PxShape;
+    touchedActor:          *PxRigidActor;
     touchedObstacleHandle: u32;
     collisionFlags:        u32;
     standOnAnotherCCT:     bool;
@@ -1882,48 +2360,48 @@ physx_PxControllerState :: struct {
     structgen_pad1:        [5] u8;
 }
 
-physx_PxControllerStats :: struct {
+PxControllerStats :: struct {
     nbIterations:     u16;
     nbFullUpdates:    u16;
     nbPartialUpdates: u16;
     nbTessellation:   u16;
 }
 
-physx_PxControllerHit :: struct {
-    controller:     *physx_PxController;
-    worldPos:       physx_PxExtendedVec3;
+PxControllerHit :: struct {
+    controller:     *PxController;
+    worldPos:       PxExtendedVec3;
     worldNormal:    Vector3;
     dir:            Vector3;
     length:         float;
     structgen_pad0: [4] u8;
 }
 
-physx_PxControllerShapeHit :: struct {
-    controller:     *physx_PxController;
-    worldPos:       physx_PxExtendedVec3;
+PxControllerShapeHit :: struct {
+    controller:     *PxController;
+    worldPos:       PxExtendedVec3;
     worldNormal:    Vector3;
     dir:            Vector3;
     length:         float;
     structgen_pad0: [4] u8;
-    shape:          *physx_PxShape;
-    actor:          *physx_PxRigidActor;
+    shape:          *PxShape;
+    actor:          *PxRigidActor;
     triangleIndex:  u32;
     structgen_pad1: [4] u8;
 }
 
-physx_PxControllersHit :: struct {
-    controller:     *physx_PxController;
-    worldPos:       physx_PxExtendedVec3;
+PxControllersHit :: struct {
+    controller:     *PxController;
+    worldPos:       PxExtendedVec3;
     worldNormal:    Vector3;
     dir:            Vector3;
     length:         float;
     structgen_pad0: [4] u8;
-    other:          *physx_PxController;
+    other:          *PxController;
 }
 
-physx_PxControllerObstacleHit :: struct {
-    controller:     *physx_PxController;
-    worldPos:       physx_PxExtendedVec3;
+PxControllerObstacleHit :: struct {
+    controller:     *PxController;
+    worldPos:       PxExtendedVec3;
     worldNormal:    Vector3;
     dir:            Vector3;
     length:         float;
@@ -1931,25 +2409,25 @@ physx_PxControllerObstacleHit :: struct {
     userData:       *void;
 }
 
-physx_PxUserControllerHitReport :: struct {
+PxUserControllerHitReport :: struct {
     vtable_: *void;
 }
 
-physx_PxControllerFilterCallback :: struct {
+PxControllerFilterCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxControllerFilters :: struct {
-    mFilterData:        *physx_PxFilterData;
-    mFilterCallback:    *physx_PxQueryFilterCallback;
+PxControllerFilters :: struct {
+    mFilterData:        *PxFilterData;
+    mFilterCallback:    *PxQueryFilterCallback;
     mFilterFlags:       u16;
     structgen_pad0:     [6] u8;
-    mCCTFilterCallback: *physx_PxControllerFilterCallback;
+    mCCTFilterCallback: *PxControllerFilterCallback;
 }
 
-physx_PxControllerDesc :: struct {
+PxControllerDesc :: struct {
     structgen_pad0:           [8] u8;
-    position:                 physx_PxExtendedVec3;
+    position:                 PxExtendedVec3;
     upDirection:              Vector3;
     slopeLimit:               float;
     invisibleWallHeight:      float;
@@ -1960,11 +2438,11 @@ physx_PxControllerDesc :: struct {
     scaleCoeff:               float;
     volumeGrowth:             float;
     structgen_pad1:           [4] u8;
-    reportCallback:           *physx_PxUserControllerHitReport;
-    behaviorCallback:         *physx_PxControllerBehaviorCallback;
+    reportCallback:           *PxUserControllerHitReport;
+    behaviorCallback:         *PxControllerBehaviorCallback;
     nonWalkableMode:          s32;
     structgen_pad2:           [4] u8;
-    material:                 *physx_PxMaterial;
+    material:                 *PxMaterial;
     registerDeletionListener: bool;
     clientID:                 u8;
     structgen_pad3:           [6] u8;
@@ -1972,13 +2450,13 @@ physx_PxControllerDesc :: struct {
     structgen_pad4:           [8] u8;
 }
 
-physx_PxController :: struct {
+PxController :: struct {
     vtable_: *void;
 }
 
-physx_PxBoxControllerDesc :: struct {
+PxBoxControllerDesc :: struct {
     structgen_pad0:           [8] u8;
-    position:                 physx_PxExtendedVec3;
+    position:                 PxExtendedVec3;
     upDirection:              Vector3;
     slopeLimit:               float;
     invisibleWallHeight:      float;
@@ -1989,11 +2467,11 @@ physx_PxBoxControllerDesc :: struct {
     scaleCoeff:               float;
     volumeGrowth:             float;
     structgen_pad1:           [4] u8;
-    reportCallback:           *physx_PxUserControllerHitReport;
-    behaviorCallback:         *physx_PxControllerBehaviorCallback;
+    reportCallback:           *PxUserControllerHitReport;
+    behaviorCallback:         *PxControllerBehaviorCallback;
     nonWalkableMode:          s32;
     structgen_pad2:           [4] u8;
-    material:                 *physx_PxMaterial;
+    material:                 *PxMaterial;
     registerDeletionListener: bool;
     clientID:                 u8;
     structgen_pad3:           [6] u8;
@@ -2005,13 +2483,13 @@ physx_PxBoxControllerDesc :: struct {
     structgen_pad5:           [4] u8;
 }
 
-physx_PxBoxController :: struct {
+PxBoxController :: struct {
     vtable_: *void;
 }
 
-physx_PxCapsuleControllerDesc :: struct {
+PxCapsuleControllerDesc :: struct {
     structgen_pad0:           [8] u8;
-    position:                 physx_PxExtendedVec3;
+    position:                 PxExtendedVec3;
     upDirection:              Vector3;
     slopeLimit:               float;
     invisibleWallHeight:      float;
@@ -2022,11 +2500,11 @@ physx_PxCapsuleControllerDesc :: struct {
     scaleCoeff:               float;
     volumeGrowth:             float;
     structgen_pad1:           [4] u8;
-    reportCallback:           *physx_PxUserControllerHitReport;
-    behaviorCallback:         *physx_PxControllerBehaviorCallback;
+    reportCallback:           *PxUserControllerHitReport;
+    behaviorCallback:         *PxControllerBehaviorCallback;
     nonWalkableMode:          s32;
     structgen_pad2:           [4] u8;
-    material:                 *physx_PxMaterial;
+    material:                 *PxMaterial;
     registerDeletionListener: bool;
     clientID:                 u8;
     structgen_pad3:           [6] u8;
@@ -2038,93 +2516,93 @@ physx_PxCapsuleControllerDesc :: struct {
     structgen_pad5:           [4] u8;
 }
 
-physx_PxCapsuleController :: struct {
+PxCapsuleController :: struct {
     vtable_: *void;
 }
 
-physx_PxControllerBehaviorCallback :: struct {
+PxControllerBehaviorCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxControllerManager :: struct {
+PxControllerManager :: struct {
     vtable_: *void;
 }
 
-physx_PxDim3 :: struct {
+PxDim3 :: struct {
     x: u32;
     y: u32;
     z: u32;
 }
 
-physx_PxSDFDesc :: struct {
-    sdf:                                            physx_PxBoundedData;
-    dims:                                           physx_PxDim3;
+PxSDFDesc :: struct {
+    sdf:                                            PxBoundedData;
+    dims:                                           PxDim3;
     meshLower:                                      Vector3;
     spacing:                                        float;
     subgridSize:                                    u32;
     bitsPerSubgridPixel:                            s32;
-    sdfSubgrids3DTexBlockDim:                       physx_PxDim3;
-    sdfSubgrids:                                    physx_PxBoundedData;
-    sdfStartSlots:                                  physx_PxBoundedData;
+    sdfSubgrids3DTexBlockDim:                       PxDim3;
+    sdfSubgrids:                                    PxBoundedData;
+    sdfStartSlots:                                  PxBoundedData;
     subgridsMinSdfValue:                            float;
     subgridsMaxSdfValue:                            float;
-    sdfBounds:                                      physx_PxBounds3;
+    sdfBounds:                                      PxBounds3;
     narrowBandThicknessRelativeToSdfBoundsDiagonal: float;
     numThreadsForSdfConstruction:                   u32;
 }
 
-physx_PxConvexMeshDesc :: struct {
-    points:         physx_PxBoundedData;
-    polygons:       physx_PxBoundedData;
-    indices:        physx_PxBoundedData;
+PxConvexMeshDesc :: struct {
+    points:         PxBoundedData;
+    polygons:       PxBoundedData;
+    indices:        PxBoundedData;
     flags:          u16;
     vertexLimit:    u16;
     polygonLimit:   u16;
     quantizedCount: u16;
-    sdfDesc:        *physx_PxSDFDesc;
+    sdfDesc:        *PxSDFDesc;
 }
 
-physx_PxTriangleMeshDesc :: struct {
-    points:         physx_PxBoundedData;
-    triangles:      physx_PxBoundedData;
+PxTriangleMeshDesc :: struct {
+    points:         PxBoundedData;
+    triangles:      PxBoundedData;
     flags:          u16;
     structgen_pad0: [22] u8;
-    sdfDesc:        *physx_PxSDFDesc;
+    sdfDesc:        *PxSDFDesc;
 }
 
-physx_PxTetrahedronMeshDesc :: struct {
+PxTetrahedronMeshDesc :: struct {
     structgen_pad0: [16] u8;
-    points:         physx_PxBoundedData;
-    tetrahedrons:   physx_PxBoundedData;
+    points:         PxBoundedData;
+    tetrahedrons:   PxBoundedData;
     flags:          u16;
     tetsPerElement: u16;
     structgen_pad1: [4] u8;
 }
 
-physx_PxSoftBodySimulationDataDesc :: struct {
-    vertexToTet: physx_PxBoundedData;
+PxSoftBodySimulationDataDesc :: struct {
+    vertexToTet: PxBoundedData;
 }
 
-physx_PxBVH34MidphaseDesc :: struct {
+PxBVH34MidphaseDesc :: struct {
     numPrimsPerLeaf: u32;
     buildStrategy:   s32;
     quantized:       bool;
     structgen_pad0:  [3] u8;
 }
 
-physx_PxMidphaseDesc :: struct {
+PxMidphaseDesc :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxBVHDesc :: struct {
-    bounds:          physx_PxBoundedData;
+PxBVHDesc :: struct {
+    bounds:          PxBoundedData;
     enlargement:     float;
     numPrimsPerLeaf: u32;
     buildStrategy:   s32;
     structgen_pad0:  [4] u8;
 }
 
-physx_PxCookingParams :: struct {
+PxCookingParams :: struct {
     areaTestEpsilon:                float;
     planeTolerance:                 float;
     convexMeshCookingType:          s32;
@@ -2132,67 +2610,67 @@ physx_PxCookingParams :: struct {
     buildTriangleAdjacencies:       bool;
     buildGPUData:                   bool;
     structgen_pad0:                 [1] u8;
-    scale:                          physx_PxTolerancesScale;
+    scale:                          PxTolerancesScale;
     meshPreprocessParams:           u32;
     meshWeldTolerance:              float;
-    midphaseDesc:                   physx_PxMidphaseDesc;
+    midphaseDesc:                   PxMidphaseDesc;
     gaussMapLimit:                  u32;
     maxWeightRatioInTet:            float;
 }
 
-physx_PxDefaultMemoryOutputStream :: struct {
+PxDefaultMemoryOutputStream :: struct {
     structgen_pad0: [32] u8;
 }
 
-physx_PxDefaultMemoryInputData :: struct {
+PxDefaultMemoryInputData :: struct {
     structgen_pad0: [32] u8;
 }
 
-physx_PxDefaultFileOutputStream :: struct {
+PxDefaultFileOutputStream :: struct {
     structgen_pad0: [16] u8;
 }
 
-physx_PxDefaultFileInputData :: struct {
+PxDefaultFileInputData :: struct {
     structgen_pad0: [24] u8;
 }
 
-physx_PxDefaultAllocator :: struct {
+PxDefaultAllocator :: struct {
     vtable_: *void;
 }
 
-physx_PxJoint :: struct {
+PxJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxSpring :: struct {
+PxSpring :: struct {
     stiffness: float;
     damping:   float;
 }
 
-physx_PxDistanceJoint :: struct {
+PxDistanceJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxJacobianRow :: struct {
+PxJacobianRow :: struct {
     linear0:  Vector3;
     linear1:  Vector3;
     angular0: Vector3;
     angular1: Vector3;
 }
 
-physx_PxContactJoint :: struct {
+PxContactJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxFixedJoint :: struct {
+PxFixedJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxJointLimitParameters :: struct {
+PxJointLimitParameters :: struct {
     restitution:                float;
     bounceThreshold:            float;
     stiffness:                  float;
@@ -2200,7 +2678,7 @@ physx_PxJointLimitParameters :: struct {
     contactDistance_deprecated: float;
 }
 
-physx_PxJointLinearLimit :: struct {
+PxJointLinearLimit :: struct {
     restitution:                float;
     bounceThreshold:            float;
     stiffness:                  float;
@@ -2209,7 +2687,7 @@ physx_PxJointLinearLimit :: struct {
     value:                      float;
 }
 
-physx_PxJointLinearLimitPair :: struct {
+PxJointLinearLimitPair :: struct {
     restitution:                float;
     bounceThreshold:            float;
     stiffness:                  float;
@@ -2219,7 +2697,7 @@ physx_PxJointLinearLimitPair :: struct {
     lower:                      float;
 }
 
-physx_PxJointAngularLimitPair :: struct {
+PxJointAngularLimitPair :: struct {
     restitution:                float;
     bounceThreshold:            float;
     stiffness:                  float;
@@ -2229,7 +2707,7 @@ physx_PxJointAngularLimitPair :: struct {
     lower:                      float;
 }
 
-physx_PxJointLimitCone :: struct {
+PxJointLimitCone :: struct {
     restitution:                float;
     bounceThreshold:            float;
     stiffness:                  float;
@@ -2239,7 +2717,7 @@ physx_PxJointLimitCone :: struct {
     zAngle:                     float;
 }
 
-physx_PxJointLimitPyramid :: struct {
+PxJointLimitPyramid :: struct {
     restitution:                float;
     bounceThreshold:            float;
     stiffness:                  float;
@@ -2251,3970 +2729,3966 @@ physx_PxJointLimitPyramid :: struct {
     zAngleMax:                  float;
 }
 
-physx_PxPrismaticJoint :: struct {
+PxPrismaticJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxRevoluteJoint :: struct {
+PxRevoluteJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxSphericalJoint :: struct {
+PxSphericalJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxD6JointDrive :: struct {
+PxD6JointDrive :: struct {
     stiffness:  float;
     damping:    float;
     forceLimit: float;
     flags:      u32;
 }
 
-physx_PxD6Joint :: struct {
+PxD6Joint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxGearJoint :: struct {
+PxGearJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxRackAndPinionJoint :: struct {
+PxRackAndPinionJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
 }
 
-physx_PxGroupsMask :: struct {
+PxGroupsMask :: struct {
     bits0: u16;
     bits1: u16;
     bits2: u16;
     bits3: u16;
 }
 
-physx_PxDefaultErrorCallback :: struct {
+PxDefaultErrorCallback :: struct {
     vtable_: *void;
 }
 
-physx_PxRigidActorExt :: struct {
+PxRigidActorExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxMassProperties :: struct {
-    inertiaTensor: physx_PxMat33;
+PxMassProperties :: struct {
+    inertiaTensor: PxMat33;
     centerOfMass:  Vector3;
     mass:          float;
 }
 
-physx_PxRigidBodyExt :: struct {
+PxRigidBodyExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxShapeExt :: struct {
+PxShapeExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxMeshOverlapUtil :: struct {
+PxMeshOverlapUtil :: struct {
     structgen_pad0: [1040] u8;
 }
 
-physx_PxBinaryConverter :: struct {}
-physx_PxXmlMiscParameter :: struct {
+PxBinaryConverter :: struct {}
+PxXmlMiscParameter :: struct {
     upVector: Vector3;
-    scale:    physx_PxTolerancesScale;
+    scale:    PxTolerancesScale;
 }
 
-physx_PxSerialization :: struct {
+PxSerialization :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxDefaultCpuDispatcher :: struct {
+PxDefaultCpuDispatcher :: struct {
     vtable_: *void;
 }
 
-physx_PxStringTableExt :: struct {
+PxStringTableExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxBroadPhaseExt :: struct {
+PxBroadPhaseExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxSceneQueryExt :: struct {
+PxSceneQueryExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxBatchQueryExt :: struct {
+PxBatchQueryExt :: struct {
     vtable_: *void;
 }
 
-physx_PxCustomSceneQuerySystem :: struct {
+PxCustomSceneQuerySystem :: struct {
     vtable_: *void;
 }
 
-physx_PxCustomSceneQuerySystemAdapter :: struct {
+PxCustomSceneQuerySystemAdapter :: struct {
     vtable_: *void;
 }
 
-physx_PxSamplingExt :: struct {
+PxSamplingExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxPoissonSampler :: struct {
+PxPoissonSampler :: struct {
     structgen_pad0: [8] u8;
 }
 
-physx_PxTriangleMeshPoissonSampler :: struct {
+PxTriangleMeshPoissonSampler :: struct {
     structgen_pad0: [24] u8;
 }
 
-physx_PxTetrahedronMeshExt :: struct {
+PxTetrahedronMeshExt :: struct {
     structgen_pad0: [1] u8;
 }
 
-physx_PxRepXObject :: struct {
+PxRepXObject :: struct {
     typeName:     *u8;
     serializable: *void;
     id:           u64;
 }
 
-physx_PxCooking :: struct {}
-physx_PxRepXInstantiationArgs :: struct {
+PxCooking :: struct {}
+PxRepXInstantiationArgs :: struct {
     structgen_pad0: [8] u8;
-    cooker:         *physx_PxCooking;
-    stringTable:    *physx_PxStringTable;
+    cooker:         *PxCooking;
+    stringTable:    *PxStringTable;
 }
 
-physx_XmlMemoryAllocator :: struct {}
-physx_XmlWriter :: struct {}
-physx_XmlReader :: struct {}
-physx_MemoryBuffer :: struct {}
-physx_PxRepXSerializer :: struct {
+XmlMemoryAllocator :: struct {}
+XmlWriter :: struct {}
+XmlReader :: struct {}
+MemoryBuffer :: struct {}
+PxRepXSerializer :: struct {
     vtable_: *void;
 }
 
-physx_PxVehicleWheels4SimData :: struct {}
-physx_PxVehicleWheels4DynData :: struct {}
-physx_PxVehicleTireForceCalculator :: struct {}
-physx_PxVehicleDrivableSurfaceToTireFrictionPairs :: struct {}
-physx_PxVehicleTelemetryData :: struct {}
+PxVehicleWheels4SimData :: struct {}
+PxVehicleWheels4DynData :: struct {}
+PxVehicleTireForceCalculator :: struct {}
+PxVehicleDrivableSurfaceToTireFrictionPairs :: struct {}
+PxVehicleTelemetryData :: struct {}
 
-physx_PxPvd :: struct {
+PxPvd :: struct {
     vtable_: *void;
 }
 
-physx_PxPvdTransport :: struct {
+PxPvdTransport :: struct {
     vtable_: *void;
 }
 
-PxAllocatorCallback_delete :: (self: *physx_PxAllocatorCallback) -> void #foreign physx_sys;
+PxAllocatorCallback_delete :: (self: *PxAllocatorCallback) -> void #foreign sys;
 
-PxAllocatorCallback_allocate :: (self: *physx_PxAllocatorCallback, size: u64, typeName: *u8, filename: *u8, line: s32) -> *void #foreign physx_sys "PxAllocatorCallback_allocate_mut";
+PxAllocatorCallback_allocate :: (self: *PxAllocatorCallback, size: u64, typeName: *u8, filename: *u8, line: s32) -> *void #foreign sys "PxAllocatorCallback_allocate_mut";
 
-PxAllocatorCallback_deallocate :: (self: *physx_PxAllocatorCallback, ptr: *void) -> void #foreign physx_sys "PxAllocatorCallback_deallocate_mut";
+PxAllocatorCallback_deallocate :: (self: *PxAllocatorCallback, ptr: *void) -> void #foreign sys "PxAllocatorCallback_deallocate_mut";
 
-PxAssertHandler_delete :: (self: *physx_PxAssertHandler) -> void #foreign physx_sys;
+PxAssertHandler_delete :: (self: *PxAssertHandler) -> void #foreign sys;
 
-phys_PxGetAssertHandler :: () -> *physx_PxAssertHandler #foreign physx_sys;
+PxGetAssertHandler :: () -> *PxAssertHandler #foreign sys "phys_PxGetAssertHandler";
 
-phys_PxSetAssertHandler :: (handler: *physx_PxAssertHandler) -> void #foreign physx_sys;
+PxSetAssertHandler :: (handler: *PxAssertHandler) -> void #foreign sys "phys_PxSetAssertHandler";
 
-PxFoundation_release :: (self: *physx_PxFoundation) -> void #foreign physx_sys "PxFoundation_release_mut";
+PxFoundation_release :: (self: *PxFoundation) -> void #foreign sys "PxFoundation_release_mut";
 
-PxFoundation_getErrorCallback :: (self: *physx_PxFoundation) -> *physx_PxErrorCallback #foreign physx_sys "PxFoundation_getErrorCallback_mut";
+PxFoundation_getErrorCallback :: (self: *PxFoundation) -> *PxErrorCallback #foreign sys "PxFoundation_getErrorCallback_mut";
 
-PxFoundation_setErrorLevel :: (self: *physx_PxFoundation, mask: u32) -> void #foreign physx_sys "PxFoundation_setErrorLevel_mut";
+PxFoundation_setErrorLevel :: (self: *PxFoundation, mask: u32) -> void #foreign sys "PxFoundation_setErrorLevel_mut";
 
-PxFoundation_getErrorLevel :: (self: *physx_PxFoundation) -> u32 #foreign physx_sys;
+PxFoundation_getErrorLevel :: (self: *PxFoundation) -> u32 #foreign sys;
 
-PxFoundation_getAllocatorCallback :: (self: *physx_PxFoundation) -> *physx_PxAllocatorCallback #foreign physx_sys "PxFoundation_getAllocatorCallback_mut";
+PxFoundation_getAllocatorCallback :: (self: *PxFoundation) -> *PxAllocatorCallback #foreign sys "PxFoundation_getAllocatorCallback_mut";
 
-PxFoundation_getReportAllocationNames :: (self: *physx_PxFoundation) -> bool #foreign physx_sys;
+PxFoundation_getReportAllocationNames :: (self: *PxFoundation) -> bool #foreign sys;
 
-PxFoundation_setReportAllocationNames :: (self: *physx_PxFoundation, value: bool) -> void #foreign physx_sys "PxFoundation_setReportAllocationNames_mut";
+PxFoundation_setReportAllocationNames :: (self: *PxFoundation, value: bool) -> void #foreign sys "PxFoundation_setReportAllocationNames_mut";
 
-PxFoundation_registerAllocationListener :: (self: *physx_PxFoundation, listener: *physx_PxAllocationListener) -> void #foreign physx_sys "PxFoundation_registerAllocationListener_mut";
+PxFoundation_registerAllocationListener :: (self: *PxFoundation, listener: *PxAllocationListener) -> void #foreign sys "PxFoundation_registerAllocationListener_mut";
 
-PxFoundation_deregisterAllocationListener :: (self: *physx_PxFoundation, listener: *physx_PxAllocationListener) -> void #foreign physx_sys "PxFoundation_deregisterAllocationListener_mut";
+PxFoundation_deregisterAllocationListener :: (self: *PxFoundation, listener: *PxAllocationListener) -> void #foreign sys "PxFoundation_deregisterAllocationListener_mut";
 
-PxFoundation_registerErrorCallback :: (self: *physx_PxFoundation, callback: *physx_PxErrorCallback) -> void #foreign physx_sys "PxFoundation_registerErrorCallback_mut";
+PxFoundation_registerErrorCallback :: (self: *PxFoundation, callback: *PxErrorCallback) -> void #foreign sys "PxFoundation_registerErrorCallback_mut";
 
-PxFoundation_deregisterErrorCallback :: (self: *physx_PxFoundation, callback: *physx_PxErrorCallback) -> void #foreign physx_sys "PxFoundation_deregisterErrorCallback_mut";
+PxFoundation_deregisterErrorCallback :: (self: *PxFoundation, callback: *PxErrorCallback) -> void #foreign sys "PxFoundation_deregisterErrorCallback_mut";
 
-phys_PxCreateFoundation :: (version: u32, allocator: *physx_PxAllocatorCallback, errorCallback: *physx_PxErrorCallback) -> *physx_PxFoundation #foreign physx_sys;
+PxCreateFoundation :: (version: u32, allocator: *PxAllocatorCallback, errorCallback: *PxErrorCallback) -> *PxFoundation #foreign sys "phys_PxCreateFoundation";
 
-phys_PxSetFoundationInstance :: (foundation: *physx_PxFoundation) -> void #foreign physx_sys;
+PxSetFoundationInstance :: (foundation: *PxFoundation) -> void #foreign sys "phys_PxSetFoundationInstance";
 
-phys_PxGetFoundation :: () -> *physx_PxFoundation #foreign physx_sys;
+PxGetFoundation :: () -> *PxFoundation #foreign sys "phys_PxGetFoundation";
 
-phys_PxGetProfilerCallback :: () -> *physx_PxProfilerCallback #foreign physx_sys;
+PxGetProfilerCallback :: () -> *PxProfilerCallback #foreign sys "phys_PxGetProfilerCallback";
 
-phys_PxSetProfilerCallback :: (profiler: *physx_PxProfilerCallback) -> void #foreign physx_sys;
+PxSetProfilerCallback :: (profiler: *PxProfilerCallback) -> void #foreign sys "phys_PxSetProfilerCallback";
 
-phys_PxGetAllocatorCallback :: () -> *physx_PxAllocatorCallback #foreign physx_sys;
+PxGetAllocatorCallback :: () -> *PxAllocatorCallback #foreign sys "phys_PxGetAllocatorCallback";
 
-phys_PxGetBroadcastAllocator :: () -> *physx_PxAllocatorCallback #foreign physx_sys;
+PxGetBroadcastAllocator :: () -> *PxAllocatorCallback #foreign sys "phys_PxGetBroadcastAllocator";
 
-phys_PxGetErrorCallback :: () -> *physx_PxErrorCallback #foreign physx_sys;
+PxGetErrorCallback :: () -> *PxErrorCallback #foreign sys "phys_PxGetErrorCallback";
 
-phys_PxGetBroadcastError :: () -> *physx_PxErrorCallback #foreign physx_sys;
+PxGetBroadcastError :: () -> *PxErrorCallback #foreign sys "phys_PxGetBroadcastError";
 
-phys_PxGetWarnOnceTimeStamp :: () -> u32 #foreign physx_sys;
+PxGetWarnOnceTimeStamp :: () -> u32 #foreign sys "phys_PxGetWarnOnceTimeStamp";
 
-phys_PxDecFoundationRefCount :: () -> void #foreign physx_sys;
+PxDecFoundationRefCount :: () -> void #foreign sys "phys_PxDecFoundationRefCount";
 
-phys_PxIncFoundationRefCount :: () -> void #foreign physx_sys;
+PxIncFoundationRefCount :: () -> void #foreign sys "phys_PxIncFoundationRefCount";
 
-PxAllocator_new :: (anon_param0: *u8) -> physx_PxAllocator #foreign physx_sys;
+PxAllocator_new :: (anon_param0: *u8) -> PxAllocator #foreign sys;
 
-PxAllocator_allocate :: (self: *physx_PxAllocator, size: u64, file: *u8, line: s32) -> *void #foreign physx_sys "PxAllocator_allocate_mut";
+PxAllocator_allocate :: (self: *PxAllocator, size: u64, file: *u8, line: s32) -> *void #foreign sys "PxAllocator_allocate_mut";
 
-PxAllocator_deallocate :: (self: *physx_PxAllocator, ptr: *void) -> void #foreign physx_sys "PxAllocator_deallocate_mut";
+PxAllocator_deallocate :: (self: *PxAllocator, ptr: *void) -> void #foreign sys "PxAllocator_deallocate_mut";
 
-PxRawAllocator_new :: (anon_param0: *u8) -> physx_PxRawAllocator #foreign physx_sys;
+PxRawAllocator_new :: (anon_param0: *u8) -> PxRawAllocator #foreign sys;
 
-PxRawAllocator_allocate :: (self: *physx_PxRawAllocator, size: u64, anon_param1: *u8, anon_param2: s32) -> *void #foreign physx_sys "PxRawAllocator_allocate_mut";
+PxRawAllocator_allocate :: (self: *PxRawAllocator, size: u64, anon_param1: *u8, anon_param2: s32) -> *void #foreign sys "PxRawAllocator_allocate_mut";
 
-PxRawAllocator_deallocate :: (self: *physx_PxRawAllocator, ptr: *void) -> void #foreign physx_sys "PxRawAllocator_deallocate_mut";
+PxRawAllocator_deallocate :: (self: *PxRawAllocator, ptr: *void) -> void #foreign sys "PxRawAllocator_deallocate_mut";
 
-PxVirtualAllocatorCallback_delete :: (self: *physx_PxVirtualAllocatorCallback) -> void #foreign physx_sys;
+PxVirtualAllocatorCallback_delete :: (self: *PxVirtualAllocatorCallback) -> void #foreign sys;
 
-PxVirtualAllocatorCallback_allocate :: (self: *physx_PxVirtualAllocatorCallback, size: u64, group: s32, file: *u8, line: s32) -> *void #foreign physx_sys "PxVirtualAllocatorCallback_allocate_mut";
+PxVirtualAllocatorCallback_allocate :: (self: *PxVirtualAllocatorCallback, size: u64, group: s32, file: *u8, line: s32) -> *void #foreign sys "PxVirtualAllocatorCallback_allocate_mut";
 
-PxVirtualAllocatorCallback_deallocate :: (self: *physx_PxVirtualAllocatorCallback, ptr: *void) -> void #foreign physx_sys "PxVirtualAllocatorCallback_deallocate_mut";
+PxVirtualAllocatorCallback_deallocate :: (self: *PxVirtualAllocatorCallback, ptr: *void) -> void #foreign sys "PxVirtualAllocatorCallback_deallocate_mut";
 
-PxVirtualAllocator_new :: (callback: *physx_PxVirtualAllocatorCallback, group: s32) -> physx_PxVirtualAllocator #foreign physx_sys;
+PxVirtualAllocator_new :: (callback: *PxVirtualAllocatorCallback, group: s32) -> PxVirtualAllocator #foreign sys;
 
-PxVirtualAllocator_allocate :: (self: *physx_PxVirtualAllocator, size: u64, file: *u8, line: s32) -> *void #foreign physx_sys "PxVirtualAllocator_allocate_mut";
+PxVirtualAllocator_allocate :: (self: *PxVirtualAllocator, size: u64, file: *u8, line: s32) -> *void #foreign sys "PxVirtualAllocator_allocate_mut";
 
-PxVirtualAllocator_deallocate :: (self: *physx_PxVirtualAllocator, ptr: *void) -> void #foreign physx_sys "PxVirtualAllocator_deallocate_mut";
+PxVirtualAllocator_deallocate :: (self: *PxVirtualAllocator, ptr: *void) -> void #foreign sys "PxVirtualAllocator_deallocate_mut";
 
-PxTempAllocatorChunk_new :: () -> physx_PxTempAllocatorChunk #foreign physx_sys;
+PxTempAllocatorChunk_new :: () -> PxTempAllocatorChunk #foreign sys;
 
-PxTempAllocator_new :: (anon_param0: *u8) -> physx_PxTempAllocator #foreign physx_sys;
+PxTempAllocator_new :: (anon_param0: *u8) -> PxTempAllocator #foreign sys;
 
-PxTempAllocator_allocate :: (self: *physx_PxTempAllocator, size: u64, file: *u8, line: s32) -> *void #foreign physx_sys "PxTempAllocator_allocate_mut";
+PxTempAllocator_allocate :: (self: *PxTempAllocator, size: u64, file: *u8, line: s32) -> *void #foreign sys "PxTempAllocator_allocate_mut";
 
-PxTempAllocator_deallocate :: (self: *physx_PxTempAllocator, ptr: *void) -> void #foreign physx_sys "PxTempAllocator_deallocate_mut";
+PxTempAllocator_deallocate :: (self: *PxTempAllocator, ptr: *void) -> void #foreign sys "PxTempAllocator_deallocate_mut";
 
-phys_PxMemZero :: (dest: *void, count: u32) -> *void #foreign physx_sys;
+PxMemZero :: (dest: *void, count: u32) -> *void #foreign sys "phys_PxMemZero";
 
-phys_PxMemSet :: (dest: *void, c: s32, count: u32) -> *void #foreign physx_sys;
+PxMemSet :: (dest: *void, c: s32, count: u32) -> *void #foreign sys "phys_PxMemSet";
 
-phys_PxMemCopy :: (dest: *void, src: *void, count: u32) -> *void #foreign physx_sys;
+PxMemCopy :: (dest: *void, src: *void, count: u32) -> *void #foreign sys "phys_PxMemCopy";
 
-phys_PxMemMove :: (dest: *void, src: *void, count: u32) -> *void #foreign physx_sys;
+PxMemMove :: (dest: *void, src: *void, count: u32) -> *void #foreign sys "phys_PxMemMove";
 
-phys_PxMarkSerializedMemory :: (ptr: *void, byteSize: u32) -> void #foreign physx_sys;
+PxMarkSerializedMemory :: (ptr: *void, byteSize: u32) -> void #foreign sys "phys_PxMarkSerializedMemory";
 
-phys_PxMemoryBarrier :: () -> void #foreign physx_sys;
+PxMemoryBarrier :: () -> void #foreign sys "phys_PxMemoryBarrier";
 
-phys_PxHighestSetBitUnsafe :: (v: u32) -> u32 #foreign physx_sys;
+PxHighestSetBitUnsafe :: (v: u32) -> u32 #foreign sys "phys_PxHighestSetBitUnsafe";
 
-phys_PxLowestSetBitUnsafe :: (v: u32) -> u32 #foreign physx_sys;
+PxLowestSetBitUnsafe :: (v: u32) -> u32 #foreign sys "phys_PxLowestSetBitUnsafe";
 
-phys_PxCountLeadingZeros :: (v: u32) -> u32 #foreign physx_sys;
+PxCountLeadingZeros :: (v: u32) -> u32 #foreign sys "phys_PxCountLeadingZeros";
 
-phys_PxPrefetchLine :: (ptr: *void, offset: u32) -> void #foreign physx_sys;
+PxPrefetchLine :: (ptr: *void, offset: u32) -> void #foreign sys "phys_PxPrefetchLine";
 
-phys_PxPrefetch :: (ptr: *void, count: u32) -> void #foreign physx_sys;
+PxPrefetch :: (ptr: *void, count: u32) -> void #foreign sys "phys_PxPrefetch";
 
-phys_PxBitCount :: (v: u32) -> u32 #foreign physx_sys;
+PxBitCount :: (v: u32) -> u32 #foreign sys "phys_PxBitCount";
 
-phys_PxIsPowerOfTwo :: (x: u32) -> bool #foreign physx_sys;
+PxIsPowerOfTwo :: (x: u32) -> bool #foreign sys "phys_PxIsPowerOfTwo";
 
-phys_PxNextPowerOfTwo :: (x: u32) -> u32 #foreign physx_sys;
+PxNextPowerOfTwo :: (x: u32) -> u32 #foreign sys "phys_PxNextPowerOfTwo";
 
-phys_PxLowestSetBit :: (x: u32) -> u32 #foreign physx_sys;
+PxLowestSetBit :: (x: u32) -> u32 #foreign sys "phys_PxLowestSetBit";
 
-phys_PxHighestSetBit :: (x: u32) -> u32 #foreign physx_sys;
+PxHighestSetBit :: (x: u32) -> u32 #foreign sys "phys_PxHighestSetBit";
 
-phys_PxILog2 :: (num: u32) -> u32 #foreign physx_sys;
+PxILog2 :: (num: u32) -> u32 #foreign sys "phys_PxILog2";
 
-PxVec3_new :: () -> Vector3 #foreign physx_sys;
+PxVec3_new :: () -> Vector3 #foreign sys;
 
-PxVec3_new_1 :: (anon_param0: s32) -> Vector3 #foreign physx_sys;
+PxVec3_new :: (anon_param0: s32) -> Vector3 #foreign sys "PxVec3_new_1";
 
-PxVec3_new_2 :: (a: float) -> Vector3 #foreign physx_sys;
+PxVec3_new :: (a: float) -> Vector3 #foreign sys "PxVec3_new_2";
 
-PxVec3_new_3 :: (nx: float, ny: float, nz: float) -> Vector3 #foreign physx_sys;
+PxVec3_new :: (nx: float, ny: float, nz: float) -> Vector3 #foreign sys "PxVec3_new_3";
 
-PxVec3_isZero :: (self: *Vector3) -> bool #foreign physx_sys;
+PxVec3_isZero :: (self: *Vector3) -> bool #foreign sys;
 
-PxVec3_isFinite :: (self: *Vector3) -> bool #foreign physx_sys;
+PxVec3_isFinite :: (self: *Vector3) -> bool #foreign sys;
 
-PxVec3_isNormalized :: (self: *Vector3) -> bool #foreign physx_sys;
+PxVec3_isNormalized :: (self: *Vector3) -> bool #foreign sys;
 
-PxVec3_magnitudeSquared :: (self: *Vector3) -> float #foreign physx_sys;
+PxVec3_magnitudeSquared :: (self: *Vector3) -> float #foreign sys;
 
-PxVec3_magnitude :: (self: *Vector3) -> float #foreign physx_sys;
+PxVec3_magnitude :: (self: *Vector3) -> float #foreign sys;
 
-PxVec3_dot :: (self: *Vector3, v: *Vector3) -> float #foreign physx_sys;
+PxVec3_dot :: (self: *Vector3, v: *Vector3) -> float #foreign sys;
 
-PxVec3_cross :: (self: *Vector3, v: *Vector3) -> Vector3 #foreign physx_sys;
+PxVec3_cross :: (self: *Vector3, v: *Vector3) -> Vector3 #foreign sys;
 
-PxVec3_getNormalized :: (self: *Vector3) -> Vector3 #foreign physx_sys;
+PxVec3_getNormalized :: (self: *Vector3) -> Vector3 #foreign sys;
 
-PxVec3_normalize :: (self: *Vector3) -> float #foreign physx_sys "PxVec3_normalize_mut";
+PxVec3_normalize :: (self: *Vector3) -> float #foreign sys "PxVec3_normalize_mut";
 
-PxVec3_normalizeSafe :: (self: *Vector3) -> float #foreign physx_sys "PxVec3_normalizeSafe_mut";
+PxVec3_normalizeSafe :: (self: *Vector3) -> float #foreign sys "PxVec3_normalizeSafe_mut";
 
-PxVec3_normalizeFast :: (self: *Vector3) -> float #foreign physx_sys "PxVec3_normalizeFast_mut";
+PxVec3_normalizeFast :: (self: *Vector3) -> float #foreign sys "PxVec3_normalizeFast_mut";
 
-PxVec3_multiply :: (self: *Vector3, a: *Vector3) -> Vector3 #foreign physx_sys;
+PxVec3_multiply :: (self: *Vector3, a: *Vector3) -> Vector3 #foreign sys;
 
-PxVec3_minimum :: (self: *Vector3, v: *Vector3) -> Vector3 #foreign physx_sys;
+PxVec3_minimum :: (self: *Vector3, v: *Vector3) -> Vector3 #foreign sys;
 
-PxVec3_minElement :: (self: *Vector3) -> float #foreign physx_sys;
+PxVec3_minElement :: (self: *Vector3) -> float #foreign sys;
 
-PxVec3_maximum :: (self: *Vector3, v: *Vector3) -> Vector3 #foreign physx_sys;
+PxVec3_maximum :: (self: *Vector3, v: *Vector3) -> Vector3 #foreign sys;
 
-PxVec3_maxElement :: (self: *Vector3) -> float #foreign physx_sys;
+PxVec3_maxElement :: (self: *Vector3) -> float #foreign sys;
 
-PxVec3_abs :: (self: *Vector3) -> Vector3 #foreign physx_sys;
+PxVec3_abs :: (self: *Vector3) -> Vector3 #foreign sys;
 
-PxVec3Padded_new_alloc :: () -> *physx_PxVec3Padded #foreign physx_sys;
+PxVec3Padded_new_alloc :: () -> *PxVec3Padded #foreign sys;
 
-PxVec3Padded_delete :: (self: *physx_PxVec3Padded) -> void #foreign physx_sys;
+PxVec3Padded_delete :: (self: *PxVec3Padded) -> void #foreign sys;
 
-PxVec3Padded_new_alloc_1 :: (p: *Vector3) -> *physx_PxVec3Padded #foreign physx_sys;
+PxVec3Padded_new_alloc :: (p: *Vector3) -> *PxVec3Padded #foreign sys "PxVec3Padded_new_alloc_1";
 
-PxVec3Padded_new_alloc_2 :: (f: float) -> *physx_PxVec3Padded #foreign physx_sys;
+PxVec3Padded_new_alloc :: (f: float) -> *PxVec3Padded #foreign sys "PxVec3Padded_new_alloc_2";
 
-PxQuat_new :: () -> Quaternion #foreign physx_sys;
+PxQuat_new :: () -> Quaternion #foreign sys;
 
-PxQuat_new_1 :: (anon_param0: s32) -> Quaternion #foreign physx_sys;
+PxQuat_new :: (anon_param0: s32) -> Quaternion #foreign sys "PxQuat_new_1";
 
-PxQuat_new_2 :: (r: float) -> Quaternion #foreign physx_sys;
+PxQuat_new :: (r: float) -> Quaternion #foreign sys "PxQuat_new_2";
 
-PxQuat_new_3 :: (nx: float, ny: float, nz: float, nw: float) -> Quaternion #foreign physx_sys;
+PxQuat_new :: (nx: float, ny: float, nz: float, nw: float) -> Quaternion #foreign sys "PxQuat_new_3";
 
-PxQuat_new_4 :: (angleRadians: float, unitAxis: *Vector3) -> Quaternion #foreign physx_sys;
+PxQuat_new :: (angleRadians: float, unitAxis: *Vector3) -> Quaternion #foreign sys "PxQuat_new_4";
 
-PxQuat_new_5 :: (m: *physx_PxMat33) -> Quaternion #foreign physx_sys;
+PxQuat_new :: (m: *PxMat33) -> Quaternion #foreign sys "PxQuat_new_5";
 
-PxQuat_isIdentity :: (self: *Quaternion) -> bool #foreign physx_sys;
+PxQuat_isIdentity :: (self: *Quaternion) -> bool #foreign sys;
 
-PxQuat_isFinite :: (self: *Quaternion) -> bool #foreign physx_sys;
+PxQuat_isFinite :: (self: *Quaternion) -> bool #foreign sys;
 
-PxQuat_isUnit :: (self: *Quaternion) -> bool #foreign physx_sys;
+PxQuat_isUnit :: (self: *Quaternion) -> bool #foreign sys;
 
-PxQuat_isSane :: (self: *Quaternion) -> bool #foreign physx_sys;
+PxQuat_isSane :: (self: *Quaternion) -> bool #foreign sys;
 
-PxQuat_toRadiansAndUnitAxis :: (self: *Quaternion, angle: *float, axis: *Vector3) -> void #foreign physx_sys;
+PxQuat_toRadiansAndUnitAxis :: (self: *Quaternion, angle: *float, axis: *Vector3) -> void #foreign sys;
 
-PxQuat_getAngle :: (self: *Quaternion) -> float #foreign physx_sys;
+PxQuat_getAngle :: (self: *Quaternion) -> float #foreign sys;
 
-PxQuat_getAngle_1 :: (self: *Quaternion, q: *Quaternion) -> float #foreign physx_sys;
+PxQuat_getAngle :: (self: *Quaternion, q: *Quaternion) -> float #foreign sys "PxQuat_getAngle_1";
 
-PxQuat_magnitudeSquared :: (self: *Quaternion) -> float #foreign physx_sys;
+PxQuat_magnitudeSquared :: (self: *Quaternion) -> float #foreign sys;
 
-PxQuat_dot :: (self: *Quaternion, v: *Quaternion) -> float #foreign physx_sys;
+PxQuat_dot :: (self: *Quaternion, v: *Quaternion) -> float #foreign sys;
 
-PxQuat_getNormalized :: (self: *Quaternion) -> Quaternion #foreign physx_sys;
+PxQuat_getNormalized :: (self: *Quaternion) -> Quaternion #foreign sys;
 
-PxQuat_magnitude :: (self: *Quaternion) -> float #foreign physx_sys;
+PxQuat_magnitude :: (self: *Quaternion) -> float #foreign sys;
 
-PxQuat_normalize :: (self: *Quaternion) -> float #foreign physx_sys "PxQuat_normalize_mut";
+PxQuat_normalize :: (self: *Quaternion) -> float #foreign sys "PxQuat_normalize_mut";
 
-PxQuat_getConjugate :: (self: *Quaternion) -> Quaternion #foreign physx_sys;
+PxQuat_getConjugate :: (self: *Quaternion) -> Quaternion #foreign sys;
 
-PxQuat_getImaginaryPart :: (self: *Quaternion) -> Vector3 #foreign physx_sys;
+PxQuat_getImaginaryPart :: (self: *Quaternion) -> Vector3 #foreign sys;
 
-PxQuat_getBasisVector0 :: (self: *Quaternion) -> Vector3 #foreign physx_sys;
+PxQuat_getBasisVector0 :: (self: *Quaternion) -> Vector3 #foreign sys;
 
-PxQuat_getBasisVector1 :: (self: *Quaternion) -> Vector3 #foreign physx_sys;
+PxQuat_getBasisVector1 :: (self: *Quaternion) -> Vector3 #foreign sys;
 
-PxQuat_getBasisVector2 :: (self: *Quaternion) -> Vector3 #foreign physx_sys;
+PxQuat_getBasisVector2 :: (self: *Quaternion) -> Vector3 #foreign sys;
 
-PxQuat_rotate :: (self: *Quaternion, v: *Vector3) -> Vector3 #foreign physx_sys;
+PxQuat_rotate :: (self: *Quaternion, v: *Vector3) -> Vector3 #foreign sys;
 
-PxQuat_rotateInv :: (self: *Quaternion, v: *Vector3) -> Vector3 #foreign physx_sys;
+PxQuat_rotateInv :: (self: *Quaternion, v: *Vector3) -> Vector3 #foreign sys;
 
-PxTransform_new :: () -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: () -> PxTransform #foreign sys;
 
-PxTransform_new_1 :: (position: *Vector3) -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: (position: *Vector3) -> PxTransform #foreign sys "PxTransform_new_1";
 
-PxTransform_new_2 :: (anon_param0: s32) -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: (anon_param0: s32) -> PxTransform #foreign sys "PxTransform_new_2";
 
-PxTransform_new_3 :: (orientation: *Quaternion) -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: (orientation: *Quaternion) -> PxTransform #foreign sys "PxTransform_new_3";
 
-PxTransform_new_4 :: (x: float, y: float, z: float, aQ: Quaternion) -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: (x: float, y: float, z: float, aQ: Quaternion) -> PxTransform #foreign sys "PxTransform_new_4";
 
-PxTransform_new_5 :: (p0: *Vector3, q0: *Quaternion) -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: (p0: *Vector3, q0: *Quaternion) -> PxTransform #foreign sys "PxTransform_new_5";
 
-PxTransform_new_6 :: (m: *physx_PxMat44) -> physx_PxTransform #foreign physx_sys;
+PxTransform_new :: (m: *PxMat44) -> PxTransform #foreign sys "PxTransform_new_6";
 
-PxTransform_getInverse :: (self: *physx_PxTransform) -> physx_PxTransform #foreign physx_sys;
+PxTransform_getInverse :: (self: *PxTransform) -> PxTransform #foreign sys;
 
-PxTransform_transform :: (self: *physx_PxTransform, input: *Vector3) -> Vector3 #foreign physx_sys;
+PxTransform_transform :: (self: *PxTransform, input: *Vector3) -> Vector3 #foreign sys;
 
-PxTransform_transformInv :: (self: *physx_PxTransform, input: *Vector3) -> Vector3 #foreign physx_sys;
+PxTransform_transformInv :: (self: *PxTransform, input: *Vector3) -> Vector3 #foreign sys;
 
-PxTransform_rotate :: (self: *physx_PxTransform, input: *Vector3) -> Vector3 #foreign physx_sys;
+PxTransform_rotate :: (self: *PxTransform, input: *Vector3) -> Vector3 #foreign sys;
 
-PxTransform_rotateInv :: (self: *physx_PxTransform, input: *Vector3) -> Vector3 #foreign physx_sys;
+PxTransform_rotateInv :: (self: *PxTransform, input: *Vector3) -> Vector3 #foreign sys;
 
-PxTransform_transform_1 :: (self: *physx_PxTransform, src: *physx_PxTransform) -> physx_PxTransform #foreign physx_sys;
+PxTransform_transform :: (self: *PxTransform, src: *PxTransform) -> PxTransform #foreign sys "PxTransform_transform_1";
 
-PxTransform_isValid :: (self: *physx_PxTransform) -> bool #foreign physx_sys;
+PxTransform_isValid :: (self: *PxTransform) -> bool #foreign sys;
 
-PxTransform_isSane :: (self: *physx_PxTransform) -> bool #foreign physx_sys;
+PxTransform_isSane :: (self: *PxTransform) -> bool #foreign sys;
 
-PxTransform_isFinite :: (self: *physx_PxTransform) -> bool #foreign physx_sys;
+PxTransform_isFinite :: (self: *PxTransform) -> bool #foreign sys;
 
-PxTransform_transformInv_1 :: (self: *physx_PxTransform, src: *physx_PxTransform) -> physx_PxTransform #foreign physx_sys;
+PxTransform_transformInv :: (self: *PxTransform, src: *PxTransform) -> PxTransform #foreign sys "PxTransform_transformInv_1";
 
-PxTransform_getNormalized :: (self: *physx_PxTransform) -> physx_PxTransform #foreign physx_sys;
+PxTransform_getNormalized :: (self: *PxTransform) -> PxTransform #foreign sys;
 
-PxMat33_new :: () -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: () -> PxMat33 #foreign sys;
 
-PxMat33_new_1 :: (anon_param0: s32) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: (anon_param0: s32) -> PxMat33 #foreign sys "PxMat33_new_1";
 
-PxMat33_new_2 :: (anon_param0: s32) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: (anon_param0: s32) -> PxMat33 #foreign sys "PxMat33_new_2";
 
-PxMat33_new_3 :: (col0: *Vector3, col1: *Vector3, col2: *Vector3) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: (col0: *Vector3, col1: *Vector3, col2: *Vector3) -> PxMat33 #foreign sys "PxMat33_new_3";
 
-PxMat33_new_4 :: (r: float) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: (r: float) -> PxMat33 #foreign sys "PxMat33_new_4";
 
-PxMat33_new_5 :: (values: *float) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: (values: *float) -> PxMat33 #foreign sys "PxMat33_new_5";
 
-PxMat33_new_6 :: (q: *Quaternion) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_new :: (q: *Quaternion) -> PxMat33 #foreign sys "PxMat33_new_6";
 
-PxMat33_createDiagonal :: (d: *Vector3) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_createDiagonal :: (d: *Vector3) -> PxMat33 #foreign sys;
 
-PxMat33_outer :: (a: *Vector3, b: *Vector3) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_outer :: (a: *Vector3, b: *Vector3) -> PxMat33 #foreign sys;
 
-PxMat33_getTranspose :: (self: *physx_PxMat33) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_getTranspose :: (self: *PxMat33) -> PxMat33 #foreign sys;
 
-PxMat33_getInverse :: (self: *physx_PxMat33) -> physx_PxMat33 #foreign physx_sys;
+PxMat33_getInverse :: (self: *PxMat33) -> PxMat33 #foreign sys;
 
-PxMat33_getDeterminant :: (self: *physx_PxMat33) -> float #foreign physx_sys;
+PxMat33_getDeterminant :: (self: *PxMat33) -> float #foreign sys;
 
-PxMat33_transform :: (self: *physx_PxMat33, other: *Vector3) -> Vector3 #foreign physx_sys;
+PxMat33_transform :: (self: *PxMat33, other: *Vector3) -> Vector3 #foreign sys;
 
-PxMat33_transformTranspose :: (self: *physx_PxMat33, other: *Vector3) -> Vector3 #foreign physx_sys;
+PxMat33_transformTranspose :: (self: *PxMat33, other: *Vector3) -> Vector3 #foreign sys;
 
-PxMat33_front :: (self: *physx_PxMat33) -> *float #foreign physx_sys;
+PxMat33_front :: (self: *PxMat33) -> *float #foreign sys;
 
-PxBounds3_new :: () -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_new :: () -> PxBounds3 #foreign sys;
 
-PxBounds3_new_1 :: (minimum: *Vector3, maximum: *Vector3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_new :: (minimum: *Vector3, maximum: *Vector3) -> PxBounds3 #foreign sys "PxBounds3_new_1";
 
-PxBounds3_empty :: () -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_empty :: () -> PxBounds3 #foreign sys;
 
-PxBounds3_boundsOfPoints :: (v0: *Vector3, v1: *Vector3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_boundsOfPoints :: (v0: *Vector3, v1: *Vector3) -> PxBounds3 #foreign sys;
 
-PxBounds3_centerExtents :: (center: *Vector3, extent: *Vector3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_centerExtents :: (center: *Vector3, extent: *Vector3) -> PxBounds3 #foreign sys;
 
-PxBounds3_basisExtent :: (center: *Vector3, basis: *physx_PxMat33, extent: *Vector3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_basisExtent :: (center: *Vector3, basis: *PxMat33, extent: *Vector3) -> PxBounds3 #foreign sys;
 
-PxBounds3_poseExtent :: (pose: *physx_PxTransform, extent: *Vector3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_poseExtent :: (pose: *PxTransform, extent: *Vector3) -> PxBounds3 #foreign sys;
 
-PxBounds3_transformSafe :: (matrix: *physx_PxMat33, bounds: *physx_PxBounds3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_transformSafe :: (matrix: *PxMat33, bounds: *PxBounds3) -> PxBounds3 #foreign sys;
 
-PxBounds3_transformFast :: (matrix: *physx_PxMat33, bounds: *physx_PxBounds3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_transformFast :: (matrix: *PxMat33, bounds: *PxBounds3) -> PxBounds3 #foreign sys;
 
-PxBounds3_transformSafe_1 :: (transform: *physx_PxTransform, bounds: *physx_PxBounds3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_transformSafe :: (transform: *PxTransform, bounds: *PxBounds3) -> PxBounds3 #foreign sys "PxBounds3_transformSafe_1";
 
-PxBounds3_transformFast_1 :: (transform: *physx_PxTransform, bounds: *physx_PxBounds3) -> physx_PxBounds3 #foreign physx_sys;
+PxBounds3_transformFast :: (transform: *PxTransform, bounds: *PxBounds3) -> PxBounds3 #foreign sys "PxBounds3_transformFast_1";
 
-PxBounds3_setEmpty :: (self: *physx_PxBounds3) -> void #foreign physx_sys "PxBounds3_setEmpty_mut";
+PxBounds3_setEmpty :: (self: *PxBounds3) -> void #foreign sys "PxBounds3_setEmpty_mut";
 
-PxBounds3_setMaximal :: (self: *physx_PxBounds3) -> void #foreign physx_sys "PxBounds3_setMaximal_mut";
+PxBounds3_setMaximal :: (self: *PxBounds3) -> void #foreign sys "PxBounds3_setMaximal_mut";
 
-PxBounds3_include :: (self: *physx_PxBounds3, v: *Vector3) -> void #foreign physx_sys "PxBounds3_include_mut";
+PxBounds3_include :: (self: *PxBounds3, v: *Vector3) -> void #foreign sys "PxBounds3_include_mut";
 
-PxBounds3_include :: (self: *physx_PxBounds3, b: *physx_PxBounds3) -> void #foreign physx_sys "PxBounds3_include_mut_1";
+PxBounds3_include_mut :: (self: *PxBounds3, b: *PxBounds3) -> void #foreign sys "PxBounds3_include_mut_1";
 
-PxBounds3_isEmpty :: (self: *physx_PxBounds3) -> bool #foreign physx_sys;
+PxBounds3_isEmpty :: (self: *PxBounds3) -> bool #foreign sys;
 
-PxBounds3_intersects :: (self: *physx_PxBounds3, b: *physx_PxBounds3) -> bool #foreign physx_sys;
+PxBounds3_intersects :: (self: *PxBounds3, b: *PxBounds3) -> bool #foreign sys;
 
-PxBounds3_intersects1D :: (self: *physx_PxBounds3, a: *physx_PxBounds3, axis: u32) -> bool #foreign physx_sys;
+PxBounds3_intersects1D :: (self: *PxBounds3, a: *PxBounds3, axis: u32) -> bool #foreign sys;
 
-PxBounds3_contains :: (self: *physx_PxBounds3, v: *Vector3) -> bool #foreign physx_sys;
+PxBounds3_contains :: (self: *PxBounds3, v: *Vector3) -> bool #foreign sys;
 
-PxBounds3_isInside :: (self: *physx_PxBounds3, box: *physx_PxBounds3) -> bool #foreign physx_sys;
+PxBounds3_isInside :: (self: *PxBounds3, box: *PxBounds3) -> bool #foreign sys;
 
-PxBounds3_getCenter :: (self: *physx_PxBounds3) -> Vector3 #foreign physx_sys;
+PxBounds3_getCenter :: (self: *PxBounds3) -> Vector3 #foreign sys;
 
-PxBounds3_getCenter_1 :: (self: *physx_PxBounds3, axis: u32) -> float #foreign physx_sys;
+PxBounds3_getCenter :: (self: *PxBounds3, axis: u32) -> float #foreign sys "PxBounds3_getCenter_1";
 
-PxBounds3_getExtents :: (self: *physx_PxBounds3, axis: u32) -> float #foreign physx_sys;
+PxBounds3_getExtents :: (self: *PxBounds3, axis: u32) -> float #foreign sys;
 
-PxBounds3_getDimensions :: (self: *physx_PxBounds3) -> Vector3 #foreign physx_sys;
+PxBounds3_getDimensions :: (self: *PxBounds3) -> Vector3 #foreign sys;
 
-PxBounds3_getExtents_1 :: (self: *physx_PxBounds3) -> Vector3 #foreign physx_sys;
+PxBounds3_getExtents :: (self: *PxBounds3) -> Vector3 #foreign sys "PxBounds3_getExtents_1";
 
-PxBounds3_scaleSafe :: (self: *physx_PxBounds3, scale: float) -> void #foreign physx_sys "PxBounds3_scaleSafe_mut";
+PxBounds3_scaleSafe :: (self: *PxBounds3, scale: float) -> void #foreign sys "PxBounds3_scaleSafe_mut";
 
-PxBounds3_scaleFast :: (self: *physx_PxBounds3, scale: float) -> void #foreign physx_sys "PxBounds3_scaleFast_mut";
+PxBounds3_scaleFast :: (self: *PxBounds3, scale: float) -> void #foreign sys "PxBounds3_scaleFast_mut";
 
-PxBounds3_fattenSafe :: (self: *physx_PxBounds3, distance: float) -> void #foreign physx_sys "PxBounds3_fattenSafe_mut";
+PxBounds3_fattenSafe :: (self: *PxBounds3, distance: float) -> void #foreign sys "PxBounds3_fattenSafe_mut";
 
-PxBounds3_fattenFast :: (self: *physx_PxBounds3, distance: float) -> void #foreign physx_sys "PxBounds3_fattenFast_mut";
+PxBounds3_fattenFast :: (self: *PxBounds3, distance: float) -> void #foreign sys "PxBounds3_fattenFast_mut";
 
-PxBounds3_isFinite :: (self: *physx_PxBounds3) -> bool #foreign physx_sys;
+PxBounds3_isFinite :: (self: *PxBounds3) -> bool #foreign sys;
 
-PxBounds3_isValid :: (self: *physx_PxBounds3) -> bool #foreign physx_sys;
+PxBounds3_isValid :: (self: *PxBounds3) -> bool #foreign sys;
 
-PxBounds3_closestPoint :: (self: *physx_PxBounds3, p: *Vector3) -> Vector3 #foreign physx_sys;
+PxBounds3_closestPoint :: (self: *PxBounds3, p: *Vector3) -> Vector3 #foreign sys;
 
-PxErrorCallback_delete :: (self: *physx_PxErrorCallback) -> void #foreign physx_sys;
+PxErrorCallback_delete :: (self: *PxErrorCallback) -> void #foreign sys;
 
-PxErrorCallback_reportError :: (self: *physx_PxErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign physx_sys "PxErrorCallback_reportError_mut";
+PxErrorCallback_reportError :: (self: *PxErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign sys "PxErrorCallback_reportError_mut";
 
-PxAllocationListener_onAllocation :: (self: *physx_PxAllocationListener, size: u64, typeName: *u8, filename: *u8, line: s32, allocatedMemory: *void) -> void #foreign physx_sys "PxAllocationListener_onAllocation_mut";
+PxAllocationListener_onAllocation :: (self: *PxAllocationListener, size: u64, typeName: *u8, filename: *u8, line: s32, allocatedMemory: *void) -> void #foreign sys "PxAllocationListener_onAllocation_mut";
 
-PxAllocationListener_onDeallocation :: (self: *physx_PxAllocationListener, allocatedMemory: *void) -> void #foreign physx_sys "PxAllocationListener_onDeallocation_mut";
+PxAllocationListener_onDeallocation :: (self: *PxAllocationListener, allocatedMemory: *void) -> void #foreign sys "PxAllocationListener_onDeallocation_mut";
 
-PxBroadcastingAllocator_new_alloc :: (allocator: *physx_PxAllocatorCallback, error: *physx_PxErrorCallback) -> *physx_PxBroadcastingAllocator #foreign physx_sys;
+PxBroadcastingAllocator_new_alloc :: (allocator: *PxAllocatorCallback, error: *PxErrorCallback) -> *PxBroadcastingAllocator #foreign sys;
 
-PxBroadcastingAllocator_delete :: (self: *physx_PxBroadcastingAllocator) -> void #foreign physx_sys;
+PxBroadcastingAllocator_delete :: (self: *PxBroadcastingAllocator) -> void #foreign sys;
 
-PxBroadcastingAllocator_allocate :: (self: *physx_PxBroadcastingAllocator, size: u64, typeName: *u8, filename: *u8, line: s32) -> *void #foreign physx_sys "PxBroadcastingAllocator_allocate_mut";
+PxBroadcastingAllocator_allocate :: (self: *PxBroadcastingAllocator, size: u64, typeName: *u8, filename: *u8, line: s32) -> *void #foreign sys "PxBroadcastingAllocator_allocate_mut";
 
-PxBroadcastingAllocator_deallocate :: (self: *physx_PxBroadcastingAllocator, ptr: *void) -> void #foreign physx_sys "PxBroadcastingAllocator_deallocate_mut";
+PxBroadcastingAllocator_deallocate :: (self: *PxBroadcastingAllocator, ptr: *void) -> void #foreign sys "PxBroadcastingAllocator_deallocate_mut";
 
-PxBroadcastingErrorCallback_new_alloc :: (errorCallback: *physx_PxErrorCallback) -> *physx_PxBroadcastingErrorCallback #foreign physx_sys;
+PxBroadcastingErrorCallback_new_alloc :: (errorCallback: *PxErrorCallback) -> *PxBroadcastingErrorCallback #foreign sys;
 
-PxBroadcastingErrorCallback_delete :: (self: *physx_PxBroadcastingErrorCallback) -> void #foreign physx_sys;
+PxBroadcastingErrorCallback_delete :: (self: *PxBroadcastingErrorCallback) -> void #foreign sys;
 
-PxBroadcastingErrorCallback_reportError :: (self: *physx_PxBroadcastingErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign physx_sys "PxBroadcastingErrorCallback_reportError_mut";
+PxBroadcastingErrorCallback_reportError :: (self: *PxBroadcastingErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign sys "PxBroadcastingErrorCallback_reportError_mut";
 
-phys_PxEnableFPExceptions :: () -> void #foreign physx_sys;
+PxEnableFPExceptions :: () -> void #foreign sys "phys_PxEnableFPExceptions";
 
-phys_PxDisableFPExceptions :: () -> void #foreign physx_sys;
+PxDisableFPExceptions :: () -> void #foreign sys "phys_PxDisableFPExceptions";
 
-PxInputStream_read :: (self: *physx_PxInputStream, dest: *void, count: u32) -> u32 #foreign physx_sys "PxInputStream_read_mut";
+PxInputStream_read :: (self: *PxInputStream, dest: *void, count: u32) -> u32 #foreign sys "PxInputStream_read_mut";
 
-PxInputStream_delete :: (self: *physx_PxInputStream) -> void #foreign physx_sys;
+PxInputStream_delete :: (self: *PxInputStream) -> void #foreign sys;
 
-PxInputData_getLength :: (self: *physx_PxInputData) -> u32 #foreign physx_sys;
+PxInputData_getLength :: (self: *PxInputData) -> u32 #foreign sys;
 
-PxInputData_seek :: (self: *physx_PxInputData, offset: u32) -> void #foreign physx_sys "PxInputData_seek_mut";
+PxInputData_seek :: (self: *PxInputData, offset: u32) -> void #foreign sys "PxInputData_seek_mut";
 
-PxInputData_tell :: (self: *physx_PxInputData) -> u32 #foreign physx_sys;
+PxInputData_tell :: (self: *PxInputData) -> u32 #foreign sys;
 
-PxInputData_delete :: (self: *physx_PxInputData) -> void #foreign physx_sys;
+PxInputData_delete :: (self: *PxInputData) -> void #foreign sys;
 
-PxOutputStream_write :: (self: *physx_PxOutputStream, src: *void, count: u32) -> u32 #foreign physx_sys "PxOutputStream_write_mut";
+PxOutputStream_write :: (self: *PxOutputStream, src: *void, count: u32) -> u32 #foreign sys "PxOutputStream_write_mut";
 
-PxOutputStream_delete :: (self: *physx_PxOutputStream) -> void #foreign physx_sys;
+PxOutputStream_delete :: (self: *PxOutputStream) -> void #foreign sys;
 
-PxVec4_new :: () -> Vector4 #foreign physx_sys;
+PxVec4_new :: () -> Vector4 #foreign sys;
 
-PxVec4_new_1 :: (anon_param0: s32) -> Vector4 #foreign physx_sys;
+PxVec4_new :: (anon_param0: s32) -> Vector4 #foreign sys "PxVec4_new_1";
 
-PxVec4_new_2 :: (a: float) -> Vector4 #foreign physx_sys;
+PxVec4_new :: (a: float) -> Vector4 #foreign sys "PxVec4_new_2";
 
-PxVec4_new_3 :: (nx: float, ny: float, nz: float, nw: float) -> Vector4 #foreign physx_sys;
+PxVec4_new :: (nx: float, ny: float, nz: float, nw: float) -> Vector4 #foreign sys "PxVec4_new_3";
 
-PxVec4_new_4 :: (v: *Vector3, nw: float) -> Vector4 #foreign physx_sys;
+PxVec4_new :: (v: *Vector3, nw: float) -> Vector4 #foreign sys "PxVec4_new_4";
 
-PxVec4_new_5 :: (v: *float) -> Vector4 #foreign physx_sys;
+PxVec4_new :: (v: *float) -> Vector4 #foreign sys "PxVec4_new_5";
 
-PxVec4_isZero :: (self: *Vector4) -> bool #foreign physx_sys;
+PxVec4_isZero :: (self: *Vector4) -> bool #foreign sys;
 
-PxVec4_isFinite :: (self: *Vector4) -> bool #foreign physx_sys;
+PxVec4_isFinite :: (self: *Vector4) -> bool #foreign sys;
 
-PxVec4_isNormalized :: (self: *Vector4) -> bool #foreign physx_sys;
+PxVec4_isNormalized :: (self: *Vector4) -> bool #foreign sys;
 
-PxVec4_magnitudeSquared :: (self: *Vector4) -> float #foreign physx_sys;
+PxVec4_magnitudeSquared :: (self: *Vector4) -> float #foreign sys;
 
-PxVec4_magnitude :: (self: *Vector4) -> float #foreign physx_sys;
+PxVec4_magnitude :: (self: *Vector4) -> float #foreign sys;
 
-PxVec4_dot :: (self: *Vector4, v: *Vector4) -> float #foreign physx_sys;
+PxVec4_dot :: (self: *Vector4, v: *Vector4) -> float #foreign sys;
 
-PxVec4_getNormalized :: (self: *Vector4) -> Vector4 #foreign physx_sys;
+PxVec4_getNormalized :: (self: *Vector4) -> Vector4 #foreign sys;
 
-PxVec4_normalize :: (self: *Vector4) -> float #foreign physx_sys "PxVec4_normalize_mut";
+PxVec4_normalize :: (self: *Vector4) -> float #foreign sys "PxVec4_normalize_mut";
 
-PxVec4_multiply :: (self: *Vector4, a: *Vector4) -> Vector4 #foreign physx_sys;
+PxVec4_multiply :: (self: *Vector4, a: *Vector4) -> Vector4 #foreign sys;
 
-PxVec4_minimum :: (self: *Vector4, v: *Vector4) -> Vector4 #foreign physx_sys;
+PxVec4_minimum :: (self: *Vector4, v: *Vector4) -> Vector4 #foreign sys;
 
-PxVec4_maximum :: (self: *Vector4, v: *Vector4) -> Vector4 #foreign physx_sys;
+PxVec4_maximum :: (self: *Vector4, v: *Vector4) -> Vector4 #foreign sys;
 
-PxVec4_getXYZ :: (self: *Vector4) -> Vector3 #foreign physx_sys;
+PxVec4_getXYZ :: (self: *Vector4) -> Vector3 #foreign sys;
 
-PxMat44_new :: () -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: () -> PxMat44 #foreign sys;
 
-PxMat44_new_1 :: (anon_param0: s32) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (col0: *Vector4, col1: *Vector4, col2: *Vector4, col3: *Vector4) -> PxMat44 #foreign sys "PxMat44_new_3";
 
-PxMat44_new_2 :: (anon_param0: s32) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (r: float) -> PxMat44 #foreign sys "PxMat44_new_4";
 
-PxMat44_new_3 :: (col0: *Vector4, col1: *Vector4, col2: *Vector4, col3: *Vector4) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (col0: *Vector3, col1: *Vector3, col2: *Vector3, col3: *Vector3) -> PxMat44 #foreign sys "PxMat44_new_5";
 
-PxMat44_new_4 :: (r: float) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (values: *float) -> PxMat44 #foreign sys "PxMat44_new_6";
 
-PxMat44_new_5 :: (col0: *Vector3, col1: *Vector3, col2: *Vector3, col3: *Vector3) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (q: *Quaternion) -> PxMat44 #foreign sys "PxMat44_new_7";
 
-PxMat44_new_6 :: (values: *float) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (diagonal: *Vector4) -> PxMat44 #foreign sys "PxMat44_new_8";
 
-PxMat44_new_7 :: (q: *Quaternion) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (axes: *PxMat33, position: *Vector3) -> PxMat44 #foreign sys "PxMat44_new_9";
 
-PxMat44_new_8 :: (diagonal: *Vector4) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_new :: (t: *PxTransform) -> PxMat44 #foreign sys "PxMat44_new_10";
 
-PxMat44_new_9 :: (axes: *physx_PxMat33, position: *Vector3) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_getTranspose :: (self: *PxMat44) -> PxMat44 #foreign sys;
 
-PxMat44_new_10 :: (t: *physx_PxTransform) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_transform :: (self: *PxMat44, other: *Vector4) -> Vector4 #foreign sys;
 
-PxMat44_getTranspose :: (self: *physx_PxMat44) -> physx_PxMat44 #foreign physx_sys;
+PxMat44_transform :: (self: *PxMat44, other: *Vector3) -> Vector3 #foreign sys "PxMat44_transform_1";
 
-PxMat44_transform :: (self: *physx_PxMat44, other: *Vector4) -> Vector4 #foreign physx_sys;
+PxMat44_rotate :: (self: *PxMat44, other: *Vector4) -> Vector4 #foreign sys;
 
-PxMat44_transform_1 :: (self: *physx_PxMat44, other: *Vector3) -> Vector3 #foreign physx_sys;
+PxMat44_rotate :: (self: *PxMat44, other: *Vector3) -> Vector3 #foreign sys "PxMat44_rotate_1";
 
-PxMat44_rotate :: (self: *physx_PxMat44, other: *Vector4) -> Vector4 #foreign physx_sys;
+PxMat44_getBasis :: (self: *PxMat44, num: u32) -> Vector3 #foreign sys;
 
-PxMat44_rotate_1 :: (self: *physx_PxMat44, other: *Vector3) -> Vector3 #foreign physx_sys;
+PxMat44_getPosition :: (self: *PxMat44) -> Vector3 #foreign sys;
 
-PxMat44_getBasis :: (self: *physx_PxMat44, num: u32) -> Vector3 #foreign physx_sys;
+PxMat44_setPosition :: (self: *PxMat44, position: *Vector3) -> void #foreign sys "PxMat44_setPosition_mut";
 
-PxMat44_getPosition :: (self: *physx_PxMat44) -> Vector3 #foreign physx_sys;
+PxMat44_front :: (self: *PxMat44) -> *float #foreign sys;
 
-PxMat44_setPosition :: (self: *physx_PxMat44, position: *Vector3) -> void #foreign physx_sys "PxMat44_setPosition_mut";
+PxMat44_scale :: (self: *PxMat44, p: *Vector4) -> void #foreign sys "PxMat44_scale_mut";
 
-PxMat44_front :: (self: *physx_PxMat44) -> *float #foreign physx_sys;
+PxMat44_inverseRT :: (self: *PxMat44) -> PxMat44 #foreign sys;
 
-PxMat44_scale :: (self: *physx_PxMat44, p: *Vector4) -> void #foreign physx_sys "PxMat44_scale_mut";
+PxMat44_isFinite :: (self: *PxMat44) -> bool #foreign sys;
 
-PxMat44_inverseRT :: (self: *physx_PxMat44) -> physx_PxMat44 #foreign physx_sys;
+PxPlane_new :: () -> Plane3 #foreign sys;
 
-PxMat44_isFinite :: (self: *physx_PxMat44) -> bool #foreign physx_sys;
+PxPlane_new :: (nx: float, ny: float, nz: float, distance: float) -> Plane3 #foreign sys "PxPlane_new_1";
 
-PxPlane_new :: () -> Plane3 #foreign physx_sys;
+PxPlane_new :: (normal: *Vector3, distance: float) -> Plane3 #foreign sys "PxPlane_new_2";
 
-PxPlane_new_1 :: (nx: float, ny: float, nz: float, distance: float) -> Plane3 #foreign physx_sys;
+PxPlane_new :: (point: *Vector3, normal: *Vector3) -> Plane3 #foreign sys "PxPlane_new_3";
 
-PxPlane_new_2 :: (normal: *Vector3, distance: float) -> Plane3 #foreign physx_sys;
+PxPlane_new :: (p0: *Vector3, p1: *Vector3, p2: *Vector3) -> Plane3 #foreign sys "PxPlane_new_4";
 
-PxPlane_new_3 :: (point: *Vector3, normal: *Vector3) -> Plane3 #foreign physx_sys;
+PxPlane_distance :: (self: *Plane3, p: *Vector3) -> float #foreign sys;
 
-PxPlane_new_4 :: (p0: *Vector3, p1: *Vector3, p2: *Vector3) -> Plane3 #foreign physx_sys;
+PxPlane_contains :: (self: *Plane3, p: *Vector3) -> bool #foreign sys;
 
-PxPlane_distance :: (self: *Plane3, p: *Vector3) -> float #foreign physx_sys;
+PxPlane_project :: (self: *Plane3, p: *Vector3) -> Vector3 #foreign sys;
 
-PxPlane_contains :: (self: *Plane3, p: *Vector3) -> bool #foreign physx_sys;
+PxPlane_pointInPlane :: (self: *Plane3) -> Vector3 #foreign sys;
 
-PxPlane_project :: (self: *Plane3, p: *Vector3) -> Vector3 #foreign physx_sys;
+PxPlane_normalize :: (self: *Plane3) -> void #foreign sys "PxPlane_normalize_mut";
 
-PxPlane_pointInPlane :: (self: *Plane3) -> Vector3 #foreign physx_sys;
+PxPlane_transform :: (self: *Plane3, pose: *PxTransform) -> Plane3 #foreign sys;
 
-PxPlane_normalize :: (self: *Plane3) -> void #foreign physx_sys "PxPlane_normalize_mut";
+PxPlane_inverseTransform :: (self: *Plane3, pose: *PxTransform) -> Plane3 #foreign sys;
 
-PxPlane_transform :: (self: *Plane3, pose: *physx_PxTransform) -> Plane3 #foreign physx_sys;
+PxShortestRotation :: (from: *Vector3, target: *Vector3) -> Quaternion #foreign sys "phys_PxShortestRotation";
 
-PxPlane_inverseTransform :: (self: *Plane3, pose: *physx_PxTransform) -> Plane3 #foreign physx_sys;
+PxDiagonalize :: (m: *PxMat33, axes: *Quaternion) -> Vector3 #foreign sys "phys_PxDiagonalize";
 
-phys_PxShortestRotation :: (from: *Vector3, target: *Vector3) -> Quaternion #foreign physx_sys;
+PxTransformFromSegment :: (p0: *Vector3, p1: *Vector3, halfHeight: *float) -> PxTransform #foreign sys "phys_PxTransformFromSegment";
 
-phys_PxDiagonalize :: (m: *physx_PxMat33, axes: *Quaternion) -> Vector3 #foreign physx_sys;
+PxTransformFromPlaneEquation :: (plane: *Plane3) -> PxTransform #foreign sys "phys_PxTransformFromPlaneEquation";
 
-phys_PxTransformFromSegment :: (p0: *Vector3, p1: *Vector3, halfHeight: *float) -> physx_PxTransform #foreign physx_sys;
+PxPlaneEquationFromTransform :: (pose: *PxTransform) -> Plane3 #foreign sys "phys_PxPlaneEquationFromTransform";
 
-phys_PxTransformFromPlaneEquation :: (plane: *Plane3) -> physx_PxTransform #foreign physx_sys;
+PxSlerp :: (t: float, left: *Quaternion, right: *Quaternion) -> Quaternion #foreign sys "phys_PxSlerp";
 
-phys_PxPlaneEquationFromTransform :: (pose: *physx_PxTransform) -> Plane3 #foreign physx_sys;
+PxIntegrateTransform :: (curTrans: *PxTransform, linvel: *Vector3, angvel: *Vector3, timeStep: float, result: *PxTransform) -> void #foreign sys "phys_PxIntegrateTransform";
 
-phys_PxSlerp :: (t: float, left: *Quaternion, right: *Quaternion) -> Quaternion #foreign physx_sys;
+PxExp :: (v: *Vector3) -> Quaternion #foreign sys "phys_PxExp";
 
-phys_PxIntegrateTransform :: (curTrans: *physx_PxTransform, linvel: *Vector3, angvel: *Vector3, timeStep: float, result: *physx_PxTransform) -> void #foreign physx_sys;
+PxOptimizeBoundingBox :: (basis: *PxMat33) -> Vector3 #foreign sys "phys_PxOptimizeBoundingBox";
 
-phys_PxExp :: (v: *Vector3) -> Quaternion #foreign physx_sys;
+PxLog :: (q: *Quaternion) -> Vector3 #foreign sys "phys_PxLog";
 
-phys_PxOptimizeBoundingBox :: (basis: *physx_PxMat33) -> Vector3 #foreign physx_sys;
+PxLargestAxis :: (v: *Vector3) -> u32 #foreign sys "phys_PxLargestAxis";
 
-phys_PxLog :: (q: *Quaternion) -> Vector3 #foreign physx_sys;
+PxTanHalf :: (sin: float, cos: float) -> float #foreign sys "phys_PxTanHalf";
 
-phys_PxLargestAxis :: (v: *Vector3) -> u32 #foreign physx_sys;
+PxEllipseClamp :: (point: *Vector3, radii: *Vector3) -> Vector3 #foreign sys "phys_PxEllipseClamp";
 
-phys_PxTanHalf :: (sin: float, cos: float) -> float #foreign physx_sys;
+PxSeparateSwingTwist :: (q: *Quaternion, swing: *Quaternion, twist: *Quaternion) -> void #foreign sys "phys_PxSeparateSwingTwist";
 
-phys_PxEllipseClamp :: (point: *Vector3, radii: *Vector3) -> Vector3 #foreign physx_sys;
+PxComputeAngle :: (v0: *Vector3, v1: *Vector3) -> float #foreign sys "phys_PxComputeAngle";
 
-phys_PxSeparateSwingTwist :: (q: *Quaternion, swing: *Quaternion, twist: *Quaternion) -> void #foreign physx_sys;
+PxComputeBasisVectors :: (dir: *Vector3, right: *Vector3, up: *Vector3) -> void #foreign sys "phys_PxComputeBasisVectors";
 
-phys_PxComputeAngle :: (v0: *Vector3, v1: *Vector3) -> float #foreign physx_sys;
+PxComputeBasisVectors_1 :: (p0: *Vector3, p1: *Vector3, dir: *Vector3, right: *Vector3, up: *Vector3) -> void #foreign sys "phys_PxComputeBasisVectors_1";
 
-phys_PxComputeBasisVectors :: (dir: *Vector3, right: *Vector3, up: *Vector3) -> void #foreign physx_sys;
+PxGetNextIndex3 :: (i: u32) -> u32 #foreign sys "phys_PxGetNextIndex3";
 
-phys_PxComputeBasisVectors_1 :: (p0: *Vector3, p1: *Vector3, dir: *Vector3, right: *Vector3, up: *Vector3) -> void #foreign physx_sys;
+computeBarycentric :: (a: *Vector3, b: *Vector3, c: *Vector3, d: *Vector3, p: *Vector3, bary: *Vector4) -> void #foreign sys "phys_computeBarycentric";
 
-phys_PxGetNextIndex3 :: (i: u32) -> u32 #foreign physx_sys;
+computeBarycentric_1 :: (a: *Vector3, b: *Vector3, c: *Vector3, p: *Vector3, bary: *Vector4) -> void #foreign sys "phys_computeBarycentric_1";
 
-phys_computeBarycentric :: (a: *Vector3, b: *Vector3, c: *Vector3, d: *Vector3, p: *Vector3, bary: *Vector4) -> void #foreign physx_sys;
+Interpolation_PxLerp :: (a: float, b: float, t: float) -> float #foreign sys;
 
-phys_computeBarycentric_1 :: (a: *Vector3, b: *Vector3, c: *Vector3, p: *Vector3, bary: *Vector4) -> void #foreign physx_sys;
+Interpolation_PxBiLerp :: (f00: float, f10: float, f01: float, f11: float, tx: float, ty: float) -> float #foreign sys;
 
-Interpolation_PxLerp :: (a: float, b: float, t: float) -> float #foreign physx_sys;
+Interpolation_PxTriLerp :: (f000: float, f100: float, f010: float, f110: float, f001: float, f101: float, f011: float, f111: float, tx: float, ty: float, tz: float) -> float #foreign sys;
 
-Interpolation_PxBiLerp :: (f00: float, f10: float, f01: float, f11: float, tx: float, ty: float) -> float #foreign physx_sys;
+Interpolation_PxSDFIdx :: (i: u32, j: u32, k: u32, nbX: u32, nbY: u32) -> u32 #foreign sys;
 
-Interpolation_PxTriLerp :: (f000: float, f100: float, f010: float, f110: float, f001: float, f101: float, f011: float, f111: float, tx: float, ty: float, tz: float) -> float #foreign physx_sys;
+Interpolation_PxSDFSampleImpl :: (sdf: *float, localPos: *Vector3, sdfBoxLower: *Vector3, sdfBoxHigher: *Vector3, sdfDx: float, invSdfDx: float, dimX: u32, dimY: u32, dimZ: u32, tolerance: float) -> float #foreign sys;
 
-Interpolation_PxSDFIdx :: (i: u32, j: u32, k: u32, nbX: u32, nbY: u32) -> u32 #foreign physx_sys;
+PxSdfSample :: (sdf: *float, localPos: *Vector3, sdfBoxLower: *Vector3, sdfBoxHigher: *Vector3, sdfDx: float, invSdfDx: float, dimX: u32, dimY: u32, dimZ: u32, gradient: *Vector3, tolerance: float) -> float #foreign sys "phys_PxSdfSample";
 
-Interpolation_PxSDFSampleImpl :: (sdf: *float, localPos: *Vector3, sdfBoxLower: *Vector3, sdfBoxHigher: *Vector3, sdfDx: float, invSdfDx: float, dimX: u32, dimY: u32, dimZ: u32, tolerance: float) -> float #foreign physx_sys;
+PxMutexImpl_new_alloc :: () -> *PxMutexImpl #foreign sys;
 
-phys_PxSdfSample :: (sdf: *float, localPos: *Vector3, sdfBoxLower: *Vector3, sdfBoxHigher: *Vector3, sdfDx: float, invSdfDx: float, dimX: u32, dimY: u32, dimZ: u32, gradient: *Vector3, tolerance: float) -> float #foreign physx_sys;
+PxMutexImpl_delete :: (self: *PxMutexImpl) -> void #foreign sys;
 
-PxMutexImpl_new_alloc :: () -> *physx_PxMutexImpl #foreign physx_sys;
+PxMutexImpl_lock :: (self: *PxMutexImpl) -> void #foreign sys "PxMutexImpl_lock_mut";
 
-PxMutexImpl_delete :: (self: *physx_PxMutexImpl) -> void #foreign physx_sys;
+PxMutexImpl_trylock :: (self: *PxMutexImpl) -> bool #foreign sys "PxMutexImpl_trylock_mut";
 
-PxMutexImpl_lock :: (self: *physx_PxMutexImpl) -> void #foreign physx_sys "PxMutexImpl_lock_mut";
+PxMutexImpl_unlock :: (self: *PxMutexImpl) -> void #foreign sys "PxMutexImpl_unlock_mut";
 
-PxMutexImpl_trylock :: (self: *physx_PxMutexImpl) -> bool #foreign physx_sys "PxMutexImpl_trylock_mut";
+PxMutexImpl_getSize :: () -> u32 #foreign sys;
 
-PxMutexImpl_unlock :: (self: *physx_PxMutexImpl) -> void #foreign physx_sys "PxMutexImpl_unlock_mut";
+PxReadWriteLock_new_alloc :: () -> *PxReadWriteLock #foreign sys;
 
-PxMutexImpl_getSize :: () -> u32 #foreign physx_sys;
+PxReadWriteLock_delete :: (self: *PxReadWriteLock) -> void #foreign sys;
 
-PxReadWriteLock_new_alloc :: () -> *physx_PxReadWriteLock #foreign physx_sys;
+PxReadWriteLock_lockReader :: (self: *PxReadWriteLock, takeLock: bool) -> void #foreign sys "PxReadWriteLock_lockReader_mut";
 
-PxReadWriteLock_delete :: (self: *physx_PxReadWriteLock) -> void #foreign physx_sys;
+PxReadWriteLock_lockWriter :: (self: *PxReadWriteLock) -> void #foreign sys "PxReadWriteLock_lockWriter_mut";
 
-PxReadWriteLock_lockReader :: (self: *physx_PxReadWriteLock, takeLock: bool) -> void #foreign physx_sys "PxReadWriteLock_lockReader_mut";
+PxReadWriteLock_unlockReader :: (self: *PxReadWriteLock) -> void #foreign sys "PxReadWriteLock_unlockReader_mut";
 
-PxReadWriteLock_lockWriter :: (self: *physx_PxReadWriteLock) -> void #foreign physx_sys "PxReadWriteLock_lockWriter_mut";
+PxReadWriteLock_unlockWriter :: (self: *PxReadWriteLock) -> void #foreign sys "PxReadWriteLock_unlockWriter_mut";
 
-PxReadWriteLock_unlockReader :: (self: *physx_PxReadWriteLock) -> void #foreign physx_sys "PxReadWriteLock_unlockReader_mut";
+PxProfilerCallback_zoneStart :: (self: *PxProfilerCallback, eventName: *u8, detached: bool, contextId: u64) -> *void #foreign sys "PxProfilerCallback_zoneStart_mut";
 
-PxReadWriteLock_unlockWriter :: (self: *physx_PxReadWriteLock) -> void #foreign physx_sys "PxReadWriteLock_unlockWriter_mut";
+PxProfilerCallback_zoneEnd :: (self: *PxProfilerCallback, profilerData: *void, eventName: *u8, detached: bool, contextId: u64) -> void #foreign sys "PxProfilerCallback_zoneEnd_mut";
 
-PxProfilerCallback_zoneStart :: (self: *physx_PxProfilerCallback, eventName: *u8, detached: bool, contextId: u64) -> *void #foreign physx_sys "PxProfilerCallback_zoneStart_mut";
+PxProfileScoped_new_alloc :: (callback: *PxProfilerCallback, eventName: *u8, detached: bool, contextId: u64) -> *PxProfileScoped #foreign sys;
 
-PxProfilerCallback_zoneEnd :: (self: *physx_PxProfilerCallback, profilerData: *void, eventName: *u8, detached: bool, contextId: u64) -> void #foreign physx_sys "PxProfilerCallback_zoneEnd_mut";
+PxProfileScoped_delete :: (self: *PxProfileScoped) -> void #foreign sys;
 
-PxProfileScoped_new_alloc :: (callback: *physx_PxProfilerCallback, eventName: *u8, detached: bool, contextId: u64) -> *physx_PxProfileScoped #foreign physx_sys;
+PxSListEntry_new :: () -> PxSListEntry #foreign sys;
 
-PxProfileScoped_delete :: (self: *physx_PxProfileScoped) -> void #foreign physx_sys;
+PxSListEntry_next :: (self: *PxSListEntry) -> *PxSListEntry #foreign sys "PxSListEntry_next_mut";
 
-PxSListEntry_new :: () -> physx_PxSListEntry #foreign physx_sys;
+PxSListImpl_new_alloc :: () -> *PxSListImpl #foreign sys;
 
-PxSListEntry_next :: (self: *physx_PxSListEntry) -> *physx_PxSListEntry #foreign physx_sys "PxSListEntry_next_mut";
+PxSListImpl_delete :: (self: *PxSListImpl) -> void #foreign sys;
 
-PxSListImpl_new_alloc :: () -> *physx_PxSListImpl #foreign physx_sys;
+PxSListImpl_push :: (self: *PxSListImpl, entry: *PxSListEntry) -> void #foreign sys "PxSListImpl_push_mut";
 
-PxSListImpl_delete :: (self: *physx_PxSListImpl) -> void #foreign physx_sys;
+PxSListImpl_pop :: (self: *PxSListImpl) -> *PxSListEntry #foreign sys "PxSListImpl_pop_mut";
 
-PxSListImpl_push :: (self: *physx_PxSListImpl, entry: *physx_PxSListEntry) -> void #foreign physx_sys "PxSListImpl_push_mut";
+PxSListImpl_flush :: (self: *PxSListImpl) -> *PxSListEntry #foreign sys "PxSListImpl_flush_mut";
 
-PxSListImpl_pop :: (self: *physx_PxSListImpl) -> *physx_PxSListEntry #foreign physx_sys "PxSListImpl_pop_mut";
+PxSListImpl_getSize :: () -> u32 #foreign sys;
 
-PxSListImpl_flush :: (self: *physx_PxSListImpl) -> *physx_PxSListEntry #foreign physx_sys "PxSListImpl_flush_mut";
+PxSyncImpl_new_alloc :: () -> *PxSyncImpl #foreign sys;
 
-PxSListImpl_getSize :: () -> u32 #foreign physx_sys;
+PxSyncImpl_delete :: (self: *PxSyncImpl) -> void #foreign sys;
 
-PxSyncImpl_new_alloc :: () -> *physx_PxSyncImpl #foreign physx_sys;
+PxSyncImpl_wait :: (self: *PxSyncImpl, milliseconds: u32) -> bool #foreign sys "PxSyncImpl_wait_mut";
 
-PxSyncImpl_delete :: (self: *physx_PxSyncImpl) -> void #foreign physx_sys;
+PxSyncImpl_set :: (self: *PxSyncImpl) -> void #foreign sys "PxSyncImpl_set_mut";
 
-PxSyncImpl_wait :: (self: *physx_PxSyncImpl, milliseconds: u32) -> bool #foreign physx_sys "PxSyncImpl_wait_mut";
+PxSyncImpl_reset :: (self: *PxSyncImpl) -> void #foreign sys "PxSyncImpl_reset_mut";
 
-PxSyncImpl_set :: (self: *physx_PxSyncImpl) -> void #foreign physx_sys "PxSyncImpl_set_mut";
+PxSyncImpl_getSize :: () -> u32 #foreign sys;
 
-PxSyncImpl_reset :: (self: *physx_PxSyncImpl) -> void #foreign physx_sys "PxSyncImpl_reset_mut";
+PxRunnable_new_alloc :: () -> *PxRunnable #foreign sys;
 
-PxSyncImpl_getSize :: () -> u32 #foreign physx_sys;
+PxRunnable_delete :: (self: *PxRunnable) -> void #foreign sys;
 
-PxRunnable_new_alloc :: () -> *physx_PxRunnable #foreign physx_sys;
+PxRunnable_execute :: (self: *PxRunnable) -> void #foreign sys "PxRunnable_execute_mut";
 
-PxRunnable_delete :: (self: *physx_PxRunnable) -> void #foreign physx_sys;
+PxTlsAlloc :: () -> u32 #foreign sys "phys_PxTlsAlloc";
 
-PxRunnable_execute :: (self: *physx_PxRunnable) -> void #foreign physx_sys "PxRunnable_execute_mut";
+PxTlsFree :: (index: u32) -> void #foreign sys "phys_PxTlsFree";
 
-phys_PxTlsAlloc :: () -> u32 #foreign physx_sys;
+PxTlsGet :: (index: u32) -> *void #foreign sys "phys_PxTlsGet";
 
-phys_PxTlsFree :: (index: u32) -> void #foreign physx_sys;
+PxTlsGetValue :: (index: u32) -> u64 #foreign sys "phys_PxTlsGetValue";
 
-phys_PxTlsGet :: (index: u32) -> *void #foreign physx_sys;
+PxTlsSet :: (index: u32, value: *void) -> u32 #foreign sys "phys_PxTlsSet";
 
-phys_PxTlsGetValue :: (index: u32) -> u64 #foreign physx_sys;
+PxTlsSetValue :: (index: u32, value: u64) -> u32 #foreign sys "phys_PxTlsSetValue";
 
-phys_PxTlsSet :: (index: u32, value: *void) -> u32 #foreign physx_sys;
+PxCounterFrequencyToTensOfNanos_new :: (inNum: u64, inDenom: u64) -> PxCounterFrequencyToTensOfNanos #foreign sys;
 
-phys_PxTlsSetValue :: (index: u32, value: u64) -> u32 #foreign physx_sys;
+PxCounterFrequencyToTensOfNanos_toTensOfNanos :: (self: *PxCounterFrequencyToTensOfNanos, inCounter: u64) -> u64 #foreign sys;
 
-PxCounterFrequencyToTensOfNanos_new :: (inNum: u64, inDenom: u64) -> physx_PxCounterFrequencyToTensOfNanos #foreign physx_sys;
+PxTime_getBootCounterFrequency :: () -> *PxCounterFrequencyToTensOfNanos #foreign sys;
 
-PxCounterFrequencyToTensOfNanos_toTensOfNanos :: (self: *physx_PxCounterFrequencyToTensOfNanos, inCounter: u64) -> u64 #foreign physx_sys;
+PxTime_getCounterFrequency :: () -> PxCounterFrequencyToTensOfNanos #foreign sys;
 
-PxTime_getBootCounterFrequency :: () -> *physx_PxCounterFrequencyToTensOfNanos #foreign physx_sys;
+PxTime_getCurrentCounterValue :: () -> u64 #foreign sys;
 
-PxTime_getCounterFrequency :: () -> physx_PxCounterFrequencyToTensOfNanos #foreign physx_sys;
+PxTime_getCurrentTimeInTensOfNanoSeconds :: () -> u64 #foreign sys;
 
-PxTime_getCurrentCounterValue :: () -> u64 #foreign physx_sys;
+PxTime_new :: () -> PxTime #foreign sys;
 
-PxTime_getCurrentTimeInTensOfNanoSeconds :: () -> u64 #foreign physx_sys;
+PxTime_getElapsedSeconds :: (self: *PxTime) -> float64 #foreign sys "PxTime_getElapsedSeconds_mut";
 
-PxTime_new :: () -> physx_PxTime #foreign physx_sys;
+PxTime_peekElapsedSeconds :: (self: *PxTime) -> float64 #foreign sys "PxTime_peekElapsedSeconds_mut";
 
-PxTime_getElapsedSeconds :: (self: *physx_PxTime) -> float64 #foreign physx_sys "PxTime_getElapsedSeconds_mut";
+PxTime_getLastTime :: (self: *PxTime) -> float64 #foreign sys;
 
-PxTime_peekElapsedSeconds :: (self: *physx_PxTime) -> float64 #foreign physx_sys "PxTime_peekElapsedSeconds_mut";
+PxVec2_new :: () -> Vector2 #foreign sys;
 
-PxTime_getLastTime :: (self: *physx_PxTime) -> float64 #foreign physx_sys;
+PxVec2_new :: (anon_param0: s32) -> Vector2 #foreign sys "PxVec2_new_1";
 
-PxVec2_new :: () -> Vector2 #foreign physx_sys;
+PxVec2_new :: (a: float) -> Vector2 #foreign sys "PxVec2_new_2";
 
-PxVec2_new_1 :: (anon_param0: s32) -> Vector2 #foreign physx_sys;
+PxVec2_new :: (nx: float, ny: float) -> Vector2 #foreign sys "PxVec2_new_3";
 
-PxVec2_new_2 :: (a: float) -> Vector2 #foreign physx_sys;
+PxVec2_isZero :: (self: *Vector2) -> bool #foreign sys;
 
-PxVec2_new_3 :: (nx: float, ny: float) -> Vector2 #foreign physx_sys;
+PxVec2_isFinite :: (self: *Vector2) -> bool #foreign sys;
 
-PxVec2_isZero :: (self: *Vector2) -> bool #foreign physx_sys;
+PxVec2_isNormalized :: (self: *Vector2) -> bool #foreign sys;
 
-PxVec2_isFinite :: (self: *Vector2) -> bool #foreign physx_sys;
+PxVec2_magnitudeSquared :: (self: *Vector2) -> float #foreign sys;
 
-PxVec2_isNormalized :: (self: *Vector2) -> bool #foreign physx_sys;
+PxVec2_magnitude :: (self: *Vector2) -> float #foreign sys;
 
-PxVec2_magnitudeSquared :: (self: *Vector2) -> float #foreign physx_sys;
+PxVec2_dot :: (self: *Vector2, v: *Vector2) -> float #foreign sys;
 
-PxVec2_magnitude :: (self: *Vector2) -> float #foreign physx_sys;
+PxVec2_getNormalized :: (self: *Vector2) -> Vector2 #foreign sys;
 
-PxVec2_dot :: (self: *Vector2, v: *Vector2) -> float #foreign physx_sys;
+PxVec2_normalize :: (self: *Vector2) -> float #foreign sys "PxVec2_normalize_mut";
 
-PxVec2_getNormalized :: (self: *Vector2) -> Vector2 #foreign physx_sys;
+PxVec2_multiply :: (self: *Vector2, a: *Vector2) -> Vector2 #foreign sys;
 
-PxVec2_normalize :: (self: *Vector2) -> float #foreign physx_sys "PxVec2_normalize_mut";
+PxVec2_minimum :: (self: *Vector2, v: *Vector2) -> Vector2 #foreign sys;
 
-PxVec2_multiply :: (self: *Vector2, a: *Vector2) -> Vector2 #foreign physx_sys;
+PxVec2_minElement :: (self: *Vector2) -> float #foreign sys;
 
-PxVec2_minimum :: (self: *Vector2, v: *Vector2) -> Vector2 #foreign physx_sys;
+PxVec2_maximum :: (self: *Vector2, v: *Vector2) -> Vector2 #foreign sys;
 
-PxVec2_minElement :: (self: *Vector2) -> float #foreign physx_sys;
+PxVec2_maxElement :: (self: *Vector2) -> float #foreign sys;
 
-PxVec2_maximum :: (self: *Vector2, v: *Vector2) -> Vector2 #foreign physx_sys;
+PxStridedData_new :: () -> PxStridedData #foreign sys;
 
-PxVec2_maxElement :: (self: *Vector2) -> float #foreign physx_sys;
+PxBoundedData_new :: () -> PxBoundedData #foreign sys;
 
-PxStridedData_new :: () -> physx_PxStridedData #foreign physx_sys;
+PxDebugPoint_new :: (p: *Vector3, c: *u32) -> PxDebugPoint #foreign sys;
 
-PxBoundedData_new :: () -> physx_PxBoundedData #foreign physx_sys;
+PxDebugLine_new :: (p0: *Vector3, p1: *Vector3, c: *u32) -> PxDebugLine #foreign sys;
 
-PxDebugPoint_new :: (p: *Vector3, c: *u32) -> physx_PxDebugPoint #foreign physx_sys;
+PxDebugTriangle_new :: (p0: *Vector3, p1: *Vector3, p2: *Vector3, c: *u32) -> PxDebugTriangle #foreign sys;
 
-PxDebugLine_new :: (p0: *Vector3, p1: *Vector3, c: *u32) -> physx_PxDebugLine #foreign physx_sys;
+PxDebugText_new :: () -> PxDebugText #foreign sys;
 
-PxDebugTriangle_new :: (p0: *Vector3, p1: *Vector3, p2: *Vector3, c: *u32) -> physx_PxDebugTriangle #foreign physx_sys;
+PxDebugText_new :: (pos: *Vector3, sz: *float, clr: *u32, str: *u8) -> PxDebugText #foreign sys "PxDebugText_new_1";
 
-PxDebugText_new :: () -> physx_PxDebugText #foreign physx_sys;
+PxRenderBuffer_delete :: (self: *PxRenderBuffer) -> void #foreign sys;
 
-PxDebugText_new_1 :: (pos: *Vector3, sz: *float, clr: *u32, str: *u8) -> physx_PxDebugText #foreign physx_sys;
+PxRenderBuffer_getNbPoints :: (self: *PxRenderBuffer) -> u32 #foreign sys;
 
-PxRenderBuffer_delete :: (self: *physx_PxRenderBuffer) -> void #foreign physx_sys;
+PxRenderBuffer_getPoints :: (self: *PxRenderBuffer) -> *PxDebugPoint #foreign sys;
 
-PxRenderBuffer_getNbPoints :: (self: *physx_PxRenderBuffer) -> u32 #foreign physx_sys;
+PxRenderBuffer_addPoint :: (self: *PxRenderBuffer, point: *PxDebugPoint) -> void #foreign sys "PxRenderBuffer_addPoint_mut";
 
-PxRenderBuffer_getPoints :: (self: *physx_PxRenderBuffer) -> *physx_PxDebugPoint #foreign physx_sys;
+PxRenderBuffer_getNbLines :: (self: *PxRenderBuffer) -> u32 #foreign sys;
 
-PxRenderBuffer_addPoint :: (self: *physx_PxRenderBuffer, point: *physx_PxDebugPoint) -> void #foreign physx_sys "PxRenderBuffer_addPoint_mut";
+PxRenderBuffer_getLines :: (self: *PxRenderBuffer) -> *PxDebugLine #foreign sys;
 
-PxRenderBuffer_getNbLines :: (self: *physx_PxRenderBuffer) -> u32 #foreign physx_sys;
+PxRenderBuffer_addLine :: (self: *PxRenderBuffer, line: *PxDebugLine) -> void #foreign sys "PxRenderBuffer_addLine_mut";
 
-PxRenderBuffer_getLines :: (self: *physx_PxRenderBuffer) -> *physx_PxDebugLine #foreign physx_sys;
+PxRenderBuffer_reserveLines :: (self: *PxRenderBuffer, nbLines: u32) -> *PxDebugLine #foreign sys "PxRenderBuffer_reserveLines_mut";
 
-PxRenderBuffer_addLine :: (self: *physx_PxRenderBuffer, line: *physx_PxDebugLine) -> void #foreign physx_sys "PxRenderBuffer_addLine_mut";
+PxRenderBuffer_reservePoints :: (self: *PxRenderBuffer, nbLines: u32) -> *PxDebugPoint #foreign sys "PxRenderBuffer_reservePoints_mut";
 
-PxRenderBuffer_reserveLines :: (self: *physx_PxRenderBuffer, nbLines: u32) -> *physx_PxDebugLine #foreign physx_sys "PxRenderBuffer_reserveLines_mut";
+PxRenderBuffer_getNbTriangles :: (self: *PxRenderBuffer) -> u32 #foreign sys;
 
-PxRenderBuffer_reservePoints :: (self: *physx_PxRenderBuffer, nbLines: u32) -> *physx_PxDebugPoint #foreign physx_sys "PxRenderBuffer_reservePoints_mut";
+PxRenderBuffer_getTriangles :: (self: *PxRenderBuffer) -> *PxDebugTriangle #foreign sys;
 
-PxRenderBuffer_getNbTriangles :: (self: *physx_PxRenderBuffer) -> u32 #foreign physx_sys;
+PxRenderBuffer_addTriangle :: (self: *PxRenderBuffer, triangle: *PxDebugTriangle) -> void #foreign sys "PxRenderBuffer_addTriangle_mut";
 
-PxRenderBuffer_getTriangles :: (self: *physx_PxRenderBuffer) -> *physx_PxDebugTriangle #foreign physx_sys;
+PxRenderBuffer_append :: (self: *PxRenderBuffer, other: *PxRenderBuffer) -> void #foreign sys "PxRenderBuffer_append_mut";
 
-PxRenderBuffer_addTriangle :: (self: *physx_PxRenderBuffer, triangle: *physx_PxDebugTriangle) -> void #foreign physx_sys "PxRenderBuffer_addTriangle_mut";
+PxRenderBuffer_clear :: (self: *PxRenderBuffer) -> void #foreign sys "PxRenderBuffer_clear_mut";
 
-PxRenderBuffer_append :: (self: *physx_PxRenderBuffer, other: *physx_PxRenderBuffer) -> void #foreign physx_sys "PxRenderBuffer_append_mut";
+PxRenderBuffer_shift :: (self: *PxRenderBuffer, delta: *Vector3) -> void #foreign sys "PxRenderBuffer_shift_mut";
 
-PxRenderBuffer_clear :: (self: *physx_PxRenderBuffer) -> void #foreign physx_sys "PxRenderBuffer_clear_mut";
+PxRenderBuffer_empty :: (self: *PxRenderBuffer) -> bool #foreign sys;
 
-PxRenderBuffer_shift :: (self: *physx_PxRenderBuffer, delta: *Vector3) -> void #foreign physx_sys "PxRenderBuffer_shift_mut";
+PxProcessPxBaseCallback_delete :: (self: *PxProcessPxBaseCallback) -> void #foreign sys;
 
-PxRenderBuffer_empty :: (self: *physx_PxRenderBuffer) -> bool #foreign physx_sys;
+PxProcessPxBaseCallback_process :: (self: *PxProcessPxBaseCallback, anon_param0: *PxBase) -> void #foreign sys "PxProcessPxBaseCallback_process_mut";
 
-PxProcessPxBaseCallback_delete :: (self: *physx_PxProcessPxBaseCallback) -> void #foreign physx_sys;
+PxSerializationContext_registerReference :: (self: *PxSerializationContext, base: *PxBase, kind: u32, reference: u64) -> void #foreign sys "PxSerializationContext_registerReference_mut";
 
-PxProcessPxBaseCallback_process :: (self: *physx_PxProcessPxBaseCallback, anon_param0: *physx_PxBase) -> void #foreign physx_sys "PxProcessPxBaseCallback_process_mut";
+PxSerializationContext_getCollection :: (self: *PxSerializationContext) -> *PxCollection #foreign sys;
 
-PxSerializationContext_registerReference :: (self: *physx_PxSerializationContext, base: *physx_PxBase, kind: u32, reference: u64) -> void #foreign physx_sys "PxSerializationContext_registerReference_mut";
+PxSerializationContext_writeData :: (self: *PxSerializationContext, data: *void, size: u32) -> void #foreign sys "PxSerializationContext_writeData_mut";
 
-PxSerializationContext_getCollection :: (self: *physx_PxSerializationContext) -> *physx_PxCollection #foreign physx_sys;
+PxSerializationContext_alignData :: (self: *PxSerializationContext, alignment: u32) -> void #foreign sys "PxSerializationContext_alignData_mut";
 
-PxSerializationContext_writeData :: (self: *physx_PxSerializationContext, data: *void, size: u32) -> void #foreign physx_sys "PxSerializationContext_writeData_mut";
+PxSerializationContext_writeName :: (self: *PxSerializationContext, name: *u8) -> void #foreign sys "PxSerializationContext_writeName_mut";
 
-PxSerializationContext_alignData :: (self: *physx_PxSerializationContext, alignment: u32) -> void #foreign physx_sys "PxSerializationContext_alignData_mut";
+PxDeserializationContext_resolveReference :: (self: *PxDeserializationContext, kind: u32, reference: u64) -> *PxBase #foreign sys;
 
-PxSerializationContext_writeName :: (self: *physx_PxSerializationContext, name: *u8) -> void #foreign physx_sys "PxSerializationContext_writeName_mut";
+PxDeserializationContext_readName :: (self: *PxDeserializationContext, name: **u8) -> void #foreign sys "PxDeserializationContext_readName_mut";
 
-PxDeserializationContext_resolveReference :: (self: *physx_PxDeserializationContext, kind: u32, reference: u64) -> *physx_PxBase #foreign physx_sys;
+PxDeserializationContext_alignExtraData :: (self: *PxDeserializationContext, alignment: u32) -> void #foreign sys "PxDeserializationContext_alignExtraData_mut";
 
-PxDeserializationContext_readName :: (self: *physx_PxDeserializationContext, name: **u8) -> void #foreign physx_sys "PxDeserializationContext_readName_mut";
+PxSerializationRegistry_registerSerializer :: (self: *PxSerializationRegistry, type: u16, serializer: *PxSerializer) -> void #foreign sys "PxSerializationRegistry_registerSerializer_mut";
 
-PxDeserializationContext_alignExtraData :: (self: *physx_PxDeserializationContext, alignment: u32) -> void #foreign physx_sys "PxDeserializationContext_alignExtraData_mut";
+PxSerializationRegistry_unregisterSerializer :: (self: *PxSerializationRegistry, type: u16) -> *PxSerializer #foreign sys "PxSerializationRegistry_unregisterSerializer_mut";
 
-PxSerializationRegistry_registerSerializer :: (self: *physx_PxSerializationRegistry, type: u16, serializer: *physx_PxSerializer) -> void #foreign physx_sys "PxSerializationRegistry_registerSerializer_mut";
+PxSerializationRegistry_getSerializer :: (self: *PxSerializationRegistry, type: u16) -> *PxSerializer #foreign sys;
 
-PxSerializationRegistry_unregisterSerializer :: (self: *physx_PxSerializationRegistry, type: u16) -> *physx_PxSerializer #foreign physx_sys "PxSerializationRegistry_unregisterSerializer_mut";
+PxSerializationRegistry_registerRepXSerializer :: (self: *PxSerializationRegistry, type: u16, serializer: *PxRepXSerializer) -> void #foreign sys "PxSerializationRegistry_registerRepXSerializer_mut";
 
-PxSerializationRegistry_getSerializer :: (self: *physx_PxSerializationRegistry, type: u16) -> *physx_PxSerializer #foreign physx_sys;
+PxSerializationRegistry_unregisterRepXSerializer :: (self: *PxSerializationRegistry, type: u16) -> *PxRepXSerializer #foreign sys "PxSerializationRegistry_unregisterRepXSerializer_mut";
 
-PxSerializationRegistry_registerRepXSerializer :: (self: *physx_PxSerializationRegistry, type: u16, serializer: *physx_PxRepXSerializer) -> void #foreign physx_sys "PxSerializationRegistry_registerRepXSerializer_mut";
+PxSerializationRegistry_getRepXSerializer :: (self: *PxSerializationRegistry, typeName: *u8) -> *PxRepXSerializer #foreign sys;
 
-PxSerializationRegistry_unregisterRepXSerializer :: (self: *physx_PxSerializationRegistry, type: u16) -> *physx_PxRepXSerializer #foreign physx_sys "PxSerializationRegistry_unregisterRepXSerializer_mut";
+PxSerializationRegistry_release :: (self: *PxSerializationRegistry) -> void #foreign sys "PxSerializationRegistry_release_mut";
 
-PxSerializationRegistry_getRepXSerializer :: (self: *physx_PxSerializationRegistry, typeName: *u8) -> *physx_PxRepXSerializer #foreign physx_sys;
+PxCollection_add :: (self: *PxCollection, object: *PxBase, id: u64) -> void #foreign sys "PxCollection_add_mut";
 
-PxSerializationRegistry_release :: (self: *physx_PxSerializationRegistry) -> void #foreign physx_sys "PxSerializationRegistry_release_mut";
+PxCollection_remove :: (self: *PxCollection, object: *PxBase) -> void #foreign sys "PxCollection_remove_mut";
 
-PxCollection_add :: (self: *physx_PxCollection, object: *physx_PxBase, id: u64) -> void #foreign physx_sys "PxCollection_add_mut";
+PxCollection_contains :: (self: *PxCollection, object: *PxBase) -> bool #foreign sys;
 
-PxCollection_remove :: (self: *physx_PxCollection, object: *physx_PxBase) -> void #foreign physx_sys "PxCollection_remove_mut";
+PxCollection_addId :: (self: *PxCollection, object: *PxBase, id: u64) -> void #foreign sys "PxCollection_addId_mut";
 
-PxCollection_contains :: (self: *physx_PxCollection, object: *physx_PxBase) -> bool #foreign physx_sys;
+PxCollection_removeId :: (self: *PxCollection, id: u64) -> void #foreign sys "PxCollection_removeId_mut";
 
-PxCollection_addId :: (self: *physx_PxCollection, object: *physx_PxBase, id: u64) -> void #foreign physx_sys "PxCollection_addId_mut";
+PxCollection_add_mut :: (self: *PxCollection, collection: *PxCollection) -> void #foreign sys "PxCollection_add_mut_1";
 
-PxCollection_removeId :: (self: *physx_PxCollection, id: u64) -> void #foreign physx_sys "PxCollection_removeId_mut";
+PxCollection_remove_mut :: (self: *PxCollection, collection: *PxCollection) -> void #foreign sys "PxCollection_remove_mut_1";
 
-PxCollection_add :: (self: *physx_PxCollection, collection: *physx_PxCollection) -> void #foreign physx_sys "PxCollection_add_mut_1";
+PxCollection_getNbObjects :: (self: *PxCollection) -> u32 #foreign sys;
 
-PxCollection_remove :: (self: *physx_PxCollection, collection: *physx_PxCollection) -> void #foreign physx_sys "PxCollection_remove_mut_1";
+PxCollection_getObject :: (self: *PxCollection, index: u32) -> *PxBase #foreign sys;
 
-PxCollection_getNbObjects :: (self: *physx_PxCollection) -> u32 #foreign physx_sys;
+PxCollection_getObjects :: (self: *PxCollection, userBuffer: **PxBase, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxCollection_getObject :: (self: *physx_PxCollection, index: u32) -> *physx_PxBase #foreign physx_sys;
+PxCollection_find :: (self: *PxCollection, id: u64) -> *PxBase #foreign sys;
 
-PxCollection_getObjects :: (self: *physx_PxCollection, userBuffer: **physx_PxBase, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxCollection_getNbIds :: (self: *PxCollection) -> u32 #foreign sys;
 
-PxCollection_find :: (self: *physx_PxCollection, id: u64) -> *physx_PxBase #foreign physx_sys;
+PxCollection_getIds :: (self: *PxCollection, userBuffer: *u64, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxCollection_getNbIds :: (self: *physx_PxCollection) -> u32 #foreign physx_sys;
+PxCollection_getId :: (self: *PxCollection, object: *PxBase) -> u64 #foreign sys;
 
-PxCollection_getIds :: (self: *physx_PxCollection, userBuffer: *u64, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxCollection_release :: (self: *PxCollection) -> void #foreign sys "PxCollection_release_mut";
 
-PxCollection_getId :: (self: *physx_PxCollection, object: *physx_PxBase) -> u64 #foreign physx_sys;
+PxCreateCollection :: () -> *PxCollection #foreign sys "phys_PxCreateCollection";
 
-PxCollection_release :: (self: *physx_PxCollection) -> void #foreign physx_sys "PxCollection_release_mut";
+PxBase_release :: (self: *PxBase) -> void #foreign sys "PxBase_release_mut";
 
-phys_PxCreateCollection :: () -> *physx_PxCollection #foreign physx_sys;
+PxBase_getConcreteTypeName :: (self: *PxBase) -> *u8 #foreign sys;
 
-PxBase_release :: (self: *physx_PxBase) -> void #foreign physx_sys "PxBase_release_mut";
+PxBase_getConcreteType :: (self: *PxBase) -> u16 #foreign sys;
 
-PxBase_getConcreteTypeName :: (self: *physx_PxBase) -> *u8 #foreign physx_sys;
+PxBase_setBaseFlag :: (self: *PxBase, flag: s32, value: bool) -> void #foreign sys "PxBase_setBaseFlag_mut";
 
-PxBase_getConcreteType :: (self: *physx_PxBase) -> u16 #foreign physx_sys;
+PxBase_setBaseFlags :: (self: *PxBase, inFlags: u16) -> void #foreign sys "PxBase_setBaseFlags_mut";
 
-PxBase_setBaseFlag :: (self: *physx_PxBase, flag: s32, value: bool) -> void #foreign physx_sys "PxBase_setBaseFlag_mut";
+PxBase_getBaseFlags :: (self: *PxBase) -> u16 #foreign sys;
 
-PxBase_setBaseFlags :: (self: *physx_PxBase, inFlags: u16) -> void #foreign physx_sys "PxBase_setBaseFlags_mut";
+PxBase_isReleasable :: (self: *PxBase) -> bool #foreign sys;
 
-PxBase_getBaseFlags :: (self: *physx_PxBase) -> u16 #foreign physx_sys;
+PxRefCounted_release :: (self: *PxRefCounted) -> void #foreign sys "PxRefCounted_release_mut";
 
-PxBase_isReleasable :: (self: *physx_PxBase) -> bool #foreign physx_sys;
+PxRefCounted_getReferenceCount :: (self: *PxRefCounted) -> u32 #foreign sys;
 
-PxRefCounted_release :: (self: *physx_PxRefCounted) -> void #foreign physx_sys "PxRefCounted_release_mut";
+PxRefCounted_acquireReference :: (self: *PxRefCounted) -> void #foreign sys "PxRefCounted_acquireReference_mut";
 
-PxRefCounted_getReferenceCount :: (self: *physx_PxRefCounted) -> u32 #foreign physx_sys;
+PxTolerancesScale_new :: (defaultLength: float, defaultSpeed: float) -> PxTolerancesScale #foreign sys;
 
-PxRefCounted_acquireReference :: (self: *physx_PxRefCounted) -> void #foreign physx_sys "PxRefCounted_acquireReference_mut";
+PxTolerancesScale_isValid :: (self: *PxTolerancesScale) -> bool #foreign sys;
 
-PxTolerancesScale_new :: (defaultLength: float, defaultSpeed: float) -> physx_PxTolerancesScale #foreign physx_sys;
+PxStringTable_allocateStr :: (self: *PxStringTable, inSrc: *u8) -> *u8 #foreign sys "PxStringTable_allocateStr_mut";
 
-PxTolerancesScale_isValid :: (self: *physx_PxTolerancesScale) -> bool #foreign physx_sys;
+PxStringTable_release :: (self: *PxStringTable) -> void #foreign sys "PxStringTable_release_mut";
 
-PxStringTable_allocateStr :: (self: *physx_PxStringTable, inSrc: *u8) -> *u8 #foreign physx_sys "PxStringTable_allocateStr_mut";
+PxSerializer_getConcreteTypeName :: (self: *PxSerializer) -> *u8 #foreign sys;
 
-PxStringTable_release :: (self: *physx_PxStringTable) -> void #foreign physx_sys "PxStringTable_release_mut";
+PxSerializer_requiresObjects :: (self: *PxSerializer, anon_param0: *PxBase, anon_param1: *PxProcessPxBaseCallback) -> void #foreign sys;
 
-PxSerializer_getConcreteTypeName :: (self: *physx_PxSerializer) -> *u8 #foreign physx_sys;
+PxSerializer_isSubordinate :: (self: *PxSerializer) -> bool #foreign sys;
 
-PxSerializer_requiresObjects :: (self: *physx_PxSerializer, anon_param0: *physx_PxBase, anon_param1: *physx_PxProcessPxBaseCallback) -> void #foreign physx_sys;
+PxSerializer_exportExtraData :: (self: *PxSerializer, anon_param0: *PxBase, anon_param1: *PxSerializationContext) -> void #foreign sys;
 
-PxSerializer_isSubordinate :: (self: *physx_PxSerializer) -> bool #foreign physx_sys;
+PxSerializer_exportData :: (self: *PxSerializer, anon_param0: *PxBase, anon_param1: *PxSerializationContext) -> void #foreign sys;
 
-PxSerializer_exportExtraData :: (self: *physx_PxSerializer, anon_param0: *physx_PxBase, anon_param1: *physx_PxSerializationContext) -> void #foreign physx_sys;
+PxSerializer_registerReferences :: (self: *PxSerializer, obj: *PxBase, s: *PxSerializationContext) -> void #foreign sys;
 
-PxSerializer_exportData :: (self: *physx_PxSerializer, anon_param0: *physx_PxBase, anon_param1: *physx_PxSerializationContext) -> void #foreign physx_sys;
+PxSerializer_getClassSize :: (self: *PxSerializer) -> u64 #foreign sys;
 
-PxSerializer_registerReferences :: (self: *physx_PxSerializer, obj: *physx_PxBase, s: *physx_PxSerializationContext) -> void #foreign physx_sys;
+PxSerializer_createObject :: (self: *PxSerializer, address: **u8, context_pod: *PxDeserializationContext) -> *PxBase #foreign sys;
 
-PxSerializer_getClassSize :: (self: *physx_PxSerializer) -> u64 #foreign physx_sys;
+PxSerializer_delete :: (self: *PxSerializer) -> void #foreign sys;
 
-PxSerializer_createObject :: (self: *physx_PxSerializer, address: **u8, context_pod: *physx_PxDeserializationContext) -> *physx_PxBase #foreign physx_sys;
+PxInsertionCallback_buildObjectFromData :: (self: *PxInsertionCallback, type: s32, data: *void) -> *PxBase #foreign sys "PxInsertionCallback_buildObjectFromData_mut";
 
-PxSerializer_delete :: (self: *physx_PxSerializer) -> void #foreign physx_sys;
+PxTaskManager_setCpuDispatcher :: (self: *PxTaskManager, ref: *PxCpuDispatcher) -> void #foreign sys "PxTaskManager_setCpuDispatcher_mut";
 
-PxInsertionCallback_buildObjectFromData :: (self: *physx_PxInsertionCallback, type: s32, data: *void) -> *physx_PxBase #foreign physx_sys "PxInsertionCallback_buildObjectFromData_mut";
+PxTaskManager_getCpuDispatcher :: (self: *PxTaskManager) -> *PxCpuDispatcher #foreign sys;
 
-PxTaskManager_setCpuDispatcher :: (self: *physx_PxTaskManager, ref: *physx_PxCpuDispatcher) -> void #foreign physx_sys "PxTaskManager_setCpuDispatcher_mut";
+PxTaskManager_resetDependencies :: (self: *PxTaskManager) -> void #foreign sys "PxTaskManager_resetDependencies_mut";
 
-PxTaskManager_getCpuDispatcher :: (self: *physx_PxTaskManager) -> *physx_PxCpuDispatcher #foreign physx_sys;
+PxTaskManager_startSimulation :: (self: *PxTaskManager) -> void #foreign sys "PxTaskManager_startSimulation_mut";
 
-PxTaskManager_resetDependencies :: (self: *physx_PxTaskManager) -> void #foreign physx_sys "PxTaskManager_resetDependencies_mut";
+PxTaskManager_stopSimulation :: (self: *PxTaskManager) -> void #foreign sys "PxTaskManager_stopSimulation_mut";
 
-PxTaskManager_startSimulation :: (self: *physx_PxTaskManager) -> void #foreign physx_sys "PxTaskManager_startSimulation_mut";
+PxTaskManager_taskCompleted :: (self: *PxTaskManager, task: *PxTask) -> void #foreign sys "PxTaskManager_taskCompleted_mut";
 
-PxTaskManager_stopSimulation :: (self: *physx_PxTaskManager) -> void #foreign physx_sys "PxTaskManager_stopSimulation_mut";
+PxTaskManager_getNamedTask :: (self: *PxTaskManager, name: *u8) -> u32 #foreign sys "PxTaskManager_getNamedTask_mut";
 
-PxTaskManager_taskCompleted :: (self: *physx_PxTaskManager, task: *physx_PxTask) -> void #foreign physx_sys "PxTaskManager_taskCompleted_mut";
+PxTaskManager_submitNamedTask :: (self: *PxTaskManager, task: *PxTask, name: *u8, type: s32) -> u32 #foreign sys "PxTaskManager_submitNamedTask_mut";
 
-PxTaskManager_getNamedTask :: (self: *physx_PxTaskManager, name: *u8) -> u32 #foreign physx_sys "PxTaskManager_getNamedTask_mut";
+PxTaskManager_submitUnnamedTask :: (self: *PxTaskManager, task: *PxTask, type: s32) -> u32 #foreign sys "PxTaskManager_submitUnnamedTask_mut";
 
-PxTaskManager_submitNamedTask :: (self: *physx_PxTaskManager, task: *physx_PxTask, name: *u8, type: s32) -> u32 #foreign physx_sys "PxTaskManager_submitNamedTask_mut";
+PxTaskManager_getTaskFromID :: (self: *PxTaskManager, id: u32) -> *PxTask #foreign sys "PxTaskManager_getTaskFromID_mut";
 
-PxTaskManager_submitUnnamedTask :: (self: *physx_PxTaskManager, task: *physx_PxTask, type: s32) -> u32 #foreign physx_sys "PxTaskManager_submitUnnamedTask_mut";
+PxTaskManager_release :: (self: *PxTaskManager) -> void #foreign sys "PxTaskManager_release_mut";
 
-PxTaskManager_getTaskFromID :: (self: *physx_PxTaskManager, id: u32) -> *physx_PxTask #foreign physx_sys "PxTaskManager_getTaskFromID_mut";
+PxTaskManager_createTaskManager :: (errorCallback: *PxErrorCallback, anon_param1: *PxCpuDispatcher) -> *PxTaskManager #foreign sys;
 
-PxTaskManager_release :: (self: *physx_PxTaskManager) -> void #foreign physx_sys "PxTaskManager_release_mut";
+PxCpuDispatcher_submitTask :: (self: *PxCpuDispatcher, task: *PxBaseTask) -> void #foreign sys "PxCpuDispatcher_submitTask_mut";
 
-PxTaskManager_createTaskManager :: (errorCallback: *physx_PxErrorCallback, anon_param1: *physx_PxCpuDispatcher) -> *physx_PxTaskManager #foreign physx_sys;
+PxCpuDispatcher_getWorkerCount :: (self: *PxCpuDispatcher) -> u32 #foreign sys;
 
-PxCpuDispatcher_submitTask :: (self: *physx_PxCpuDispatcher, task: *physx_PxBaseTask) -> void #foreign physx_sys "PxCpuDispatcher_submitTask_mut";
+PxCpuDispatcher_delete :: (self: *PxCpuDispatcher) -> void #foreign sys;
 
-PxCpuDispatcher_getWorkerCount :: (self: *physx_PxCpuDispatcher) -> u32 #foreign physx_sys;
+PxBaseTask_run :: (self: *PxBaseTask) -> void #foreign sys "PxBaseTask_run_mut";
 
-PxCpuDispatcher_delete :: (self: *physx_PxCpuDispatcher) -> void #foreign physx_sys;
+PxBaseTask_getName :: (self: *PxBaseTask) -> *u8 #foreign sys;
 
-PxBaseTask_run :: (self: *physx_PxBaseTask) -> void #foreign physx_sys "PxBaseTask_run_mut";
+PxBaseTask_addReference :: (self: *PxBaseTask) -> void #foreign sys "PxBaseTask_addReference_mut";
 
-PxBaseTask_getName :: (self: *physx_PxBaseTask) -> *u8 #foreign physx_sys;
+PxBaseTask_removeReference :: (self: *PxBaseTask) -> void #foreign sys "PxBaseTask_removeReference_mut";
 
-PxBaseTask_addReference :: (self: *physx_PxBaseTask) -> void #foreign physx_sys "PxBaseTask_addReference_mut";
+PxBaseTask_getReference :: (self: *PxBaseTask) -> s32 #foreign sys;
 
-PxBaseTask_removeReference :: (self: *physx_PxBaseTask) -> void #foreign physx_sys "PxBaseTask_removeReference_mut";
+PxBaseTask_release :: (self: *PxBaseTask) -> void #foreign sys "PxBaseTask_release_mut";
 
-PxBaseTask_getReference :: (self: *physx_PxBaseTask) -> s32 #foreign physx_sys;
+PxBaseTask_getTaskManager :: (self: *PxBaseTask) -> *PxTaskManager #foreign sys;
 
-PxBaseTask_release :: (self: *physx_PxBaseTask) -> void #foreign physx_sys "PxBaseTask_release_mut";
+PxBaseTask_setContextId :: (self: *PxBaseTask, id: u64) -> void #foreign sys "PxBaseTask_setContextId_mut";
 
-PxBaseTask_getTaskManager :: (self: *physx_PxBaseTask) -> *physx_PxTaskManager #foreign physx_sys;
+PxBaseTask_getContextId :: (self: *PxBaseTask) -> u64 #foreign sys;
 
-PxBaseTask_setContextId :: (self: *physx_PxBaseTask, id: u64) -> void #foreign physx_sys "PxBaseTask_setContextId_mut";
+PxTask_release :: (self: *PxTask) -> void #foreign sys "PxTask_release_mut";
 
-PxBaseTask_getContextId :: (self: *physx_PxBaseTask) -> u64 #foreign physx_sys;
+PxTask_finishBefore :: (self: *PxTask, taskID: u32) -> void #foreign sys "PxTask_finishBefore_mut";
 
-PxTask_release :: (self: *physx_PxTask) -> void #foreign physx_sys "PxTask_release_mut";
+PxTask_startAfter :: (self: *PxTask, taskID: u32) -> void #foreign sys "PxTask_startAfter_mut";
 
-PxTask_finishBefore :: (self: *physx_PxTask, taskID: u32) -> void #foreign physx_sys "PxTask_finishBefore_mut";
+PxTask_addReference :: (self: *PxTask) -> void #foreign sys "PxTask_addReference_mut";
 
-PxTask_startAfter :: (self: *physx_PxTask, taskID: u32) -> void #foreign physx_sys "PxTask_startAfter_mut";
+PxTask_removeReference :: (self: *PxTask) -> void #foreign sys "PxTask_removeReference_mut";
 
-PxTask_addReference :: (self: *physx_PxTask) -> void #foreign physx_sys "PxTask_addReference_mut";
+PxTask_getReference :: (self: *PxTask) -> s32 #foreign sys;
 
-PxTask_removeReference :: (self: *physx_PxTask) -> void #foreign physx_sys "PxTask_removeReference_mut";
+PxTask_getTaskID :: (self: *PxTask) -> u32 #foreign sys;
 
-PxTask_getReference :: (self: *physx_PxTask) -> s32 #foreign physx_sys;
+PxTask_submitted :: (self: *PxTask) -> void #foreign sys "PxTask_submitted_mut";
 
-PxTask_getTaskID :: (self: *physx_PxTask) -> u32 #foreign physx_sys;
+PxLightCpuTask_setContinuation :: (self: *PxLightCpuTask, tm: *PxTaskManager, c: *PxBaseTask) -> void #foreign sys "PxLightCpuTask_setContinuation_mut";
 
-PxTask_submitted :: (self: *physx_PxTask) -> void #foreign physx_sys "PxTask_submitted_mut";
+PxLightCpuTask_setContinuation_mut :: (self: *PxLightCpuTask, c: *PxBaseTask) -> void #foreign sys "PxLightCpuTask_setContinuation_mut_1";
 
-PxLightCpuTask_setContinuation :: (self: *physx_PxLightCpuTask, tm: *physx_PxTaskManager, c: *physx_PxBaseTask) -> void #foreign physx_sys "PxLightCpuTask_setContinuation_mut";
+PxLightCpuTask_getContinuation :: (self: *PxLightCpuTask) -> *PxBaseTask #foreign sys;
 
-PxLightCpuTask_setContinuation :: (self: *physx_PxLightCpuTask, c: *physx_PxBaseTask) -> void #foreign physx_sys "PxLightCpuTask_setContinuation_mut_1";
+PxLightCpuTask_removeReference :: (self: *PxLightCpuTask) -> void #foreign sys "PxLightCpuTask_removeReference_mut";
 
-PxLightCpuTask_getContinuation :: (self: *physx_PxLightCpuTask) -> *physx_PxBaseTask #foreign physx_sys;
+PxLightCpuTask_getReference :: (self: *PxLightCpuTask) -> s32 #foreign sys;
 
-PxLightCpuTask_removeReference :: (self: *physx_PxLightCpuTask) -> void #foreign physx_sys "PxLightCpuTask_removeReference_mut";
+PxLightCpuTask_addReference :: (self: *PxLightCpuTask) -> void #foreign sys "PxLightCpuTask_addReference_mut";
 
-PxLightCpuTask_getReference :: (self: *physx_PxLightCpuTask) -> s32 #foreign physx_sys;
+PxLightCpuTask_release :: (self: *PxLightCpuTask) -> void #foreign sys "PxLightCpuTask_release_mut";
 
-PxLightCpuTask_addReference :: (self: *physx_PxLightCpuTask) -> void #foreign physx_sys "PxLightCpuTask_addReference_mut";
+PxGeometry_getType :: (self: *PxGeometry) -> s32 #foreign sys;
 
-PxLightCpuTask_release :: (self: *physx_PxLightCpuTask) -> void #foreign physx_sys "PxLightCpuTask_release_mut";
+PxBoxGeometry_new :: (hx: float, hy: float, hz: float) -> PxBoxGeometry #foreign sys;
 
-PxGeometry_getType :: (self: *physx_PxGeometry) -> s32 #foreign physx_sys;
+PxBoxGeometry_new :: (halfExtents: Vector3) -> PxBoxGeometry #foreign sys "PxBoxGeometry_new_1";
 
-PxBoxGeometry_new :: (hx: float, hy: float, hz: float) -> physx_PxBoxGeometry #foreign physx_sys;
+PxBoxGeometry_isValid :: (self: *PxBoxGeometry) -> bool #foreign sys;
 
-PxBoxGeometry_new_1 :: (halfExtents: Vector3) -> physx_PxBoxGeometry #foreign physx_sys;
+PxBVHRaycastCallback_delete :: (self: *PxBVHRaycastCallback) -> void #foreign sys;
 
-PxBoxGeometry_isValid :: (self: *physx_PxBoxGeometry) -> bool #foreign physx_sys;
+PxBVHRaycastCallback_reportHit :: (self: *PxBVHRaycastCallback, boundsIndex: u32, distance: *float) -> bool #foreign sys "PxBVHRaycastCallback_reportHit_mut";
 
-PxBVHRaycastCallback_delete :: (self: *physx_PxBVHRaycastCallback) -> void #foreign physx_sys;
+PxBVHOverlapCallback_delete :: (self: *PxBVHOverlapCallback) -> void #foreign sys;
 
-PxBVHRaycastCallback_reportHit :: (self: *physx_PxBVHRaycastCallback, boundsIndex: u32, distance: *float) -> bool #foreign physx_sys "PxBVHRaycastCallback_reportHit_mut";
+PxBVHOverlapCallback_reportHit :: (self: *PxBVHOverlapCallback, boundsIndex: u32) -> bool #foreign sys "PxBVHOverlapCallback_reportHit_mut";
 
-PxBVHOverlapCallback_delete :: (self: *physx_PxBVHOverlapCallback) -> void #foreign physx_sys;
+PxBVHTraversalCallback_delete :: (self: *PxBVHTraversalCallback) -> void #foreign sys;
 
-PxBVHOverlapCallback_reportHit :: (self: *physx_PxBVHOverlapCallback, boundsIndex: u32) -> bool #foreign physx_sys "PxBVHOverlapCallback_reportHit_mut";
+PxBVHTraversalCallback_visitNode :: (self: *PxBVHTraversalCallback, bounds: *PxBounds3) -> bool #foreign sys "PxBVHTraversalCallback_visitNode_mut";
 
-PxBVHTraversalCallback_delete :: (self: *physx_PxBVHTraversalCallback) -> void #foreign physx_sys;
+PxBVHTraversalCallback_reportLeaf :: (self: *PxBVHTraversalCallback, nbPrims: u32, prims: *u32) -> bool #foreign sys "PxBVHTraversalCallback_reportLeaf_mut";
 
-PxBVHTraversalCallback_visitNode :: (self: *physx_PxBVHTraversalCallback, bounds: *physx_PxBounds3) -> bool #foreign physx_sys "PxBVHTraversalCallback_visitNode_mut";
+PxBVH_raycast :: (self: *PxBVH, origin: *Vector3, unitDir: *Vector3, maxDist: float, cb: *PxBVHRaycastCallback, queryFlags: u32) -> bool #foreign sys;
 
-PxBVHTraversalCallback_reportLeaf :: (self: *physx_PxBVHTraversalCallback, nbPrims: u32, prims: *u32) -> bool #foreign physx_sys "PxBVHTraversalCallback_reportLeaf_mut";
+PxBVH_sweep :: (self: *PxBVH, geom: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, maxDist: float, cb: *PxBVHRaycastCallback, queryFlags: u32) -> bool #foreign sys;
 
-PxBVH_raycast :: (self: *physx_PxBVH, origin: *Vector3, unitDir: *Vector3, maxDist: float, cb: *physx_PxBVHRaycastCallback, queryFlags: u32) -> bool #foreign physx_sys;
+PxBVH_overlap :: (self: *PxBVH, geom: *PxGeometry, pose: *PxTransform, cb: *PxBVHOverlapCallback, queryFlags: u32) -> bool #foreign sys;
 
-PxBVH_sweep :: (self: *physx_PxBVH, geom: *physx_PxGeometry, pose: *physx_PxTransform, unitDir: *Vector3, maxDist: float, cb: *physx_PxBVHRaycastCallback, queryFlags: u32) -> bool #foreign physx_sys;
+PxBVH_cull :: (self: *PxBVH, nbPlanes: u32, planes: *Plane3, cb: *PxBVHOverlapCallback, queryFlags: u32) -> bool #foreign sys;
 
-PxBVH_overlap :: (self: *physx_PxBVH, geom: *physx_PxGeometry, pose: *physx_PxTransform, cb: *physx_PxBVHOverlapCallback, queryFlags: u32) -> bool #foreign physx_sys;
+PxBVH_getNbBounds :: (self: *PxBVH) -> u32 #foreign sys;
 
-PxBVH_cull :: (self: *physx_PxBVH, nbPlanes: u32, planes: *Plane3, cb: *physx_PxBVHOverlapCallback, queryFlags: u32) -> bool #foreign physx_sys;
+PxBVH_getBounds :: (self: *PxBVH) -> *PxBounds3 #foreign sys;
 
-PxBVH_getNbBounds :: (self: *physx_PxBVH) -> u32 #foreign physx_sys;
+PxBVH_getBoundsForModification :: (self: *PxBVH) -> *PxBounds3 #foreign sys "PxBVH_getBoundsForModification_mut";
 
-PxBVH_getBounds :: (self: *physx_PxBVH) -> *physx_PxBounds3 #foreign physx_sys;
+PxBVH_refit :: (self: *PxBVH) -> void #foreign sys "PxBVH_refit_mut";
 
-PxBVH_getBoundsForModification :: (self: *physx_PxBVH) -> *physx_PxBounds3 #foreign physx_sys "PxBVH_getBoundsForModification_mut";
+PxBVH_updateBounds :: (self: *PxBVH, boundsIndex: u32, newBounds: *PxBounds3) -> bool #foreign sys "PxBVH_updateBounds_mut";
 
-PxBVH_refit :: (self: *physx_PxBVH) -> void #foreign physx_sys "PxBVH_refit_mut";
+PxBVH_partialRefit :: (self: *PxBVH) -> void #foreign sys "PxBVH_partialRefit_mut";
 
-PxBVH_updateBounds :: (self: *physx_PxBVH, boundsIndex: u32, newBounds: *physx_PxBounds3) -> bool #foreign physx_sys "PxBVH_updateBounds_mut";
+PxBVH_traverse :: (self: *PxBVH, cb: *PxBVHTraversalCallback) -> bool #foreign sys;
 
-PxBVH_partialRefit :: (self: *physx_PxBVH) -> void #foreign physx_sys "PxBVH_partialRefit_mut";
+PxBVH_getConcreteTypeName :: (self: *PxBVH) -> *u8 #foreign sys;
 
-PxBVH_traverse :: (self: *physx_PxBVH, cb: *physx_PxBVHTraversalCallback) -> bool #foreign physx_sys;
+PxCapsuleGeometry_new :: (radius_: float, halfHeight_: float) -> PxCapsuleGeometry #foreign sys;
 
-PxBVH_getConcreteTypeName :: (self: *physx_PxBVH) -> *u8 #foreign physx_sys;
+PxCapsuleGeometry_isValid :: (self: *PxCapsuleGeometry) -> bool #foreign sys;
 
-PxCapsuleGeometry_new :: (radius_: float, halfHeight_: float) -> physx_PxCapsuleGeometry #foreign physx_sys;
+PxConvexMesh_getNbVertices :: (self: *PxConvexMesh) -> u32 #foreign sys;
 
-PxCapsuleGeometry_isValid :: (self: *physx_PxCapsuleGeometry) -> bool #foreign physx_sys;
+PxConvexMesh_getVertices :: (self: *PxConvexMesh) -> *Vector3 #foreign sys;
 
-PxConvexMesh_getNbVertices :: (self: *physx_PxConvexMesh) -> u32 #foreign physx_sys;
+PxConvexMesh_getIndexBuffer :: (self: *PxConvexMesh) -> *u8 #foreign sys;
 
-PxConvexMesh_getVertices :: (self: *physx_PxConvexMesh) -> *Vector3 #foreign physx_sys;
+PxConvexMesh_getNbPolygons :: (self: *PxConvexMesh) -> u32 #foreign sys;
 
-PxConvexMesh_getIndexBuffer :: (self: *physx_PxConvexMesh) -> *u8 #foreign physx_sys;
+PxConvexMesh_getPolygonData :: (self: *PxConvexMesh, index: u32, data: *PxHullPolygon) -> bool #foreign sys;
 
-PxConvexMesh_getNbPolygons :: (self: *physx_PxConvexMesh) -> u32 #foreign physx_sys;
+PxConvexMesh_release :: (self: *PxConvexMesh) -> void #foreign sys "PxConvexMesh_release_mut";
 
-PxConvexMesh_getPolygonData :: (self: *physx_PxConvexMesh, index: u32, data: *physx_PxHullPolygon) -> bool #foreign physx_sys;
+PxConvexMesh_getMassInformation :: (self: *PxConvexMesh, mass: *float, localInertia: *PxMat33, localCenterOfMass: *Vector3) -> void #foreign sys;
 
-PxConvexMesh_release :: (self: *physx_PxConvexMesh) -> void #foreign physx_sys "PxConvexMesh_release_mut";
+PxConvexMesh_getLocalBounds :: (self: *PxConvexMesh) -> PxBounds3 #foreign sys;
 
-PxConvexMesh_getMassInformation :: (self: *physx_PxConvexMesh, mass: *float, localInertia: *physx_PxMat33, localCenterOfMass: *Vector3) -> void #foreign physx_sys;
+PxConvexMesh_getSDF :: (self: *PxConvexMesh) -> *float #foreign sys;
 
-PxConvexMesh_getLocalBounds :: (self: *physx_PxConvexMesh) -> physx_PxBounds3 #foreign physx_sys;
+PxConvexMesh_getConcreteTypeName :: (self: *PxConvexMesh) -> *u8 #foreign sys;
 
-PxConvexMesh_getSDF :: (self: *physx_PxConvexMesh) -> *float #foreign physx_sys;
+PxConvexMesh_isGpuCompatible :: (self: *PxConvexMesh) -> bool #foreign sys;
 
-PxConvexMesh_getConcreteTypeName :: (self: *physx_PxConvexMesh) -> *u8 #foreign physx_sys;
+PxMeshScale_new :: () -> PxMeshScale #foreign sys;
 
-PxConvexMesh_isGpuCompatible :: (self: *physx_PxConvexMesh) -> bool #foreign physx_sys;
+PxMeshScale_new :: (r: float) -> PxMeshScale #foreign sys "PxMeshScale_new_1";
 
-PxMeshScale_new :: () -> physx_PxMeshScale #foreign physx_sys;
+PxMeshScale_new :: (s: *Vector3) -> PxMeshScale #foreign sys "PxMeshScale_new_2";
 
-PxMeshScale_new_1 :: (r: float) -> physx_PxMeshScale #foreign physx_sys;
+PxMeshScale_new :: (s: *Vector3, r: *Quaternion) -> PxMeshScale #foreign sys "PxMeshScale_new_3";
 
-PxMeshScale_new_2 :: (s: *Vector3) -> physx_PxMeshScale #foreign physx_sys;
+PxMeshScale_isIdentity :: (self: *PxMeshScale) -> bool #foreign sys;
 
-PxMeshScale_new_3 :: (s: *Vector3, r: *Quaternion) -> physx_PxMeshScale #foreign physx_sys;
+PxMeshScale_getInverse :: (self: *PxMeshScale) -> PxMeshScale #foreign sys;
 
-PxMeshScale_isIdentity :: (self: *physx_PxMeshScale) -> bool #foreign physx_sys;
+PxMeshScale_toMat33 :: (self: *PxMeshScale) -> PxMat33 #foreign sys;
 
-PxMeshScale_getInverse :: (self: *physx_PxMeshScale) -> physx_PxMeshScale #foreign physx_sys;
+PxMeshScale_hasNegativeDeterminant :: (self: *PxMeshScale) -> bool #foreign sys;
 
-PxMeshScale_toMat33 :: (self: *physx_PxMeshScale) -> physx_PxMat33 #foreign physx_sys;
+PxMeshScale_transform :: (self: *PxMeshScale, v: *Vector3) -> Vector3 #foreign sys;
 
-PxMeshScale_hasNegativeDeterminant :: (self: *physx_PxMeshScale) -> bool #foreign physx_sys;
+PxMeshScale_isValidForTriangleMesh :: (self: *PxMeshScale) -> bool #foreign sys;
 
-PxMeshScale_transform :: (self: *physx_PxMeshScale, v: *Vector3) -> Vector3 #foreign physx_sys;
+PxMeshScale_isValidForConvexMesh :: (self: *PxMeshScale) -> bool #foreign sys;
 
-PxMeshScale_isValidForTriangleMesh :: (self: *physx_PxMeshScale) -> bool #foreign physx_sys;
+PxConvexMeshGeometry_new :: (mesh: *PxConvexMesh, scaling: *PxMeshScale, flags: u8) -> PxConvexMeshGeometry #foreign sys;
 
-PxMeshScale_isValidForConvexMesh :: (self: *physx_PxMeshScale) -> bool #foreign physx_sys;
+PxConvexMeshGeometry_isValid :: (self: *PxConvexMeshGeometry) -> bool #foreign sys;
 
-PxConvexMeshGeometry_new :: (mesh: *physx_PxConvexMesh, scaling: *physx_PxMeshScale, flags: u8) -> physx_PxConvexMeshGeometry #foreign physx_sys;
+PxSphereGeometry_new :: (ir: float) -> PxSphereGeometry #foreign sys;
 
-PxConvexMeshGeometry_isValid :: (self: *physx_PxConvexMeshGeometry) -> bool #foreign physx_sys;
+PxSphereGeometry_isValid :: (self: *PxSphereGeometry) -> bool #foreign sys;
 
-PxSphereGeometry_new :: (ir: float) -> physx_PxSphereGeometry #foreign physx_sys;
+PxPlaneGeometry_new :: () -> PxPlaneGeometry #foreign sys;
 
-PxSphereGeometry_isValid :: (self: *physx_PxSphereGeometry) -> bool #foreign physx_sys;
+PxPlaneGeometry_isValid :: (self: *PxPlaneGeometry) -> bool #foreign sys;
 
-PxPlaneGeometry_new :: () -> physx_PxPlaneGeometry #foreign physx_sys;
+PxTriangleMeshGeometry_new :: (mesh: *PxTriangleMesh, scaling: *PxMeshScale, flags: u8) -> PxTriangleMeshGeometry #foreign sys;
 
-PxPlaneGeometry_isValid :: (self: *physx_PxPlaneGeometry) -> bool #foreign physx_sys;
+PxTriangleMeshGeometry_isValid :: (self: *PxTriangleMeshGeometry) -> bool #foreign sys;
 
-PxTriangleMeshGeometry_new :: (mesh: *physx_PxTriangleMesh, scaling: *physx_PxMeshScale, flags: u8) -> physx_PxTriangleMeshGeometry #foreign physx_sys;
+PxHeightFieldGeometry_new :: (hf: *PxHeightField, flags: u8, heightScale_: float, rowScale_: float, columnScale_: float) -> PxHeightFieldGeometry #foreign sys;
 
-PxTriangleMeshGeometry_isValid :: (self: *physx_PxTriangleMeshGeometry) -> bool #foreign physx_sys;
+PxHeightFieldGeometry_isValid :: (self: *PxHeightFieldGeometry) -> bool #foreign sys;
 
-PxHeightFieldGeometry_new :: (hf: *physx_PxHeightField, flags: u8, heightScale_: float, rowScale_: float, columnScale_: float) -> physx_PxHeightFieldGeometry #foreign physx_sys;
+PxParticleSystemGeometry_new :: () -> PxParticleSystemGeometry #foreign sys;
 
-PxHeightFieldGeometry_isValid :: (self: *physx_PxHeightFieldGeometry) -> bool #foreign physx_sys;
+PxParticleSystemGeometry_isValid :: (self: *PxParticleSystemGeometry) -> bool #foreign sys;
 
-PxParticleSystemGeometry_new :: () -> physx_PxParticleSystemGeometry #foreign physx_sys;
+PxHairSystemGeometry_new :: () -> PxHairSystemGeometry #foreign sys;
 
-PxParticleSystemGeometry_isValid :: (self: *physx_PxParticleSystemGeometry) -> bool #foreign physx_sys;
+PxHairSystemGeometry_isValid :: (self: *PxHairSystemGeometry) -> bool #foreign sys;
 
-PxHairSystemGeometry_new :: () -> physx_PxHairSystemGeometry #foreign physx_sys;
+PxTetrahedronMeshGeometry_new :: (mesh: *PxTetrahedronMesh) -> PxTetrahedronMeshGeometry #foreign sys;
 
-PxHairSystemGeometry_isValid :: (self: *physx_PxHairSystemGeometry) -> bool #foreign physx_sys;
+PxTetrahedronMeshGeometry_isValid :: (self: *PxTetrahedronMeshGeometry) -> bool #foreign sys;
 
-PxTetrahedronMeshGeometry_new :: (mesh: *physx_PxTetrahedronMesh) -> physx_PxTetrahedronMeshGeometry #foreign physx_sys;
+PxQueryHit_new :: () -> PxQueryHit #foreign sys;
 
-PxTetrahedronMeshGeometry_isValid :: (self: *physx_PxTetrahedronMeshGeometry) -> bool #foreign physx_sys;
+PxLocationHit_new :: () -> PxLocationHit #foreign sys;
 
-PxQueryHit_new :: () -> physx_PxQueryHit #foreign physx_sys;
+PxLocationHit_hadInitialOverlap :: (self: *PxLocationHit) -> bool #foreign sys;
 
-PxLocationHit_new :: () -> physx_PxLocationHit #foreign physx_sys;
+PxGeomRaycastHit_new :: () -> PxGeomRaycastHit #foreign sys;
 
-PxLocationHit_hadInitialOverlap :: (self: *physx_PxLocationHit) -> bool #foreign physx_sys;
+PxGeomOverlapHit_new :: () -> PxGeomOverlapHit #foreign sys;
 
-PxGeomRaycastHit_new :: () -> physx_PxGeomRaycastHit #foreign physx_sys;
+PxGeomSweepHit_new :: () -> PxGeomSweepHit #foreign sys;
 
-PxGeomOverlapHit_new :: () -> physx_PxGeomOverlapHit #foreign physx_sys;
+PxGeomIndexPair_new :: () -> PxGeomIndexPair #foreign sys;
 
-PxGeomSweepHit_new :: () -> physx_PxGeomSweepHit #foreign physx_sys;
+PxGeomIndexPair_new :: (_id0: u32, _id1: u32) -> PxGeomIndexPair #foreign sys "PxGeomIndexPair_new_1";
 
-PxGeomIndexPair_new :: () -> physx_PxGeomIndexPair #foreign physx_sys;
+PxCustomGeometry_getUniqueID :: () -> u32 #foreign sys "phys_PxCustomGeometry_getUniqueID";
 
-PxGeomIndexPair_new_1 :: (_id0: u32, _id1: u32) -> physx_PxGeomIndexPair #foreign physx_sys;
+PxCustomGeometryType_new :: () -> PxCustomGeometryType #foreign sys;
 
-phys_PxCustomGeometry_getUniqueID :: () -> u32 #foreign physx_sys;
+PxCustomGeometryType_INVALID :: () -> PxCustomGeometryType #foreign sys;
 
-PxCustomGeometryType_new :: () -> physx_PxCustomGeometryType #foreign physx_sys;
+PxCustomGeometryCallbacks_getCustomType :: (self: *PxCustomGeometryCallbacks) -> PxCustomGeometryType #foreign sys;
 
-PxCustomGeometryType_INVALID :: () -> physx_PxCustomGeometryType #foreign physx_sys;
+PxCustomGeometryCallbacks_getLocalBounds :: (self: *PxCustomGeometryCallbacks, geometry: *PxGeometry) -> PxBounds3 #foreign sys;
 
-PxCustomGeometryCallbacks_getCustomType :: (self: *physx_PxCustomGeometryCallbacks) -> physx_PxCustomGeometryType #foreign physx_sys;
+PxCustomGeometryCallbacks_raycast :: (self: *PxCustomGeometryCallbacks, origin: *Vector3, unitDir: *Vector3, geom: *PxGeometry, pose: *PxTransform, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *PxGeomRaycastHit, stride: u32, threadContext: *PxQueryThreadContext) -> u32 #foreign sys;
 
-PxCustomGeometryCallbacks_getLocalBounds :: (self: *physx_PxCustomGeometryCallbacks, geometry: *physx_PxGeometry) -> physx_PxBounds3 #foreign physx_sys;
+PxCustomGeometryCallbacks_overlap :: (self: *PxCustomGeometryCallbacks, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, threadContext: *PxQueryThreadContext) -> bool #foreign sys;
 
-PxCustomGeometryCallbacks_raycast :: (self: *physx_PxCustomGeometryCallbacks, origin: *Vector3, unitDir: *Vector3, geom: *physx_PxGeometry, pose: *physx_PxTransform, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *physx_PxGeomRaycastHit, stride: u32, threadContext: *physx_PxQueryThreadContext) -> u32 #foreign physx_sys;
+PxCustomGeometryCallbacks_sweep :: (self: *PxCustomGeometryCallbacks, unitDir: *Vector3, maxDist: float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, sweepHit: *PxGeomSweepHit, hitFlags: u16, inflation: float, threadContext: *PxQueryThreadContext) -> bool #foreign sys;
 
-PxCustomGeometryCallbacks_overlap :: (self: *physx_PxCustomGeometryCallbacks, geom0: *physx_PxGeometry, pose0: *physx_PxTransform, geom1: *physx_PxGeometry, pose1: *physx_PxTransform, threadContext: *physx_PxQueryThreadContext) -> bool #foreign physx_sys;
+PxCustomGeometryCallbacks_computeMassProperties :: (self: *PxCustomGeometryCallbacks, geometry: *PxGeometry, massProperties: *PxMassProperties) -> void #foreign sys;
 
-PxCustomGeometryCallbacks_sweep :: (self: *physx_PxCustomGeometryCallbacks, unitDir: *Vector3, maxDist: float, geom0: *physx_PxGeometry, pose0: *physx_PxTransform, geom1: *physx_PxGeometry, pose1: *physx_PxTransform, sweepHit: *physx_PxGeomSweepHit, hitFlags: u16, inflation: float, threadContext: *physx_PxQueryThreadContext) -> bool #foreign physx_sys;
+PxCustomGeometryCallbacks_usePersistentContactManifold :: (self: *PxCustomGeometryCallbacks, geometry: *PxGeometry, breakingThreshold: *float) -> bool #foreign sys;
 
-PxCustomGeometryCallbacks_computeMassProperties :: (self: *physx_PxCustomGeometryCallbacks, geometry: *physx_PxGeometry, massProperties: *physx_PxMassProperties) -> void #foreign physx_sys;
+PxCustomGeometryCallbacks_delete :: (self: *PxCustomGeometryCallbacks) -> void #foreign sys;
 
-PxCustomGeometryCallbacks_usePersistentContactManifold :: (self: *physx_PxCustomGeometryCallbacks, geometry: *physx_PxGeometry, breakingThreshold: *float) -> bool #foreign physx_sys;
+PxCustomGeometry_new :: () -> PxCustomGeometry #foreign sys;
 
-PxCustomGeometryCallbacks_delete :: (self: *physx_PxCustomGeometryCallbacks) -> void #foreign physx_sys;
+PxCustomGeometry_new :: (_callbacks: *PxCustomGeometryCallbacks) -> PxCustomGeometry #foreign sys "PxCustomGeometry_new_1";
 
-PxCustomGeometry_new :: () -> physx_PxCustomGeometry #foreign physx_sys;
+PxCustomGeometry_isValid :: (self: *PxCustomGeometry) -> bool #foreign sys;
 
-PxCustomGeometry_new_1 :: (_callbacks: *physx_PxCustomGeometryCallbacks) -> physx_PxCustomGeometry #foreign physx_sys;
+PxCustomGeometry_getCustomType :: (self: *PxCustomGeometry) -> PxCustomGeometryType #foreign sys;
 
-PxCustomGeometry_isValid :: (self: *physx_PxCustomGeometry) -> bool #foreign physx_sys;
+PxGeometryHolder_getType :: (self: *PxGeometryHolder) -> s32 #foreign sys;
 
-PxCustomGeometry_getCustomType :: (self: *physx_PxCustomGeometry) -> physx_PxCustomGeometryType #foreign physx_sys;
+PxGeometryHolder_any :: (self: *PxGeometryHolder) -> *PxGeometry #foreign sys "PxGeometryHolder_any_mut";
 
-PxGeometryHolder_getType :: (self: *physx_PxGeometryHolder) -> s32 #foreign physx_sys;
+PxGeometryHolder_any :: (self: *PxGeometryHolder) -> *PxGeometry #foreign sys;
 
-PxGeometryHolder_any :: (self: *physx_PxGeometryHolder) -> *physx_PxGeometry #foreign physx_sys "PxGeometryHolder_any_mut";
+PxGeometryHolder_sphere :: (self: *PxGeometryHolder) -> *PxSphereGeometry #foreign sys "PxGeometryHolder_sphere_mut";
 
-PxGeometryHolder_any :: (self: *physx_PxGeometryHolder) -> *physx_PxGeometry #foreign physx_sys;
+PxGeometryHolder_sphere :: (self: *PxGeometryHolder) -> *PxSphereGeometry #foreign sys;
 
-PxGeometryHolder_sphere :: (self: *physx_PxGeometryHolder) -> *physx_PxSphereGeometry #foreign physx_sys "PxGeometryHolder_sphere_mut";
+PxGeometryHolder_plane :: (self: *PxGeometryHolder) -> *PxPlaneGeometry #foreign sys "PxGeometryHolder_plane_mut";
 
-PxGeometryHolder_sphere :: (self: *physx_PxGeometryHolder) -> *physx_PxSphereGeometry #foreign physx_sys;
+PxGeometryHolder_plane :: (self: *PxGeometryHolder) -> *PxPlaneGeometry #foreign sys;
 
-PxGeometryHolder_plane :: (self: *physx_PxGeometryHolder) -> *physx_PxPlaneGeometry #foreign physx_sys "PxGeometryHolder_plane_mut";
+PxGeometryHolder_capsule :: (self: *PxGeometryHolder) -> *PxCapsuleGeometry #foreign sys "PxGeometryHolder_capsule_mut";
 
-PxGeometryHolder_plane :: (self: *physx_PxGeometryHolder) -> *physx_PxPlaneGeometry #foreign physx_sys;
+PxGeometryHolder_capsule :: (self: *PxGeometryHolder) -> *PxCapsuleGeometry #foreign sys;
 
-PxGeometryHolder_capsule :: (self: *physx_PxGeometryHolder) -> *physx_PxCapsuleGeometry #foreign physx_sys "PxGeometryHolder_capsule_mut";
+PxGeometryHolder_box :: (self: *PxGeometryHolder) -> *PxBoxGeometry #foreign sys "PxGeometryHolder_box_mut";
 
-PxGeometryHolder_capsule :: (self: *physx_PxGeometryHolder) -> *physx_PxCapsuleGeometry #foreign physx_sys;
+PxGeometryHolder_box :: (self: *PxGeometryHolder) -> *PxBoxGeometry #foreign sys;
 
-PxGeometryHolder_box :: (self: *physx_PxGeometryHolder) -> *physx_PxBoxGeometry #foreign physx_sys "PxGeometryHolder_box_mut";
+PxGeometryHolder_convexMesh :: (self: *PxGeometryHolder) -> *PxConvexMeshGeometry #foreign sys "PxGeometryHolder_convexMesh_mut";
 
-PxGeometryHolder_box :: (self: *physx_PxGeometryHolder) -> *physx_PxBoxGeometry #foreign physx_sys;
+PxGeometryHolder_convexMesh :: (self: *PxGeometryHolder) -> *PxConvexMeshGeometry #foreign sys;
 
-PxGeometryHolder_convexMesh :: (self: *physx_PxGeometryHolder) -> *physx_PxConvexMeshGeometry #foreign physx_sys "PxGeometryHolder_convexMesh_mut";
+PxGeometryHolder_tetMesh :: (self: *PxGeometryHolder) -> *PxTetrahedronMeshGeometry #foreign sys "PxGeometryHolder_tetMesh_mut";
 
-PxGeometryHolder_convexMesh :: (self: *physx_PxGeometryHolder) -> *physx_PxConvexMeshGeometry #foreign physx_sys;
+PxGeometryHolder_tetMesh :: (self: *PxGeometryHolder) -> *PxTetrahedronMeshGeometry #foreign sys;
 
-PxGeometryHolder_tetMesh :: (self: *physx_PxGeometryHolder) -> *physx_PxTetrahedronMeshGeometry #foreign physx_sys "PxGeometryHolder_tetMesh_mut";
+PxGeometryHolder_triangleMesh :: (self: *PxGeometryHolder) -> *PxTriangleMeshGeometry #foreign sys "PxGeometryHolder_triangleMesh_mut";
 
-PxGeometryHolder_tetMesh :: (self: *physx_PxGeometryHolder) -> *physx_PxTetrahedronMeshGeometry #foreign physx_sys;
+PxGeometryHolder_triangleMesh :: (self: *PxGeometryHolder) -> *PxTriangleMeshGeometry #foreign sys;
 
-PxGeometryHolder_triangleMesh :: (self: *physx_PxGeometryHolder) -> *physx_PxTriangleMeshGeometry #foreign physx_sys "PxGeometryHolder_triangleMesh_mut";
+PxGeometryHolder_heightField :: (self: *PxGeometryHolder) -> *PxHeightFieldGeometry #foreign sys "PxGeometryHolder_heightField_mut";
 
-PxGeometryHolder_triangleMesh :: (self: *physx_PxGeometryHolder) -> *physx_PxTriangleMeshGeometry #foreign physx_sys;
+PxGeometryHolder_heightField :: (self: *PxGeometryHolder) -> *PxHeightFieldGeometry #foreign sys;
 
-PxGeometryHolder_heightField :: (self: *physx_PxGeometryHolder) -> *physx_PxHeightFieldGeometry #foreign physx_sys "PxGeometryHolder_heightField_mut";
+PxGeometryHolder_particleSystem :: (self: *PxGeometryHolder) -> *PxParticleSystemGeometry #foreign sys "PxGeometryHolder_particleSystem_mut";
 
-PxGeometryHolder_heightField :: (self: *physx_PxGeometryHolder) -> *physx_PxHeightFieldGeometry #foreign physx_sys;
+PxGeometryHolder_particleSystem :: (self: *PxGeometryHolder) -> *PxParticleSystemGeometry #foreign sys;
 
-PxGeometryHolder_particleSystem :: (self: *physx_PxGeometryHolder) -> *physx_PxParticleSystemGeometry #foreign physx_sys "PxGeometryHolder_particleSystem_mut";
+PxGeometryHolder_hairSystem :: (self: *PxGeometryHolder) -> *PxHairSystemGeometry #foreign sys "PxGeometryHolder_hairSystem_mut";
 
-PxGeometryHolder_particleSystem :: (self: *physx_PxGeometryHolder) -> *physx_PxParticleSystemGeometry #foreign physx_sys;
+PxGeometryHolder_hairSystem :: (self: *PxGeometryHolder) -> *PxHairSystemGeometry #foreign sys;
 
-PxGeometryHolder_hairSystem :: (self: *physx_PxGeometryHolder) -> *physx_PxHairSystemGeometry #foreign physx_sys "PxGeometryHolder_hairSystem_mut";
+PxGeometryHolder_custom :: (self: *PxGeometryHolder) -> *PxCustomGeometry #foreign sys "PxGeometryHolder_custom_mut";
 
-PxGeometryHolder_hairSystem :: (self: *physx_PxGeometryHolder) -> *physx_PxHairSystemGeometry #foreign physx_sys;
+PxGeometryHolder_custom :: (self: *PxGeometryHolder) -> *PxCustomGeometry #foreign sys;
 
-PxGeometryHolder_custom :: (self: *physx_PxGeometryHolder) -> *physx_PxCustomGeometry #foreign physx_sys "PxGeometryHolder_custom_mut";
+PxGeometryHolder_storeAny :: (self: *PxGeometryHolder, geometry: *PxGeometry) -> void #foreign sys "PxGeometryHolder_storeAny_mut";
 
-PxGeometryHolder_custom :: (self: *physx_PxGeometryHolder) -> *physx_PxCustomGeometry #foreign physx_sys;
+PxGeometryHolder_new :: () -> PxGeometryHolder #foreign sys;
 
-PxGeometryHolder_storeAny :: (self: *physx_PxGeometryHolder, geometry: *physx_PxGeometry) -> void #foreign physx_sys "PxGeometryHolder_storeAny_mut";
+PxGeometryHolder_new :: (geometry: *PxGeometry) -> PxGeometryHolder #foreign sys "PxGeometryHolder_new_1";
 
-PxGeometryHolder_new :: () -> physx_PxGeometryHolder #foreign physx_sys;
+PxGeometryQuery_raycast :: (origin: *Vector3, unitDir: *Vector3, geom: *PxGeometry, pose: *PxTransform, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *PxGeomRaycastHit, stride: u32, queryFlags: u32, threadContext: *PxQueryThreadContext) -> u32 #foreign sys;
 
-PxGeometryHolder_new_1 :: (geometry: *physx_PxGeometry) -> physx_PxGeometryHolder #foreign physx_sys;
+PxGeometryQuery_overlap :: (geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, queryFlags: u32, threadContext: *PxQueryThreadContext) -> bool #foreign sys;
 
-PxGeometryQuery_raycast :: (origin: *Vector3, unitDir: *Vector3, geom: *physx_PxGeometry, pose: *physx_PxTransform, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *physx_PxGeomRaycastHit, stride: u32, queryFlags: u32, threadContext: *physx_PxQueryThreadContext) -> u32 #foreign physx_sys;
+PxGeometryQuery_sweep :: (unitDir: *Vector3, maxDist: float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, sweepHit: *PxGeomSweepHit, hitFlags: u16, inflation: float, queryFlags: u32, threadContext: *PxQueryThreadContext) -> bool #foreign sys;
 
-PxGeometryQuery_overlap :: (geom0: *physx_PxGeometry, pose0: *physx_PxTransform, geom1: *physx_PxGeometry, pose1: *physx_PxTransform, queryFlags: u32, threadContext: *physx_PxQueryThreadContext) -> bool #foreign physx_sys;
+PxGeometryQuery_computePenetration :: (direction: *Vector3, depth: *float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, queryFlags: u32) -> bool #foreign sys;
 
-PxGeometryQuery_sweep :: (unitDir: *Vector3, maxDist: float, geom0: *physx_PxGeometry, pose0: *physx_PxTransform, geom1: *physx_PxGeometry, pose1: *physx_PxTransform, sweepHit: *physx_PxGeomSweepHit, hitFlags: u16, inflation: float, queryFlags: u32, threadContext: *physx_PxQueryThreadContext) -> bool #foreign physx_sys;
+PxGeometryQuery_pointDistance :: (point: *Vector3, geom: *PxGeometry, pose: *PxTransform, closestPoint: *Vector3, closestIndex: *u32, queryFlags: u32) -> float #foreign sys;
 
-PxGeometryQuery_computePenetration :: (direction: *Vector3, depth: *float, geom0: *physx_PxGeometry, pose0: *physx_PxTransform, geom1: *physx_PxGeometry, pose1: *physx_PxTransform, queryFlags: u32) -> bool #foreign physx_sys;
+PxGeometryQuery_computeGeomBounds :: (bounds: *PxBounds3, geom: *PxGeometry, pose: *PxTransform, offset: float, inflation: float, queryFlags: u32) -> void #foreign sys;
 
-PxGeometryQuery_pointDistance :: (point: *Vector3, geom: *physx_PxGeometry, pose: *physx_PxTransform, closestPoint: *Vector3, closestIndex: *u32, queryFlags: u32) -> float #foreign physx_sys;
+PxGeometryQuery_isValid :: (geom: *PxGeometry) -> bool #foreign sys;
 
-PxGeometryQuery_computeGeomBounds :: (bounds: *physx_PxBounds3, geom: *physx_PxGeometry, pose: *physx_PxTransform, offset: float, inflation: float, queryFlags: u32) -> void #foreign physx_sys;
+PxHeightFieldSample_tessFlag :: (self: *PxHeightFieldSample) -> u8 #foreign sys;
 
-PxGeometryQuery_isValid :: (geom: *physx_PxGeometry) -> bool #foreign physx_sys;
+PxHeightFieldSample_setTessFlag :: (self: *PxHeightFieldSample) -> void #foreign sys "PxHeightFieldSample_setTessFlag_mut";
 
-PxHeightFieldSample_tessFlag :: (self: *physx_PxHeightFieldSample) -> u8 #foreign physx_sys;
+PxHeightFieldSample_clearTessFlag :: (self: *PxHeightFieldSample) -> void #foreign sys "PxHeightFieldSample_clearTessFlag_mut";
 
-PxHeightFieldSample_setTessFlag :: (self: *physx_PxHeightFieldSample) -> void #foreign physx_sys "PxHeightFieldSample_setTessFlag_mut";
+PxHeightField_release :: (self: *PxHeightField) -> void #foreign sys "PxHeightField_release_mut";
 
-PxHeightFieldSample_clearTessFlag :: (self: *physx_PxHeightFieldSample) -> void #foreign physx_sys "PxHeightFieldSample_clearTessFlag_mut";
+PxHeightField_saveCells :: (self: *PxHeightField, destBuffer: *void, destBufferSize: u32) -> u32 #foreign sys;
 
-PxHeightField_release :: (self: *physx_PxHeightField) -> void #foreign physx_sys "PxHeightField_release_mut";
+PxHeightField_modifySamples :: (self: *PxHeightField, startCol: s32, startRow: s32, subfieldDesc: *PxHeightFieldDesc, shrinkBounds: bool) -> bool #foreign sys "PxHeightField_modifySamples_mut";
 
-PxHeightField_saveCells :: (self: *physx_PxHeightField, destBuffer: *void, destBufferSize: u32) -> u32 #foreign physx_sys;
+PxHeightField_getNbRows :: (self: *PxHeightField) -> u32 #foreign sys;
 
-PxHeightField_modifySamples :: (self: *physx_PxHeightField, startCol: s32, startRow: s32, subfieldDesc: *physx_PxHeightFieldDesc, shrinkBounds: bool) -> bool #foreign physx_sys "PxHeightField_modifySamples_mut";
+PxHeightField_getNbColumns :: (self: *PxHeightField) -> u32 #foreign sys;
 
-PxHeightField_getNbRows :: (self: *physx_PxHeightField) -> u32 #foreign physx_sys;
+PxHeightField_getFormat :: (self: *PxHeightField) -> s32 #foreign sys;
 
-PxHeightField_getNbColumns :: (self: *physx_PxHeightField) -> u32 #foreign physx_sys;
+PxHeightField_getSampleStride :: (self: *PxHeightField) -> u32 #foreign sys;
 
-PxHeightField_getFormat :: (self: *physx_PxHeightField) -> s32 #foreign physx_sys;
+PxHeightField_getConvexEdgeThreshold :: (self: *PxHeightField) -> float #foreign sys;
 
-PxHeightField_getSampleStride :: (self: *physx_PxHeightField) -> u32 #foreign physx_sys;
+PxHeightField_getFlags :: (self: *PxHeightField) -> u16 #foreign sys;
 
-PxHeightField_getConvexEdgeThreshold :: (self: *physx_PxHeightField) -> float #foreign physx_sys;
+PxHeightField_getHeight :: (self: *PxHeightField, x: float, z: float) -> float #foreign sys;
 
-PxHeightField_getFlags :: (self: *physx_PxHeightField) -> u16 #foreign physx_sys;
+PxHeightField_getTriangleMaterialIndex :: (self: *PxHeightField, triangleIndex: u32) -> u16 #foreign sys;
 
-PxHeightField_getHeight :: (self: *physx_PxHeightField, x: float, z: float) -> float #foreign physx_sys;
+PxHeightField_getTriangleNormal :: (self: *PxHeightField, triangleIndex: u32) -> Vector3 #foreign sys;
 
-PxHeightField_getTriangleMaterialIndex :: (self: *physx_PxHeightField, triangleIndex: u32) -> u16 #foreign physx_sys;
+PxHeightField_getSample :: (self: *PxHeightField, row: u32, column: u32) -> *PxHeightFieldSample #foreign sys;
 
-PxHeightField_getTriangleNormal :: (self: *physx_PxHeightField, triangleIndex: u32) -> Vector3 #foreign physx_sys;
+PxHeightField_getTimestamp :: (self: *PxHeightField) -> u32 #foreign sys;
 
-PxHeightField_getSample :: (self: *physx_PxHeightField, row: u32, column: u32) -> *physx_PxHeightFieldSample #foreign physx_sys;
+PxHeightField_getConcreteTypeName :: (self: *PxHeightField) -> *u8 #foreign sys;
 
-PxHeightField_getTimestamp :: (self: *physx_PxHeightField) -> u32 #foreign physx_sys;
+PxHeightFieldDesc_new :: () -> PxHeightFieldDesc #foreign sys;
 
-PxHeightField_getConcreteTypeName :: (self: *physx_PxHeightField) -> *u8 #foreign physx_sys;
+PxHeightFieldDesc_setToDefault :: (self: *PxHeightFieldDesc) -> void #foreign sys "PxHeightFieldDesc_setToDefault_mut";
 
-PxHeightFieldDesc_new :: () -> physx_PxHeightFieldDesc #foreign physx_sys;
+PxHeightFieldDesc_isValid :: (self: *PxHeightFieldDesc) -> bool #foreign sys;
 
-PxHeightFieldDesc_setToDefault :: (self: *physx_PxHeightFieldDesc) -> void #foreign physx_sys "PxHeightFieldDesc_setToDefault_mut";
+PxMeshQuery_getTriangle :: (triGeom: *PxTriangleMeshGeometry, transform: *PxTransform, triangleIndex: u32, triangle: *PxTriangle, vertexIndices: *u32, adjacencyIndices: *u32) -> void #foreign sys;
 
-PxHeightFieldDesc_isValid :: (self: *physx_PxHeightFieldDesc) -> bool #foreign physx_sys;
+PxMeshQuery_getTriangle :: (hfGeom: *PxHeightFieldGeometry, transform: *PxTransform, triangleIndex: u32, triangle: *PxTriangle, vertexIndices: *u32, adjacencyIndices: *u32) -> void #foreign sys "PxMeshQuery_getTriangle_1";
 
-PxMeshQuery_getTriangle :: (triGeom: *physx_PxTriangleMeshGeometry, transform: *physx_PxTransform, triangleIndex: u32, triangle: *physx_PxTriangle, vertexIndices: *u32, adjacencyIndices: *u32) -> void #foreign physx_sys;
+PxMeshQuery_findOverlapTriangleMesh :: (geom: *PxGeometry, geomPose: *PxTransform, meshGeom: *PxTriangleMeshGeometry, meshPose: *PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: u32) -> u32 #foreign sys;
 
-PxMeshQuery_getTriangle_1 :: (hfGeom: *physx_PxHeightFieldGeometry, transform: *physx_PxTransform, triangleIndex: u32, triangle: *physx_PxTriangle, vertexIndices: *u32, adjacencyIndices: *u32) -> void #foreign physx_sys;
+PxMeshQuery_findOverlapHeightField :: (geom: *PxGeometry, geomPose: *PxTransform, hfGeom: *PxHeightFieldGeometry, hfPose: *PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: u32) -> u32 #foreign sys;
 
-PxMeshQuery_findOverlapTriangleMesh :: (geom: *physx_PxGeometry, geomPose: *physx_PxTransform, meshGeom: *physx_PxTriangleMeshGeometry, meshPose: *physx_PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: u32) -> u32 #foreign physx_sys;
+PxMeshQuery_sweep :: (unitDir: *Vector3, distance: float, geom: *PxGeometry, pose: *PxTransform, triangleCount: u32, triangles: *PxTriangle, sweepHit: *PxGeomSweepHit, hitFlags: u16, cachedIndex: *u32, inflation: float, doubleSided: bool, queryFlags: u32) -> bool #foreign sys;
 
-PxMeshQuery_findOverlapHeightField :: (geom: *physx_PxGeometry, geomPose: *physx_PxTransform, hfGeom: *physx_PxHeightFieldGeometry, hfPose: *physx_PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: u32) -> u32 #foreign physx_sys;
+PxSimpleTriangleMesh_new :: () -> PxSimpleTriangleMesh #foreign sys;
 
-PxMeshQuery_sweep :: (unitDir: *Vector3, distance: float, geom: *physx_PxGeometry, pose: *physx_PxTransform, triangleCount: u32, triangles: *physx_PxTriangle, sweepHit: *physx_PxGeomSweepHit, hitFlags: u16, cachedIndex: *u32, inflation: float, doubleSided: bool, queryFlags: u32) -> bool #foreign physx_sys;
+PxSimpleTriangleMesh_setToDefault :: (self: *PxSimpleTriangleMesh) -> void #foreign sys "PxSimpleTriangleMesh_setToDefault_mut";
 
-PxSimpleTriangleMesh_new :: () -> physx_PxSimpleTriangleMesh #foreign physx_sys;
+PxSimpleTriangleMesh_isValid :: (self: *PxSimpleTriangleMesh) -> bool #foreign sys;
 
-PxSimpleTriangleMesh_setToDefault :: (self: *physx_PxSimpleTriangleMesh) -> void #foreign physx_sys "PxSimpleTriangleMesh_setToDefault_mut";
+PxTriangle_new_alloc :: () -> *PxTriangle #foreign sys;
 
-PxSimpleTriangleMesh_isValid :: (self: *physx_PxSimpleTriangleMesh) -> bool #foreign physx_sys;
+PxTriangle_new_alloc :: (p0: *Vector3, p1: *Vector3, p2: *Vector3) -> *PxTriangle #foreign sys "PxTriangle_new_alloc_1";
 
-PxTriangle_new_alloc :: () -> *physx_PxTriangle #foreign physx_sys;
+PxTriangle_delete :: (self: *PxTriangle) -> void #foreign sys;
 
-PxTriangle_new_alloc_1 :: (p0: *Vector3, p1: *Vector3, p2: *Vector3) -> *physx_PxTriangle #foreign physx_sys;
+PxTriangle_normal :: (self: *PxTriangle, _normal: *Vector3) -> void #foreign sys;
 
-PxTriangle_delete :: (self: *physx_PxTriangle) -> void #foreign physx_sys;
+PxTriangle_denormalizedNormal :: (self: *PxTriangle, _normal: *Vector3) -> void #foreign sys;
 
-PxTriangle_normal :: (self: *physx_PxTriangle, _normal: *Vector3) -> void #foreign physx_sys;
+PxTriangle_area :: (self: *PxTriangle) -> float #foreign sys;
 
-PxTriangle_denormalizedNormal :: (self: *physx_PxTriangle, _normal: *Vector3) -> void #foreign physx_sys;
+PxTriangle_pointFromUV :: (self: *PxTriangle, u: float, v: float) -> Vector3 #foreign sys;
 
-PxTriangle_area :: (self: *physx_PxTriangle) -> float #foreign physx_sys;
+PxTrianglePadded_new_alloc :: () -> *PxTrianglePadded #foreign sys;
 
-PxTriangle_pointFromUV :: (self: *physx_PxTriangle, u: float, v: float) -> Vector3 #foreign physx_sys;
+PxTrianglePadded_delete :: (self: *PxTrianglePadded) -> void #foreign sys;
 
-PxTrianglePadded_new_alloc :: () -> *physx_PxTrianglePadded #foreign physx_sys;
+PxTriangleMesh_getNbVertices :: (self: *PxTriangleMesh) -> u32 #foreign sys;
 
-PxTrianglePadded_delete :: (self: *physx_PxTrianglePadded) -> void #foreign physx_sys;
+PxTriangleMesh_getVertices :: (self: *PxTriangleMesh) -> *Vector3 #foreign sys;
 
-PxTriangleMesh_getNbVertices :: (self: *physx_PxTriangleMesh) -> u32 #foreign physx_sys;
+PxTriangleMesh_getVerticesForModification :: (self: *PxTriangleMesh) -> *Vector3 #foreign sys "PxTriangleMesh_getVerticesForModification_mut";
 
-PxTriangleMesh_getVertices :: (self: *physx_PxTriangleMesh) -> *Vector3 #foreign physx_sys;
+PxTriangleMesh_refitBVH :: (self: *PxTriangleMesh) -> PxBounds3 #foreign sys "PxTriangleMesh_refitBVH_mut";
 
-PxTriangleMesh_getVerticesForModification :: (self: *physx_PxTriangleMesh) -> *Vector3 #foreign physx_sys "PxTriangleMesh_getVerticesForModification_mut";
+PxTriangleMesh_getNbTriangles :: (self: *PxTriangleMesh) -> u32 #foreign sys;
 
-PxTriangleMesh_refitBVH :: (self: *physx_PxTriangleMesh) -> physx_PxBounds3 #foreign physx_sys "PxTriangleMesh_refitBVH_mut";
+PxTriangleMesh_getTriangles :: (self: *PxTriangleMesh) -> *void #foreign sys;
 
-PxTriangleMesh_getNbTriangles :: (self: *physx_PxTriangleMesh) -> u32 #foreign physx_sys;
+PxTriangleMesh_getTriangleMeshFlags :: (self: *PxTriangleMesh) -> u8 #foreign sys;
 
-PxTriangleMesh_getTriangles :: (self: *physx_PxTriangleMesh) -> *void #foreign physx_sys;
+PxTriangleMesh_getTrianglesRemap :: (self: *PxTriangleMesh) -> *u32 #foreign sys;
 
-PxTriangleMesh_getTriangleMeshFlags :: (self: *physx_PxTriangleMesh) -> u8 #foreign physx_sys;
+PxTriangleMesh_release :: (self: *PxTriangleMesh) -> void #foreign sys "PxTriangleMesh_release_mut";
 
-PxTriangleMesh_getTrianglesRemap :: (self: *physx_PxTriangleMesh) -> *u32 #foreign physx_sys;
+PxTriangleMesh_getTriangleMaterialIndex :: (self: *PxTriangleMesh, triangleIndex: u32) -> u16 #foreign sys;
 
-PxTriangleMesh_release :: (self: *physx_PxTriangleMesh) -> void #foreign physx_sys "PxTriangleMesh_release_mut";
+PxTriangleMesh_getLocalBounds :: (self: *PxTriangleMesh) -> PxBounds3 #foreign sys;
 
-PxTriangleMesh_getTriangleMaterialIndex :: (self: *physx_PxTriangleMesh, triangleIndex: u32) -> u16 #foreign physx_sys;
+PxTriangleMesh_getSDF :: (self: *PxTriangleMesh) -> *float #foreign sys;
 
-PxTriangleMesh_getLocalBounds :: (self: *physx_PxTriangleMesh) -> physx_PxBounds3 #foreign physx_sys;
+PxTriangleMesh_getSDFDimensions :: (self: *PxTriangleMesh, numX: *u32, numY: *u32, numZ: *u32) -> void #foreign sys;
 
-PxTriangleMesh_getSDF :: (self: *physx_PxTriangleMesh) -> *float #foreign physx_sys;
+PxTriangleMesh_setPreferSDFProjection :: (self: *PxTriangleMesh, preferProjection: bool) -> void #foreign sys "PxTriangleMesh_setPreferSDFProjection_mut";
 
-PxTriangleMesh_getSDFDimensions :: (self: *physx_PxTriangleMesh, numX: *u32, numY: *u32, numZ: *u32) -> void #foreign physx_sys;
+PxTriangleMesh_getPreferSDFProjection :: (self: *PxTriangleMesh) -> bool #foreign sys;
 
-PxTriangleMesh_setPreferSDFProjection :: (self: *physx_PxTriangleMesh, preferProjection: bool) -> void #foreign physx_sys "PxTriangleMesh_setPreferSDFProjection_mut";
+PxTriangleMesh_getMassInformation :: (self: *PxTriangleMesh, mass: *float, localInertia: *PxMat33, localCenterOfMass: *Vector3) -> void #foreign sys;
 
-PxTriangleMesh_getPreferSDFProjection :: (self: *physx_PxTriangleMesh) -> bool #foreign physx_sys;
+PxTetrahedron_new_alloc :: () -> *PxTetrahedron #foreign sys;
 
-PxTriangleMesh_getMassInformation :: (self: *physx_PxTriangleMesh, mass: *float, localInertia: *physx_PxMat33, localCenterOfMass: *Vector3) -> void #foreign physx_sys;
+PxTetrahedron_new_alloc :: (p0: *Vector3, p1: *Vector3, p2: *Vector3, p3: *Vector3) -> *PxTetrahedron #foreign sys "PxTetrahedron_new_alloc_1";
 
-PxTetrahedron_new_alloc :: () -> *physx_PxTetrahedron #foreign physx_sys;
+PxTetrahedron_delete :: (self: *PxTetrahedron) -> void #foreign sys;
 
-PxTetrahedron_new_alloc_1 :: (p0: *Vector3, p1: *Vector3, p2: *Vector3, p3: *Vector3) -> *physx_PxTetrahedron #foreign physx_sys;
+PxSoftBodyAuxData_release :: (self: *PxSoftBodyAuxData) -> void #foreign sys "PxSoftBodyAuxData_release_mut";
 
-PxTetrahedron_delete :: (self: *physx_PxTetrahedron) -> void #foreign physx_sys;
+PxTetrahedronMesh_getNbVertices :: (self: *PxTetrahedronMesh) -> u32 #foreign sys;
 
-PxSoftBodyAuxData_release :: (self: *physx_PxSoftBodyAuxData) -> void #foreign physx_sys "PxSoftBodyAuxData_release_mut";
+PxTetrahedronMesh_getVertices :: (self: *PxTetrahedronMesh) -> *Vector3 #foreign sys;
 
-PxTetrahedronMesh_getNbVertices :: (self: *physx_PxTetrahedronMesh) -> u32 #foreign physx_sys;
+PxTetrahedronMesh_getNbTetrahedrons :: (self: *PxTetrahedronMesh) -> u32 #foreign sys;
 
-PxTetrahedronMesh_getVertices :: (self: *physx_PxTetrahedronMesh) -> *Vector3 #foreign physx_sys;
+PxTetrahedronMesh_getTetrahedrons :: (self: *PxTetrahedronMesh) -> *void #foreign sys;
 
-PxTetrahedronMesh_getNbTetrahedrons :: (self: *physx_PxTetrahedronMesh) -> u32 #foreign physx_sys;
+PxTetrahedronMesh_getTetrahedronMeshFlags :: (self: *PxTetrahedronMesh) -> u8 #foreign sys;
 
-PxTetrahedronMesh_getTetrahedrons :: (self: *physx_PxTetrahedronMesh) -> *void #foreign physx_sys;
+PxTetrahedronMesh_getTetrahedraRemap :: (self: *PxTetrahedronMesh) -> *u32 #foreign sys;
 
-PxTetrahedronMesh_getTetrahedronMeshFlags :: (self: *physx_PxTetrahedronMesh) -> u8 #foreign physx_sys;
+PxTetrahedronMesh_getLocalBounds :: (self: *PxTetrahedronMesh) -> PxBounds3 #foreign sys;
 
-PxTetrahedronMesh_getTetrahedraRemap :: (self: *physx_PxTetrahedronMesh) -> *u32 #foreign physx_sys;
+PxTetrahedronMesh_release :: (self: *PxTetrahedronMesh) -> void #foreign sys "PxTetrahedronMesh_release_mut";
 
-PxTetrahedronMesh_getLocalBounds :: (self: *physx_PxTetrahedronMesh) -> physx_PxBounds3 #foreign physx_sys;
+PxSoftBodyMesh_getCollisionMesh :: (self: *PxSoftBodyMesh) -> *PxTetrahedronMesh #foreign sys;
 
-PxTetrahedronMesh_release :: (self: *physx_PxTetrahedronMesh) -> void #foreign physx_sys "PxTetrahedronMesh_release_mut";
+PxSoftBodyMesh_getCollisionMesh :: (self: *PxSoftBodyMesh) -> *PxTetrahedronMesh #foreign sys "PxSoftBodyMesh_getCollisionMesh_mut";
 
-PxSoftBodyMesh_getCollisionMesh :: (self: *physx_PxSoftBodyMesh) -> *physx_PxTetrahedronMesh #foreign physx_sys;
+PxSoftBodyMesh_getSimulationMesh :: (self: *PxSoftBodyMesh) -> *PxTetrahedronMesh #foreign sys;
 
-PxSoftBodyMesh_getCollisionMesh :: (self: *physx_PxSoftBodyMesh) -> *physx_PxTetrahedronMesh #foreign physx_sys "PxSoftBodyMesh_getCollisionMesh_mut";
+PxSoftBodyMesh_getSimulationMesh :: (self: *PxSoftBodyMesh) -> *PxTetrahedronMesh #foreign sys "PxSoftBodyMesh_getSimulationMesh_mut";
 
-PxSoftBodyMesh_getSimulationMesh :: (self: *physx_PxSoftBodyMesh) -> *physx_PxTetrahedronMesh #foreign physx_sys;
+PxSoftBodyMesh_getSoftBodyAuxData :: (self: *PxSoftBodyMesh) -> *PxSoftBodyAuxData #foreign sys;
 
-PxSoftBodyMesh_getSimulationMesh :: (self: *physx_PxSoftBodyMesh) -> *physx_PxTetrahedronMesh #foreign physx_sys "PxSoftBodyMesh_getSimulationMesh_mut";
+PxSoftBodyMesh_getSoftBodyAuxData :: (self: *PxSoftBodyMesh) -> *PxSoftBodyAuxData #foreign sys "PxSoftBodyMesh_getSoftBodyAuxData_mut";
 
-PxSoftBodyMesh_getSoftBodyAuxData :: (self: *physx_PxSoftBodyMesh) -> *physx_PxSoftBodyAuxData #foreign physx_sys;
+PxSoftBodyMesh_release :: (self: *PxSoftBodyMesh) -> void #foreign sys "PxSoftBodyMesh_release_mut";
 
-PxSoftBodyMesh_getSoftBodyAuxData :: (self: *physx_PxSoftBodyMesh) -> *physx_PxSoftBodyAuxData #foreign physx_sys "PxSoftBodyMesh_getSoftBodyAuxData_mut";
+PxCollisionMeshMappingData_release :: (self: *PxCollisionMeshMappingData) -> void #foreign sys "PxCollisionMeshMappingData_release_mut";
 
-PxSoftBodyMesh_release :: (self: *physx_PxSoftBodyMesh) -> void #foreign physx_sys "PxSoftBodyMesh_release_mut";
+PxCollisionTetrahedronMeshData_getMesh :: (self: *PxCollisionTetrahedronMeshData) -> *PxTetrahedronMeshData #foreign sys;
 
-PxCollisionMeshMappingData_release :: (self: *physx_PxCollisionMeshMappingData) -> void #foreign physx_sys "PxCollisionMeshMappingData_release_mut";
+PxCollisionTetrahedronMeshData_getMesh :: (self: *PxCollisionTetrahedronMeshData) -> *PxTetrahedronMeshData #foreign sys "PxCollisionTetrahedronMeshData_getMesh_mut";
 
-PxCollisionTetrahedronMeshData_getMesh :: (self: *physx_PxCollisionTetrahedronMeshData) -> *physx_PxTetrahedronMeshData #foreign physx_sys;
+PxCollisionTetrahedronMeshData_getData :: (self: *PxCollisionTetrahedronMeshData) -> *PxSoftBodyCollisionData #foreign sys;
 
-PxCollisionTetrahedronMeshData_getMesh :: (self: *physx_PxCollisionTetrahedronMeshData) -> *physx_PxTetrahedronMeshData #foreign physx_sys "PxCollisionTetrahedronMeshData_getMesh_mut";
+PxCollisionTetrahedronMeshData_getData :: (self: *PxCollisionTetrahedronMeshData) -> *PxSoftBodyCollisionData #foreign sys "PxCollisionTetrahedronMeshData_getData_mut";
 
-PxCollisionTetrahedronMeshData_getData :: (self: *physx_PxCollisionTetrahedronMeshData) -> *physx_PxSoftBodyCollisionData #foreign physx_sys;
+PxCollisionTetrahedronMeshData_release :: (self: *PxCollisionTetrahedronMeshData) -> void #foreign sys "PxCollisionTetrahedronMeshData_release_mut";
 
-PxCollisionTetrahedronMeshData_getData :: (self: *physx_PxCollisionTetrahedronMeshData) -> *physx_PxSoftBodyCollisionData #foreign physx_sys "PxCollisionTetrahedronMeshData_getData_mut";
+PxSimulationTetrahedronMeshData_getMesh :: (self: *PxSimulationTetrahedronMeshData) -> *PxTetrahedronMeshData #foreign sys "PxSimulationTetrahedronMeshData_getMesh_mut";
 
-PxCollisionTetrahedronMeshData_release :: (self: *physx_PxCollisionTetrahedronMeshData) -> void #foreign physx_sys "PxCollisionTetrahedronMeshData_release_mut";
+PxSimulationTetrahedronMeshData_getData :: (self: *PxSimulationTetrahedronMeshData) -> *PxSoftBodySimulationData #foreign sys "PxSimulationTetrahedronMeshData_getData_mut";
 
-PxSimulationTetrahedronMeshData_getMesh :: (self: *physx_PxSimulationTetrahedronMeshData) -> *physx_PxTetrahedronMeshData #foreign physx_sys "PxSimulationTetrahedronMeshData_getMesh_mut";
+PxSimulationTetrahedronMeshData_release :: (self: *PxSimulationTetrahedronMeshData) -> void #foreign sys "PxSimulationTetrahedronMeshData_release_mut";
 
-PxSimulationTetrahedronMeshData_getData :: (self: *physx_PxSimulationTetrahedronMeshData) -> *physx_PxSoftBodySimulationData #foreign physx_sys "PxSimulationTetrahedronMeshData_getData_mut";
+PxActor_release :: (self: *PxActor) -> void #foreign sys "PxActor_release_mut";
 
-PxSimulationTetrahedronMeshData_release :: (self: *physx_PxSimulationTetrahedronMeshData) -> void #foreign physx_sys "PxSimulationTetrahedronMeshData_release_mut";
+PxActor_getType :: (self: *PxActor) -> s32 #foreign sys;
 
-PxActor_release :: (self: *physx_PxActor) -> void #foreign physx_sys "PxActor_release_mut";
+PxActor_getScene :: (self: *PxActor) -> *PxScene #foreign sys;
 
-PxActor_getType :: (self: *physx_PxActor) -> s32 #foreign physx_sys;
+PxActor_setName :: (self: *PxActor, name: *u8) -> void #foreign sys "PxActor_setName_mut";
 
-PxActor_getScene :: (self: *physx_PxActor) -> *physx_PxScene #foreign physx_sys;
+PxActor_getName :: (self: *PxActor) -> *u8 #foreign sys;
 
-PxActor_setName :: (self: *physx_PxActor, name: *u8) -> void #foreign physx_sys "PxActor_setName_mut";
+PxActor_getWorldBounds :: (self: *PxActor, inflation: float) -> PxBounds3 #foreign sys;
 
-PxActor_getName :: (self: *physx_PxActor) -> *u8 #foreign physx_sys;
+PxActor_setActorFlag :: (self: *PxActor, flag: s32, value: bool) -> void #foreign sys "PxActor_setActorFlag_mut";
 
-PxActor_getWorldBounds :: (self: *physx_PxActor, inflation: float) -> physx_PxBounds3 #foreign physx_sys;
+PxActor_setActorFlags :: (self: *PxActor, inFlags: u8) -> void #foreign sys "PxActor_setActorFlags_mut";
 
-PxActor_setActorFlag :: (self: *physx_PxActor, flag: s32, value: bool) -> void #foreign physx_sys "PxActor_setActorFlag_mut";
+PxActor_getActorFlags :: (self: *PxActor) -> u8 #foreign sys;
 
-PxActor_setActorFlags :: (self: *physx_PxActor, inFlags: u8) -> void #foreign physx_sys "PxActor_setActorFlags_mut";
+PxActor_setDominanceGroup :: (self: *PxActor, dominanceGroup: u8) -> void #foreign sys "PxActor_setDominanceGroup_mut";
 
-PxActor_getActorFlags :: (self: *physx_PxActor) -> u8 #foreign physx_sys;
+PxActor_getDominanceGroup :: (self: *PxActor) -> u8 #foreign sys;
 
-PxActor_setDominanceGroup :: (self: *physx_PxActor, dominanceGroup: u8) -> void #foreign physx_sys "PxActor_setDominanceGroup_mut";
+PxActor_setOwnerClient :: (self: *PxActor, inClient: u8) -> void #foreign sys "PxActor_setOwnerClient_mut";
 
-PxActor_getDominanceGroup :: (self: *physx_PxActor) -> u8 #foreign physx_sys;
+PxActor_getOwnerClient :: (self: *PxActor) -> u8 #foreign sys;
 
-PxActor_setOwnerClient :: (self: *physx_PxActor, inClient: u8) -> void #foreign physx_sys "PxActor_setOwnerClient_mut";
+PxActor_getAggregate :: (self: *PxActor) -> *PxAggregate #foreign sys;
 
-PxActor_getOwnerClient :: (self: *physx_PxActor) -> u8 #foreign physx_sys;
+PxGetAggregateFilterHint :: (type: s32, enableSelfCollision: bool) -> u32 #foreign sys "phys_PxGetAggregateFilterHint";
 
-PxActor_getAggregate :: (self: *physx_PxActor) -> *physx_PxAggregate #foreign physx_sys;
+PxGetAggregateSelfCollisionBit :: (hint: u32) -> u32 #foreign sys "phys_PxGetAggregateSelfCollisionBit";
 
-phys_PxGetAggregateFilterHint :: (type: s32, enableSelfCollision: bool) -> u32 #foreign physx_sys;
+PxGetAggregateType :: (hint: u32) -> s32 #foreign sys "phys_PxGetAggregateType";
 
-phys_PxGetAggregateSelfCollisionBit :: (hint: u32) -> u32 #foreign physx_sys;
+PxAggregate_release :: (self: *PxAggregate) -> void #foreign sys "PxAggregate_release_mut";
 
-phys_PxGetAggregateType :: (hint: u32) -> s32 #foreign physx_sys;
+PxAggregate_addActor :: (self: *PxAggregate, actor: *PxActor, bvh: *PxBVH) -> bool #foreign sys "PxAggregate_addActor_mut";
 
-PxAggregate_release :: (self: *physx_PxAggregate) -> void #foreign physx_sys "PxAggregate_release_mut";
+PxAggregate_removeActor :: (self: *PxAggregate, actor: *PxActor) -> bool #foreign sys "PxAggregate_removeActor_mut";
 
-PxAggregate_addActor :: (self: *physx_PxAggregate, actor: *physx_PxActor, bvh: *physx_PxBVH) -> bool #foreign physx_sys "PxAggregate_addActor_mut";
+PxAggregate_addArticulation :: (self: *PxAggregate, articulation: *PxArticulationReducedCoordinate) -> bool #foreign sys "PxAggregate_addArticulation_mut";
 
-PxAggregate_removeActor :: (self: *physx_PxAggregate, actor: *physx_PxActor) -> bool #foreign physx_sys "PxAggregate_removeActor_mut";
+PxAggregate_removeArticulation :: (self: *PxAggregate, articulation: *PxArticulationReducedCoordinate) -> bool #foreign sys "PxAggregate_removeArticulation_mut";
 
-PxAggregate_addArticulation :: (self: *physx_PxAggregate, articulation: *physx_PxArticulationReducedCoordinate) -> bool #foreign physx_sys "PxAggregate_addArticulation_mut";
+PxAggregate_getNbActors :: (self: *PxAggregate) -> u32 #foreign sys;
 
-PxAggregate_removeArticulation :: (self: *physx_PxAggregate, articulation: *physx_PxArticulationReducedCoordinate) -> bool #foreign physx_sys "PxAggregate_removeArticulation_mut";
+PxAggregate_getMaxNbShapes :: (self: *PxAggregate) -> u32 #foreign sys;
 
-PxAggregate_getNbActors :: (self: *physx_PxAggregate) -> u32 #foreign physx_sys;
+PxAggregate_getActors :: (self: *PxAggregate, userBuffer: **PxActor, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxAggregate_getMaxNbShapes :: (self: *physx_PxAggregate) -> u32 #foreign physx_sys;
+PxAggregate_getScene :: (self: *PxAggregate) -> *PxScene #foreign sys "PxAggregate_getScene_mut";
 
-PxAggregate_getActors :: (self: *physx_PxAggregate, userBuffer: **physx_PxActor, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxAggregate_getSelfCollision :: (self: *PxAggregate) -> bool #foreign sys;
 
-PxAggregate_getScene :: (self: *physx_PxAggregate) -> *physx_PxScene #foreign physx_sys "PxAggregate_getScene_mut";
+PxAggregate_getConcreteTypeName :: (self: *PxAggregate) -> *u8 #foreign sys;
 
-PxAggregate_getSelfCollision :: (self: *physx_PxAggregate) -> bool #foreign physx_sys;
+PxConstraintInvMassScale_new :: () -> PxConstraintInvMassScale #foreign sys;
 
-PxAggregate_getConcreteTypeName :: (self: *physx_PxAggregate) -> *u8 #foreign physx_sys;
+PxConstraintInvMassScale_new :: (lin0: float, ang0: float, lin1: float, ang1: float) -> PxConstraintInvMassScale #foreign sys "PxConstraintInvMassScale_new_1";
 
-PxConstraintInvMassScale_new :: () -> physx_PxConstraintInvMassScale #foreign physx_sys;
+PxConstraintVisualizer_visualizeJointFrames :: (self: *PxConstraintVisualizer, parent: *PxTransform, child: *PxTransform) -> void #foreign sys "PxConstraintVisualizer_visualizeJointFrames_mut";
 
-PxConstraintInvMassScale_new_1 :: (lin0: float, ang0: float, lin1: float, ang1: float) -> physx_PxConstraintInvMassScale #foreign physx_sys;
+PxConstraintVisualizer_visualizeLinearLimit :: (self: *PxConstraintVisualizer, t0: *PxTransform, t1: *PxTransform, value: float, active: bool) -> void #foreign sys "PxConstraintVisualizer_visualizeLinearLimit_mut";
 
-PxConstraintVisualizer_visualizeJointFrames :: (self: *physx_PxConstraintVisualizer, parent: *physx_PxTransform, child: *physx_PxTransform) -> void #foreign physx_sys "PxConstraintVisualizer_visualizeJointFrames_mut";
+PxConstraintVisualizer_visualizeAngularLimit :: (self: *PxConstraintVisualizer, t0: *PxTransform, lower: float, upper: float, active: bool) -> void #foreign sys "PxConstraintVisualizer_visualizeAngularLimit_mut";
 
-PxConstraintVisualizer_visualizeLinearLimit :: (self: *physx_PxConstraintVisualizer, t0: *physx_PxTransform, t1: *physx_PxTransform, value: float, active: bool) -> void #foreign physx_sys "PxConstraintVisualizer_visualizeLinearLimit_mut";
+PxConstraintVisualizer_visualizeLimitCone :: (self: *PxConstraintVisualizer, t: *PxTransform, tanQSwingY: float, tanQSwingZ: float, active: bool) -> void #foreign sys "PxConstraintVisualizer_visualizeLimitCone_mut";
 
-PxConstraintVisualizer_visualizeAngularLimit :: (self: *physx_PxConstraintVisualizer, t0: *physx_PxTransform, lower: float, upper: float, active: bool) -> void #foreign physx_sys "PxConstraintVisualizer_visualizeAngularLimit_mut";
+PxConstraintVisualizer_visualizeDoubleCone :: (self: *PxConstraintVisualizer, t: *PxTransform, angle: float, active: bool) -> void #foreign sys "PxConstraintVisualizer_visualizeDoubleCone_mut";
 
-PxConstraintVisualizer_visualizeLimitCone :: (self: *physx_PxConstraintVisualizer, t: *physx_PxTransform, tanQSwingY: float, tanQSwingZ: float, active: bool) -> void #foreign physx_sys "PxConstraintVisualizer_visualizeLimitCone_mut";
+PxConstraintVisualizer_visualizeLine :: (self: *PxConstraintVisualizer, p0: *Vector3, p1: *Vector3, color: u32) -> void #foreign sys "PxConstraintVisualizer_visualizeLine_mut";
 
-PxConstraintVisualizer_visualizeDoubleCone :: (self: *physx_PxConstraintVisualizer, t: *physx_PxTransform, angle: float, active: bool) -> void #foreign physx_sys "PxConstraintVisualizer_visualizeDoubleCone_mut";
+PxConstraintConnector_prepareData :: (self: *PxConstraintConnector) -> *void #foreign sys "PxConstraintConnector_prepareData_mut";
 
-PxConstraintVisualizer_visualizeLine :: (self: *physx_PxConstraintVisualizer, p0: *Vector3, p1: *Vector3, color: u32) -> void #foreign physx_sys "PxConstraintVisualizer_visualizeLine_mut";
+PxConstraintConnector_onConstraintRelease :: (self: *PxConstraintConnector) -> void #foreign sys "PxConstraintConnector_onConstraintRelease_mut";
 
-PxConstraintConnector_prepareData :: (self: *physx_PxConstraintConnector) -> *void #foreign physx_sys "PxConstraintConnector_prepareData_mut";
+PxConstraintConnector_onComShift :: (self: *PxConstraintConnector, actor: u32) -> void #foreign sys "PxConstraintConnector_onComShift_mut";
 
-PxConstraintConnector_onConstraintRelease :: (self: *physx_PxConstraintConnector) -> void #foreign physx_sys "PxConstraintConnector_onConstraintRelease_mut";
+PxConstraintConnector_onOriginShift :: (self: *PxConstraintConnector, shift: *Vector3) -> void #foreign sys "PxConstraintConnector_onOriginShift_mut";
 
-PxConstraintConnector_onComShift :: (self: *physx_PxConstraintConnector, actor: u32) -> void #foreign physx_sys "PxConstraintConnector_onComShift_mut";
+PxConstraintConnector_getSerializable :: (self: *PxConstraintConnector) -> *PxBase #foreign sys "PxConstraintConnector_getSerializable_mut";
 
-PxConstraintConnector_onOriginShift :: (self: *physx_PxConstraintConnector, shift: *Vector3) -> void #foreign physx_sys "PxConstraintConnector_onOriginShift_mut";
+PxConstraintConnector_getConstantBlock :: (self: *PxConstraintConnector) -> *void #foreign sys;
 
-PxConstraintConnector_getSerializable :: (self: *physx_PxConstraintConnector) -> *physx_PxBase #foreign physx_sys "PxConstraintConnector_getSerializable_mut";
+PxConstraintConnector_connectToConstraint :: (self: *PxConstraintConnector, anon_param0: *PxConstraint) -> void #foreign sys "PxConstraintConnector_connectToConstraint_mut";
 
-PxConstraintConnector_getConstantBlock :: (self: *physx_PxConstraintConnector) -> *void #foreign physx_sys;
+PxConstraintConnector_delete :: (self: *PxConstraintConnector) -> void #foreign sys;
 
-PxConstraintConnector_connectToConstraint :: (self: *physx_PxConstraintConnector, anon_param0: *physx_PxConstraint) -> void #foreign physx_sys "PxConstraintConnector_connectToConstraint_mut";
+PxSolverBody_new :: () -> PxSolverBody #foreign sys;
 
-PxConstraintConnector_delete :: (self: *physx_PxConstraintConnector) -> void #foreign physx_sys;
+PxSolverBodyData_projectVelocity :: (self: *PxSolverBodyData, lin: *Vector3, ang: *Vector3) -> float #foreign sys;
 
-PxSolverBody_new :: () -> physx_PxSolverBody #foreign physx_sys;
+PxSolverConstraintPrepDesc_delete :: (self: *PxSolverConstraintPrepDesc) -> void #foreign sys;
 
-PxSolverBodyData_projectVelocity :: (self: *physx_PxSolverBodyData, lin: *Vector3, ang: *Vector3) -> float #foreign physx_sys;
+PxConstraintAllocator_reserveConstraintData :: (self: *PxConstraintAllocator, byteSize: u32) -> *u8 #foreign sys "PxConstraintAllocator_reserveConstraintData_mut";
 
-PxSolverConstraintPrepDesc_delete :: (self: *physx_PxSolverConstraintPrepDesc) -> void #foreign physx_sys;
+PxConstraintAllocator_reserveFrictionData :: (self: *PxConstraintAllocator, byteSize: u32) -> *u8 #foreign sys "PxConstraintAllocator_reserveFrictionData_mut";
 
-PxConstraintAllocator_reserveConstraintData :: (self: *physx_PxConstraintAllocator, byteSize: u32) -> *u8 #foreign physx_sys "PxConstraintAllocator_reserveConstraintData_mut";
+PxConstraintAllocator_delete :: (self: *PxConstraintAllocator) -> void #foreign sys;
 
-PxConstraintAllocator_reserveFrictionData :: (self: *physx_PxConstraintAllocator, byteSize: u32) -> *u8 #foreign physx_sys "PxConstraintAllocator_reserveFrictionData_mut";
+PxArticulationLimit_new :: () -> PxArticulationLimit #foreign sys;
 
-PxConstraintAllocator_delete :: (self: *physx_PxConstraintAllocator) -> void #foreign physx_sys;
+PxArticulationLimit_new :: (low_: float, high_: float) -> PxArticulationLimit #foreign sys "PxArticulationLimit_new_1";
 
-PxArticulationLimit_new :: () -> physx_PxArticulationLimit #foreign physx_sys;
+PxArticulationDrive_new :: () -> PxArticulationDrive #foreign sys;
 
-PxArticulationLimit_new_1 :: (low_: float, high_: float) -> physx_PxArticulationLimit #foreign physx_sys;
+PxArticulationDrive_new :: (stiffness_: float, damping_: float, maxForce_: float, driveType: s32) -> PxArticulationDrive #foreign sys "PxArticulationDrive_new_1";
 
-PxArticulationDrive_new :: () -> physx_PxArticulationDrive #foreign physx_sys;
+PxTGSSolverBodyVel_projectVelocity :: (self: *PxTGSSolverBodyVel, lin: *Vector3, ang: *Vector3) -> float #foreign sys;
 
-PxArticulationDrive_new_1 :: (stiffness_: float, damping_: float, maxForce_: float, driveType: s32) -> physx_PxArticulationDrive #foreign physx_sys;
+PxTGSSolverBodyData_projectVelocity :: (self: *PxTGSSolverBodyData, linear: *Vector3, angular: *Vector3) -> float #foreign sys;
 
-PxTGSSolverBodyVel_projectVelocity :: (self: *physx_PxTGSSolverBodyVel, lin: *Vector3, ang: *Vector3) -> float #foreign physx_sys;
+PxTGSSolverConstraintPrepDesc_delete :: (self: *PxTGSSolverConstraintPrepDesc) -> void #foreign sys;
 
-PxTGSSolverBodyData_projectVelocity :: (self: *physx_PxTGSSolverBodyData, linear: *Vector3, angular: *Vector3) -> float #foreign physx_sys;
+PxArticulationAttachment_setRestLength :: (self: *PxArticulationAttachment, restLength: float) -> void #foreign sys "PxArticulationAttachment_setRestLength_mut";
 
-PxTGSSolverConstraintPrepDesc_delete :: (self: *physx_PxTGSSolverConstraintPrepDesc) -> void #foreign physx_sys;
+PxArticulationAttachment_getRestLength :: (self: *PxArticulationAttachment) -> float #foreign sys;
 
-PxArticulationAttachment_setRestLength :: (self: *physx_PxArticulationAttachment, restLength: float) -> void #foreign physx_sys "PxArticulationAttachment_setRestLength_mut";
+PxArticulationAttachment_setLimitParameters :: (self: *PxArticulationAttachment, parameters: *PxArticulationTendonLimit) -> void #foreign sys "PxArticulationAttachment_setLimitParameters_mut";
 
-PxArticulationAttachment_getRestLength :: (self: *physx_PxArticulationAttachment) -> float #foreign physx_sys;
+PxArticulationAttachment_getLimitParameters :: (self: *PxArticulationAttachment) -> PxArticulationTendonLimit #foreign sys;
 
-PxArticulationAttachment_setLimitParameters :: (self: *physx_PxArticulationAttachment, parameters: *physx_PxArticulationTendonLimit) -> void #foreign physx_sys "PxArticulationAttachment_setLimitParameters_mut";
+PxArticulationAttachment_setRelativeOffset :: (self: *PxArticulationAttachment, offset: *Vector3) -> void #foreign sys "PxArticulationAttachment_setRelativeOffset_mut";
 
-PxArticulationAttachment_getLimitParameters :: (self: *physx_PxArticulationAttachment) -> physx_PxArticulationTendonLimit #foreign physx_sys;
+PxArticulationAttachment_getRelativeOffset :: (self: *PxArticulationAttachment) -> Vector3 #foreign sys;
 
-PxArticulationAttachment_setRelativeOffset :: (self: *physx_PxArticulationAttachment, offset: *Vector3) -> void #foreign physx_sys "PxArticulationAttachment_setRelativeOffset_mut";
+PxArticulationAttachment_setCoefficient :: (self: *PxArticulationAttachment, coefficient: float) -> void #foreign sys "PxArticulationAttachment_setCoefficient_mut";
 
-PxArticulationAttachment_getRelativeOffset :: (self: *physx_PxArticulationAttachment) -> Vector3 #foreign physx_sys;
+PxArticulationAttachment_getCoefficient :: (self: *PxArticulationAttachment) -> float #foreign sys;
 
-PxArticulationAttachment_setCoefficient :: (self: *physx_PxArticulationAttachment, coefficient: float) -> void #foreign physx_sys "PxArticulationAttachment_setCoefficient_mut";
+PxArticulationAttachment_getLink :: (self: *PxArticulationAttachment) -> *PxArticulationLink #foreign sys;
 
-PxArticulationAttachment_getCoefficient :: (self: *physx_PxArticulationAttachment) -> float #foreign physx_sys;
+PxArticulationAttachment_getParent :: (self: *PxArticulationAttachment) -> *PxArticulationAttachment #foreign sys;
 
-PxArticulationAttachment_getLink :: (self: *physx_PxArticulationAttachment) -> *physx_PxArticulationLink #foreign physx_sys;
+PxArticulationAttachment_isLeaf :: (self: *PxArticulationAttachment) -> bool #foreign sys;
 
-PxArticulationAttachment_getParent :: (self: *physx_PxArticulationAttachment) -> *physx_PxArticulationAttachment #foreign physx_sys;
+PxArticulationAttachment_getTendon :: (self: *PxArticulationAttachment) -> *PxArticulationSpatialTendon #foreign sys;
 
-PxArticulationAttachment_isLeaf :: (self: *physx_PxArticulationAttachment) -> bool #foreign physx_sys;
+PxArticulationAttachment_release :: (self: *PxArticulationAttachment) -> void #foreign sys "PxArticulationAttachment_release_mut";
 
-PxArticulationAttachment_getTendon :: (self: *physx_PxArticulationAttachment) -> *physx_PxArticulationSpatialTendon #foreign physx_sys;
+PxArticulationAttachment_getConcreteTypeName :: (self: *PxArticulationAttachment) -> *u8 #foreign sys;
 
-PxArticulationAttachment_release :: (self: *physx_PxArticulationAttachment) -> void #foreign physx_sys "PxArticulationAttachment_release_mut";
+PxArticulationTendonJoint_setCoefficient :: (self: *PxArticulationTendonJoint, axis: s32, coefficient: float, recipCoefficient: float) -> void #foreign sys "PxArticulationTendonJoint_setCoefficient_mut";
 
-PxArticulationAttachment_getConcreteTypeName :: (self: *physx_PxArticulationAttachment) -> *u8 #foreign physx_sys;
+PxArticulationTendonJoint_getCoefficient :: (self: *PxArticulationTendonJoint, axis: *s32, coefficient: *float, recipCoefficient: *float) -> void #foreign sys;
 
-PxArticulationTendonJoint_setCoefficient :: (self: *physx_PxArticulationTendonJoint, axis: s32, coefficient: float, recipCoefficient: float) -> void #foreign physx_sys "PxArticulationTendonJoint_setCoefficient_mut";
+PxArticulationTendonJoint_getLink :: (self: *PxArticulationTendonJoint) -> *PxArticulationLink #foreign sys;
 
-PxArticulationTendonJoint_getCoefficient :: (self: *physx_PxArticulationTendonJoint, axis: *s32, coefficient: *float, recipCoefficient: *float) -> void #foreign physx_sys;
+PxArticulationTendonJoint_getParent :: (self: *PxArticulationTendonJoint) -> *PxArticulationTendonJoint #foreign sys;
 
-PxArticulationTendonJoint_getLink :: (self: *physx_PxArticulationTendonJoint) -> *physx_PxArticulationLink #foreign physx_sys;
+PxArticulationTendonJoint_getTendon :: (self: *PxArticulationTendonJoint) -> *PxArticulationFixedTendon #foreign sys;
 
-PxArticulationTendonJoint_getParent :: (self: *physx_PxArticulationTendonJoint) -> *physx_PxArticulationTendonJoint #foreign physx_sys;
+PxArticulationTendonJoint_release :: (self: *PxArticulationTendonJoint) -> void #foreign sys "PxArticulationTendonJoint_release_mut";
 
-PxArticulationTendonJoint_getTendon :: (self: *physx_PxArticulationTendonJoint) -> *physx_PxArticulationFixedTendon #foreign physx_sys;
+PxArticulationTendonJoint_getConcreteTypeName :: (self: *PxArticulationTendonJoint) -> *u8 #foreign sys;
 
-PxArticulationTendonJoint_release :: (self: *physx_PxArticulationTendonJoint) -> void #foreign physx_sys "PxArticulationTendonJoint_release_mut";
+PxArticulationTendon_setStiffness :: (self: *PxArticulationTendon, stiffness: float) -> void #foreign sys "PxArticulationTendon_setStiffness_mut";
 
-PxArticulationTendonJoint_getConcreteTypeName :: (self: *physx_PxArticulationTendonJoint) -> *u8 #foreign physx_sys;
+PxArticulationTendon_getStiffness :: (self: *PxArticulationTendon) -> float #foreign sys;
 
-PxArticulationTendon_setStiffness :: (self: *physx_PxArticulationTendon, stiffness: float) -> void #foreign physx_sys "PxArticulationTendon_setStiffness_mut";
+PxArticulationTendon_setDamping :: (self: *PxArticulationTendon, damping: float) -> void #foreign sys "PxArticulationTendon_setDamping_mut";
 
-PxArticulationTendon_getStiffness :: (self: *physx_PxArticulationTendon) -> float #foreign physx_sys;
+PxArticulationTendon_getDamping :: (self: *PxArticulationTendon) -> float #foreign sys;
 
-PxArticulationTendon_setDamping :: (self: *physx_PxArticulationTendon, damping: float) -> void #foreign physx_sys "PxArticulationTendon_setDamping_mut";
+PxArticulationTendon_setLimitStiffness :: (self: *PxArticulationTendon, stiffness: float) -> void #foreign sys "PxArticulationTendon_setLimitStiffness_mut";
 
-PxArticulationTendon_getDamping :: (self: *physx_PxArticulationTendon) -> float #foreign physx_sys;
+PxArticulationTendon_getLimitStiffness :: (self: *PxArticulationTendon) -> float #foreign sys;
 
-PxArticulationTendon_setLimitStiffness :: (self: *physx_PxArticulationTendon, stiffness: float) -> void #foreign physx_sys "PxArticulationTendon_setLimitStiffness_mut";
+PxArticulationTendon_setOffset :: (self: *PxArticulationTendon, offset: float, autowake: bool) -> void #foreign sys "PxArticulationTendon_setOffset_mut";
 
-PxArticulationTendon_getLimitStiffness :: (self: *physx_PxArticulationTendon) -> float #foreign physx_sys;
+PxArticulationTendon_getOffset :: (self: *PxArticulationTendon) -> float #foreign sys;
 
-PxArticulationTendon_setOffset :: (self: *physx_PxArticulationTendon, offset: float, autowake: bool) -> void #foreign physx_sys "PxArticulationTendon_setOffset_mut";
+PxArticulationTendon_getArticulation :: (self: *PxArticulationTendon) -> *PxArticulationReducedCoordinate #foreign sys;
 
-PxArticulationTendon_getOffset :: (self: *physx_PxArticulationTendon) -> float #foreign physx_sys;
+PxArticulationTendon_release :: (self: *PxArticulationTendon) -> void #foreign sys "PxArticulationTendon_release_mut";
 
-PxArticulationTendon_getArticulation :: (self: *physx_PxArticulationTendon) -> *physx_PxArticulationReducedCoordinate #foreign physx_sys;
+PxArticulationSpatialTendon_createAttachment :: (self: *PxArticulationSpatialTendon, parent: *PxArticulationAttachment, coefficient: float, relativeOffset: Vector3, link: *PxArticulationLink) -> *PxArticulationAttachment #foreign sys "PxArticulationSpatialTendon_createAttachment_mut";
 
-PxArticulationTendon_release :: (self: *physx_PxArticulationTendon) -> void #foreign physx_sys "PxArticulationTendon_release_mut";
+PxArticulationSpatialTendon_getAttachments :: (self: *PxArticulationSpatialTendon, userBuffer: **PxArticulationAttachment, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationSpatialTendon_createAttachment :: (self: *physx_PxArticulationSpatialTendon, parent: *physx_PxArticulationAttachment, coefficient: float, relativeOffset: Vector3, link: *physx_PxArticulationLink) -> *physx_PxArticulationAttachment #foreign physx_sys "PxArticulationSpatialTendon_createAttachment_mut";
+PxArticulationSpatialTendon_getNbAttachments :: (self: *PxArticulationSpatialTendon) -> u32 #foreign sys;
 
-PxArticulationSpatialTendon_getAttachments :: (self: *physx_PxArticulationSpatialTendon, userBuffer: **physx_PxArticulationAttachment, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationSpatialTendon_getConcreteTypeName :: (self: *PxArticulationSpatialTendon) -> *u8 #foreign sys;
 
-PxArticulationSpatialTendon_getNbAttachments :: (self: *physx_PxArticulationSpatialTendon) -> u32 #foreign physx_sys;
+PxArticulationFixedTendon_createTendonJoint :: (self: *PxArticulationFixedTendon, parent: *PxArticulationTendonJoint, axis: s32, coefficient: float, recipCoefficient: float, link: *PxArticulationLink) -> *PxArticulationTendonJoint #foreign sys "PxArticulationFixedTendon_createTendonJoint_mut";
 
-PxArticulationSpatialTendon_getConcreteTypeName :: (self: *physx_PxArticulationSpatialTendon) -> *u8 #foreign physx_sys;
+PxArticulationFixedTendon_getTendonJoints :: (self: *PxArticulationFixedTendon, userBuffer: **PxArticulationTendonJoint, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationFixedTendon_createTendonJoint :: (self: *physx_PxArticulationFixedTendon, parent: *physx_PxArticulationTendonJoint, axis: s32, coefficient: float, recipCoefficient: float, link: *physx_PxArticulationLink) -> *physx_PxArticulationTendonJoint #foreign physx_sys "PxArticulationFixedTendon_createTendonJoint_mut";
+PxArticulationFixedTendon_getNbTendonJoints :: (self: *PxArticulationFixedTendon) -> u32 #foreign sys;
 
-PxArticulationFixedTendon_getTendonJoints :: (self: *physx_PxArticulationFixedTendon, userBuffer: **physx_PxArticulationTendonJoint, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationFixedTendon_setRestLength :: (self: *PxArticulationFixedTendon, restLength: float) -> void #foreign sys "PxArticulationFixedTendon_setRestLength_mut";
 
-PxArticulationFixedTendon_getNbTendonJoints :: (self: *physx_PxArticulationFixedTendon) -> u32 #foreign physx_sys;
+PxArticulationFixedTendon_getRestLength :: (self: *PxArticulationFixedTendon) -> float #foreign sys;
 
-PxArticulationFixedTendon_setRestLength :: (self: *physx_PxArticulationFixedTendon, restLength: float) -> void #foreign physx_sys "PxArticulationFixedTendon_setRestLength_mut";
+PxArticulationFixedTendon_setLimitParameters :: (self: *PxArticulationFixedTendon, parameter: *PxArticulationTendonLimit) -> void #foreign sys "PxArticulationFixedTendon_setLimitParameters_mut";
 
-PxArticulationFixedTendon_getRestLength :: (self: *physx_PxArticulationFixedTendon) -> float #foreign physx_sys;
+PxArticulationFixedTendon_getLimitParameters :: (self: *PxArticulationFixedTendon) -> PxArticulationTendonLimit #foreign sys;
 
-PxArticulationFixedTendon_setLimitParameters :: (self: *physx_PxArticulationFixedTendon, parameter: *physx_PxArticulationTendonLimit) -> void #foreign physx_sys "PxArticulationFixedTendon_setLimitParameters_mut";
+PxArticulationFixedTendon_getConcreteTypeName :: (self: *PxArticulationFixedTendon) -> *u8 #foreign sys;
 
-PxArticulationFixedTendon_getLimitParameters :: (self: *physx_PxArticulationFixedTendon) -> physx_PxArticulationTendonLimit #foreign physx_sys;
+PxArticulationCache_new :: () -> PxArticulationCache #foreign sys;
 
-PxArticulationFixedTendon_getConcreteTypeName :: (self: *physx_PxArticulationFixedTendon) -> *u8 #foreign physx_sys;
+PxArticulationCache_release :: (self: *PxArticulationCache) -> void #foreign sys "PxArticulationCache_release_mut";
 
-PxArticulationCache_new :: () -> physx_PxArticulationCache #foreign physx_sys;
+PxArticulationSensor_release :: (self: *PxArticulationSensor) -> void #foreign sys "PxArticulationSensor_release_mut";
 
-PxArticulationCache_release :: (self: *physx_PxArticulationCache) -> void #foreign physx_sys "PxArticulationCache_release_mut";
+PxArticulationSensor_getForces :: (self: *PxArticulationSensor) -> PxSpatialForce #foreign sys;
 
-PxArticulationSensor_release :: (self: *physx_PxArticulationSensor) -> void #foreign physx_sys "PxArticulationSensor_release_mut";
+PxArticulationSensor_getRelativePose :: (self: *PxArticulationSensor) -> PxTransform #foreign sys;
 
-PxArticulationSensor_getForces :: (self: *physx_PxArticulationSensor) -> physx_PxSpatialForce #foreign physx_sys;
+PxArticulationSensor_setRelativePose :: (self: *PxArticulationSensor, pose: *PxTransform) -> void #foreign sys "PxArticulationSensor_setRelativePose_mut";
 
-PxArticulationSensor_getRelativePose :: (self: *physx_PxArticulationSensor) -> physx_PxTransform #foreign physx_sys;
+PxArticulationSensor_getLink :: (self: *PxArticulationSensor) -> *PxArticulationLink #foreign sys;
 
-PxArticulationSensor_setRelativePose :: (self: *physx_PxArticulationSensor, pose: *physx_PxTransform) -> void #foreign physx_sys "PxArticulationSensor_setRelativePose_mut";
+PxArticulationSensor_getIndex :: (self: *PxArticulationSensor) -> u32 #foreign sys;
 
-PxArticulationSensor_getLink :: (self: *physx_PxArticulationSensor) -> *physx_PxArticulationLink #foreign physx_sys;
+PxArticulationSensor_getArticulation :: (self: *PxArticulationSensor) -> *PxArticulationReducedCoordinate #foreign sys;
 
-PxArticulationSensor_getIndex :: (self: *physx_PxArticulationSensor) -> u32 #foreign physx_sys;
+PxArticulationSensor_getFlags :: (self: *PxArticulationSensor) -> u8 #foreign sys;
 
-PxArticulationSensor_getArticulation :: (self: *physx_PxArticulationSensor) -> *physx_PxArticulationReducedCoordinate #foreign physx_sys;
+PxArticulationSensor_setFlag :: (self: *PxArticulationSensor, flag: s32, enabled: bool) -> void #foreign sys "PxArticulationSensor_setFlag_mut";
 
-PxArticulationSensor_getFlags :: (self: *physx_PxArticulationSensor) -> u8 #foreign physx_sys;
+PxArticulationSensor_getConcreteTypeName :: (self: *PxArticulationSensor) -> *u8 #foreign sys;
 
-PxArticulationSensor_setFlag :: (self: *physx_PxArticulationSensor, flag: s32, enabled: bool) -> void #foreign physx_sys "PxArticulationSensor_setFlag_mut";
+PxArticulationReducedCoordinate_getScene :: (self: *PxArticulationReducedCoordinate) -> *PxScene #foreign sys;
 
-PxArticulationSensor_getConcreteTypeName :: (self: *physx_PxArticulationSensor) -> *u8 #foreign physx_sys;
+PxArticulationReducedCoordinate_setSolverIterationCounts :: (self: *PxArticulationReducedCoordinate, minPositionIters: u32, minVelocityIters: u32) -> void #foreign sys "PxArticulationReducedCoordinate_setSolverIterationCounts_mut";
 
-PxArticulationReducedCoordinate_getScene :: (self: *physx_PxArticulationReducedCoordinate) -> *physx_PxScene #foreign physx_sys;
+PxArticulationReducedCoordinate_getSolverIterationCounts :: (self: *PxArticulationReducedCoordinate, minPositionIters: *u32, minVelocityIters: *u32) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_setSolverIterationCounts :: (self: *physx_PxArticulationReducedCoordinate, minPositionIters: u32, minVelocityIters: u32) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setSolverIterationCounts_mut";
+PxArticulationReducedCoordinate_isSleeping :: (self: *PxArticulationReducedCoordinate) -> bool #foreign sys;
 
-PxArticulationReducedCoordinate_getSolverIterationCounts :: (self: *physx_PxArticulationReducedCoordinate, minPositionIters: *u32, minVelocityIters: *u32) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_setSleepThreshold :: (self: *PxArticulationReducedCoordinate, threshold: float) -> void #foreign sys "PxArticulationReducedCoordinate_setSleepThreshold_mut";
 
-PxArticulationReducedCoordinate_isSleeping :: (self: *physx_PxArticulationReducedCoordinate) -> bool #foreign physx_sys;
+PxArticulationReducedCoordinate_getSleepThreshold :: (self: *PxArticulationReducedCoordinate) -> float #foreign sys;
 
-PxArticulationReducedCoordinate_setSleepThreshold :: (self: *physx_PxArticulationReducedCoordinate, threshold: float) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setSleepThreshold_mut";
+PxArticulationReducedCoordinate_setStabilizationThreshold :: (self: *PxArticulationReducedCoordinate, threshold: float) -> void #foreign sys "PxArticulationReducedCoordinate_setStabilizationThreshold_mut";
 
-PxArticulationReducedCoordinate_getSleepThreshold :: (self: *physx_PxArticulationReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationReducedCoordinate_getStabilizationThreshold :: (self: *PxArticulationReducedCoordinate) -> float #foreign sys;
 
-PxArticulationReducedCoordinate_setStabilizationThreshold :: (self: *physx_PxArticulationReducedCoordinate, threshold: float) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setStabilizationThreshold_mut";
+PxArticulationReducedCoordinate_setWakeCounter :: (self: *PxArticulationReducedCoordinate, wakeCounterValue: float) -> void #foreign sys "PxArticulationReducedCoordinate_setWakeCounter_mut";
 
-PxArticulationReducedCoordinate_getStabilizationThreshold :: (self: *physx_PxArticulationReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationReducedCoordinate_getWakeCounter :: (self: *PxArticulationReducedCoordinate) -> float #foreign sys;
 
-PxArticulationReducedCoordinate_setWakeCounter :: (self: *physx_PxArticulationReducedCoordinate, wakeCounterValue: float) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setWakeCounter_mut";
+PxArticulationReducedCoordinate_wakeUp :: (self: *PxArticulationReducedCoordinate) -> void #foreign sys "PxArticulationReducedCoordinate_wakeUp_mut";
 
-PxArticulationReducedCoordinate_getWakeCounter :: (self: *physx_PxArticulationReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationReducedCoordinate_putToSleep :: (self: *PxArticulationReducedCoordinate) -> void #foreign sys "PxArticulationReducedCoordinate_putToSleep_mut";
 
-PxArticulationReducedCoordinate_wakeUp :: (self: *physx_PxArticulationReducedCoordinate) -> void #foreign physx_sys "PxArticulationReducedCoordinate_wakeUp_mut";
+PxArticulationReducedCoordinate_setMaxCOMLinearVelocity :: (self: *PxArticulationReducedCoordinate, maxLinearVelocity: float) -> void #foreign sys "PxArticulationReducedCoordinate_setMaxCOMLinearVelocity_mut";
 
-PxArticulationReducedCoordinate_putToSleep :: (self: *physx_PxArticulationReducedCoordinate) -> void #foreign physx_sys "PxArticulationReducedCoordinate_putToSleep_mut";
+PxArticulationReducedCoordinate_getMaxCOMLinearVelocity :: (self: *PxArticulationReducedCoordinate) -> float #foreign sys;
 
-PxArticulationReducedCoordinate_setMaxCOMLinearVelocity :: (self: *physx_PxArticulationReducedCoordinate, maxLinearVelocity: float) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setMaxCOMLinearVelocity_mut";
+PxArticulationReducedCoordinate_setMaxCOMAngularVelocity :: (self: *PxArticulationReducedCoordinate, maxAngularVelocity: float) -> void #foreign sys "PxArticulationReducedCoordinate_setMaxCOMAngularVelocity_mut";
 
-PxArticulationReducedCoordinate_getMaxCOMLinearVelocity :: (self: *physx_PxArticulationReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationReducedCoordinate_getMaxCOMAngularVelocity :: (self: *PxArticulationReducedCoordinate) -> float #foreign sys;
 
-PxArticulationReducedCoordinate_setMaxCOMAngularVelocity :: (self: *physx_PxArticulationReducedCoordinate, maxAngularVelocity: float) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setMaxCOMAngularVelocity_mut";
+PxArticulationReducedCoordinate_createLink :: (self: *PxArticulationReducedCoordinate, parent: *PxArticulationLink, pose: *PxTransform) -> *PxArticulationLink #foreign sys "PxArticulationReducedCoordinate_createLink_mut";
 
-PxArticulationReducedCoordinate_getMaxCOMAngularVelocity :: (self: *physx_PxArticulationReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationReducedCoordinate_release :: (self: *PxArticulationReducedCoordinate) -> void #foreign sys "PxArticulationReducedCoordinate_release_mut";
 
-PxArticulationReducedCoordinate_createLink :: (self: *physx_PxArticulationReducedCoordinate, parent: *physx_PxArticulationLink, pose: *physx_PxTransform) -> *physx_PxArticulationLink #foreign physx_sys "PxArticulationReducedCoordinate_createLink_mut";
+PxArticulationReducedCoordinate_getNbLinks :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_release :: (self: *physx_PxArticulationReducedCoordinate) -> void #foreign physx_sys "PxArticulationReducedCoordinate_release_mut";
+PxArticulationReducedCoordinate_getLinks :: (self: *PxArticulationReducedCoordinate, userBuffer: **PxArticulationLink, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getNbLinks :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getNbShapes :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getLinks :: (self: *physx_PxArticulationReducedCoordinate, userBuffer: **physx_PxArticulationLink, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_setName :: (self: *PxArticulationReducedCoordinate, name: *u8) -> void #foreign sys "PxArticulationReducedCoordinate_setName_mut";
 
-PxArticulationReducedCoordinate_getNbShapes :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getName :: (self: *PxArticulationReducedCoordinate) -> *u8 #foreign sys;
 
-PxArticulationReducedCoordinate_setName :: (self: *physx_PxArticulationReducedCoordinate, name: *u8) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setName_mut";
+PxArticulationReducedCoordinate_getWorldBounds :: (self: *PxArticulationReducedCoordinate, inflation: float) -> PxBounds3 #foreign sys;
 
-PxArticulationReducedCoordinate_getName :: (self: *physx_PxArticulationReducedCoordinate) -> *u8 #foreign physx_sys;
+PxArticulationReducedCoordinate_getAggregate :: (self: *PxArticulationReducedCoordinate) -> *PxAggregate #foreign sys;
 
-PxArticulationReducedCoordinate_getWorldBounds :: (self: *physx_PxArticulationReducedCoordinate, inflation: float) -> physx_PxBounds3 #foreign physx_sys;
+PxArticulationReducedCoordinate_setArticulationFlags :: (self: *PxArticulationReducedCoordinate, flags: u8) -> void #foreign sys "PxArticulationReducedCoordinate_setArticulationFlags_mut";
 
-PxArticulationReducedCoordinate_getAggregate :: (self: *physx_PxArticulationReducedCoordinate) -> *physx_PxAggregate #foreign physx_sys;
+PxArticulationReducedCoordinate_setArticulationFlag :: (self: *PxArticulationReducedCoordinate, flag: s32, value: bool) -> void #foreign sys "PxArticulationReducedCoordinate_setArticulationFlag_mut";
 
-PxArticulationReducedCoordinate_setArticulationFlags :: (self: *physx_PxArticulationReducedCoordinate, flags: u8) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setArticulationFlags_mut";
+PxArticulationReducedCoordinate_getArticulationFlags :: (self: *PxArticulationReducedCoordinate) -> u8 #foreign sys;
 
-PxArticulationReducedCoordinate_setArticulationFlag :: (self: *physx_PxArticulationReducedCoordinate, flag: s32, value: bool) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setArticulationFlag_mut";
+PxArticulationReducedCoordinate_getDofs :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getArticulationFlags :: (self: *physx_PxArticulationReducedCoordinate) -> u8 #foreign physx_sys;
+PxArticulationReducedCoordinate_createCache :: (self: *PxArticulationReducedCoordinate) -> *PxArticulationCache #foreign sys;
 
-PxArticulationReducedCoordinate_getDofs :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getCacheDataSize :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_createCache :: (self: *physx_PxArticulationReducedCoordinate) -> *physx_PxArticulationCache #foreign physx_sys;
+PxArticulationReducedCoordinate_zeroCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_getCacheDataSize :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_applyCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, flags: u32, autowake: bool) -> void #foreign sys "PxArticulationReducedCoordinate_applyCache_mut";
 
-PxArticulationReducedCoordinate_zeroCache :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_copyInternalStateToCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, flags: u32) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_applyCache :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache, flags: u32, autowake: bool) -> void #foreign physx_sys "PxArticulationReducedCoordinate_applyCache_mut";
+PxArticulationReducedCoordinate_packJointData :: (self: *PxArticulationReducedCoordinate, maximum: *float, reduced: *float) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_copyInternalStateToCache :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache, flags: u32) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_unpackJointData :: (self: *PxArticulationReducedCoordinate, reduced: *float, maximum: *float) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_packJointData :: (self: *physx_PxArticulationReducedCoordinate, maximum: *float, reduced: *float) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_commonInit :: (self: *PxArticulationReducedCoordinate) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_unpackJointData :: (self: *physx_PxArticulationReducedCoordinate, reduced: *float, maximum: *float) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeGeneralizedGravityForce :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_commonInit :: (self: *physx_PxArticulationReducedCoordinate) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeCoriolisAndCentrifugalForce :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeGeneralizedGravityForce :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeGeneralizedExternalForce :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeCoriolisAndCentrifugalForce :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeJointAcceleration :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeGeneralizedExternalForce :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeJointForce :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeJointAcceleration :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeDenseJacobian :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, nRows: *u32, nCols: *u32) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeJointForce :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeCoefficientMatrix :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeDenseJacobian :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache, nRows: *u32, nCols: *u32) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeLambda :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, initialState: *PxArticulationCache, jointTorque: *float, maxIter: u32) -> bool #foreign sys;
 
-PxArticulationReducedCoordinate_computeCoefficientMatrix :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_computeGeneralizedMassMatrix :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign sys;
 
-PxArticulationReducedCoordinate_computeLambda :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache, initialState: *physx_PxArticulationCache, jointTorque: *float, maxIter: u32) -> bool #foreign physx_sys;
+PxArticulationReducedCoordinate_addLoopJoint :: (self: *PxArticulationReducedCoordinate, joint: *PxConstraint) -> void #foreign sys "PxArticulationReducedCoordinate_addLoopJoint_mut";
 
-PxArticulationReducedCoordinate_computeGeneralizedMassMatrix :: (self: *physx_PxArticulationReducedCoordinate, cache: *physx_PxArticulationCache) -> void #foreign physx_sys;
+PxArticulationReducedCoordinate_removeLoopJoint :: (self: *PxArticulationReducedCoordinate, joint: *PxConstraint) -> void #foreign sys "PxArticulationReducedCoordinate_removeLoopJoint_mut";
 
-PxArticulationReducedCoordinate_addLoopJoint :: (self: *physx_PxArticulationReducedCoordinate, joint: *physx_PxConstraint) -> void #foreign physx_sys "PxArticulationReducedCoordinate_addLoopJoint_mut";
+PxArticulationReducedCoordinate_getNbLoopJoints :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_removeLoopJoint :: (self: *physx_PxArticulationReducedCoordinate, joint: *physx_PxConstraint) -> void #foreign physx_sys "PxArticulationReducedCoordinate_removeLoopJoint_mut";
+PxArticulationReducedCoordinate_getLoopJoints :: (self: *PxArticulationReducedCoordinate, userBuffer: **PxConstraint, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getNbLoopJoints :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getCoefficientMatrixSize :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getLoopJoints :: (self: *physx_PxArticulationReducedCoordinate, userBuffer: **physx_PxConstraint, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_setRootGlobalPose :: (self: *PxArticulationReducedCoordinate, pose: *PxTransform, autowake: bool) -> void #foreign sys "PxArticulationReducedCoordinate_setRootGlobalPose_mut";
 
-PxArticulationReducedCoordinate_getCoefficientMatrixSize :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getRootGlobalPose :: (self: *PxArticulationReducedCoordinate) -> PxTransform #foreign sys;
 
-PxArticulationReducedCoordinate_setRootGlobalPose :: (self: *physx_PxArticulationReducedCoordinate, pose: *physx_PxTransform, autowake: bool) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setRootGlobalPose_mut";
+PxArticulationReducedCoordinate_setRootLinearVelocity :: (self: *PxArticulationReducedCoordinate, linearVelocity: *Vector3, autowake: bool) -> void #foreign sys "PxArticulationReducedCoordinate_setRootLinearVelocity_mut";
 
-PxArticulationReducedCoordinate_getRootGlobalPose :: (self: *physx_PxArticulationReducedCoordinate) -> physx_PxTransform #foreign physx_sys;
+PxArticulationReducedCoordinate_getRootLinearVelocity :: (self: *PxArticulationReducedCoordinate) -> Vector3 #foreign sys;
 
-PxArticulationReducedCoordinate_setRootLinearVelocity :: (self: *physx_PxArticulationReducedCoordinate, linearVelocity: *Vector3, autowake: bool) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setRootLinearVelocity_mut";
+PxArticulationReducedCoordinate_setRootAngularVelocity :: (self: *PxArticulationReducedCoordinate, angularVelocity: *Vector3, autowake: bool) -> void #foreign sys "PxArticulationReducedCoordinate_setRootAngularVelocity_mut";
 
-PxArticulationReducedCoordinate_getRootLinearVelocity :: (self: *physx_PxArticulationReducedCoordinate) -> Vector3 #foreign physx_sys;
+PxArticulationReducedCoordinate_getRootAngularVelocity :: (self: *PxArticulationReducedCoordinate) -> Vector3 #foreign sys;
 
-PxArticulationReducedCoordinate_setRootAngularVelocity :: (self: *physx_PxArticulationReducedCoordinate, angularVelocity: *Vector3, autowake: bool) -> void #foreign physx_sys "PxArticulationReducedCoordinate_setRootAngularVelocity_mut";
+PxArticulationReducedCoordinate_getLinkAcceleration :: (self: *PxArticulationReducedCoordinate, linkId: u32) -> PxSpatialVelocity #foreign sys "PxArticulationReducedCoordinate_getLinkAcceleration_mut";
 
-PxArticulationReducedCoordinate_getRootAngularVelocity :: (self: *physx_PxArticulationReducedCoordinate) -> Vector3 #foreign physx_sys;
+PxArticulationReducedCoordinate_getGpuArticulationIndex :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys "PxArticulationReducedCoordinate_getGpuArticulationIndex_mut";
 
-PxArticulationReducedCoordinate_getLinkAcceleration :: (self: *physx_PxArticulationReducedCoordinate, linkId: u32) -> physx_PxSpatialVelocity #foreign physx_sys "PxArticulationReducedCoordinate_getLinkAcceleration_mut";
+PxArticulationReducedCoordinate_createSpatialTendon :: (self: *PxArticulationReducedCoordinate) -> *PxArticulationSpatialTendon #foreign sys "PxArticulationReducedCoordinate_createSpatialTendon_mut";
 
-PxArticulationReducedCoordinate_getGpuArticulationIndex :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys "PxArticulationReducedCoordinate_getGpuArticulationIndex_mut";
+PxArticulationReducedCoordinate_createFixedTendon :: (self: *PxArticulationReducedCoordinate) -> *PxArticulationFixedTendon #foreign sys "PxArticulationReducedCoordinate_createFixedTendon_mut";
 
-PxArticulationReducedCoordinate_createSpatialTendon :: (self: *physx_PxArticulationReducedCoordinate) -> *physx_PxArticulationSpatialTendon #foreign physx_sys "PxArticulationReducedCoordinate_createSpatialTendon_mut";
+PxArticulationReducedCoordinate_createSensor :: (self: *PxArticulationReducedCoordinate, link: *PxArticulationLink, relativePose: *PxTransform) -> *PxArticulationSensor #foreign sys "PxArticulationReducedCoordinate_createSensor_mut";
 
-PxArticulationReducedCoordinate_createFixedTendon :: (self: *physx_PxArticulationReducedCoordinate) -> *physx_PxArticulationFixedTendon #foreign physx_sys "PxArticulationReducedCoordinate_createFixedTendon_mut";
+PxArticulationReducedCoordinate_getSpatialTendons :: (self: *PxArticulationReducedCoordinate, userBuffer: **PxArticulationSpatialTendon, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_createSensor :: (self: *physx_PxArticulationReducedCoordinate, link: *physx_PxArticulationLink, relativePose: *physx_PxTransform) -> *physx_PxArticulationSensor #foreign physx_sys "PxArticulationReducedCoordinate_createSensor_mut";
+PxArticulationReducedCoordinate_getNbSpatialTendons :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys "PxArticulationReducedCoordinate_getNbSpatialTendons_mut";
 
-PxArticulationReducedCoordinate_getSpatialTendons :: (self: *physx_PxArticulationReducedCoordinate, userBuffer: **physx_PxArticulationSpatialTendon, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getFixedTendons :: (self: *PxArticulationReducedCoordinate, userBuffer: **PxArticulationFixedTendon, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getNbSpatialTendons :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys "PxArticulationReducedCoordinate_getNbSpatialTendons_mut";
+PxArticulationReducedCoordinate_getNbFixedTendons :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys "PxArticulationReducedCoordinate_getNbFixedTendons_mut";
 
-PxArticulationReducedCoordinate_getFixedTendons :: (self: *physx_PxArticulationReducedCoordinate, userBuffer: **physx_PxArticulationFixedTendon, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_getSensors :: (self: *PxArticulationReducedCoordinate, userBuffer: **PxArticulationSensor, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationReducedCoordinate_getNbFixedTendons :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys "PxArticulationReducedCoordinate_getNbFixedTendons_mut";
+PxArticulationReducedCoordinate_getNbSensors :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign sys "PxArticulationReducedCoordinate_getNbSensors_mut";
 
-PxArticulationReducedCoordinate_getSensors :: (self: *physx_PxArticulationReducedCoordinate, userBuffer: **physx_PxArticulationSensor, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationReducedCoordinate_updateKinematic :: (self: *PxArticulationReducedCoordinate, flags: u8) -> void #foreign sys "PxArticulationReducedCoordinate_updateKinematic_mut";
 
-PxArticulationReducedCoordinate_getNbSensors :: (self: *physx_PxArticulationReducedCoordinate) -> u32 #foreign physx_sys "PxArticulationReducedCoordinate_getNbSensors_mut";
+PxArticulationJointReducedCoordinate_getParentArticulationLink :: (self: *PxArticulationJointReducedCoordinate) -> *PxArticulationLink #foreign sys;
 
-PxArticulationReducedCoordinate_updateKinematic :: (self: *physx_PxArticulationReducedCoordinate, flags: u8) -> void #foreign physx_sys "PxArticulationReducedCoordinate_updateKinematic_mut";
+PxArticulationJointReducedCoordinate_setParentPose :: (self: *PxArticulationJointReducedCoordinate, pose: *PxTransform) -> void #foreign sys "PxArticulationJointReducedCoordinate_setParentPose_mut";
 
-PxArticulationJointReducedCoordinate_getParentArticulationLink :: (self: *physx_PxArticulationJointReducedCoordinate) -> *physx_PxArticulationLink #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getParentPose :: (self: *PxArticulationJointReducedCoordinate) -> PxTransform #foreign sys;
 
-PxArticulationJointReducedCoordinate_setParentPose :: (self: *physx_PxArticulationJointReducedCoordinate, pose: *physx_PxTransform) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setParentPose_mut";
+PxArticulationJointReducedCoordinate_getChildArticulationLink :: (self: *PxArticulationJointReducedCoordinate) -> *PxArticulationLink #foreign sys;
 
-PxArticulationJointReducedCoordinate_getParentPose :: (self: *physx_PxArticulationJointReducedCoordinate) -> physx_PxTransform #foreign physx_sys;
+PxArticulationJointReducedCoordinate_setChildPose :: (self: *PxArticulationJointReducedCoordinate, pose: *PxTransform) -> void #foreign sys "PxArticulationJointReducedCoordinate_setChildPose_mut";
 
-PxArticulationJointReducedCoordinate_getChildArticulationLink :: (self: *physx_PxArticulationJointReducedCoordinate) -> *physx_PxArticulationLink #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getChildPose :: (self: *PxArticulationJointReducedCoordinate) -> PxTransform #foreign sys;
 
-PxArticulationJointReducedCoordinate_setChildPose :: (self: *physx_PxArticulationJointReducedCoordinate, pose: *physx_PxTransform) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setChildPose_mut";
+PxArticulationJointReducedCoordinate_setJointType :: (self: *PxArticulationJointReducedCoordinate, jointType: s32) -> void #foreign sys "PxArticulationJointReducedCoordinate_setJointType_mut";
 
-PxArticulationJointReducedCoordinate_getChildPose :: (self: *physx_PxArticulationJointReducedCoordinate) -> physx_PxTransform #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getJointType :: (self: *PxArticulationJointReducedCoordinate) -> s32 #foreign sys;
 
-PxArticulationJointReducedCoordinate_setJointType :: (self: *physx_PxArticulationJointReducedCoordinate, jointType: s32) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setJointType_mut";
+PxArticulationJointReducedCoordinate_setMotion :: (self: *PxArticulationJointReducedCoordinate, axis: s32, motion: s32) -> void #foreign sys "PxArticulationJointReducedCoordinate_setMotion_mut";
 
-PxArticulationJointReducedCoordinate_getJointType :: (self: *physx_PxArticulationJointReducedCoordinate) -> s32 #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getMotion :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> s32 #foreign sys;
 
-PxArticulationJointReducedCoordinate_setMotion :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, motion: s32) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setMotion_mut";
+PxArticulationJointReducedCoordinate_setLimitParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32, limit: *PxArticulationLimit) -> void #foreign sys "PxArticulationJointReducedCoordinate_setLimitParams_mut";
 
-PxArticulationJointReducedCoordinate_getMotion :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> s32 #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getLimitParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> PxArticulationLimit #foreign sys;
 
-PxArticulationJointReducedCoordinate_setLimitParams :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, limit: *physx_PxArticulationLimit) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setLimitParams_mut";
+PxArticulationJointReducedCoordinate_setDriveParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32, drive: *PxArticulationDrive) -> void #foreign sys "PxArticulationJointReducedCoordinate_setDriveParams_mut";
 
-PxArticulationJointReducedCoordinate_getLimitParams :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> physx_PxArticulationLimit #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getDriveParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> PxArticulationDrive #foreign sys;
 
-PxArticulationJointReducedCoordinate_setDriveParams :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, drive: *physx_PxArticulationDrive) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setDriveParams_mut";
+PxArticulationJointReducedCoordinate_setDriveTarget :: (self: *PxArticulationJointReducedCoordinate, axis: s32, target: float, autowake: bool) -> void #foreign sys "PxArticulationJointReducedCoordinate_setDriveTarget_mut";
 
-PxArticulationJointReducedCoordinate_getDriveParams :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> physx_PxArticulationDrive #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getDriveTarget :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setDriveTarget :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, target: float, autowake: bool) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setDriveTarget_mut";
+PxArticulationJointReducedCoordinate_setDriveVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32, targetVel: float, autowake: bool) -> void #foreign sys "PxArticulationJointReducedCoordinate_setDriveVelocity_mut";
 
-PxArticulationJointReducedCoordinate_getDriveTarget :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getDriveVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setDriveVelocity :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, targetVel: float, autowake: bool) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setDriveVelocity_mut";
+PxArticulationJointReducedCoordinate_setArmature :: (self: *PxArticulationJointReducedCoordinate, axis: s32, armature: float) -> void #foreign sys "PxArticulationJointReducedCoordinate_setArmature_mut";
 
-PxArticulationJointReducedCoordinate_getDriveVelocity :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getArmature :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setArmature :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, armature: float) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setArmature_mut";
+PxArticulationJointReducedCoordinate_setFrictionCoefficient :: (self: *PxArticulationJointReducedCoordinate, coefficient: float) -> void #foreign sys "PxArticulationJointReducedCoordinate_setFrictionCoefficient_mut";
 
-PxArticulationJointReducedCoordinate_getArmature :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getFrictionCoefficient :: (self: *PxArticulationJointReducedCoordinate) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setFrictionCoefficient :: (self: *physx_PxArticulationJointReducedCoordinate, coefficient: float) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setFrictionCoefficient_mut";
+PxArticulationJointReducedCoordinate_setMaxJointVelocity :: (self: *PxArticulationJointReducedCoordinate, maxJointV: float) -> void #foreign sys "PxArticulationJointReducedCoordinate_setMaxJointVelocity_mut";
 
-PxArticulationJointReducedCoordinate_getFrictionCoefficient :: (self: *physx_PxArticulationJointReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getMaxJointVelocity :: (self: *PxArticulationJointReducedCoordinate) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setMaxJointVelocity :: (self: *physx_PxArticulationJointReducedCoordinate, maxJointV: float) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setMaxJointVelocity_mut";
+PxArticulationJointReducedCoordinate_setJointPosition :: (self: *PxArticulationJointReducedCoordinate, axis: s32, jointPos: float) -> void #foreign sys "PxArticulationJointReducedCoordinate_setJointPosition_mut";
 
-PxArticulationJointReducedCoordinate_getMaxJointVelocity :: (self: *physx_PxArticulationJointReducedCoordinate) -> float #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getJointPosition :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setJointPosition :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, jointPos: float) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setJointPosition_mut";
+PxArticulationJointReducedCoordinate_setJointVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32, jointVel: float) -> void #foreign sys "PxArticulationJointReducedCoordinate_setJointVelocity_mut";
 
-PxArticulationJointReducedCoordinate_getJointPosition :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx_sys;
+PxArticulationJointReducedCoordinate_getJointVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign sys;
 
-PxArticulationJointReducedCoordinate_setJointVelocity :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32, jointVel: float) -> void #foreign physx_sys "PxArticulationJointReducedCoordinate_setJointVelocity_mut";
+PxArticulationJointReducedCoordinate_getConcreteTypeName :: (self: *PxArticulationJointReducedCoordinate) -> *u8 #foreign sys;
 
-PxArticulationJointReducedCoordinate_getJointVelocity :: (self: *physx_PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx_sys;
+PxShape_release :: (self: *PxShape) -> void #foreign sys "PxShape_release_mut";
 
-PxArticulationJointReducedCoordinate_getConcreteTypeName :: (self: *physx_PxArticulationJointReducedCoordinate) -> *u8 #foreign physx_sys;
+PxShape_setGeometry :: (self: *PxShape, geometry: *PxGeometry) -> void #foreign sys "PxShape_setGeometry_mut";
 
-PxShape_release :: (self: *physx_PxShape) -> void #foreign physx_sys "PxShape_release_mut";
+PxShape_getGeometry :: (self: *PxShape) -> *PxGeometry #foreign sys;
 
-PxShape_setGeometry :: (self: *physx_PxShape, geometry: *physx_PxGeometry) -> void #foreign physx_sys "PxShape_setGeometry_mut";
+PxShape_getActor :: (self: *PxShape) -> *PxRigidActor #foreign sys;
 
-PxShape_getGeometry :: (self: *physx_PxShape) -> *physx_PxGeometry #foreign physx_sys;
+PxShape_setLocalPose :: (self: *PxShape, pose: *PxTransform) -> void #foreign sys "PxShape_setLocalPose_mut";
 
-PxShape_getActor :: (self: *physx_PxShape) -> *physx_PxRigidActor #foreign physx_sys;
+PxShape_getLocalPose :: (self: *PxShape) -> PxTransform #foreign sys;
 
-PxShape_setLocalPose :: (self: *physx_PxShape, pose: *physx_PxTransform) -> void #foreign physx_sys "PxShape_setLocalPose_mut";
+PxShape_setSimulationFilterData :: (self: *PxShape, data: *PxFilterData) -> void #foreign sys "PxShape_setSimulationFilterData_mut";
 
-PxShape_getLocalPose :: (self: *physx_PxShape) -> physx_PxTransform #foreign physx_sys;
+PxShape_getSimulationFilterData :: (self: *PxShape) -> PxFilterData #foreign sys;
 
-PxShape_setSimulationFilterData :: (self: *physx_PxShape, data: *physx_PxFilterData) -> void #foreign physx_sys "PxShape_setSimulationFilterData_mut";
+PxShape_setQueryFilterData :: (self: *PxShape, data: *PxFilterData) -> void #foreign sys "PxShape_setQueryFilterData_mut";
 
-PxShape_getSimulationFilterData :: (self: *physx_PxShape) -> physx_PxFilterData #foreign physx_sys;
+PxShape_getQueryFilterData :: (self: *PxShape) -> PxFilterData #foreign sys;
 
-PxShape_setQueryFilterData :: (self: *physx_PxShape, data: *physx_PxFilterData) -> void #foreign physx_sys "PxShape_setQueryFilterData_mut";
+PxShape_setMaterials :: (self: *PxShape, materials: **PxMaterial, materialCount: u16) -> void #foreign sys "PxShape_setMaterials_mut";
 
-PxShape_getQueryFilterData :: (self: *physx_PxShape) -> physx_PxFilterData #foreign physx_sys;
+PxShape_getNbMaterials :: (self: *PxShape) -> u16 #foreign sys;
 
-PxShape_setMaterials :: (self: *physx_PxShape, materials: **physx_PxMaterial, materialCount: u16) -> void #foreign physx_sys "PxShape_setMaterials_mut";
+PxShape_getMaterials :: (self: *PxShape, userBuffer: **PxMaterial, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxShape_getNbMaterials :: (self: *physx_PxShape) -> u16 #foreign physx_sys;
+PxShape_getMaterialFromInternalFaceIndex :: (self: *PxShape, faceIndex: u32) -> *PxBaseMaterial #foreign sys;
 
-PxShape_getMaterials :: (self: *physx_PxShape, userBuffer: **physx_PxMaterial, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxShape_setContactOffset :: (self: *PxShape, contactOffset: float) -> void #foreign sys "PxShape_setContactOffset_mut";
 
-PxShape_getMaterialFromInternalFaceIndex :: (self: *physx_PxShape, faceIndex: u32) -> *physx_PxBaseMaterial #foreign physx_sys;
+PxShape_getContactOffset :: (self: *PxShape) -> float #foreign sys;
 
-PxShape_setContactOffset :: (self: *physx_PxShape, contactOffset: float) -> void #foreign physx_sys "PxShape_setContactOffset_mut";
+PxShape_setRestOffset :: (self: *PxShape, restOffset: float) -> void #foreign sys "PxShape_setRestOffset_mut";
 
-PxShape_getContactOffset :: (self: *physx_PxShape) -> float #foreign physx_sys;
+PxShape_getRestOffset :: (self: *PxShape) -> float #foreign sys;
 
-PxShape_setRestOffset :: (self: *physx_PxShape, restOffset: float) -> void #foreign physx_sys "PxShape_setRestOffset_mut";
+PxShape_setDensityForFluid :: (self: *PxShape, densityForFluid: float) -> void #foreign sys "PxShape_setDensityForFluid_mut";
 
-PxShape_getRestOffset :: (self: *physx_PxShape) -> float #foreign physx_sys;
+PxShape_getDensityForFluid :: (self: *PxShape) -> float #foreign sys;
 
-PxShape_setDensityForFluid :: (self: *physx_PxShape, densityForFluid: float) -> void #foreign physx_sys "PxShape_setDensityForFluid_mut";
+PxShape_setTorsionalPatchRadius :: (self: *PxShape, radius: float) -> void #foreign sys "PxShape_setTorsionalPatchRadius_mut";
 
-PxShape_getDensityForFluid :: (self: *physx_PxShape) -> float #foreign physx_sys;
+PxShape_getTorsionalPatchRadius :: (self: *PxShape) -> float #foreign sys;
 
-PxShape_setTorsionalPatchRadius :: (self: *physx_PxShape, radius: float) -> void #foreign physx_sys "PxShape_setTorsionalPatchRadius_mut";
+PxShape_setMinTorsionalPatchRadius :: (self: *PxShape, radius: float) -> void #foreign sys "PxShape_setMinTorsionalPatchRadius_mut";
 
-PxShape_getTorsionalPatchRadius :: (self: *physx_PxShape) -> float #foreign physx_sys;
+PxShape_getMinTorsionalPatchRadius :: (self: *PxShape) -> float #foreign sys;
 
-PxShape_setMinTorsionalPatchRadius :: (self: *physx_PxShape, radius: float) -> void #foreign physx_sys "PxShape_setMinTorsionalPatchRadius_mut";
+PxShape_setFlag :: (self: *PxShape, flag: s32, value: bool) -> void #foreign sys "PxShape_setFlag_mut";
 
-PxShape_getMinTorsionalPatchRadius :: (self: *physx_PxShape) -> float #foreign physx_sys;
+PxShape_setFlags :: (self: *PxShape, inFlags: u8) -> void #foreign sys "PxShape_setFlags_mut";
 
-PxShape_setFlag :: (self: *physx_PxShape, flag: s32, value: bool) -> void #foreign physx_sys "PxShape_setFlag_mut";
+PxShape_getFlags :: (self: *PxShape) -> u8 #foreign sys;
 
-PxShape_setFlags :: (self: *physx_PxShape, inFlags: u8) -> void #foreign physx_sys "PxShape_setFlags_mut";
+PxShape_isExclusive :: (self: *PxShape) -> bool #foreign sys;
 
-PxShape_getFlags :: (self: *physx_PxShape) -> u8 #foreign physx_sys;
+PxShape_setName :: (self: *PxShape, name: *u8) -> void #foreign sys "PxShape_setName_mut";
 
-PxShape_isExclusive :: (self: *physx_PxShape) -> bool #foreign physx_sys;
+PxShape_getName :: (self: *PxShape) -> *u8 #foreign sys;
 
-PxShape_setName :: (self: *physx_PxShape, name: *u8) -> void #foreign physx_sys "PxShape_setName_mut";
+PxShape_getConcreteTypeName :: (self: *PxShape) -> *u8 #foreign sys;
 
-PxShape_getName :: (self: *physx_PxShape) -> *u8 #foreign physx_sys;
+PxRigidActor_release :: (self: *PxRigidActor) -> void #foreign sys "PxRigidActor_release_mut";
 
-PxShape_getConcreteTypeName :: (self: *physx_PxShape) -> *u8 #foreign physx_sys;
+PxRigidActor_getInternalActorIndex :: (self: *PxRigidActor) -> u32 #foreign sys;
 
-PxRigidActor_release :: (self: *physx_PxRigidActor) -> void #foreign physx_sys "PxRigidActor_release_mut";
+PxRigidActor_getGlobalPose :: (self: *PxRigidActor) -> PxTransform #foreign sys;
 
-PxRigidActor_getInternalActorIndex :: (self: *physx_PxRigidActor) -> u32 #foreign physx_sys;
+PxRigidActor_setGlobalPose :: (self: *PxRigidActor, pose: *PxTransform, autowake: bool) -> void #foreign sys "PxRigidActor_setGlobalPose_mut";
 
-PxRigidActor_getGlobalPose :: (self: *physx_PxRigidActor) -> physx_PxTransform #foreign physx_sys;
+PxRigidActor_attachShape :: (self: *PxRigidActor, shape: *PxShape) -> bool #foreign sys "PxRigidActor_attachShape_mut";
 
-PxRigidActor_setGlobalPose :: (self: *physx_PxRigidActor, pose: *physx_PxTransform, autowake: bool) -> void #foreign physx_sys "PxRigidActor_setGlobalPose_mut";
+PxRigidActor_detachShape :: (self: *PxRigidActor, shape: *PxShape, wakeOnLostTouch: bool) -> void #foreign sys "PxRigidActor_detachShape_mut";
 
-PxRigidActor_attachShape :: (self: *physx_PxRigidActor, shape: *physx_PxShape) -> bool #foreign physx_sys "PxRigidActor_attachShape_mut";
+PxRigidActor_getNbShapes :: (self: *PxRigidActor) -> u32 #foreign sys;
 
-PxRigidActor_detachShape :: (self: *physx_PxRigidActor, shape: *physx_PxShape, wakeOnLostTouch: bool) -> void #foreign physx_sys "PxRigidActor_detachShape_mut";
+PxRigidActor_getShapes :: (self: *PxRigidActor, userBuffer: **PxShape, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxRigidActor_getNbShapes :: (self: *physx_PxRigidActor) -> u32 #foreign physx_sys;
+PxRigidActor_getNbConstraints :: (self: *PxRigidActor) -> u32 #foreign sys;
 
-PxRigidActor_getShapes :: (self: *physx_PxRigidActor, userBuffer: **physx_PxShape, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxRigidActor_getConstraints :: (self: *PxRigidActor, userBuffer: **PxConstraint, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxRigidActor_getNbConstraints :: (self: *physx_PxRigidActor) -> u32 #foreign physx_sys;
+PxNodeIndex_new :: (id: u32, articLinkId: u32) -> PxNodeIndex #foreign sys;
 
-PxRigidActor_getConstraints :: (self: *physx_PxRigidActor, userBuffer: **physx_PxConstraint, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxNodeIndex_new :: (id: u32) -> PxNodeIndex #foreign sys "PxNodeIndex_new_1";
 
-PxNodeIndex_new :: (id: u32, articLinkId: u32) -> physx_PxNodeIndex #foreign physx_sys;
+PxNodeIndex_index :: (self: *PxNodeIndex) -> u32 #foreign sys;
 
-PxNodeIndex_new_1 :: (id: u32) -> physx_PxNodeIndex #foreign physx_sys;
+PxNodeIndex_articulationLinkId :: (self: *PxNodeIndex) -> u32 #foreign sys;
 
-PxNodeIndex_index :: (self: *physx_PxNodeIndex) -> u32 #foreign physx_sys;
+PxNodeIndex_isArticulation :: (self: *PxNodeIndex) -> u32 #foreign sys;
 
-PxNodeIndex_articulationLinkId :: (self: *physx_PxNodeIndex) -> u32 #foreign physx_sys;
+PxNodeIndex_isStaticBody :: (self: *PxNodeIndex) -> bool #foreign sys;
 
-PxNodeIndex_isArticulation :: (self: *physx_PxNodeIndex) -> u32 #foreign physx_sys;
+PxNodeIndex_isValid :: (self: *PxNodeIndex) -> bool #foreign sys;
 
-PxNodeIndex_isStaticBody :: (self: *physx_PxNodeIndex) -> bool #foreign physx_sys;
+PxNodeIndex_setIndices :: (self: *PxNodeIndex, index: u32, articLinkId: u32) -> void #foreign sys "PxNodeIndex_setIndices_mut";
 
-PxNodeIndex_isValid :: (self: *physx_PxNodeIndex) -> bool #foreign physx_sys;
+PxNodeIndex_setIndices_mut :: (self: *PxNodeIndex, index: u32) -> void #foreign sys "PxNodeIndex_setIndices_mut_1";
 
-PxNodeIndex_setIndices :: (self: *physx_PxNodeIndex, index: u32, articLinkId: u32) -> void #foreign physx_sys "PxNodeIndex_setIndices_mut";
+PxNodeIndex_getInd :: (self: *PxNodeIndex) -> u64 #foreign sys;
 
-PxNodeIndex_setIndices :: (self: *physx_PxNodeIndex, index: u32) -> void #foreign physx_sys "PxNodeIndex_setIndices_mut_1";
+PxRigidBody_setCMassLocalPose :: (self: *PxRigidBody, pose: *PxTransform) -> void #foreign sys "PxRigidBody_setCMassLocalPose_mut";
 
-PxNodeIndex_getInd :: (self: *physx_PxNodeIndex) -> u64 #foreign physx_sys;
+PxRigidBody_getCMassLocalPose :: (self: *PxRigidBody) -> PxTransform #foreign sys;
 
-PxRigidBody_setCMassLocalPose :: (self: *physx_PxRigidBody, pose: *physx_PxTransform) -> void #foreign physx_sys "PxRigidBody_setCMassLocalPose_mut";
+PxRigidBody_setMass :: (self: *PxRigidBody, mass: float) -> void #foreign sys "PxRigidBody_setMass_mut";
 
-PxRigidBody_getCMassLocalPose :: (self: *physx_PxRigidBody) -> physx_PxTransform #foreign physx_sys;
+PxRigidBody_getMass :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setMass :: (self: *physx_PxRigidBody, mass: float) -> void #foreign physx_sys "PxRigidBody_setMass_mut";
+PxRigidBody_getInvMass :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_getMass :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_setMassSpaceInertiaTensor :: (self: *PxRigidBody, m: *Vector3) -> void #foreign sys "PxRigidBody_setMassSpaceInertiaTensor_mut";
 
-PxRigidBody_getInvMass :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getMassSpaceInertiaTensor :: (self: *PxRigidBody) -> Vector3 #foreign sys;
 
-PxRigidBody_setMassSpaceInertiaTensor :: (self: *physx_PxRigidBody, m: *Vector3) -> void #foreign physx_sys "PxRigidBody_setMassSpaceInertiaTensor_mut";
+PxRigidBody_getMassSpaceInvInertiaTensor :: (self: *PxRigidBody) -> Vector3 #foreign sys;
 
-PxRigidBody_getMassSpaceInertiaTensor :: (self: *physx_PxRigidBody) -> Vector3 #foreign physx_sys;
+PxRigidBody_setLinearDamping :: (self: *PxRigidBody, linDamp: float) -> void #foreign sys "PxRigidBody_setLinearDamping_mut";
 
-PxRigidBody_getMassSpaceInvInertiaTensor :: (self: *physx_PxRigidBody) -> Vector3 #foreign physx_sys;
+PxRigidBody_getLinearDamping :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setLinearDamping :: (self: *physx_PxRigidBody, linDamp: float) -> void #foreign physx_sys "PxRigidBody_setLinearDamping_mut";
+PxRigidBody_setAngularDamping :: (self: *PxRigidBody, angDamp: float) -> void #foreign sys "PxRigidBody_setAngularDamping_mut";
 
-PxRigidBody_getLinearDamping :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getAngularDamping :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setAngularDamping :: (self: *physx_PxRigidBody, angDamp: float) -> void #foreign physx_sys "PxRigidBody_setAngularDamping_mut";
+PxRigidBody_getLinearVelocity :: (self: *PxRigidBody) -> Vector3 #foreign sys;
 
-PxRigidBody_getAngularDamping :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getAngularVelocity :: (self: *PxRigidBody) -> Vector3 #foreign sys;
 
-PxRigidBody_getLinearVelocity :: (self: *physx_PxRigidBody) -> Vector3 #foreign physx_sys;
+PxRigidBody_setMaxLinearVelocity :: (self: *PxRigidBody, maxLinVel: float) -> void #foreign sys "PxRigidBody_setMaxLinearVelocity_mut";
 
-PxRigidBody_getAngularVelocity :: (self: *physx_PxRigidBody) -> Vector3 #foreign physx_sys;
+PxRigidBody_getMaxLinearVelocity :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setMaxLinearVelocity :: (self: *physx_PxRigidBody, maxLinVel: float) -> void #foreign physx_sys "PxRigidBody_setMaxLinearVelocity_mut";
+PxRigidBody_setMaxAngularVelocity :: (self: *PxRigidBody, maxAngVel: float) -> void #foreign sys "PxRigidBody_setMaxAngularVelocity_mut";
 
-PxRigidBody_getMaxLinearVelocity :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getMaxAngularVelocity :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setMaxAngularVelocity :: (self: *physx_PxRigidBody, maxAngVel: float) -> void #foreign physx_sys "PxRigidBody_setMaxAngularVelocity_mut";
+PxRigidBody_addForce :: (self: *PxRigidBody, force: *Vector3, mode: s32, autowake: bool) -> void #foreign sys "PxRigidBody_addForce_mut";
 
-PxRigidBody_getMaxAngularVelocity :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_addTorque :: (self: *PxRigidBody, torque: *Vector3, mode: s32, autowake: bool) -> void #foreign sys "PxRigidBody_addTorque_mut";
 
-PxRigidBody_addForce :: (self: *physx_PxRigidBody, force: *Vector3, mode: s32, autowake: bool) -> void #foreign physx_sys "PxRigidBody_addForce_mut";
+PxRigidBody_clearForce :: (self: *PxRigidBody, mode: s32) -> void #foreign sys "PxRigidBody_clearForce_mut";
 
-PxRigidBody_addTorque :: (self: *physx_PxRigidBody, torque: *Vector3, mode: s32, autowake: bool) -> void #foreign physx_sys "PxRigidBody_addTorque_mut";
+PxRigidBody_clearTorque :: (self: *PxRigidBody, mode: s32) -> void #foreign sys "PxRigidBody_clearTorque_mut";
 
-PxRigidBody_clearForce :: (self: *physx_PxRigidBody, mode: s32) -> void #foreign physx_sys "PxRigidBody_clearForce_mut";
+PxRigidBody_setForceAndTorque :: (self: *PxRigidBody, force: *Vector3, torque: *Vector3, mode: s32) -> void #foreign sys "PxRigidBody_setForceAndTorque_mut";
 
-PxRigidBody_clearTorque :: (self: *physx_PxRigidBody, mode: s32) -> void #foreign physx_sys "PxRigidBody_clearTorque_mut";
+PxRigidBody_setRigidBodyFlag :: (self: *PxRigidBody, flag: s32, value: bool) -> void #foreign sys "PxRigidBody_setRigidBodyFlag_mut";
 
-PxRigidBody_setForceAndTorque :: (self: *physx_PxRigidBody, force: *Vector3, torque: *Vector3, mode: s32) -> void #foreign physx_sys "PxRigidBody_setForceAndTorque_mut";
+PxRigidBody_setRigidBodyFlags :: (self: *PxRigidBody, inFlags: u16) -> void #foreign sys "PxRigidBody_setRigidBodyFlags_mut";
 
-PxRigidBody_setRigidBodyFlag :: (self: *physx_PxRigidBody, flag: s32, value: bool) -> void #foreign physx_sys "PxRigidBody_setRigidBodyFlag_mut";
+PxRigidBody_getRigidBodyFlags :: (self: *PxRigidBody) -> u16 #foreign sys;
 
-PxRigidBody_setRigidBodyFlags :: (self: *physx_PxRigidBody, inFlags: u16) -> void #foreign physx_sys "PxRigidBody_setRigidBodyFlags_mut";
+PxRigidBody_setMinCCDAdvanceCoefficient :: (self: *PxRigidBody, advanceCoefficient: float) -> void #foreign sys "PxRigidBody_setMinCCDAdvanceCoefficient_mut";
 
-PxRigidBody_getRigidBodyFlags :: (self: *physx_PxRigidBody) -> u16 #foreign physx_sys;
+PxRigidBody_getMinCCDAdvanceCoefficient :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setMinCCDAdvanceCoefficient :: (self: *physx_PxRigidBody, advanceCoefficient: float) -> void #foreign physx_sys "PxRigidBody_setMinCCDAdvanceCoefficient_mut";
+PxRigidBody_setMaxDepenetrationVelocity :: (self: *PxRigidBody, biasClamp: float) -> void #foreign sys "PxRigidBody_setMaxDepenetrationVelocity_mut";
 
-PxRigidBody_getMinCCDAdvanceCoefficient :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getMaxDepenetrationVelocity :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setMaxDepenetrationVelocity :: (self: *physx_PxRigidBody, biasClamp: float) -> void #foreign physx_sys "PxRigidBody_setMaxDepenetrationVelocity_mut";
+PxRigidBody_setMaxContactImpulse :: (self: *PxRigidBody, maxImpulse: float) -> void #foreign sys "PxRigidBody_setMaxContactImpulse_mut";
 
-PxRigidBody_getMaxDepenetrationVelocity :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getMaxContactImpulse :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setMaxContactImpulse :: (self: *physx_PxRigidBody, maxImpulse: float) -> void #foreign physx_sys "PxRigidBody_setMaxContactImpulse_mut";
+PxRigidBody_setContactSlopCoefficient :: (self: *PxRigidBody, slopCoefficient: float) -> void #foreign sys "PxRigidBody_setContactSlopCoefficient_mut";
 
-PxRigidBody_getMaxContactImpulse :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxRigidBody_getContactSlopCoefficient :: (self: *PxRigidBody) -> float #foreign sys;
 
-PxRigidBody_setContactSlopCoefficient :: (self: *physx_PxRigidBody, slopCoefficient: float) -> void #foreign physx_sys "PxRigidBody_setContactSlopCoefficient_mut";
+PxRigidBody_getInternalIslandNodeIndex :: (self: *PxRigidBody) -> PxNodeIndex #foreign sys;
 
-PxRigidBody_getContactSlopCoefficient :: (self: *physx_PxRigidBody) -> float #foreign physx_sys;
+PxArticulationLink_release :: (self: *PxArticulationLink) -> void #foreign sys "PxArticulationLink_release_mut";
 
-PxRigidBody_getInternalIslandNodeIndex :: (self: *physx_PxRigidBody) -> physx_PxNodeIndex #foreign physx_sys;
+PxArticulationLink_getArticulation :: (self: *PxArticulationLink) -> *PxArticulationReducedCoordinate #foreign sys;
 
-PxArticulationLink_release :: (self: *physx_PxArticulationLink) -> void #foreign physx_sys "PxArticulationLink_release_mut";
+PxArticulationLink_getInboundJoint :: (self: *PxArticulationLink) -> *PxArticulationJointReducedCoordinate #foreign sys;
 
-PxArticulationLink_getArticulation :: (self: *physx_PxArticulationLink) -> *physx_PxArticulationReducedCoordinate #foreign physx_sys;
+PxArticulationLink_getInboundJointDof :: (self: *PxArticulationLink) -> u32 #foreign sys;
 
-PxArticulationLink_getInboundJoint :: (self: *physx_PxArticulationLink) -> *physx_PxArticulationJointReducedCoordinate #foreign physx_sys;
+PxArticulationLink_getNbChildren :: (self: *PxArticulationLink) -> u32 #foreign sys;
 
-PxArticulationLink_getInboundJointDof :: (self: *physx_PxArticulationLink) -> u32 #foreign physx_sys;
+PxArticulationLink_getLinkIndex :: (self: *PxArticulationLink) -> u32 #foreign sys;
 
-PxArticulationLink_getNbChildren :: (self: *physx_PxArticulationLink) -> u32 #foreign physx_sys;
+PxArticulationLink_getChildren :: (self: *PxArticulationLink, userBuffer: **PxArticulationLink, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxArticulationLink_getLinkIndex :: (self: *physx_PxArticulationLink) -> u32 #foreign physx_sys;
+PxArticulationLink_setCfmScale :: (self: *PxArticulationLink, cfm: float) -> void #foreign sys "PxArticulationLink_setCfmScale_mut";
 
-PxArticulationLink_getChildren :: (self: *physx_PxArticulationLink, userBuffer: **physx_PxArticulationLink, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxArticulationLink_getCfmScale :: (self: *PxArticulationLink) -> float #foreign sys;
 
-PxArticulationLink_setCfmScale :: (self: *physx_PxArticulationLink, cfm: float) -> void #foreign physx_sys "PxArticulationLink_setCfmScale_mut";
+PxArticulationLink_getLinearVelocity :: (self: *PxArticulationLink) -> Vector3 #foreign sys;
 
-PxArticulationLink_getCfmScale :: (self: *physx_PxArticulationLink) -> float #foreign physx_sys;
+PxArticulationLink_getAngularVelocity :: (self: *PxArticulationLink) -> Vector3 #foreign sys;
 
-PxArticulationLink_getLinearVelocity :: (self: *physx_PxArticulationLink) -> Vector3 #foreign physx_sys;
+PxArticulationLink_getConcreteTypeName :: (self: *PxArticulationLink) -> *u8 #foreign sys;
 
-PxArticulationLink_getAngularVelocity :: (self: *physx_PxArticulationLink) -> Vector3 #foreign physx_sys;
+PxConeLimitedConstraint_new :: () -> PxConeLimitedConstraint #foreign sys;
 
-PxArticulationLink_getConcreteTypeName :: (self: *physx_PxArticulationLink) -> *u8 #foreign physx_sys;
+PxConstraint_release :: (self: *PxConstraint) -> void #foreign sys "PxConstraint_release_mut";
 
-PxConeLimitedConstraint_new :: () -> physx_PxConeLimitedConstraint #foreign physx_sys;
+PxConstraint_getScene :: (self: *PxConstraint) -> *PxScene #foreign sys;
 
-PxConstraint_release :: (self: *physx_PxConstraint) -> void #foreign physx_sys "PxConstraint_release_mut";
+PxConstraint_getActors :: (self: *PxConstraint, actor0: **PxRigidActor, actor1: **PxRigidActor) -> void #foreign sys;
 
-PxConstraint_getScene :: (self: *physx_PxConstraint) -> *physx_PxScene #foreign physx_sys;
+PxConstraint_setActors :: (self: *PxConstraint, actor0: *PxRigidActor, actor1: *PxRigidActor) -> void #foreign sys "PxConstraint_setActors_mut";
 
-PxConstraint_getActors :: (self: *physx_PxConstraint, actor0: **physx_PxRigidActor, actor1: **physx_PxRigidActor) -> void #foreign physx_sys;
+PxConstraint_markDirty :: (self: *PxConstraint) -> void #foreign sys "PxConstraint_markDirty_mut";
 
-PxConstraint_setActors :: (self: *physx_PxConstraint, actor0: *physx_PxRigidActor, actor1: *physx_PxRigidActor) -> void #foreign physx_sys "PxConstraint_setActors_mut";
+PxConstraint_getFlags :: (self: *PxConstraint) -> u16 #foreign sys;
 
-PxConstraint_markDirty :: (self: *physx_PxConstraint) -> void #foreign physx_sys "PxConstraint_markDirty_mut";
+PxConstraint_setFlags :: (self: *PxConstraint, flags: u16) -> void #foreign sys "PxConstraint_setFlags_mut";
 
-PxConstraint_getFlags :: (self: *physx_PxConstraint) -> u16 #foreign physx_sys;
+PxConstraint_setFlag :: (self: *PxConstraint, flag: s32, value: bool) -> void #foreign sys "PxConstraint_setFlag_mut";
 
-PxConstraint_setFlags :: (self: *physx_PxConstraint, flags: u16) -> void #foreign physx_sys "PxConstraint_setFlags_mut";
+PxConstraint_getForce :: (self: *PxConstraint, linear: *Vector3, angular: *Vector3) -> void #foreign sys;
 
-PxConstraint_setFlag :: (self: *physx_PxConstraint, flag: s32, value: bool) -> void #foreign physx_sys "PxConstraint_setFlag_mut";
+PxConstraint_isValid :: (self: *PxConstraint) -> bool #foreign sys;
 
-PxConstraint_getForce :: (self: *physx_PxConstraint, linear: *Vector3, angular: *Vector3) -> void #foreign physx_sys;
+PxConstraint_setBreakForce :: (self: *PxConstraint, linear: float, angular: float) -> void #foreign sys "PxConstraint_setBreakForce_mut";
 
-PxConstraint_isValid :: (self: *physx_PxConstraint) -> bool #foreign physx_sys;
+PxConstraint_getBreakForce :: (self: *PxConstraint, linear: *float, angular: *float) -> void #foreign sys;
 
-PxConstraint_setBreakForce :: (self: *physx_PxConstraint, linear: float, angular: float) -> void #foreign physx_sys "PxConstraint_setBreakForce_mut";
+PxConstraint_setMinResponseThreshold :: (self: *PxConstraint, threshold: float) -> void #foreign sys "PxConstraint_setMinResponseThreshold_mut";
 
-PxConstraint_getBreakForce :: (self: *physx_PxConstraint, linear: *float, angular: *float) -> void #foreign physx_sys;
+PxConstraint_getMinResponseThreshold :: (self: *PxConstraint) -> float #foreign sys;
 
-PxConstraint_setMinResponseThreshold :: (self: *physx_PxConstraint, threshold: float) -> void #foreign physx_sys "PxConstraint_setMinResponseThreshold_mut";
+PxConstraint_getExternalReference :: (self: *PxConstraint, typeID: *u32) -> *void #foreign sys "PxConstraint_getExternalReference_mut";
 
-PxConstraint_getMinResponseThreshold :: (self: *physx_PxConstraint) -> float #foreign physx_sys;
+PxConstraint_setConstraintFunctions :: (self: *PxConstraint, connector: *PxConstraintConnector, shaders: *PxConstraintShaderTable) -> void #foreign sys "PxConstraint_setConstraintFunctions_mut";
 
-PxConstraint_getExternalReference :: (self: *physx_PxConstraint, typeID: *u32) -> *void #foreign physx_sys "PxConstraint_getExternalReference_mut";
+PxConstraint_getConcreteTypeName :: (self: *PxConstraint) -> *u8 #foreign sys;
 
-PxConstraint_setConstraintFunctions :: (self: *physx_PxConstraint, connector: *physx_PxConstraintConnector, shaders: *physx_PxConstraintShaderTable) -> void #foreign physx_sys "PxConstraint_setConstraintFunctions_mut";
+PxContactStreamIterator_new :: (contactPatches: *u8, contactPoints: *u8, contactFaceIndices: *u32, nbPatches: u32, nbContacts: u32) -> PxContactStreamIterator #foreign sys;
 
-PxConstraint_getConcreteTypeName :: (self: *physx_PxConstraint) -> *u8 #foreign physx_sys;
+PxContactStreamIterator_hasNextPatch :: (self: *PxContactStreamIterator) -> bool #foreign sys;
 
-PxContactStreamIterator_new :: (contactPatches: *u8, contactPoints: *u8, contactFaceIndices: *u32, nbPatches: u32, nbContacts: u32) -> physx_PxContactStreamIterator #foreign physx_sys;
+PxContactStreamIterator_getTotalContactCount :: (self: *PxContactStreamIterator) -> u32 #foreign sys;
 
-PxContactStreamIterator_hasNextPatch :: (self: *physx_PxContactStreamIterator) -> bool #foreign physx_sys;
+PxContactStreamIterator_getTotalPatchCount :: (self: *PxContactStreamIterator) -> u32 #foreign sys;
 
-PxContactStreamIterator_getTotalContactCount :: (self: *physx_PxContactStreamIterator) -> u32 #foreign physx_sys;
+PxContactStreamIterator_nextPatch :: (self: *PxContactStreamIterator) -> void #foreign sys "PxContactStreamIterator_nextPatch_mut";
 
-PxContactStreamIterator_getTotalPatchCount :: (self: *physx_PxContactStreamIterator) -> u32 #foreign physx_sys;
+PxContactStreamIterator_hasNextContact :: (self: *PxContactStreamIterator) -> bool #foreign sys;
 
-PxContactStreamIterator_nextPatch :: (self: *physx_PxContactStreamIterator) -> void #foreign physx_sys "PxContactStreamIterator_nextPatch_mut";
+PxContactStreamIterator_nextContact :: (self: *PxContactStreamIterator) -> void #foreign sys "PxContactStreamIterator_nextContact_mut";
 
-PxContactStreamIterator_hasNextContact :: (self: *physx_PxContactStreamIterator) -> bool #foreign physx_sys;
+PxContactStreamIterator_getContactNormal :: (self: *PxContactStreamIterator) -> *Vector3 #foreign sys;
 
-PxContactStreamIterator_nextContact :: (self: *physx_PxContactStreamIterator) -> void #foreign physx_sys "PxContactStreamIterator_nextContact_mut";
+PxContactStreamIterator_getInvMassScale0 :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getContactNormal :: (self: *physx_PxContactStreamIterator) -> *Vector3 #foreign physx_sys;
+PxContactStreamIterator_getInvMassScale1 :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getInvMassScale0 :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getInvInertiaScale0 :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getInvMassScale1 :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getInvInertiaScale1 :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getInvInertiaScale0 :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getMaxImpulse :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getInvInertiaScale1 :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getTargetVel :: (self: *PxContactStreamIterator) -> *Vector3 #foreign sys;
 
-PxContactStreamIterator_getMaxImpulse :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getContactPoint :: (self: *PxContactStreamIterator) -> *Vector3 #foreign sys;
 
-PxContactStreamIterator_getTargetVel :: (self: *physx_PxContactStreamIterator) -> *Vector3 #foreign physx_sys;
+PxContactStreamIterator_getSeparation :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getContactPoint :: (self: *physx_PxContactStreamIterator) -> *Vector3 #foreign physx_sys;
+PxContactStreamIterator_getFaceIndex0 :: (self: *PxContactStreamIterator) -> u32 #foreign sys;
 
-PxContactStreamIterator_getSeparation :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getFaceIndex1 :: (self: *PxContactStreamIterator) -> u32 #foreign sys;
 
-PxContactStreamIterator_getFaceIndex0 :: (self: *physx_PxContactStreamIterator) -> u32 #foreign physx_sys;
+PxContactStreamIterator_getStaticFriction :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getFaceIndex1 :: (self: *physx_PxContactStreamIterator) -> u32 #foreign physx_sys;
+PxContactStreamIterator_getDynamicFriction :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getStaticFriction :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getRestitution :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getDynamicFriction :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getDamping :: (self: *PxContactStreamIterator) -> float #foreign sys;
 
-PxContactStreamIterator_getRestitution :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getMaterialFlags :: (self: *PxContactStreamIterator) -> u32 #foreign sys;
 
-PxContactStreamIterator_getDamping :: (self: *physx_PxContactStreamIterator) -> float #foreign physx_sys;
+PxContactStreamIterator_getMaterialIndex0 :: (self: *PxContactStreamIterator) -> u16 #foreign sys;
 
-PxContactStreamIterator_getMaterialFlags :: (self: *physx_PxContactStreamIterator) -> u32 #foreign physx_sys;
+PxContactStreamIterator_getMaterialIndex1 :: (self: *PxContactStreamIterator) -> u16 #foreign sys;
 
-PxContactStreamIterator_getMaterialIndex0 :: (self: *physx_PxContactStreamIterator) -> u16 #foreign physx_sys;
+PxContactStreamIterator_advanceToIndex :: (self: *PxContactStreamIterator, initialIndex: u32) -> bool #foreign sys "PxContactStreamIterator_advanceToIndex_mut";
 
-PxContactStreamIterator_getMaterialIndex1 :: (self: *physx_PxContactStreamIterator) -> u16 #foreign physx_sys;
+PxContactSet_getPoint :: (self: *PxContactSet, i: u32) -> *Vector3 #foreign sys;
 
-PxContactStreamIterator_advanceToIndex :: (self: *physx_PxContactStreamIterator, initialIndex: u32) -> bool #foreign physx_sys "PxContactStreamIterator_advanceToIndex_mut";
+PxContactSet_setPoint :: (self: *PxContactSet, i: u32, p: *Vector3) -> void #foreign sys "PxContactSet_setPoint_mut";
 
-PxContactSet_getPoint :: (self: *physx_PxContactSet, i: u32) -> *Vector3 #foreign physx_sys;
+PxContactSet_getNormal :: (self: *PxContactSet, i: u32) -> *Vector3 #foreign sys;
 
-PxContactSet_setPoint :: (self: *physx_PxContactSet, i: u32, p: *Vector3) -> void #foreign physx_sys "PxContactSet_setPoint_mut";
+PxContactSet_setNormal :: (self: *PxContactSet, i: u32, n: *Vector3) -> void #foreign sys "PxContactSet_setNormal_mut";
 
-PxContactSet_getNormal :: (self: *physx_PxContactSet, i: u32) -> *Vector3 #foreign physx_sys;
+PxContactSet_getSeparation :: (self: *PxContactSet, i: u32) -> float #foreign sys;
 
-PxContactSet_setNormal :: (self: *physx_PxContactSet, i: u32, n: *Vector3) -> void #foreign physx_sys "PxContactSet_setNormal_mut";
+PxContactSet_setSeparation :: (self: *PxContactSet, i: u32, s: float) -> void #foreign sys "PxContactSet_setSeparation_mut";
 
-PxContactSet_getSeparation :: (self: *physx_PxContactSet, i: u32) -> float #foreign physx_sys;
+PxContactSet_getTargetVelocity :: (self: *PxContactSet, i: u32) -> *Vector3 #foreign sys;
 
-PxContactSet_setSeparation :: (self: *physx_PxContactSet, i: u32, s: float) -> void #foreign physx_sys "PxContactSet_setSeparation_mut";
+PxContactSet_setTargetVelocity :: (self: *PxContactSet, i: u32, v: *Vector3) -> void #foreign sys "PxContactSet_setTargetVelocity_mut";
 
-PxContactSet_getTargetVelocity :: (self: *physx_PxContactSet, i: u32) -> *Vector3 #foreign physx_sys;
+PxContactSet_getInternalFaceIndex0 :: (self: *PxContactSet, i: u32) -> u32 #foreign sys;
 
-PxContactSet_setTargetVelocity :: (self: *physx_PxContactSet, i: u32, v: *Vector3) -> void #foreign physx_sys "PxContactSet_setTargetVelocity_mut";
+PxContactSet_getInternalFaceIndex1 :: (self: *PxContactSet, i: u32) -> u32 #foreign sys;
 
-PxContactSet_getInternalFaceIndex0 :: (self: *physx_PxContactSet, i: u32) -> u32 #foreign physx_sys;
+PxContactSet_getMaxImpulse :: (self: *PxContactSet, i: u32) -> float #foreign sys;
 
-PxContactSet_getInternalFaceIndex1 :: (self: *physx_PxContactSet, i: u32) -> u32 #foreign physx_sys;
+PxContactSet_setMaxImpulse :: (self: *PxContactSet, i: u32, s: float) -> void #foreign sys "PxContactSet_setMaxImpulse_mut";
 
-PxContactSet_getMaxImpulse :: (self: *physx_PxContactSet, i: u32) -> float #foreign physx_sys;
+PxContactSet_getRestitution :: (self: *PxContactSet, i: u32) -> float #foreign sys;
 
-PxContactSet_setMaxImpulse :: (self: *physx_PxContactSet, i: u32, s: float) -> void #foreign physx_sys "PxContactSet_setMaxImpulse_mut";
+PxContactSet_setRestitution :: (self: *PxContactSet, i: u32, r: float) -> void #foreign sys "PxContactSet_setRestitution_mut";
 
-PxContactSet_getRestitution :: (self: *physx_PxContactSet, i: u32) -> float #foreign physx_sys;
+PxContactSet_getStaticFriction :: (self: *PxContactSet, i: u32) -> float #foreign sys;
 
-PxContactSet_setRestitution :: (self: *physx_PxContactSet, i: u32, r: float) -> void #foreign physx_sys "PxContactSet_setRestitution_mut";
+PxContactSet_setStaticFriction :: (self: *PxContactSet, i: u32, f: float) -> void #foreign sys "PxContactSet_setStaticFriction_mut";
 
-PxContactSet_getStaticFriction :: (self: *physx_PxContactSet, i: u32) -> float #foreign physx_sys;
+PxContactSet_getDynamicFriction :: (self: *PxContactSet, i: u32) -> float #foreign sys;
 
-PxContactSet_setStaticFriction :: (self: *physx_PxContactSet, i: u32, f: float) -> void #foreign physx_sys "PxContactSet_setStaticFriction_mut";
+PxContactSet_setDynamicFriction :: (self: *PxContactSet, i: u32, f: float) -> void #foreign sys "PxContactSet_setDynamicFriction_mut";
 
-PxContactSet_getDynamicFriction :: (self: *physx_PxContactSet, i: u32) -> float #foreign physx_sys;
+PxContactSet_ignore :: (self: *PxContactSet, i: u32) -> void #foreign sys "PxContactSet_ignore_mut";
 
-PxContactSet_setDynamicFriction :: (self: *physx_PxContactSet, i: u32, f: float) -> void #foreign physx_sys "PxContactSet_setDynamicFriction_mut";
+PxContactSet_size :: (self: *PxContactSet) -> u32 #foreign sys;
 
-PxContactSet_ignore :: (self: *physx_PxContactSet, i: u32) -> void #foreign physx_sys "PxContactSet_ignore_mut";
+PxContactSet_getInvMassScale0 :: (self: *PxContactSet) -> float #foreign sys;
 
-PxContactSet_size :: (self: *physx_PxContactSet) -> u32 #foreign physx_sys;
+PxContactSet_getInvMassScale1 :: (self: *PxContactSet) -> float #foreign sys;
 
-PxContactSet_getInvMassScale0 :: (self: *physx_PxContactSet) -> float #foreign physx_sys;
+PxContactSet_getInvInertiaScale0 :: (self: *PxContactSet) -> float #foreign sys;
 
-PxContactSet_getInvMassScale1 :: (self: *physx_PxContactSet) -> float #foreign physx_sys;
+PxContactSet_getInvInertiaScale1 :: (self: *PxContactSet) -> float #foreign sys;
 
-PxContactSet_getInvInertiaScale0 :: (self: *physx_PxContactSet) -> float #foreign physx_sys;
+PxContactSet_setInvMassScale0 :: (self: *PxContactSet, scale: float) -> void #foreign sys "PxContactSet_setInvMassScale0_mut";
 
-PxContactSet_getInvInertiaScale1 :: (self: *physx_PxContactSet) -> float #foreign physx_sys;
+PxContactSet_setInvMassScale1 :: (self: *PxContactSet, scale: float) -> void #foreign sys "PxContactSet_setInvMassScale1_mut";
 
-PxContactSet_setInvMassScale0 :: (self: *physx_PxContactSet, scale: float) -> void #foreign physx_sys "PxContactSet_setInvMassScale0_mut";
+PxContactSet_setInvInertiaScale0 :: (self: *PxContactSet, scale: float) -> void #foreign sys "PxContactSet_setInvInertiaScale0_mut";
 
-PxContactSet_setInvMassScale1 :: (self: *physx_PxContactSet, scale: float) -> void #foreign physx_sys "PxContactSet_setInvMassScale1_mut";
+PxContactSet_setInvInertiaScale1 :: (self: *PxContactSet, scale: float) -> void #foreign sys "PxContactSet_setInvInertiaScale1_mut";
 
-PxContactSet_setInvInertiaScale0 :: (self: *physx_PxContactSet, scale: float) -> void #foreign physx_sys "PxContactSet_setInvInertiaScale0_mut";
+PxContactModifyCallback_onContactModify :: (self: *PxContactModifyCallback, pairs: *PxContactModifyPair, count: u32) -> void #foreign sys "PxContactModifyCallback_onContactModify_mut";
 
-PxContactSet_setInvInertiaScale1 :: (self: *physx_PxContactSet, scale: float) -> void #foreign physx_sys "PxContactSet_setInvInertiaScale1_mut";
+PxCCDContactModifyCallback_onCCDContactModify :: (self: *PxCCDContactModifyCallback, pairs: *PxContactModifyPair, count: u32) -> void #foreign sys "PxCCDContactModifyCallback_onCCDContactModify_mut";
 
-PxContactModifyCallback_onContactModify :: (self: *physx_PxContactModifyCallback, pairs: *physx_PxContactModifyPair, count: u32) -> void #foreign physx_sys "PxContactModifyCallback_onContactModify_mut";
+PxDeletionListener_onRelease :: (self: *PxDeletionListener, observed: *PxBase, userData: *void, deletionEvent: s32) -> void #foreign sys "PxDeletionListener_onRelease_mut";
 
-PxCCDContactModifyCallback_onCCDContactModify :: (self: *physx_PxCCDContactModifyCallback, pairs: *physx_PxContactModifyPair, count: u32) -> void #foreign physx_sys "PxCCDContactModifyCallback_onCCDContactModify_mut";
+PxBaseMaterial_isKindOf :: (self: *PxBaseMaterial, name: *u8) -> bool #foreign sys;
 
-PxDeletionListener_onRelease :: (self: *physx_PxDeletionListener, observed: *physx_PxBase, userData: *void, deletionEvent: s32) -> void #foreign physx_sys "PxDeletionListener_onRelease_mut";
+PxFEMMaterial_setYoungsModulus :: (self: *PxFEMMaterial, young: float) -> void #foreign sys "PxFEMMaterial_setYoungsModulus_mut";
 
-PxBaseMaterial_isKindOf :: (self: *physx_PxBaseMaterial, name: *u8) -> bool #foreign physx_sys;
+PxFEMMaterial_getYoungsModulus :: (self: *PxFEMMaterial) -> float #foreign sys;
 
-PxFEMMaterial_setYoungsModulus :: (self: *physx_PxFEMMaterial, young: float) -> void #foreign physx_sys "PxFEMMaterial_setYoungsModulus_mut";
+PxFEMMaterial_setPoissons :: (self: *PxFEMMaterial, poisson: float) -> void #foreign sys "PxFEMMaterial_setPoissons_mut";
 
-PxFEMMaterial_getYoungsModulus :: (self: *physx_PxFEMMaterial) -> float #foreign physx_sys;
+PxFEMMaterial_getPoissons :: (self: *PxFEMMaterial) -> float #foreign sys;
 
-PxFEMMaterial_setPoissons :: (self: *physx_PxFEMMaterial, poisson: float) -> void #foreign physx_sys "PxFEMMaterial_setPoissons_mut";
+PxFEMMaterial_setDynamicFriction :: (self: *PxFEMMaterial, dynamicFriction: float) -> void #foreign sys "PxFEMMaterial_setDynamicFriction_mut";
 
-PxFEMMaterial_getPoissons :: (self: *physx_PxFEMMaterial) -> float #foreign physx_sys;
+PxFEMMaterial_getDynamicFriction :: (self: *PxFEMMaterial) -> float #foreign sys;
 
-PxFEMMaterial_setDynamicFriction :: (self: *physx_PxFEMMaterial, dynamicFriction: float) -> void #foreign physx_sys "PxFEMMaterial_setDynamicFriction_mut";
+PxFilterData_new :: (anon_param0: s32) -> PxFilterData #foreign sys;
 
-PxFEMMaterial_getDynamicFriction :: (self: *physx_PxFEMMaterial) -> float #foreign physx_sys;
+PxFilterData_new :: () -> PxFilterData #foreign sys "PxFilterData_new_1";
 
-PxFilterData_new :: (anon_param0: s32) -> physx_PxFilterData #foreign physx_sys;
+PxFilterData_new :: (w0: u32, w1: u32, w2: u32, w3: u32) -> PxFilterData #foreign sys "PxFilterData_new_2";
 
-PxFilterData_new_1 :: () -> physx_PxFilterData #foreign physx_sys;
+PxFilterData_setToDefault :: (self: *PxFilterData) -> void #foreign sys "PxFilterData_setToDefault_mut";
 
-PxFilterData_new_2 :: (w0: u32, w1: u32, w2: u32, w3: u32) -> physx_PxFilterData #foreign physx_sys;
+PxGetFilterObjectType :: (attr: u32) -> s32 #foreign sys "phys_PxGetFilterObjectType";
 
-PxFilterData_setToDefault :: (self: *physx_PxFilterData) -> void #foreign physx_sys "PxFilterData_setToDefault_mut";
+PxFilterObjectIsKinematic :: (attr: u32) -> bool #foreign sys "phys_PxFilterObjectIsKinematic";
 
-phys_PxGetFilterObjectType :: (attr: u32) -> s32 #foreign physx_sys;
+PxFilterObjectIsTrigger :: (attr: u32) -> bool #foreign sys "phys_PxFilterObjectIsTrigger";
 
-phys_PxFilterObjectIsKinematic :: (attr: u32) -> bool #foreign physx_sys;
+PxSimulationFilterCallback_pairFound :: (self: *PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: PxFilterData, a0: *PxActor, s0: *PxShape, attributes1: u32, filterData1: PxFilterData, a1: *PxActor, s1: *PxShape, pairFlags: *u16) -> u16 #foreign sys "PxSimulationFilterCallback_pairFound_mut";
 
-phys_PxFilterObjectIsTrigger :: (attr: u32) -> bool #foreign physx_sys;
+PxSimulationFilterCallback_pairLost :: (self: *PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, objectRemoved: bool) -> void #foreign sys "PxSimulationFilterCallback_pairLost_mut";
 
-PxSimulationFilterCallback_pairFound :: (self: *physx_PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: physx_PxFilterData, a0: *physx_PxActor, s0: *physx_PxShape, attributes1: u32, filterData1: physx_PxFilterData, a1: *physx_PxActor, s1: *physx_PxShape, pairFlags: *u16) -> u16 #foreign physx_sys "PxSimulationFilterCallback_pairFound_mut";
+PxSimulationFilterCallback_statusChange :: (self: *PxSimulationFilterCallback, pairID: *u32, pairFlags: *u16, filterFlags: *u16) -> bool #foreign sys "PxSimulationFilterCallback_statusChange_mut";
 
-PxSimulationFilterCallback_pairLost :: (self: *physx_PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: physx_PxFilterData, attributes1: u32, filterData1: physx_PxFilterData, objectRemoved: bool) -> void #foreign physx_sys "PxSimulationFilterCallback_pairLost_mut";
+PxLockedData_getDataAccessFlags :: (self: *PxLockedData) -> u8 #foreign sys "PxLockedData_getDataAccessFlags_mut";
 
-PxSimulationFilterCallback_statusChange :: (self: *physx_PxSimulationFilterCallback, pairID: *u32, pairFlags: *u16, filterFlags: *u16) -> bool #foreign physx_sys "PxSimulationFilterCallback_statusChange_mut";
+PxLockedData_unlock :: (self: *PxLockedData) -> void #foreign sys "PxLockedData_unlock_mut";
 
-PxLockedData_getDataAccessFlags :: (self: *physx_PxLockedData) -> u8 #foreign physx_sys "PxLockedData_getDataAccessFlags_mut";
+PxLockedData_delete :: (self: *PxLockedData) -> void #foreign sys;
 
-PxLockedData_unlock :: (self: *physx_PxLockedData) -> void #foreign physx_sys "PxLockedData_unlock_mut";
+PxMaterial_setDynamicFriction :: (self: *PxMaterial, coef: float) -> void #foreign sys "PxMaterial_setDynamicFriction_mut";
 
-PxLockedData_delete :: (self: *physx_PxLockedData) -> void #foreign physx_sys;
+PxMaterial_getDynamicFriction :: (self: *PxMaterial) -> float #foreign sys;
 
-PxMaterial_setDynamicFriction :: (self: *physx_PxMaterial, coef: float) -> void #foreign physx_sys "PxMaterial_setDynamicFriction_mut";
+PxMaterial_setStaticFriction :: (self: *PxMaterial, coef: float) -> void #foreign sys "PxMaterial_setStaticFriction_mut";
 
-PxMaterial_getDynamicFriction :: (self: *physx_PxMaterial) -> float #foreign physx_sys;
+PxMaterial_getStaticFriction :: (self: *PxMaterial) -> float #foreign sys;
 
-PxMaterial_setStaticFriction :: (self: *physx_PxMaterial, coef: float) -> void #foreign physx_sys "PxMaterial_setStaticFriction_mut";
+PxMaterial_setRestitution :: (self: *PxMaterial, rest: float) -> void #foreign sys "PxMaterial_setRestitution_mut";
 
-PxMaterial_getStaticFriction :: (self: *physx_PxMaterial) -> float #foreign physx_sys;
+PxMaterial_getRestitution :: (self: *PxMaterial) -> float #foreign sys;
 
-PxMaterial_setRestitution :: (self: *physx_PxMaterial, rest: float) -> void #foreign physx_sys "PxMaterial_setRestitution_mut";
+PxMaterial_setDamping :: (self: *PxMaterial, damping: float) -> void #foreign sys "PxMaterial_setDamping_mut";
 
-PxMaterial_getRestitution :: (self: *physx_PxMaterial) -> float #foreign physx_sys;
+PxMaterial_getDamping :: (self: *PxMaterial) -> float #foreign sys;
 
-PxMaterial_setDamping :: (self: *physx_PxMaterial, damping: float) -> void #foreign physx_sys "PxMaterial_setDamping_mut";
+PxMaterial_setFlag :: (self: *PxMaterial, flag: s32, b: bool) -> void #foreign sys "PxMaterial_setFlag_mut";
 
-PxMaterial_getDamping :: (self: *physx_PxMaterial) -> float #foreign physx_sys;
+PxMaterial_setFlags :: (self: *PxMaterial, flags: u16) -> void #foreign sys "PxMaterial_setFlags_mut";
 
-PxMaterial_setFlag :: (self: *physx_PxMaterial, flag: s32, b: bool) -> void #foreign physx_sys "PxMaterial_setFlag_mut";
+PxMaterial_getFlags :: (self: *PxMaterial) -> u16 #foreign sys;
 
-PxMaterial_setFlags :: (self: *physx_PxMaterial, flags: u16) -> void #foreign physx_sys "PxMaterial_setFlags_mut";
+PxMaterial_setFrictionCombineMode :: (self: *PxMaterial, combMode: s32) -> void #foreign sys "PxMaterial_setFrictionCombineMode_mut";
 
-PxMaterial_getFlags :: (self: *physx_PxMaterial) -> u16 #foreign physx_sys;
+PxMaterial_getFrictionCombineMode :: (self: *PxMaterial) -> s32 #foreign sys;
 
-PxMaterial_setFrictionCombineMode :: (self: *physx_PxMaterial, combMode: s32) -> void #foreign physx_sys "PxMaterial_setFrictionCombineMode_mut";
+PxMaterial_setRestitutionCombineMode :: (self: *PxMaterial, combMode: s32) -> void #foreign sys "PxMaterial_setRestitutionCombineMode_mut";
 
-PxMaterial_getFrictionCombineMode :: (self: *physx_PxMaterial) -> s32 #foreign physx_sys;
+PxMaterial_getRestitutionCombineMode :: (self: *PxMaterial) -> s32 #foreign sys;
 
-PxMaterial_setRestitutionCombineMode :: (self: *physx_PxMaterial, combMode: s32) -> void #foreign physx_sys "PxMaterial_setRestitutionCombineMode_mut";
+PxMaterial_getConcreteTypeName :: (self: *PxMaterial) -> *u8 #foreign sys;
 
-PxMaterial_getRestitutionCombineMode :: (self: *physx_PxMaterial) -> s32 #foreign physx_sys;
+PxDiffuseParticleParams_new :: () -> PxDiffuseParticleParams #foreign sys;
 
-PxMaterial_getConcreteTypeName :: (self: *physx_PxMaterial) -> *u8 #foreign physx_sys;
+PxDiffuseParticleParams_setToDefault :: (self: *PxDiffuseParticleParams) -> void #foreign sys "PxDiffuseParticleParams_setToDefault_mut";
 
-PxDiffuseParticleParams_new :: () -> physx_PxDiffuseParticleParams #foreign physx_sys;
+PxParticleMaterial_setFriction :: (self: *PxParticleMaterial, friction: float) -> void #foreign sys "PxParticleMaterial_setFriction_mut";
 
-PxDiffuseParticleParams_setToDefault :: (self: *physx_PxDiffuseParticleParams) -> void #foreign physx_sys "PxDiffuseParticleParams_setToDefault_mut";
+PxParticleMaterial_getFriction :: (self: *PxParticleMaterial) -> float #foreign sys;
 
-PxParticleMaterial_setFriction :: (self: *physx_PxParticleMaterial, friction: float) -> void #foreign physx_sys "PxParticleMaterial_setFriction_mut";
+PxParticleMaterial_setDamping :: (self: *PxParticleMaterial, damping: float) -> void #foreign sys "PxParticleMaterial_setDamping_mut";
 
-PxParticleMaterial_getFriction :: (self: *physx_PxParticleMaterial) -> float #foreign physx_sys;
+PxParticleMaterial_getDamping :: (self: *PxParticleMaterial) -> float #foreign sys;
 
-PxParticleMaterial_setDamping :: (self: *physx_PxParticleMaterial, damping: float) -> void #foreign physx_sys "PxParticleMaterial_setDamping_mut";
+PxParticleMaterial_setAdhesion :: (self: *PxParticleMaterial, adhesion: float) -> void #foreign sys "PxParticleMaterial_setAdhesion_mut";
 
-PxParticleMaterial_getDamping :: (self: *physx_PxParticleMaterial) -> float #foreign physx_sys;
+PxParticleMaterial_getAdhesion :: (self: *PxParticleMaterial) -> float #foreign sys;
 
-PxParticleMaterial_setAdhesion :: (self: *physx_PxParticleMaterial, adhesion: float) -> void #foreign physx_sys "PxParticleMaterial_setAdhesion_mut";
+PxParticleMaterial_setGravityScale :: (self: *PxParticleMaterial, scale: float) -> void #foreign sys "PxParticleMaterial_setGravityScale_mut";
 
-PxParticleMaterial_getAdhesion :: (self: *physx_PxParticleMaterial) -> float #foreign physx_sys;
+PxParticleMaterial_getGravityScale :: (self: *PxParticleMaterial) -> float #foreign sys;
 
-PxParticleMaterial_setGravityScale :: (self: *physx_PxParticleMaterial, scale: float) -> void #foreign physx_sys "PxParticleMaterial_setGravityScale_mut";
+PxParticleMaterial_setAdhesionRadiusScale :: (self: *PxParticleMaterial, scale: float) -> void #foreign sys "PxParticleMaterial_setAdhesionRadiusScale_mut";
 
-PxParticleMaterial_getGravityScale :: (self: *physx_PxParticleMaterial) -> float #foreign physx_sys;
+PxParticleMaterial_getAdhesionRadiusScale :: (self: *PxParticleMaterial) -> float #foreign sys;
 
-PxParticleMaterial_setAdhesionRadiusScale :: (self: *physx_PxParticleMaterial, scale: float) -> void #foreign physx_sys "PxParticleMaterial_setAdhesionRadiusScale_mut";
+PxPhysics_release :: (self: *PxPhysics) -> void #foreign sys "PxPhysics_release_mut";
 
-PxParticleMaterial_getAdhesionRadiusScale :: (self: *physx_PxParticleMaterial) -> float #foreign physx_sys;
+PxPhysics_getFoundation :: (self: *PxPhysics) -> *PxFoundation #foreign sys "PxPhysics_getFoundation_mut";
 
-PxPhysics_release :: (self: *physx_PxPhysics) -> void #foreign physx_sys "PxPhysics_release_mut";
+PxPhysics_createAggregate :: (self: *PxPhysics, maxActor: u32, maxShape: u32, filterHint: u32) -> *PxAggregate #foreign sys "PxPhysics_createAggregate_mut";
 
-PxPhysics_getFoundation :: (self: *physx_PxPhysics) -> *physx_PxFoundation #foreign physx_sys "PxPhysics_getFoundation_mut";
+PxPhysics_getTolerancesScale :: (self: *PxPhysics) -> *PxTolerancesScale #foreign sys;
 
-PxPhysics_createAggregate :: (self: *physx_PxPhysics, maxActor: u32, maxShape: u32, filterHint: u32) -> *physx_PxAggregate #foreign physx_sys "PxPhysics_createAggregate_mut";
+PxPhysics_createTriangleMesh :: (self: *PxPhysics, stream: *PxInputStream) -> *PxTriangleMesh #foreign sys "PxPhysics_createTriangleMesh_mut";
 
-PxPhysics_getTolerancesScale :: (self: *physx_PxPhysics) -> *physx_PxTolerancesScale #foreign physx_sys;
+PxPhysics_getNbTriangleMeshes :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createTriangleMesh :: (self: *physx_PxPhysics, stream: *physx_PxInputStream) -> *physx_PxTriangleMesh #foreign physx_sys "PxPhysics_createTriangleMesh_mut";
+PxPhysics_getTriangleMeshes :: (self: *PxPhysics, userBuffer: **PxTriangleMesh, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbTriangleMeshes :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createTetrahedronMesh :: (self: *PxPhysics, stream: *PxInputStream) -> *PxTetrahedronMesh #foreign sys "PxPhysics_createTetrahedronMesh_mut";
 
-PxPhysics_getTriangleMeshes :: (self: *physx_PxPhysics, userBuffer: **physx_PxTriangleMesh, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_createSoftBodyMesh :: (self: *PxPhysics, stream: *PxInputStream) -> *PxSoftBodyMesh #foreign sys "PxPhysics_createSoftBodyMesh_mut";
 
-PxPhysics_createTetrahedronMesh :: (self: *physx_PxPhysics, stream: *physx_PxInputStream) -> *physx_PxTetrahedronMesh #foreign physx_sys "PxPhysics_createTetrahedronMesh_mut";
+PxPhysics_getNbTetrahedronMeshes :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createSoftBodyMesh :: (self: *physx_PxPhysics, stream: *physx_PxInputStream) -> *physx_PxSoftBodyMesh #foreign physx_sys "PxPhysics_createSoftBodyMesh_mut";
+PxPhysics_getTetrahedronMeshes :: (self: *PxPhysics, userBuffer: **PxTetrahedronMesh, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbTetrahedronMeshes :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createHeightField :: (self: *PxPhysics, stream: *PxInputStream) -> *PxHeightField #foreign sys "PxPhysics_createHeightField_mut";
 
-PxPhysics_getTetrahedronMeshes :: (self: *physx_PxPhysics, userBuffer: **physx_PxTetrahedronMesh, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_getNbHeightFields :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createHeightField :: (self: *physx_PxPhysics, stream: *physx_PxInputStream) -> *physx_PxHeightField #foreign physx_sys "PxPhysics_createHeightField_mut";
+PxPhysics_getHeightFields :: (self: *PxPhysics, userBuffer: **PxHeightField, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbHeightFields :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createConvexMesh :: (self: *PxPhysics, stream: *PxInputStream) -> *PxConvexMesh #foreign sys "PxPhysics_createConvexMesh_mut";
 
-PxPhysics_getHeightFields :: (self: *physx_PxPhysics, userBuffer: **physx_PxHeightField, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_getNbConvexMeshes :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createConvexMesh :: (self: *physx_PxPhysics, stream: *physx_PxInputStream) -> *physx_PxConvexMesh #foreign physx_sys "PxPhysics_createConvexMesh_mut";
+PxPhysics_getConvexMeshes :: (self: *PxPhysics, userBuffer: **PxConvexMesh, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbConvexMeshes :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createBVH :: (self: *PxPhysics, stream: *PxInputStream) -> *PxBVH #foreign sys "PxPhysics_createBVH_mut";
 
-PxPhysics_getConvexMeshes :: (self: *physx_PxPhysics, userBuffer: **physx_PxConvexMesh, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_getNbBVHs :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createBVH :: (self: *physx_PxPhysics, stream: *physx_PxInputStream) -> *physx_PxBVH #foreign physx_sys "PxPhysics_createBVH_mut";
+PxPhysics_getBVHs :: (self: *PxPhysics, userBuffer: **PxBVH, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbBVHs :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createScene :: (self: *PxPhysics, sceneDesc: *PxSceneDesc) -> *PxScene #foreign sys "PxPhysics_createScene_mut";
 
-PxPhysics_getBVHs :: (self: *physx_PxPhysics, userBuffer: **physx_PxBVH, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_getNbScenes :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createScene :: (self: *physx_PxPhysics, sceneDesc: *physx_PxSceneDesc) -> *physx_PxScene #foreign physx_sys "PxPhysics_createScene_mut";
+PxPhysics_getScenes :: (self: *PxPhysics, userBuffer: **PxScene, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbScenes :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createRigidStatic :: (self: *PxPhysics, pose: *PxTransform) -> *PxRigidStatic #foreign sys "PxPhysics_createRigidStatic_mut";
 
-PxPhysics_getScenes :: (self: *physx_PxPhysics, userBuffer: **physx_PxScene, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_createRigidDynamic :: (self: *PxPhysics, pose: *PxTransform) -> *PxRigidDynamic #foreign sys "PxPhysics_createRigidDynamic_mut";
 
-PxPhysics_createRigidStatic :: (self: *physx_PxPhysics, pose: *physx_PxTransform) -> *physx_PxRigidStatic #foreign physx_sys "PxPhysics_createRigidStatic_mut";
+PxPhysics_createPruningStructure :: (self: *PxPhysics, actors: **PxRigidActor, nbActors: u32) -> *PxPruningStructure #foreign sys "PxPhysics_createPruningStructure_mut";
 
-PxPhysics_createRigidDynamic :: (self: *physx_PxPhysics, pose: *physx_PxTransform) -> *physx_PxRigidDynamic #foreign physx_sys "PxPhysics_createRigidDynamic_mut";
+PxPhysics_createShape :: (self: *PxPhysics, geometry: *PxGeometry, material: *PxMaterial, isExclusive: bool, shapeFlags: u8) -> *PxShape #foreign sys "PxPhysics_createShape_mut";
 
-PxPhysics_createPruningStructure :: (self: *physx_PxPhysics, actors: **physx_PxRigidActor, nbActors: u32) -> *physx_PxPruningStructure #foreign physx_sys "PxPhysics_createPruningStructure_mut";
+PxPhysics_createShape_mut :: (self: *PxPhysics, geometry: *PxGeometry, materials: **PxMaterial, materialCount: u16, isExclusive: bool, shapeFlags: u8) -> *PxShape #foreign sys "PxPhysics_createShape_mut_1";
 
-PxPhysics_createShape :: (self: *physx_PxPhysics, geometry: *physx_PxGeometry, material: *physx_PxMaterial, isExclusive: bool, shapeFlags: u8) -> *physx_PxShape #foreign physx_sys "PxPhysics_createShape_mut";
+PxPhysics_getNbShapes :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createShape :: (self: *physx_PxPhysics, geometry: *physx_PxGeometry, materials: **physx_PxMaterial, materialCount: u16, isExclusive: bool, shapeFlags: u8) -> *physx_PxShape #foreign physx_sys "PxPhysics_createShape_mut_1";
+PxPhysics_getShapes :: (self: *PxPhysics, userBuffer: **PxShape, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbShapes :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_createConstraint :: (self: *PxPhysics, actor0: *PxRigidActor, actor1: *PxRigidActor, connector: *PxConstraintConnector, shaders: *PxConstraintShaderTable, dataSize: u32) -> *PxConstraint #foreign sys "PxPhysics_createConstraint_mut";
 
-PxPhysics_getShapes :: (self: *physx_PxPhysics, userBuffer: **physx_PxShape, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_createArticulationReducedCoordinate :: (self: *PxPhysics) -> *PxArticulationReducedCoordinate #foreign sys "PxPhysics_createArticulationReducedCoordinate_mut";
 
-PxPhysics_createConstraint :: (self: *physx_PxPhysics, actor0: *physx_PxRigidActor, actor1: *physx_PxRigidActor, connector: *physx_PxConstraintConnector, shaders: *physx_PxConstraintShaderTable, dataSize: u32) -> *physx_PxConstraint #foreign physx_sys "PxPhysics_createConstraint_mut";
+PxPhysics_createMaterial :: (self: *PxPhysics, staticFriction: float, dynamicFriction: float, restitution: float) -> *PxMaterial #foreign sys "PxPhysics_createMaterial_mut";
 
-PxPhysics_createArticulationReducedCoordinate :: (self: *physx_PxPhysics) -> *physx_PxArticulationReducedCoordinate #foreign physx_sys "PxPhysics_createArticulationReducedCoordinate_mut";
+PxPhysics_getNbMaterials :: (self: *PxPhysics) -> u32 #foreign sys;
 
-PxPhysics_createMaterial :: (self: *physx_PxPhysics, staticFriction: float, dynamicFriction: float, restitution: float) -> *physx_PxMaterial #foreign physx_sys "PxPhysics_createMaterial_mut";
+PxPhysics_getMaterials :: (self: *PxPhysics, userBuffer: **PxMaterial, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPhysics_getNbMaterials :: (self: *physx_PxPhysics) -> u32 #foreign physx_sys;
+PxPhysics_registerDeletionListener :: (self: *PxPhysics, observer: *PxDeletionListener, deletionEvents: *u8, restrictedObjectSet: bool) -> void #foreign sys "PxPhysics_registerDeletionListener_mut";
 
-PxPhysics_getMaterials :: (self: *physx_PxPhysics, userBuffer: **physx_PxMaterial, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPhysics_unregisterDeletionListener :: (self: *PxPhysics, observer: *PxDeletionListener) -> void #foreign sys "PxPhysics_unregisterDeletionListener_mut";
 
-PxPhysics_registerDeletionListener :: (self: *physx_PxPhysics, observer: *physx_PxDeletionListener, deletionEvents: *u8, restrictedObjectSet: bool) -> void #foreign physx_sys "PxPhysics_registerDeletionListener_mut";
+PxPhysics_registerDeletionListenerObjects :: (self: *PxPhysics, observer: *PxDeletionListener, observables: **PxBase, observableCount: u32) -> void #foreign sys "PxPhysics_registerDeletionListenerObjects_mut";
 
-PxPhysics_unregisterDeletionListener :: (self: *physx_PxPhysics, observer: *physx_PxDeletionListener) -> void #foreign physx_sys "PxPhysics_unregisterDeletionListener_mut";
+PxPhysics_unregisterDeletionListenerObjects :: (self: *PxPhysics, observer: *PxDeletionListener, observables: **PxBase, observableCount: u32) -> void #foreign sys "PxPhysics_unregisterDeletionListenerObjects_mut";
 
-PxPhysics_registerDeletionListenerObjects :: (self: *physx_PxPhysics, observer: *physx_PxDeletionListener, observables: **physx_PxBase, observableCount: u32) -> void #foreign physx_sys "PxPhysics_registerDeletionListenerObjects_mut";
+PxPhysics_getPhysicsInsertionCallback :: (self: *PxPhysics) -> *PxInsertionCallback #foreign sys "PxPhysics_getPhysicsInsertionCallback_mut";
 
-PxPhysics_unregisterDeletionListenerObjects :: (self: *physx_PxPhysics, observer: *physx_PxDeletionListener, observables: **physx_PxBase, observableCount: u32) -> void #foreign physx_sys "PxPhysics_unregisterDeletionListenerObjects_mut";
+PxCreatePhysics :: (version: u32, foundation: *PxFoundation, scale: *PxTolerancesScale, trackOutstandingAllocations: bool, pvd: *PxPvd, omniPvd: *PxOmniPvd) -> *PxPhysics #foreign sys "phys_PxCreatePhysics";
 
-PxPhysics_getPhysicsInsertionCallback :: (self: *physx_PxPhysics) -> *physx_PxInsertionCallback #foreign physx_sys "PxPhysics_getPhysicsInsertionCallback_mut";
+PxGetPhysics :: () -> *PxPhysics #foreign sys "phys_PxGetPhysics";
 
-phys_PxCreatePhysics :: (version: u32, foundation: *physx_PxFoundation, scale: *physx_PxTolerancesScale, trackOutstandingAllocations: bool, pvd: *physx_PxPvd, omniPvd: *physx_PxOmniPvd) -> *physx_PxPhysics #foreign physx_sys;
+PxActorShape_new :: () -> PxActorShape #foreign sys;
 
-phys_PxGetPhysics :: () -> *physx_PxPhysics #foreign physx_sys;
+PxActorShape_new :: (a: *PxRigidActor, s: *PxShape) -> PxActorShape #foreign sys "PxActorShape_new_1";
 
-PxActorShape_new :: () -> physx_PxActorShape #foreign physx_sys;
+PxQueryCache_new :: () -> PxQueryCache #foreign sys;
 
-PxActorShape_new_1 :: (a: *physx_PxRigidActor, s: *physx_PxShape) -> physx_PxActorShape #foreign physx_sys;
+PxQueryCache_new :: (s: *PxShape, findex: u32) -> PxQueryCache #foreign sys "PxQueryCache_new_1";
 
-PxQueryCache_new :: () -> physx_PxQueryCache #foreign physx_sys;
+PxQueryFilterData_new :: () -> PxQueryFilterData #foreign sys;
 
-PxQueryCache_new_1 :: (s: *physx_PxShape, findex: u32) -> physx_PxQueryCache #foreign physx_sys;
+PxQueryFilterData_new :: (fd: *PxFilterData, f: u16) -> PxQueryFilterData #foreign sys "PxQueryFilterData_new_1";
 
-PxQueryFilterData_new :: () -> physx_PxQueryFilterData #foreign physx_sys;
+PxQueryFilterData_new :: (f: u16) -> PxQueryFilterData #foreign sys "PxQueryFilterData_new_2";
 
-PxQueryFilterData_new_1 :: (fd: *physx_PxFilterData, f: u16) -> physx_PxQueryFilterData #foreign physx_sys;
+PxQueryFilterCallback_preFilter :: (self: *PxQueryFilterCallback, filterData: *PxFilterData, shape: *PxShape, actor: *PxRigidActor, queryFlags: *u16) -> s32 #foreign sys "PxQueryFilterCallback_preFilter_mut";
 
-PxQueryFilterData_new_2 :: (f: u16) -> physx_PxQueryFilterData #foreign physx_sys;
+PxQueryFilterCallback_postFilter :: (self: *PxQueryFilterCallback, filterData: *PxFilterData, hit: *PxQueryHit, shape: *PxShape, actor: *PxRigidActor) -> s32 #foreign sys "PxQueryFilterCallback_postFilter_mut";
 
-PxQueryFilterCallback_preFilter :: (self: *physx_PxQueryFilterCallback, filterData: *physx_PxFilterData, shape: *physx_PxShape, actor: *physx_PxRigidActor, queryFlags: *u16) -> s32 #foreign physx_sys "PxQueryFilterCallback_preFilter_mut";
+PxQueryFilterCallback_delete :: (self: *PxQueryFilterCallback) -> void #foreign sys;
 
-PxQueryFilterCallback_postFilter :: (self: *physx_PxQueryFilterCallback, filterData: *physx_PxFilterData, hit: *physx_PxQueryHit, shape: *physx_PxShape, actor: *physx_PxRigidActor) -> s32 #foreign physx_sys "PxQueryFilterCallback_postFilter_mut";
+PxRigidDynamic_setKinematicTarget :: (self: *PxRigidDynamic, destination: *PxTransform) -> void #foreign sys "PxRigidDynamic_setKinematicTarget_mut";
 
-PxQueryFilterCallback_delete :: (self: *physx_PxQueryFilterCallback) -> void #foreign physx_sys;
+PxRigidDynamic_getKinematicTarget :: (self: *PxRigidDynamic, target: *PxTransform) -> bool #foreign sys;
 
-PxRigidDynamic_setKinematicTarget :: (self: *physx_PxRigidDynamic, destination: *physx_PxTransform) -> void #foreign physx_sys "PxRigidDynamic_setKinematicTarget_mut";
+PxRigidDynamic_isSleeping :: (self: *PxRigidDynamic) -> bool #foreign sys;
 
-PxRigidDynamic_getKinematicTarget :: (self: *physx_PxRigidDynamic, target: *physx_PxTransform) -> bool #foreign physx_sys;
+PxRigidDynamic_setSleepThreshold :: (self: *PxRigidDynamic, threshold: float) -> void #foreign sys "PxRigidDynamic_setSleepThreshold_mut";
 
-PxRigidDynamic_isSleeping :: (self: *physx_PxRigidDynamic) -> bool #foreign physx_sys;
+PxRigidDynamic_getSleepThreshold :: (self: *PxRigidDynamic) -> float #foreign sys;
 
-PxRigidDynamic_setSleepThreshold :: (self: *physx_PxRigidDynamic, threshold: float) -> void #foreign physx_sys "PxRigidDynamic_setSleepThreshold_mut";
+PxRigidDynamic_setStabilizationThreshold :: (self: *PxRigidDynamic, threshold: float) -> void #foreign sys "PxRigidDynamic_setStabilizationThreshold_mut";
 
-PxRigidDynamic_getSleepThreshold :: (self: *physx_PxRigidDynamic) -> float #foreign physx_sys;
+PxRigidDynamic_getStabilizationThreshold :: (self: *PxRigidDynamic) -> float #foreign sys;
 
-PxRigidDynamic_setStabilizationThreshold :: (self: *physx_PxRigidDynamic, threshold: float) -> void #foreign physx_sys "PxRigidDynamic_setStabilizationThreshold_mut";
+PxRigidDynamic_getRigidDynamicLockFlags :: (self: *PxRigidDynamic) -> u8 #foreign sys;
 
-PxRigidDynamic_getStabilizationThreshold :: (self: *physx_PxRigidDynamic) -> float #foreign physx_sys;
+PxRigidDynamic_setRigidDynamicLockFlag :: (self: *PxRigidDynamic, flag: s32, value: bool) -> void #foreign sys "PxRigidDynamic_setRigidDynamicLockFlag_mut";
 
-PxRigidDynamic_getRigidDynamicLockFlags :: (self: *physx_PxRigidDynamic) -> u8 #foreign physx_sys;
+PxRigidDynamic_setRigidDynamicLockFlags :: (self: *PxRigidDynamic, flags: u8) -> void #foreign sys "PxRigidDynamic_setRigidDynamicLockFlags_mut";
 
-PxRigidDynamic_setRigidDynamicLockFlag :: (self: *physx_PxRigidDynamic, flag: s32, value: bool) -> void #foreign physx_sys "PxRigidDynamic_setRigidDynamicLockFlag_mut";
+PxRigidDynamic_getLinearVelocity :: (self: *PxRigidDynamic) -> Vector3 #foreign sys;
 
-PxRigidDynamic_setRigidDynamicLockFlags :: (self: *physx_PxRigidDynamic, flags: u8) -> void #foreign physx_sys "PxRigidDynamic_setRigidDynamicLockFlags_mut";
+PxRigidDynamic_setLinearVelocity :: (self: *PxRigidDynamic, linVel: *Vector3, autowake: bool) -> void #foreign sys "PxRigidDynamic_setLinearVelocity_mut";
 
-PxRigidDynamic_getLinearVelocity :: (self: *physx_PxRigidDynamic) -> Vector3 #foreign physx_sys;
+PxRigidDynamic_getAngularVelocity :: (self: *PxRigidDynamic) -> Vector3 #foreign sys;
 
-PxRigidDynamic_setLinearVelocity :: (self: *physx_PxRigidDynamic, linVel: *Vector3, autowake: bool) -> void #foreign physx_sys "PxRigidDynamic_setLinearVelocity_mut";
+PxRigidDynamic_setAngularVelocity :: (self: *PxRigidDynamic, angVel: *Vector3, autowake: bool) -> void #foreign sys "PxRigidDynamic_setAngularVelocity_mut";
 
-PxRigidDynamic_getAngularVelocity :: (self: *physx_PxRigidDynamic) -> Vector3 #foreign physx_sys;
+PxRigidDynamic_setWakeCounter :: (self: *PxRigidDynamic, wakeCounterValue: float) -> void #foreign sys "PxRigidDynamic_setWakeCounter_mut";
 
-PxRigidDynamic_setAngularVelocity :: (self: *physx_PxRigidDynamic, angVel: *Vector3, autowake: bool) -> void #foreign physx_sys "PxRigidDynamic_setAngularVelocity_mut";
+PxRigidDynamic_getWakeCounter :: (self: *PxRigidDynamic) -> float #foreign sys;
 
-PxRigidDynamic_setWakeCounter :: (self: *physx_PxRigidDynamic, wakeCounterValue: float) -> void #foreign physx_sys "PxRigidDynamic_setWakeCounter_mut";
+PxRigidDynamic_wakeUp :: (self: *PxRigidDynamic) -> void #foreign sys "PxRigidDynamic_wakeUp_mut";
 
-PxRigidDynamic_getWakeCounter :: (self: *physx_PxRigidDynamic) -> float #foreign physx_sys;
+PxRigidDynamic_putToSleep :: (self: *PxRigidDynamic) -> void #foreign sys "PxRigidDynamic_putToSleep_mut";
 
-PxRigidDynamic_wakeUp :: (self: *physx_PxRigidDynamic) -> void #foreign physx_sys "PxRigidDynamic_wakeUp_mut";
+PxRigidDynamic_setSolverIterationCounts :: (self: *PxRigidDynamic, minPositionIters: u32, minVelocityIters: u32) -> void #foreign sys "PxRigidDynamic_setSolverIterationCounts_mut";
 
-PxRigidDynamic_putToSleep :: (self: *physx_PxRigidDynamic) -> void #foreign physx_sys "PxRigidDynamic_putToSleep_mut";
+PxRigidDynamic_getSolverIterationCounts :: (self: *PxRigidDynamic, minPositionIters: *u32, minVelocityIters: *u32) -> void #foreign sys;
 
-PxRigidDynamic_setSolverIterationCounts :: (self: *physx_PxRigidDynamic, minPositionIters: u32, minVelocityIters: u32) -> void #foreign physx_sys "PxRigidDynamic_setSolverIterationCounts_mut";
+PxRigidDynamic_getContactReportThreshold :: (self: *PxRigidDynamic) -> float #foreign sys;
 
-PxRigidDynamic_getSolverIterationCounts :: (self: *physx_PxRigidDynamic, minPositionIters: *u32, minVelocityIters: *u32) -> void #foreign physx_sys;
+PxRigidDynamic_setContactReportThreshold :: (self: *PxRigidDynamic, threshold: float) -> void #foreign sys "PxRigidDynamic_setContactReportThreshold_mut";
 
-PxRigidDynamic_getContactReportThreshold :: (self: *physx_PxRigidDynamic) -> float #foreign physx_sys;
+PxRigidDynamic_getConcreteTypeName :: (self: *PxRigidDynamic) -> *u8 #foreign sys;
 
-PxRigidDynamic_setContactReportThreshold :: (self: *physx_PxRigidDynamic, threshold: float) -> void #foreign physx_sys "PxRigidDynamic_setContactReportThreshold_mut";
+PxRigidStatic_getConcreteTypeName :: (self: *PxRigidStatic) -> *u8 #foreign sys;
 
-PxRigidDynamic_getConcreteTypeName :: (self: *physx_PxRigidDynamic) -> *u8 #foreign physx_sys;
+PxSceneQueryDesc_new :: () -> PxSceneQueryDesc #foreign sys;
 
-PxRigidStatic_getConcreteTypeName :: (self: *physx_PxRigidStatic) -> *u8 #foreign physx_sys;
+PxSceneQueryDesc_setToDefault :: (self: *PxSceneQueryDesc) -> void #foreign sys "PxSceneQueryDesc_setToDefault_mut";
 
-PxSceneQueryDesc_new :: () -> physx_PxSceneQueryDesc #foreign physx_sys;
+PxSceneQueryDesc_isValid :: (self: *PxSceneQueryDesc) -> bool #foreign sys;
 
-PxSceneQueryDesc_setToDefault :: (self: *physx_PxSceneQueryDesc) -> void #foreign physx_sys "PxSceneQueryDesc_setToDefault_mut";
+PxSceneQuerySystemBase_setDynamicTreeRebuildRateHint :: (self: *PxSceneQuerySystemBase, dynamicTreeRebuildRateHint: u32) -> void #foreign sys "PxSceneQuerySystemBase_setDynamicTreeRebuildRateHint_mut";
 
-PxSceneQueryDesc_isValid :: (self: *physx_PxSceneQueryDesc) -> bool #foreign physx_sys;
+PxSceneQuerySystemBase_getDynamicTreeRebuildRateHint :: (self: *PxSceneQuerySystemBase) -> u32 #foreign sys;
 
-PxSceneQuerySystemBase_setDynamicTreeRebuildRateHint :: (self: *physx_PxSceneQuerySystemBase, dynamicTreeRebuildRateHint: u32) -> void #foreign physx_sys "PxSceneQuerySystemBase_setDynamicTreeRebuildRateHint_mut";
+PxSceneQuerySystemBase_forceRebuildDynamicTree :: (self: *PxSceneQuerySystemBase, prunerIndex: u32) -> void #foreign sys "PxSceneQuerySystemBase_forceRebuildDynamicTree_mut";
 
-PxSceneQuerySystemBase_getDynamicTreeRebuildRateHint :: (self: *physx_PxSceneQuerySystemBase) -> u32 #foreign physx_sys;
+PxSceneQuerySystemBase_setUpdateMode :: (self: *PxSceneQuerySystemBase, updateMode: s32) -> void #foreign sys "PxSceneQuerySystemBase_setUpdateMode_mut";
 
-PxSceneQuerySystemBase_forceRebuildDynamicTree :: (self: *physx_PxSceneQuerySystemBase, prunerIndex: u32) -> void #foreign physx_sys "PxSceneQuerySystemBase_forceRebuildDynamicTree_mut";
+PxSceneQuerySystemBase_getUpdateMode :: (self: *PxSceneQuerySystemBase) -> s32 #foreign sys;
 
-PxSceneQuerySystemBase_setUpdateMode :: (self: *physx_PxSceneQuerySystemBase, updateMode: s32) -> void #foreign physx_sys "PxSceneQuerySystemBase_setUpdateMode_mut";
+PxSceneQuerySystemBase_getStaticTimestamp :: (self: *PxSceneQuerySystemBase) -> u32 #foreign sys;
 
-PxSceneQuerySystemBase_getUpdateMode :: (self: *physx_PxSceneQuerySystemBase) -> s32 #foreign physx_sys;
+PxSceneQuerySystemBase_flushUpdates :: (self: *PxSceneQuerySystemBase) -> void #foreign sys "PxSceneQuerySystemBase_flushUpdates_mut";
 
-PxSceneQuerySystemBase_getStaticTimestamp :: (self: *physx_PxSceneQuerySystemBase) -> u32 #foreign physx_sys;
+PxSceneQuerySystemBase_raycast :: (self: *PxSceneQuerySystemBase, origin: *Vector3, unitDir: *Vector3, distance: float, hitCall: *PxRaycastCallback, hitFlags: u16, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, queryFlags: u32) -> bool #foreign sys;
 
-PxSceneQuerySystemBase_flushUpdates :: (self: *physx_PxSceneQuerySystemBase) -> void #foreign physx_sys "PxSceneQuerySystemBase_flushUpdates_mut";
+PxSceneQuerySystemBase_sweep :: (self: *PxSceneQuerySystemBase, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, hitCall: *PxSweepCallback, hitFlags: u16, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float, queryFlags: u32) -> bool #foreign sys;
 
-PxSceneQuerySystemBase_raycast :: (self: *physx_PxSceneQuerySystemBase, origin: *Vector3, unitDir: *Vector3, distance: float, hitCall: *physx_PxRaycastCallback, hitFlags: u16, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, queryFlags: u32) -> bool #foreign physx_sys;
+PxSceneQuerySystemBase_overlap :: (self: *PxSceneQuerySystemBase, geometry: *PxGeometry, pose: *PxTransform, hitCall: *PxOverlapCallback, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, queryFlags: u32) -> bool #foreign sys;
 
-PxSceneQuerySystemBase_sweep :: (self: *physx_PxSceneQuerySystemBase, geometry: *physx_PxGeometry, pose: *physx_PxTransform, unitDir: *Vector3, distance: float, hitCall: *physx_PxSweepCallback, hitFlags: u16, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, inflation: float, queryFlags: u32) -> bool #foreign physx_sys;
+PxSceneSQSystem_setSceneQueryUpdateMode :: (self: *PxSceneSQSystem, updateMode: s32) -> void #foreign sys "PxSceneSQSystem_setSceneQueryUpdateMode_mut";
 
-PxSceneQuerySystemBase_overlap :: (self: *physx_PxSceneQuerySystemBase, geometry: *physx_PxGeometry, pose: *physx_PxTransform, hitCall: *physx_PxOverlapCallback, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, queryFlags: u32) -> bool #foreign physx_sys;
+PxSceneSQSystem_getSceneQueryUpdateMode :: (self: *PxSceneSQSystem) -> s32 #foreign sys;
 
-PxSceneSQSystem_setSceneQueryUpdateMode :: (self: *physx_PxSceneSQSystem, updateMode: s32) -> void #foreign physx_sys "PxSceneSQSystem_setSceneQueryUpdateMode_mut";
+PxSceneSQSystem_getSceneQueryStaticTimestamp :: (self: *PxSceneSQSystem) -> u32 #foreign sys;
 
-PxSceneSQSystem_getSceneQueryUpdateMode :: (self: *physx_PxSceneSQSystem) -> s32 #foreign physx_sys;
+PxSceneSQSystem_flushQueryUpdates :: (self: *PxSceneSQSystem) -> void #foreign sys "PxSceneSQSystem_flushQueryUpdates_mut";
 
-PxSceneSQSystem_getSceneQueryStaticTimestamp :: (self: *physx_PxSceneSQSystem) -> u32 #foreign physx_sys;
+PxSceneSQSystem_forceDynamicTreeRebuild :: (self: *PxSceneSQSystem, rebuildStaticStructure: bool, rebuildDynamicStructure: bool) -> void #foreign sys "PxSceneSQSystem_forceDynamicTreeRebuild_mut";
 
-PxSceneSQSystem_flushQueryUpdates :: (self: *physx_PxSceneSQSystem) -> void #foreign physx_sys "PxSceneSQSystem_flushQueryUpdates_mut";
+PxSceneSQSystem_getStaticStructure :: (self: *PxSceneSQSystem) -> s32 #foreign sys;
 
-PxSceneSQSystem_forceDynamicTreeRebuild :: (self: *physx_PxSceneSQSystem, rebuildStaticStructure: bool, rebuildDynamicStructure: bool) -> void #foreign physx_sys "PxSceneSQSystem_forceDynamicTreeRebuild_mut";
+PxSceneSQSystem_getDynamicStructure :: (self: *PxSceneSQSystem) -> s32 #foreign sys;
 
-PxSceneSQSystem_getStaticStructure :: (self: *physx_PxSceneSQSystem) -> s32 #foreign physx_sys;
+PxSceneSQSystem_sceneQueriesUpdate :: (self: *PxSceneSQSystem, completionTask: *PxBaseTask, controlSimulation: bool) -> void #foreign sys "PxSceneSQSystem_sceneQueriesUpdate_mut";
 
-PxSceneSQSystem_getDynamicStructure :: (self: *physx_PxSceneSQSystem) -> s32 #foreign physx_sys;
+PxSceneSQSystem_checkQueries :: (self: *PxSceneSQSystem, block: bool) -> bool #foreign sys "PxSceneSQSystem_checkQueries_mut";
 
-PxSceneSQSystem_sceneQueriesUpdate :: (self: *physx_PxSceneSQSystem, completionTask: *physx_PxBaseTask, controlSimulation: bool) -> void #foreign physx_sys "PxSceneSQSystem_sceneQueriesUpdate_mut";
+PxSceneSQSystem_fetchQueries :: (self: *PxSceneSQSystem, block: bool) -> bool #foreign sys "PxSceneSQSystem_fetchQueries_mut";
 
-PxSceneSQSystem_checkQueries :: (self: *physx_PxSceneSQSystem, block: bool) -> bool #foreign physx_sys "PxSceneSQSystem_checkQueries_mut";
+PxSceneQuerySystem_release :: (self: *PxSceneQuerySystem) -> void #foreign sys "PxSceneQuerySystem_release_mut";
 
-PxSceneSQSystem_fetchQueries :: (self: *physx_PxSceneSQSystem, block: bool) -> bool #foreign physx_sys "PxSceneSQSystem_fetchQueries_mut";
+PxSceneQuerySystem_acquireReference :: (self: *PxSceneQuerySystem) -> void #foreign sys "PxSceneQuerySystem_acquireReference_mut";
 
-PxSceneQuerySystem_release :: (self: *physx_PxSceneQuerySystem) -> void #foreign physx_sys "PxSceneQuerySystem_release_mut";
+PxSceneQuerySystem_preallocate :: (self: *PxSceneQuerySystem, prunerIndex: u32, nbShapes: u32) -> void #foreign sys "PxSceneQuerySystem_preallocate_mut";
 
-PxSceneQuerySystem_acquireReference :: (self: *physx_PxSceneQuerySystem) -> void #foreign physx_sys "PxSceneQuerySystem_acquireReference_mut";
+PxSceneQuerySystem_flushMemory :: (self: *PxSceneQuerySystem) -> void #foreign sys "PxSceneQuerySystem_flushMemory_mut";
 
-PxSceneQuerySystem_preallocate :: (self: *physx_PxSceneQuerySystem, prunerIndex: u32, nbShapes: u32) -> void #foreign physx_sys "PxSceneQuerySystem_preallocate_mut";
+PxSceneQuerySystem_addSQShape :: (self: *PxSceneQuerySystem, actor: *PxRigidActor, shape: *PxShape, bounds: *PxBounds3, transform: *PxTransform, compoundHandle: *u32, hasPruningStructure: bool) -> void #foreign sys "PxSceneQuerySystem_addSQShape_mut";
 
-PxSceneQuerySystem_flushMemory :: (self: *physx_PxSceneQuerySystem) -> void #foreign physx_sys "PxSceneQuerySystem_flushMemory_mut";
+PxSceneQuerySystem_removeSQShape :: (self: *PxSceneQuerySystem, actor: *PxRigidActor, shape: *PxShape) -> void #foreign sys "PxSceneQuerySystem_removeSQShape_mut";
 
-PxSceneQuerySystem_addSQShape :: (self: *physx_PxSceneQuerySystem, actor: *physx_PxRigidActor, shape: *physx_PxShape, bounds: *physx_PxBounds3, transform: *physx_PxTransform, compoundHandle: *u32, hasPruningStructure: bool) -> void #foreign physx_sys "PxSceneQuerySystem_addSQShape_mut";
+PxSceneQuerySystem_updateSQShape :: (self: *PxSceneQuerySystem, actor: *PxRigidActor, shape: *PxShape, transform: *PxTransform) -> void #foreign sys "PxSceneQuerySystem_updateSQShape_mut";
 
-PxSceneQuerySystem_removeSQShape :: (self: *physx_PxSceneQuerySystem, actor: *physx_PxRigidActor, shape: *physx_PxShape) -> void #foreign physx_sys "PxSceneQuerySystem_removeSQShape_mut";
+PxSceneQuerySystem_addSQCompound :: (self: *PxSceneQuerySystem, actor: *PxRigidActor, shapes: **PxShape, bvh: *PxBVH, transforms: *PxTransform) -> u32 #foreign sys "PxSceneQuerySystem_addSQCompound_mut";
 
-PxSceneQuerySystem_updateSQShape :: (self: *physx_PxSceneQuerySystem, actor: *physx_PxRigidActor, shape: *physx_PxShape, transform: *physx_PxTransform) -> void #foreign physx_sys "PxSceneQuerySystem_updateSQShape_mut";
+PxSceneQuerySystem_removeSQCompound :: (self: *PxSceneQuerySystem, compoundHandle: u32) -> void #foreign sys "PxSceneQuerySystem_removeSQCompound_mut";
 
-PxSceneQuerySystem_addSQCompound :: (self: *physx_PxSceneQuerySystem, actor: *physx_PxRigidActor, shapes: **physx_PxShape, bvh: *physx_PxBVH, transforms: *physx_PxTransform) -> u32 #foreign physx_sys "PxSceneQuerySystem_addSQCompound_mut";
+PxSceneQuerySystem_updateSQCompound :: (self: *PxSceneQuerySystem, compoundHandle: u32, compoundTransform: *PxTransform) -> void #foreign sys "PxSceneQuerySystem_updateSQCompound_mut";
 
-PxSceneQuerySystem_removeSQCompound :: (self: *physx_PxSceneQuerySystem, compoundHandle: u32) -> void #foreign physx_sys "PxSceneQuerySystem_removeSQCompound_mut";
+PxSceneQuerySystem_shiftOrigin :: (self: *PxSceneQuerySystem, shift: *Vector3) -> void #foreign sys "PxSceneQuerySystem_shiftOrigin_mut";
 
-PxSceneQuerySystem_updateSQCompound :: (self: *physx_PxSceneQuerySystem, compoundHandle: u32, compoundTransform: *physx_PxTransform) -> void #foreign physx_sys "PxSceneQuerySystem_updateSQCompound_mut";
+PxSceneQuerySystem_merge :: (self: *PxSceneQuerySystem, pruningStructure: *PxPruningStructure) -> void #foreign sys "PxSceneQuerySystem_merge_mut";
 
-PxSceneQuerySystem_shiftOrigin :: (self: *physx_PxSceneQuerySystem, shift: *Vector3) -> void #foreign physx_sys "PxSceneQuerySystem_shiftOrigin_mut";
+PxSceneQuerySystem_getHandle :: (self: *PxSceneQuerySystem, actor: *PxRigidActor, shape: *PxShape, prunerIndex: *u32) -> u32 #foreign sys;
 
-PxSceneQuerySystem_merge :: (self: *physx_PxSceneQuerySystem, pruningStructure: *physx_PxPruningStructure) -> void #foreign physx_sys "PxSceneQuerySystem_merge_mut";
+PxSceneQuerySystem_sync :: (self: *PxSceneQuerySystem, prunerIndex: u32, handles: *u32, indices: *u32, bounds: *PxBounds3, transforms: *PxTransformPadded, count: u32, ignoredIndices: *PxBitMap) -> void #foreign sys "PxSceneQuerySystem_sync_mut";
 
-PxSceneQuerySystem_getHandle :: (self: *physx_PxSceneQuerySystem, actor: *physx_PxRigidActor, shape: *physx_PxShape, prunerIndex: *u32) -> u32 #foreign physx_sys;
+PxSceneQuerySystem_finalizeUpdates :: (self: *PxSceneQuerySystem) -> void #foreign sys "PxSceneQuerySystem_finalizeUpdates_mut";
 
-PxSceneQuerySystem_sync :: (self: *physx_PxSceneQuerySystem, prunerIndex: u32, handles: *u32, indices: *u32, bounds: *physx_PxBounds3, transforms: *physx_PxTransformPadded, count: u32, ignoredIndices: *physx_PxBitMap) -> void #foreign physx_sys "PxSceneQuerySystem_sync_mut";
+PxSceneQuerySystem_prepareSceneQueryBuildStep :: (self: *PxSceneQuerySystem, prunerIndex: u32) -> *void #foreign sys "PxSceneQuerySystem_prepareSceneQueryBuildStep_mut";
 
-PxSceneQuerySystem_finalizeUpdates :: (self: *physx_PxSceneQuerySystem) -> void #foreign physx_sys "PxSceneQuerySystem_finalizeUpdates_mut";
+PxSceneQuerySystem_sceneQueryBuildStep :: (self: *PxSceneQuerySystem, handle: *void) -> void #foreign sys "PxSceneQuerySystem_sceneQueryBuildStep_mut";
 
-PxSceneQuerySystem_prepareSceneQueryBuildStep :: (self: *physx_PxSceneQuerySystem, prunerIndex: u32) -> *void #foreign physx_sys "PxSceneQuerySystem_prepareSceneQueryBuildStep_mut";
+PxBroadPhaseDesc_new :: (type: s32) -> PxBroadPhaseDesc #foreign sys;
 
-PxSceneQuerySystem_sceneQueryBuildStep :: (self: *physx_PxSceneQuerySystem, handle: *void) -> void #foreign physx_sys "PxSceneQuerySystem_sceneQueryBuildStep_mut";
+PxBroadPhaseDesc_isValid :: (self: *PxBroadPhaseDesc) -> bool #foreign sys;
 
-PxBroadPhaseDesc_new :: (type: s32) -> physx_PxBroadPhaseDesc #foreign physx_sys;
+PxGetBroadPhaseStaticFilterGroup :: () -> u32 #foreign sys "phys_PxGetBroadPhaseStaticFilterGroup";
 
-PxBroadPhaseDesc_isValid :: (self: *physx_PxBroadPhaseDesc) -> bool #foreign physx_sys;
+PxGetBroadPhaseDynamicFilterGroup :: (id: u32) -> u32 #foreign sys "phys_PxGetBroadPhaseDynamicFilterGroup";
 
-phys_PxGetBroadPhaseStaticFilterGroup :: () -> u32 #foreign physx_sys;
+PxGetBroadPhaseKinematicFilterGroup :: (id: u32) -> u32 #foreign sys "phys_PxGetBroadPhaseKinematicFilterGroup";
 
-phys_PxGetBroadPhaseDynamicFilterGroup :: (id: u32) -> u32 #foreign physx_sys;
+PxBroadPhaseUpdateData_new :: (created: *u32, nbCreated: u32, updated: *u32, nbUpdated: u32, removed: *u32, nbRemoved: u32, bounds: *PxBounds3, groups: *u32, distances: *float, capacity: u32) -> PxBroadPhaseUpdateData #foreign sys;
 
-phys_PxGetBroadPhaseKinematicFilterGroup :: (id: u32) -> u32 #foreign physx_sys;
+PxBroadPhaseResults_new :: () -> PxBroadPhaseResults #foreign sys;
 
-PxBroadPhaseUpdateData_new :: (created: *u32, nbCreated: u32, updated: *u32, nbUpdated: u32, removed: *u32, nbRemoved: u32, bounds: *physx_PxBounds3, groups: *u32, distances: *float, capacity: u32) -> physx_PxBroadPhaseUpdateData #foreign physx_sys;
+PxBroadPhaseRegions_getNbRegions :: (self: *PxBroadPhaseRegions) -> u32 #foreign sys;
 
-PxBroadPhaseResults_new :: () -> physx_PxBroadPhaseResults #foreign physx_sys;
+PxBroadPhaseRegions_getRegions :: (self: *PxBroadPhaseRegions, userBuffer: *PxBroadPhaseRegionInfo, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxBroadPhaseRegions_getNbRegions :: (self: *physx_PxBroadPhaseRegions) -> u32 #foreign physx_sys;
+PxBroadPhaseRegions_addRegion :: (self: *PxBroadPhaseRegions, region: *PxBroadPhaseRegion, populateRegion: bool, bounds: *PxBounds3, distances: *float) -> u32 #foreign sys "PxBroadPhaseRegions_addRegion_mut";
 
-PxBroadPhaseRegions_getRegions :: (self: *physx_PxBroadPhaseRegions, userBuffer: *physx_PxBroadPhaseRegionInfo, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxBroadPhaseRegions_removeRegion :: (self: *PxBroadPhaseRegions, handle: u32) -> bool #foreign sys "PxBroadPhaseRegions_removeRegion_mut";
 
-PxBroadPhaseRegions_addRegion :: (self: *physx_PxBroadPhaseRegions, region: *physx_PxBroadPhaseRegion, populateRegion: bool, bounds: *physx_PxBounds3, distances: *float) -> u32 #foreign physx_sys "PxBroadPhaseRegions_addRegion_mut";
+PxBroadPhaseRegions_getNbOutOfBoundsObjects :: (self: *PxBroadPhaseRegions) -> u32 #foreign sys;
 
-PxBroadPhaseRegions_removeRegion :: (self: *physx_PxBroadPhaseRegions, handle: u32) -> bool #foreign physx_sys "PxBroadPhaseRegions_removeRegion_mut";
+PxBroadPhaseRegions_getOutOfBoundsObjects :: (self: *PxBroadPhaseRegions) -> *u32 #foreign sys;
 
-PxBroadPhaseRegions_getNbOutOfBoundsObjects :: (self: *physx_PxBroadPhaseRegions) -> u32 #foreign physx_sys;
+PxBroadPhase_release :: (self: *PxBroadPhase) -> void #foreign sys "PxBroadPhase_release_mut";
 
-PxBroadPhaseRegions_getOutOfBoundsObjects :: (self: *physx_PxBroadPhaseRegions) -> *u32 #foreign physx_sys;
+PxBroadPhase_getType :: (self: *PxBroadPhase) -> s32 #foreign sys;
 
-PxBroadPhase_release :: (self: *physx_PxBroadPhase) -> void #foreign physx_sys "PxBroadPhase_release_mut";
+PxBroadPhase_getCaps :: (self: *PxBroadPhase, caps: *PxBroadPhaseCaps) -> void #foreign sys;
 
-PxBroadPhase_getType :: (self: *physx_PxBroadPhase) -> s32 #foreign physx_sys;
+PxBroadPhase_getRegions :: (self: *PxBroadPhase) -> *PxBroadPhaseRegions #foreign sys "PxBroadPhase_getRegions_mut";
 
-PxBroadPhase_getCaps :: (self: *physx_PxBroadPhase, caps: *physx_PxBroadPhaseCaps) -> void #foreign physx_sys;
+PxBroadPhase_getAllocator :: (self: *PxBroadPhase) -> *PxAllocatorCallback #foreign sys "PxBroadPhase_getAllocator_mut";
 
-PxBroadPhase_getRegions :: (self: *physx_PxBroadPhase) -> *physx_PxBroadPhaseRegions #foreign physx_sys "PxBroadPhase_getRegions_mut";
+PxBroadPhase_getContextID :: (self: *PxBroadPhase) -> u64 #foreign sys;
 
-PxBroadPhase_getAllocator :: (self: *physx_PxBroadPhase) -> *physx_PxAllocatorCallback #foreign physx_sys "PxBroadPhase_getAllocator_mut";
+PxBroadPhase_setScratchBlock :: (self: *PxBroadPhase, scratchBlock: *void, size: u32) -> void #foreign sys "PxBroadPhase_setScratchBlock_mut";
 
-PxBroadPhase_getContextID :: (self: *physx_PxBroadPhase) -> u64 #foreign physx_sys;
+PxBroadPhase_update :: (self: *PxBroadPhase, updateData: *PxBroadPhaseUpdateData, continuation: *PxBaseTask) -> void #foreign sys "PxBroadPhase_update_mut";
 
-PxBroadPhase_setScratchBlock :: (self: *physx_PxBroadPhase, scratchBlock: *void, size: u32) -> void #foreign physx_sys "PxBroadPhase_setScratchBlock_mut";
+PxBroadPhase_fetchResults :: (self: *PxBroadPhase, results: *PxBroadPhaseResults) -> void #foreign sys "PxBroadPhase_fetchResults_mut";
 
-PxBroadPhase_update :: (self: *physx_PxBroadPhase, updateData: *physx_PxBroadPhaseUpdateData, continuation: *physx_PxBaseTask) -> void #foreign physx_sys "PxBroadPhase_update_mut";
+PxBroadPhase_update_mut :: (self: *PxBroadPhase, results: *PxBroadPhaseResults, updateData: *PxBroadPhaseUpdateData) -> void #foreign sys "PxBroadPhase_update_mut_1";
 
-PxBroadPhase_fetchResults :: (self: *physx_PxBroadPhase, results: *physx_PxBroadPhaseResults) -> void #foreign physx_sys "PxBroadPhase_fetchResults_mut";
+PxCreateBroadPhase :: (desc: *PxBroadPhaseDesc) -> *PxBroadPhase #foreign sys "phys_PxCreateBroadPhase";
 
-PxBroadPhase_update :: (self: *physx_PxBroadPhase, results: *physx_PxBroadPhaseResults, updateData: *physx_PxBroadPhaseUpdateData) -> void #foreign physx_sys "PxBroadPhase_update_mut_1";
+PxAABBManager_release :: (self: *PxAABBManager) -> void #foreign sys "PxAABBManager_release_mut";
 
-phys_PxCreateBroadPhase :: (desc: *physx_PxBroadPhaseDesc) -> *physx_PxBroadPhase #foreign physx_sys;
+PxAABBManager_getBroadPhase :: (self: *PxAABBManager) -> *PxBroadPhase #foreign sys "PxAABBManager_getBroadPhase_mut";
 
-PxAABBManager_release :: (self: *physx_PxAABBManager) -> void #foreign physx_sys "PxAABBManager_release_mut";
+PxAABBManager_getBounds :: (self: *PxAABBManager) -> *PxBounds3 #foreign sys;
 
-PxAABBManager_getBroadPhase :: (self: *physx_PxAABBManager) -> *physx_PxBroadPhase #foreign physx_sys "PxAABBManager_getBroadPhase_mut";
+PxAABBManager_getDistances :: (self: *PxAABBManager) -> *float #foreign sys;
 
-PxAABBManager_getBounds :: (self: *physx_PxAABBManager) -> *physx_PxBounds3 #foreign physx_sys;
+PxAABBManager_getGroups :: (self: *PxAABBManager) -> *u32 #foreign sys;
 
-PxAABBManager_getDistances :: (self: *physx_PxAABBManager) -> *float #foreign physx_sys;
+PxAABBManager_getCapacity :: (self: *PxAABBManager) -> u32 #foreign sys;
 
-PxAABBManager_getGroups :: (self: *physx_PxAABBManager) -> *u32 #foreign physx_sys;
+PxAABBManager_addObject :: (self: *PxAABBManager, index: u32, bounds: *PxBounds3, group: u32, distance: float) -> void #foreign sys "PxAABBManager_addObject_mut";
 
-PxAABBManager_getCapacity :: (self: *physx_PxAABBManager) -> u32 #foreign physx_sys;
+PxAABBManager_removeObject :: (self: *PxAABBManager, index: u32) -> void #foreign sys "PxAABBManager_removeObject_mut";
 
-PxAABBManager_addObject :: (self: *physx_PxAABBManager, index: u32, bounds: *physx_PxBounds3, group: u32, distance: float) -> void #foreign physx_sys "PxAABBManager_addObject_mut";
+PxAABBManager_updateObject :: (self: *PxAABBManager, index: u32, bounds: *PxBounds3, distance: *float) -> void #foreign sys "PxAABBManager_updateObject_mut";
 
-PxAABBManager_removeObject :: (self: *physx_PxAABBManager, index: u32) -> void #foreign physx_sys "PxAABBManager_removeObject_mut";
+PxAABBManager_update :: (self: *PxAABBManager, continuation: *PxBaseTask) -> void #foreign sys "PxAABBManager_update_mut";
 
-PxAABBManager_updateObject :: (self: *physx_PxAABBManager, index: u32, bounds: *physx_PxBounds3, distance: *float) -> void #foreign physx_sys "PxAABBManager_updateObject_mut";
+PxAABBManager_fetchResults :: (self: *PxAABBManager, results: *PxBroadPhaseResults) -> void #foreign sys "PxAABBManager_fetchResults_mut";
 
-PxAABBManager_update :: (self: *physx_PxAABBManager, continuation: *physx_PxBaseTask) -> void #foreign physx_sys "PxAABBManager_update_mut";
+PxAABBManager_update_mut :: (self: *PxAABBManager, results: *PxBroadPhaseResults) -> void #foreign sys "PxAABBManager_update_mut_1";
 
-PxAABBManager_fetchResults :: (self: *physx_PxAABBManager, results: *physx_PxBroadPhaseResults) -> void #foreign physx_sys "PxAABBManager_fetchResults_mut";
+PxCreateAABBManager :: (broadphase: *PxBroadPhase) -> *PxAABBManager #foreign sys "phys_PxCreateAABBManager";
 
-PxAABBManager_update :: (self: *physx_PxAABBManager, results: *physx_PxBroadPhaseResults) -> void #foreign physx_sys "PxAABBManager_update_mut_1";
+PxSceneLimits_new :: () -> PxSceneLimits #foreign sys;
 
-phys_PxCreateAABBManager :: (broadphase: *physx_PxBroadPhase) -> *physx_PxAABBManager #foreign physx_sys;
+PxSceneLimits_setToDefault :: (self: *PxSceneLimits) -> void #foreign sys "PxSceneLimits_setToDefault_mut";
 
-PxSceneLimits_new :: () -> physx_PxSceneLimits #foreign physx_sys;
+PxSceneLimits_isValid :: (self: *PxSceneLimits) -> bool #foreign sys;
 
-PxSceneLimits_setToDefault :: (self: *physx_PxSceneLimits) -> void #foreign physx_sys "PxSceneLimits_setToDefault_mut";
+PxgDynamicsMemoryConfig_new :: () -> PxgDynamicsMemoryConfig #foreign sys;
 
-PxSceneLimits_isValid :: (self: *physx_PxSceneLimits) -> bool #foreign physx_sys;
+PxgDynamicsMemoryConfig_isValid :: (self: *PxgDynamicsMemoryConfig) -> bool #foreign sys;
 
-PxgDynamicsMemoryConfig_new :: () -> physx_PxgDynamicsMemoryConfig #foreign physx_sys;
+PxSceneDesc_new :: (scale: *PxTolerancesScale) -> PxSceneDesc #foreign sys;
 
-PxgDynamicsMemoryConfig_isValid :: (self: *physx_PxgDynamicsMemoryConfig) -> bool #foreign physx_sys;
+PxSceneDesc_setToDefault :: (self: *PxSceneDesc, scale: *PxTolerancesScale) -> void #foreign sys "PxSceneDesc_setToDefault_mut";
 
-PxSceneDesc_new :: (scale: *physx_PxTolerancesScale) -> physx_PxSceneDesc #foreign physx_sys;
+PxSceneDesc_isValid :: (self: *PxSceneDesc) -> bool #foreign sys;
 
-PxSceneDesc_setToDefault :: (self: *physx_PxSceneDesc, scale: *physx_PxTolerancesScale) -> void #foreign physx_sys "PxSceneDesc_setToDefault_mut";
+PxSceneDesc_getTolerancesScale :: (self: *PxSceneDesc) -> *PxTolerancesScale #foreign sys;
 
-PxSceneDesc_isValid :: (self: *physx_PxSceneDesc) -> bool #foreign physx_sys;
+PxSimulationStatistics_getNbBroadPhaseAdds :: (self: *PxSimulationStatistics) -> u32 #foreign sys;
 
-PxSceneDesc_getTolerancesScale :: (self: *physx_PxSceneDesc) -> *physx_PxTolerancesScale #foreign physx_sys;
+PxSimulationStatistics_getNbBroadPhaseRemoves :: (self: *PxSimulationStatistics) -> u32 #foreign sys;
 
-PxSimulationStatistics_getNbBroadPhaseAdds :: (self: *physx_PxSimulationStatistics) -> u32 #foreign physx_sys;
+PxSimulationStatistics_getRbPairStats :: (self: *PxSimulationStatistics, pairType: s32, g0: s32, g1: s32) -> u32 #foreign sys;
 
-PxSimulationStatistics_getNbBroadPhaseRemoves :: (self: *physx_PxSimulationStatistics) -> u32 #foreign physx_sys;
+PxSimulationStatistics_new :: () -> PxSimulationStatistics #foreign sys;
 
-PxSimulationStatistics_getRbPairStats :: (self: *physx_PxSimulationStatistics, pairType: s32, g0: s32, g1: s32) -> u32 #foreign physx_sys;
+PxPvdSceneClient_setScenePvdFlag :: (self: *PxPvdSceneClient, flag: s32, value: bool) -> void #foreign sys "PxPvdSceneClient_setScenePvdFlag_mut";
 
-PxSimulationStatistics_new :: () -> physx_PxSimulationStatistics #foreign physx_sys;
+PxPvdSceneClient_setScenePvdFlags :: (self: *PxPvdSceneClient, flags: u8) -> void #foreign sys "PxPvdSceneClient_setScenePvdFlags_mut";
 
-PxPvdSceneClient_setScenePvdFlag :: (self: *physx_PxPvdSceneClient, flag: s32, value: bool) -> void #foreign physx_sys "PxPvdSceneClient_setScenePvdFlag_mut";
+PxPvdSceneClient_getScenePvdFlags :: (self: *PxPvdSceneClient) -> u8 #foreign sys;
 
-PxPvdSceneClient_setScenePvdFlags :: (self: *physx_PxPvdSceneClient, flags: u8) -> void #foreign physx_sys "PxPvdSceneClient_setScenePvdFlags_mut";
+PxPvdSceneClient_updateCamera :: (self: *PxPvdSceneClient, name: *u8, origin: *Vector3, up: *Vector3, target: *Vector3) -> void #foreign sys "PxPvdSceneClient_updateCamera_mut";
 
-PxPvdSceneClient_getScenePvdFlags :: (self: *physx_PxPvdSceneClient) -> u8 #foreign physx_sys;
+PxPvdSceneClient_drawPoints :: (self: *PxPvdSceneClient, points: *PxDebugPoint, count: u32) -> void #foreign sys "PxPvdSceneClient_drawPoints_mut";
 
-PxPvdSceneClient_updateCamera :: (self: *physx_PxPvdSceneClient, name: *u8, origin: *Vector3, up: *Vector3, target: *Vector3) -> void #foreign physx_sys "PxPvdSceneClient_updateCamera_mut";
+PxPvdSceneClient_drawLines :: (self: *PxPvdSceneClient, lines: *PxDebugLine, count: u32) -> void #foreign sys "PxPvdSceneClient_drawLines_mut";
 
-PxPvdSceneClient_drawPoints :: (self: *physx_PxPvdSceneClient, points: *physx_PxDebugPoint, count: u32) -> void #foreign physx_sys "PxPvdSceneClient_drawPoints_mut";
+PxPvdSceneClient_drawTriangles :: (self: *PxPvdSceneClient, triangles: *PxDebugTriangle, count: u32) -> void #foreign sys "PxPvdSceneClient_drawTriangles_mut";
 
-PxPvdSceneClient_drawLines :: (self: *physx_PxPvdSceneClient, lines: *physx_PxDebugLine, count: u32) -> void #foreign physx_sys "PxPvdSceneClient_drawLines_mut";
+PxPvdSceneClient_drawText :: (self: *PxPvdSceneClient, text: *PxDebugText) -> void #foreign sys "PxPvdSceneClient_drawText_mut";
 
-PxPvdSceneClient_drawTriangles :: (self: *physx_PxPvdSceneClient, triangles: *physx_PxDebugTriangle, count: u32) -> void #foreign physx_sys "PxPvdSceneClient_drawTriangles_mut";
+PxDominanceGroupPair_new :: (a: u8, b: u8) -> PxDominanceGroupPair #foreign sys;
 
-PxPvdSceneClient_drawText :: (self: *physx_PxPvdSceneClient, text: *physx_PxDebugText) -> void #foreign physx_sys "PxPvdSceneClient_drawText_mut";
+PxBroadPhaseCallback_delete :: (self: *PxBroadPhaseCallback) -> void #foreign sys;
 
-PxDominanceGroupPair_new :: (a: u8, b: u8) -> physx_PxDominanceGroupPair #foreign physx_sys;
+PxBroadPhaseCallback_onObjectOutOfBounds :: (self: *PxBroadPhaseCallback, shape: *PxShape, actor: *PxActor) -> void #foreign sys "PxBroadPhaseCallback_onObjectOutOfBounds_mut";
 
-PxBroadPhaseCallback_delete :: (self: *physx_PxBroadPhaseCallback) -> void #foreign physx_sys;
+PxBroadPhaseCallback_onObjectOutOfBounds_mut :: (self: *PxBroadPhaseCallback, aggregate: *PxAggregate) -> void #foreign sys "PxBroadPhaseCallback_onObjectOutOfBounds_mut_1";
 
-PxBroadPhaseCallback_onObjectOutOfBounds :: (self: *physx_PxBroadPhaseCallback, shape: *physx_PxShape, actor: *physx_PxActor) -> void #foreign physx_sys "PxBroadPhaseCallback_onObjectOutOfBounds_mut";
+PxScene_release :: (self: *PxScene) -> void #foreign sys "PxScene_release_mut";
 
-PxBroadPhaseCallback_onObjectOutOfBounds :: (self: *physx_PxBroadPhaseCallback, aggregate: *physx_PxAggregate) -> void #foreign physx_sys "PxBroadPhaseCallback_onObjectOutOfBounds_mut_1";
+PxScene_setFlag :: (self: *PxScene, flag: s32, value: bool) -> void #foreign sys "PxScene_setFlag_mut";
 
-PxScene_release :: (self: *physx_PxScene) -> void #foreign physx_sys "PxScene_release_mut";
+PxScene_getFlags :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_setFlag :: (self: *physx_PxScene, flag: s32, value: bool) -> void #foreign physx_sys "PxScene_setFlag_mut";
+PxScene_setLimits :: (self: *PxScene, limits: *PxSceneLimits) -> void #foreign sys "PxScene_setLimits_mut";
 
-PxScene_getFlags :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getLimits :: (self: *PxScene) -> PxSceneLimits #foreign sys;
 
-PxScene_setLimits :: (self: *physx_PxScene, limits: *physx_PxSceneLimits) -> void #foreign physx_sys "PxScene_setLimits_mut";
+PxScene_getPhysics :: (self: *PxScene) -> *PxPhysics #foreign sys "PxScene_getPhysics_mut";
 
-PxScene_getLimits :: (self: *physx_PxScene) -> physx_PxSceneLimits #foreign physx_sys;
+PxScene_getTimestamp :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getPhysics :: (self: *physx_PxScene) -> *physx_PxPhysics #foreign physx_sys "PxScene_getPhysics_mut";
+PxScene_addArticulation :: (self: *PxScene, articulation: *PxArticulationReducedCoordinate) -> bool #foreign sys "PxScene_addArticulation_mut";
 
-PxScene_getTimestamp :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_removeArticulation :: (self: *PxScene, articulation: *PxArticulationReducedCoordinate, wakeOnLostTouch: bool) -> void #foreign sys "PxScene_removeArticulation_mut";
 
-PxScene_addArticulation :: (self: *physx_PxScene, articulation: *physx_PxArticulationReducedCoordinate) -> bool #foreign physx_sys "PxScene_addArticulation_mut";
+PxScene_addActor :: (self: *PxScene, actor: *PxActor, bvh: *PxBVH) -> bool #foreign sys "PxScene_addActor_mut";
 
-PxScene_removeArticulation :: (self: *physx_PxScene, articulation: *physx_PxArticulationReducedCoordinate, wakeOnLostTouch: bool) -> void #foreign physx_sys "PxScene_removeArticulation_mut";
+PxScene_addActors :: (self: *PxScene, actors: **PxActor, nbActors: u32) -> bool #foreign sys "PxScene_addActors_mut";
 
-PxScene_addActor :: (self: *physx_PxScene, actor: *physx_PxActor, bvh: *physx_PxBVH) -> bool #foreign physx_sys "PxScene_addActor_mut";
+PxScene_addActors_mut :: (self: *PxScene, pruningStructure: *PxPruningStructure) -> bool #foreign sys "PxScene_addActors_mut_1";
 
-PxScene_addActors :: (self: *physx_PxScene, actors: **physx_PxActor, nbActors: u32) -> bool #foreign physx_sys "PxScene_addActors_mut";
+PxScene_removeActor :: (self: *PxScene, actor: *PxActor, wakeOnLostTouch: bool) -> void #foreign sys "PxScene_removeActor_mut";
 
-PxScene_addActors :: (self: *physx_PxScene, pruningStructure: *physx_PxPruningStructure) -> bool #foreign physx_sys "PxScene_addActors_mut_1";
+PxScene_removeActors :: (self: *PxScene, actors: **PxActor, nbActors: u32, wakeOnLostTouch: bool) -> void #foreign sys "PxScene_removeActors_mut";
 
-PxScene_removeActor :: (self: *physx_PxScene, actor: *physx_PxActor, wakeOnLostTouch: bool) -> void #foreign physx_sys "PxScene_removeActor_mut";
+PxScene_addAggregate :: (self: *PxScene, aggregate: *PxAggregate) -> bool #foreign sys "PxScene_addAggregate_mut";
 
-PxScene_removeActors :: (self: *physx_PxScene, actors: **physx_PxActor, nbActors: u32, wakeOnLostTouch: bool) -> void #foreign physx_sys "PxScene_removeActors_mut";
+PxScene_removeAggregate :: (self: *PxScene, aggregate: *PxAggregate, wakeOnLostTouch: bool) -> void #foreign sys "PxScene_removeAggregate_mut";
 
-PxScene_addAggregate :: (self: *physx_PxScene, aggregate: *physx_PxAggregate) -> bool #foreign physx_sys "PxScene_addAggregate_mut";
+PxScene_addCollection :: (self: *PxScene, collection: *PxCollection) -> bool #foreign sys "PxScene_addCollection_mut";
 
-PxScene_removeAggregate :: (self: *physx_PxScene, aggregate: *physx_PxAggregate, wakeOnLostTouch: bool) -> void #foreign physx_sys "PxScene_removeAggregate_mut";
+PxScene_getNbActors :: (self: *PxScene, types: u16) -> u32 #foreign sys;
 
-PxScene_addCollection :: (self: *physx_PxScene, collection: *physx_PxCollection) -> bool #foreign physx_sys "PxScene_addCollection_mut";
+PxScene_getActors :: (self: *PxScene, types: u16, userBuffer: **PxActor, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxScene_getNbActors :: (self: *physx_PxScene, types: u16) -> u32 #foreign physx_sys;
+PxScene_getActiveActors :: (self: *PxScene, nbActorsOut: *u32) -> **PxActor #foreign sys "PxScene_getActiveActors_mut";
 
-PxScene_getActors :: (self: *physx_PxScene, types: u16, userBuffer: **physx_PxActor, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxScene_getNbArticulations :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getActiveActors :: (self: *physx_PxScene, nbActorsOut: *u32) -> **physx_PxActor #foreign physx_sys "PxScene_getActiveActors_mut";
+PxScene_getArticulations :: (self: *PxScene, userBuffer: **PxArticulationReducedCoordinate, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxScene_getNbArticulations :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getNbConstraints :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getArticulations :: (self: *physx_PxScene, userBuffer: **physx_PxArticulationReducedCoordinate, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxScene_getConstraints :: (self: *PxScene, userBuffer: **PxConstraint, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxScene_getNbConstraints :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getNbAggregates :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getConstraints :: (self: *physx_PxScene, userBuffer: **physx_PxConstraint, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxScene_getAggregates :: (self: *PxScene, userBuffer: **PxAggregate, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxScene_getNbAggregates :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_setDominanceGroupPair :: (self: *PxScene, group1: u8, group2: u8, dominance: *PxDominanceGroupPair) -> void #foreign sys "PxScene_setDominanceGroupPair_mut";
 
-PxScene_getAggregates :: (self: *physx_PxScene, userBuffer: **physx_PxAggregate, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxScene_getDominanceGroupPair :: (self: *PxScene, group1: u8, group2: u8) -> PxDominanceGroupPair #foreign sys;
 
-PxScene_setDominanceGroupPair :: (self: *physx_PxScene, group1: u8, group2: u8, dominance: *physx_PxDominanceGroupPair) -> void #foreign physx_sys "PxScene_setDominanceGroupPair_mut";
+PxScene_getCpuDispatcher :: (self: *PxScene) -> *PxCpuDispatcher #foreign sys;
 
-PxScene_getDominanceGroupPair :: (self: *physx_PxScene, group1: u8, group2: u8) -> physx_PxDominanceGroupPair #foreign physx_sys;
+PxScene_createClient :: (self: *PxScene) -> u8 #foreign sys "PxScene_createClient_mut";
 
-PxScene_getCpuDispatcher :: (self: *physx_PxScene) -> *physx_PxCpuDispatcher #foreign physx_sys;
+PxScene_setSimulationEventCallback :: (self: *PxScene, callback: *PxSimulationEventCallback) -> void #foreign sys "PxScene_setSimulationEventCallback_mut";
 
-PxScene_createClient :: (self: *physx_PxScene) -> u8 #foreign physx_sys "PxScene_createClient_mut";
+PxScene_getSimulationEventCallback :: (self: *PxScene) -> *PxSimulationEventCallback #foreign sys;
 
-PxScene_setSimulationEventCallback :: (self: *physx_PxScene, callback: *physx_PxSimulationEventCallback) -> void #foreign physx_sys "PxScene_setSimulationEventCallback_mut";
+PxScene_setContactModifyCallback :: (self: *PxScene, callback: *PxContactModifyCallback) -> void #foreign sys "PxScene_setContactModifyCallback_mut";
 
-PxScene_getSimulationEventCallback :: (self: *physx_PxScene) -> *physx_PxSimulationEventCallback #foreign physx_sys;
+PxScene_setCCDContactModifyCallback :: (self: *PxScene, callback: *PxCCDContactModifyCallback) -> void #foreign sys "PxScene_setCCDContactModifyCallback_mut";
 
-PxScene_setContactModifyCallback :: (self: *physx_PxScene, callback: *physx_PxContactModifyCallback) -> void #foreign physx_sys "PxScene_setContactModifyCallback_mut";
+PxScene_getContactModifyCallback :: (self: *PxScene) -> *PxContactModifyCallback #foreign sys;
 
-PxScene_setCCDContactModifyCallback :: (self: *physx_PxScene, callback: *physx_PxCCDContactModifyCallback) -> void #foreign physx_sys "PxScene_setCCDContactModifyCallback_mut";
+PxScene_getCCDContactModifyCallback :: (self: *PxScene) -> *PxCCDContactModifyCallback #foreign sys;
 
-PxScene_getContactModifyCallback :: (self: *physx_PxScene) -> *physx_PxContactModifyCallback #foreign physx_sys;
+PxScene_setBroadPhaseCallback :: (self: *PxScene, callback: *PxBroadPhaseCallback) -> void #foreign sys "PxScene_setBroadPhaseCallback_mut";
 
-PxScene_getCCDContactModifyCallback :: (self: *physx_PxScene) -> *physx_PxCCDContactModifyCallback #foreign physx_sys;
+PxScene_getBroadPhaseCallback :: (self: *PxScene) -> *PxBroadPhaseCallback #foreign sys;
 
-PxScene_setBroadPhaseCallback :: (self: *physx_PxScene, callback: *physx_PxBroadPhaseCallback) -> void #foreign physx_sys "PxScene_setBroadPhaseCallback_mut";
+PxScene_setFilterShaderData :: (self: *PxScene, data: *void, dataSize: u32) -> void #foreign sys "PxScene_setFilterShaderData_mut";
 
-PxScene_getBroadPhaseCallback :: (self: *physx_PxScene) -> *physx_PxBroadPhaseCallback #foreign physx_sys;
+PxScene_getFilterShaderData :: (self: *PxScene) -> *void #foreign sys;
 
-PxScene_setFilterShaderData :: (self: *physx_PxScene, data: *void, dataSize: u32) -> void #foreign physx_sys "PxScene_setFilterShaderData_mut";
+PxScene_getFilterShaderDataSize :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getFilterShaderData :: (self: *physx_PxScene) -> *void #foreign physx_sys;
+PxScene_resetFiltering :: (self: *PxScene, actor: *PxActor) -> bool #foreign sys "PxScene_resetFiltering_mut";
 
-PxScene_getFilterShaderDataSize :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_resetFiltering_mut :: (self: *PxScene, actor: *PxRigidActor, shapes: **PxShape, shapeCount: u32) -> bool #foreign sys "PxScene_resetFiltering_mut_1";
 
-PxScene_resetFiltering :: (self: *physx_PxScene, actor: *physx_PxActor) -> bool #foreign physx_sys "PxScene_resetFiltering_mut";
+PxScene_getKinematicKinematicFilteringMode :: (self: *PxScene) -> s32 #foreign sys;
 
-PxScene_resetFiltering :: (self: *physx_PxScene, actor: *physx_PxRigidActor, shapes: **physx_PxShape, shapeCount: u32) -> bool #foreign physx_sys "PxScene_resetFiltering_mut_1";
+PxScene_getStaticKinematicFilteringMode :: (self: *PxScene) -> s32 #foreign sys;
 
-PxScene_getKinematicKinematicFilteringMode :: (self: *physx_PxScene) -> s32 #foreign physx_sys;
+PxScene_simulate :: (self: *PxScene, elapsedTime: float, completionTask: *PxBaseTask, scratchMemBlock: *void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool #foreign sys "PxScene_simulate_mut";
 
-PxScene_getStaticKinematicFilteringMode :: (self: *physx_PxScene) -> s32 #foreign physx_sys;
+PxScene_advance :: (self: *PxScene, completionTask: *PxBaseTask) -> bool #foreign sys "PxScene_advance_mut";
 
-PxScene_simulate :: (self: *physx_PxScene, elapsedTime: float, completionTask: *physx_PxBaseTask, scratchMemBlock: *void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool #foreign physx_sys "PxScene_simulate_mut";
+PxScene_collide :: (self: *PxScene, elapsedTime: float, completionTask: *PxBaseTask, scratchMemBlock: *void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool #foreign sys "PxScene_collide_mut";
 
-PxScene_advance :: (self: *physx_PxScene, completionTask: *physx_PxBaseTask) -> bool #foreign physx_sys "PxScene_advance_mut";
+PxScene_checkResults :: (self: *PxScene, block: bool) -> bool #foreign sys "PxScene_checkResults_mut";
 
-PxScene_collide :: (self: *physx_PxScene, elapsedTime: float, completionTask: *physx_PxBaseTask, scratchMemBlock: *void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool #foreign physx_sys "PxScene_collide_mut";
+PxScene_fetchCollision :: (self: *PxScene, block: bool) -> bool #foreign sys "PxScene_fetchCollision_mut";
 
-PxScene_checkResults :: (self: *physx_PxScene, block: bool) -> bool #foreign physx_sys "PxScene_checkResults_mut";
+PxScene_fetchResults :: (self: *PxScene, block: bool, errorState: *u32) -> bool #foreign sys "PxScene_fetchResults_mut";
 
-PxScene_fetchCollision :: (self: *physx_PxScene, block: bool) -> bool #foreign physx_sys "PxScene_fetchCollision_mut";
+PxScene_fetchResultsStart :: (self: *PxScene, contactPairs: **PxContactPairHeader, nbContactPairs: *u32, block: bool) -> bool #foreign sys "PxScene_fetchResultsStart_mut";
 
-PxScene_fetchResults :: (self: *physx_PxScene, block: bool, errorState: *u32) -> bool #foreign physx_sys "PxScene_fetchResults_mut";
+PxScene_processCallbacks :: (self: *PxScene, continuation: *PxBaseTask) -> void #foreign sys "PxScene_processCallbacks_mut";
 
-PxScene_fetchResultsStart :: (self: *physx_PxScene, contactPairs: **physx_PxContactPairHeader, nbContactPairs: *u32, block: bool) -> bool #foreign physx_sys "PxScene_fetchResultsStart_mut";
+PxScene_fetchResultsFinish :: (self: *PxScene, errorState: *u32) -> void #foreign sys "PxScene_fetchResultsFinish_mut";
 
-PxScene_processCallbacks :: (self: *physx_PxScene, continuation: *physx_PxBaseTask) -> void #foreign physx_sys "PxScene_processCallbacks_mut";
+PxScene_fetchResultsParticleSystem :: (self: *PxScene) -> void #foreign sys "PxScene_fetchResultsParticleSystem_mut";
 
-PxScene_fetchResultsFinish :: (self: *physx_PxScene, errorState: *u32) -> void #foreign physx_sys "PxScene_fetchResultsFinish_mut";
+PxScene_flushSimulation :: (self: *PxScene, sendPendingReports: bool) -> void #foreign sys "PxScene_flushSimulation_mut";
 
-PxScene_fetchResultsParticleSystem :: (self: *physx_PxScene) -> void #foreign physx_sys "PxScene_fetchResultsParticleSystem_mut";
+PxScene_setGravity :: (self: *PxScene, vec: *Vector3) -> void #foreign sys "PxScene_setGravity_mut";
 
-PxScene_flushSimulation :: (self: *physx_PxScene, sendPendingReports: bool) -> void #foreign physx_sys "PxScene_flushSimulation_mut";
+PxScene_getGravity :: (self: *PxScene) -> Vector3 #foreign sys;
 
-PxScene_setGravity :: (self: *physx_PxScene, vec: *Vector3) -> void #foreign physx_sys "PxScene_setGravity_mut";
+PxScene_setBounceThresholdVelocity :: (self: *PxScene, t: float) -> void #foreign sys "PxScene_setBounceThresholdVelocity_mut";
 
-PxScene_getGravity :: (self: *physx_PxScene) -> Vector3 #foreign physx_sys;
+PxScene_getBounceThresholdVelocity :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_setBounceThresholdVelocity :: (self: *physx_PxScene, t: float) -> void #foreign physx_sys "PxScene_setBounceThresholdVelocity_mut";
+PxScene_setCCDMaxPasses :: (self: *PxScene, ccdMaxPasses: u32) -> void #foreign sys "PxScene_setCCDMaxPasses_mut";
 
-PxScene_getBounceThresholdVelocity :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getCCDMaxPasses :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_setCCDMaxPasses :: (self: *physx_PxScene, ccdMaxPasses: u32) -> void #foreign physx_sys "PxScene_setCCDMaxPasses_mut";
+PxScene_setCCDMaxSeparation :: (self: *PxScene, t: float) -> void #foreign sys "PxScene_setCCDMaxSeparation_mut";
 
-PxScene_getCCDMaxPasses :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getCCDMaxSeparation :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_setCCDMaxSeparation :: (self: *physx_PxScene, t: float) -> void #foreign physx_sys "PxScene_setCCDMaxSeparation_mut";
+PxScene_setCCDThreshold :: (self: *PxScene, t: float) -> void #foreign sys "PxScene_setCCDThreshold_mut";
 
-PxScene_getCCDMaxSeparation :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getCCDThreshold :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_setCCDThreshold :: (self: *physx_PxScene, t: float) -> void #foreign physx_sys "PxScene_setCCDThreshold_mut";
+PxScene_setMaxBiasCoefficient :: (self: *PxScene, t: float) -> void #foreign sys "PxScene_setMaxBiasCoefficient_mut";
 
-PxScene_getCCDThreshold :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getMaxBiasCoefficient :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_setMaxBiasCoefficient :: (self: *physx_PxScene, t: float) -> void #foreign physx_sys "PxScene_setMaxBiasCoefficient_mut";
+PxScene_setFrictionOffsetThreshold :: (self: *PxScene, t: float) -> void #foreign sys "PxScene_setFrictionOffsetThreshold_mut";
 
-PxScene_getMaxBiasCoefficient :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getFrictionOffsetThreshold :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_setFrictionOffsetThreshold :: (self: *physx_PxScene, t: float) -> void #foreign physx_sys "PxScene_setFrictionOffsetThreshold_mut";
+PxScene_setFrictionCorrelationDistance :: (self: *PxScene, t: float) -> void #foreign sys "PxScene_setFrictionCorrelationDistance_mut";
 
-PxScene_getFrictionOffsetThreshold :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getFrictionCorrelationDistance :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_setFrictionCorrelationDistance :: (self: *physx_PxScene, t: float) -> void #foreign physx_sys "PxScene_setFrictionCorrelationDistance_mut";
+PxScene_getFrictionType :: (self: *PxScene) -> s32 #foreign sys;
 
-PxScene_getFrictionCorrelationDistance :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getSolverType :: (self: *PxScene) -> s32 #foreign sys;
 
-PxScene_getFrictionType :: (self: *physx_PxScene) -> s32 #foreign physx_sys;
+PxScene_setVisualizationParameter :: (self: *PxScene, param: s32, value: float) -> bool #foreign sys "PxScene_setVisualizationParameter_mut";
 
-PxScene_getSolverType :: (self: *physx_PxScene) -> s32 #foreign physx_sys;
+PxScene_getVisualizationParameter :: (self: *PxScene, paramEnum: s32) -> float #foreign sys;
 
-PxScene_setVisualizationParameter :: (self: *physx_PxScene, param: s32, value: float) -> bool #foreign physx_sys "PxScene_setVisualizationParameter_mut";
+PxScene_setVisualizationCullingBox :: (self: *PxScene, box: *PxBounds3) -> void #foreign sys "PxScene_setVisualizationCullingBox_mut";
 
-PxScene_getVisualizationParameter :: (self: *physx_PxScene, paramEnum: s32) -> float #foreign physx_sys;
+PxScene_getVisualizationCullingBox :: (self: *PxScene) -> PxBounds3 #foreign sys;
 
-PxScene_setVisualizationCullingBox :: (self: *physx_PxScene, box: *physx_PxBounds3) -> void #foreign physx_sys "PxScene_setVisualizationCullingBox_mut";
+PxScene_getRenderBuffer :: (self: *PxScene) -> *PxRenderBuffer #foreign sys "PxScene_getRenderBuffer_mut";
 
-PxScene_getVisualizationCullingBox :: (self: *physx_PxScene) -> physx_PxBounds3 #foreign physx_sys;
+PxScene_getSimulationStatistics :: (self: *PxScene, stats: *PxSimulationStatistics) -> void #foreign sys;
 
-PxScene_getRenderBuffer :: (self: *physx_PxScene) -> *physx_PxRenderBuffer #foreign physx_sys "PxScene_getRenderBuffer_mut";
+PxScene_getBroadPhaseType :: (self: *PxScene) -> s32 #foreign sys;
 
-PxScene_getSimulationStatistics :: (self: *physx_PxScene, stats: *physx_PxSimulationStatistics) -> void #foreign physx_sys;
+PxScene_getBroadPhaseCaps :: (self: *PxScene, caps: *PxBroadPhaseCaps) -> bool #foreign sys;
 
-PxScene_getBroadPhaseType :: (self: *physx_PxScene) -> s32 #foreign physx_sys;
+PxScene_getNbBroadPhaseRegions :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getBroadPhaseCaps :: (self: *physx_PxScene, caps: *physx_PxBroadPhaseCaps) -> bool #foreign physx_sys;
+PxScene_getBroadPhaseRegions :: (self: *PxScene, userBuffer: *PxBroadPhaseRegionInfo, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxScene_getNbBroadPhaseRegions :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_addBroadPhaseRegion :: (self: *PxScene, region: *PxBroadPhaseRegion, populateRegion: bool) -> u32 #foreign sys "PxScene_addBroadPhaseRegion_mut";
 
-PxScene_getBroadPhaseRegions :: (self: *physx_PxScene, userBuffer: *physx_PxBroadPhaseRegionInfo, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxScene_removeBroadPhaseRegion :: (self: *PxScene, handle: u32) -> bool #foreign sys "PxScene_removeBroadPhaseRegion_mut";
 
-PxScene_addBroadPhaseRegion :: (self: *physx_PxScene, region: *physx_PxBroadPhaseRegion, populateRegion: bool) -> u32 #foreign physx_sys "PxScene_addBroadPhaseRegion_mut";
+PxScene_getTaskManager :: (self: *PxScene) -> *PxTaskManager #foreign sys;
 
-PxScene_removeBroadPhaseRegion :: (self: *physx_PxScene, handle: u32) -> bool #foreign physx_sys "PxScene_removeBroadPhaseRegion_mut";
+PxScene_lockRead :: (self: *PxScene, file: *u8, line: u32) -> void #foreign sys "PxScene_lockRead_mut";
 
-PxScene_getTaskManager :: (self: *physx_PxScene) -> *physx_PxTaskManager #foreign physx_sys;
+PxScene_unlockRead :: (self: *PxScene) -> void #foreign sys "PxScene_unlockRead_mut";
 
-PxScene_lockRead :: (self: *physx_PxScene, file: *u8, line: u32) -> void #foreign physx_sys "PxScene_lockRead_mut";
+PxScene_lockWrite :: (self: *PxScene, file: *u8, line: u32) -> void #foreign sys "PxScene_lockWrite_mut";
 
-PxScene_unlockRead :: (self: *physx_PxScene) -> void #foreign physx_sys "PxScene_unlockRead_mut";
+PxScene_unlockWrite :: (self: *PxScene) -> void #foreign sys "PxScene_unlockWrite_mut";
 
-PxScene_lockWrite :: (self: *physx_PxScene, file: *u8, line: u32) -> void #foreign physx_sys "PxScene_lockWrite_mut";
+PxScene_setNbContactDataBlocks :: (self: *PxScene, numBlocks: u32) -> void #foreign sys "PxScene_setNbContactDataBlocks_mut";
 
-PxScene_unlockWrite :: (self: *physx_PxScene) -> void #foreign physx_sys "PxScene_unlockWrite_mut";
+PxScene_getNbContactDataBlocksUsed :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_setNbContactDataBlocks :: (self: *physx_PxScene, numBlocks: u32) -> void #foreign physx_sys "PxScene_setNbContactDataBlocks_mut";
+PxScene_getMaxNbContactDataBlocksUsed :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getNbContactDataBlocksUsed :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getContactReportStreamBufferSize :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_getMaxNbContactDataBlocksUsed :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_setSolverBatchSize :: (self: *PxScene, solverBatchSize: u32) -> void #foreign sys "PxScene_setSolverBatchSize_mut";
 
-PxScene_getContactReportStreamBufferSize :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getSolverBatchSize :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_setSolverBatchSize :: (self: *physx_PxScene, solverBatchSize: u32) -> void #foreign physx_sys "PxScene_setSolverBatchSize_mut";
+PxScene_setSolverArticulationBatchSize :: (self: *PxScene, solverBatchSize: u32) -> void #foreign sys "PxScene_setSolverArticulationBatchSize_mut";
 
-PxScene_getSolverBatchSize :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_getSolverArticulationBatchSize :: (self: *PxScene) -> u32 #foreign sys;
 
-PxScene_setSolverArticulationBatchSize :: (self: *physx_PxScene, solverBatchSize: u32) -> void #foreign physx_sys "PxScene_setSolverArticulationBatchSize_mut";
+PxScene_getWakeCounterResetValue :: (self: *PxScene) -> float #foreign sys;
 
-PxScene_getSolverArticulationBatchSize :: (self: *physx_PxScene) -> u32 #foreign physx_sys;
+PxScene_shiftOrigin :: (self: *PxScene, shift: *Vector3) -> void #foreign sys "PxScene_shiftOrigin_mut";
 
-PxScene_getWakeCounterResetValue :: (self: *physx_PxScene) -> float #foreign physx_sys;
+PxScene_getScenePvdClient :: (self: *PxScene) -> *PxPvdSceneClient #foreign sys "PxScene_getScenePvdClient_mut";
 
-PxScene_shiftOrigin :: (self: *physx_PxScene, shift: *Vector3) -> void #foreign physx_sys "PxScene_shiftOrigin_mut";
+PxScene_copyArticulationData :: (self: *PxScene, data: *void, index: *void, dataType: s32, nbCopyArticulations: u32, copyEvent: *void) -> void #foreign sys "PxScene_copyArticulationData_mut";
 
-PxScene_getScenePvdClient :: (self: *physx_PxScene) -> *physx_PxPvdSceneClient #foreign physx_sys "PxScene_getScenePvdClient_mut";
+PxScene_applyArticulationData :: (self: *PxScene, data: *void, index: *void, dataType: s32, nbUpdatedArticulations: u32, waitEvent: *void, signalEvent: *void) -> void #foreign sys "PxScene_applyArticulationData_mut";
 
-PxScene_copyArticulationData :: (self: *physx_PxScene, data: *void, index: *void, dataType: s32, nbCopyArticulations: u32, copyEvent: *void) -> void #foreign physx_sys "PxScene_copyArticulationData_mut";
+PxScene_copySoftBodyData :: (self: *PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: s32, nbCopySoftBodies: u32, maxSize: u32, copyEvent: *void) -> void #foreign sys "PxScene_copySoftBodyData_mut";
 
-PxScene_applyArticulationData :: (self: *physx_PxScene, data: *void, index: *void, dataType: s32, nbUpdatedArticulations: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx_sys "PxScene_applyArticulationData_mut";
+PxScene_applySoftBodyData :: (self: *PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: s32, nbUpdatedSoftBodies: u32, maxSize: u32, applyEvent: *void) -> void #foreign sys "PxScene_applySoftBodyData_mut";
 
-PxScene_copySoftBodyData :: (self: *physx_PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: s32, nbCopySoftBodies: u32, maxSize: u32, copyEvent: *void) -> void #foreign physx_sys "PxScene_copySoftBodyData_mut";
+PxScene_copyContactData :: (self: *PxScene, data: *void, maxContactPairs: u32, numContactPairs: *void, copyEvent: *void) -> void #foreign sys "PxScene_copyContactData_mut";
 
-PxScene_applySoftBodyData :: (self: *physx_PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: s32, nbUpdatedSoftBodies: u32, maxSize: u32, applyEvent: *void) -> void #foreign physx_sys "PxScene_applySoftBodyData_mut";
+PxScene_copyBodyData :: (self: *PxScene, data: *PxGpuBodyData, index: *PxGpuActorPair, nbCopyActors: u32, copyEvent: *void) -> void #foreign sys "PxScene_copyBodyData_mut";
 
-PxScene_copyContactData :: (self: *physx_PxScene, data: *void, maxContactPairs: u32, numContactPairs: *void, copyEvent: *void) -> void #foreign physx_sys "PxScene_copyContactData_mut";
+PxScene_applyActorData :: (self: *PxScene, data: *void, index: *PxGpuActorPair, flag: s32, nbUpdatedActors: u32, waitEvent: *void, signalEvent: *void) -> void #foreign sys "PxScene_applyActorData_mut";
 
-PxScene_copyBodyData :: (self: *physx_PxScene, data: *physx_PxGpuBodyData, index: *physx_PxGpuActorPair, nbCopyActors: u32, copyEvent: *void) -> void #foreign physx_sys "PxScene_copyBodyData_mut";
+PxScene_computeDenseJacobians :: (self: *PxScene, indices: *PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign sys "PxScene_computeDenseJacobians_mut";
 
-PxScene_applyActorData :: (self: *physx_PxScene, data: *void, index: *physx_PxGpuActorPair, flag: s32, nbUpdatedActors: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx_sys "PxScene_applyActorData_mut";
+PxScene_computeGeneralizedMassMatrices :: (self: *PxScene, indices: *PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign sys "PxScene_computeGeneralizedMassMatrices_mut";
 
-PxScene_computeDenseJacobians :: (self: *physx_PxScene, indices: *physx_PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign physx_sys "PxScene_computeDenseJacobians_mut";
+PxScene_computeGeneralizedGravityForces :: (self: *PxScene, indices: *PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign sys "PxScene_computeGeneralizedGravityForces_mut";
 
-PxScene_computeGeneralizedMassMatrices :: (self: *physx_PxScene, indices: *physx_PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign physx_sys "PxScene_computeGeneralizedMassMatrices_mut";
+PxScene_computeCoriolisAndCentrifugalForces :: (self: *PxScene, indices: *PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign sys "PxScene_computeCoriolisAndCentrifugalForces_mut";
 
-PxScene_computeGeneralizedGravityForces :: (self: *physx_PxScene, indices: *physx_PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign physx_sys "PxScene_computeGeneralizedGravityForces_mut";
+PxScene_getGpuDynamicsConfig :: (self: *PxScene) -> PxgDynamicsMemoryConfig #foreign sys;
 
-PxScene_computeCoriolisAndCentrifugalForces :: (self: *physx_PxScene, indices: *physx_PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign physx_sys "PxScene_computeCoriolisAndCentrifugalForces_mut";
+PxScene_applyParticleBufferData :: (self: *PxScene, indices: *u32, bufferIndexPair: *PxGpuParticleBufferIndexPair, flags: *u32, nbUpdatedBuffers: u32, waitEvent: *void, signalEvent: *void) -> void #foreign sys "PxScene_applyParticleBufferData_mut";
 
-PxScene_getGpuDynamicsConfig :: (self: *physx_PxScene) -> physx_PxgDynamicsMemoryConfig #foreign physx_sys;
+PxSceneReadLock_new_alloc :: (scene: *PxScene, file: *u8, line: u32) -> *PxSceneReadLock #foreign sys;
 
-PxScene_applyParticleBufferData :: (self: *physx_PxScene, indices: *u32, bufferIndexPair: *physx_PxGpuParticleBufferIndexPair, flags: *u32, nbUpdatedBuffers: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx_sys "PxScene_applyParticleBufferData_mut";
+PxSceneReadLock_delete :: (self: *PxSceneReadLock) -> void #foreign sys;
 
-PxSceneReadLock_new_alloc :: (scene: *physx_PxScene, file: *u8, line: u32) -> *physx_PxSceneReadLock #foreign physx_sys;
+PxSceneWriteLock_new_alloc :: (scene: *PxScene, file: *u8, line: u32) -> *PxSceneWriteLock #foreign sys;
 
-PxSceneReadLock_delete :: (self: *physx_PxSceneReadLock) -> void #foreign physx_sys;
+PxSceneWriteLock_delete :: (self: *PxSceneWriteLock) -> void #foreign sys;
 
-PxSceneWriteLock_new_alloc :: (scene: *physx_PxScene, file: *u8, line: u32) -> *physx_PxSceneWriteLock #foreign physx_sys;
+PxContactPairExtraDataItem_new :: () -> PxContactPairExtraDataItem #foreign sys;
 
-PxSceneWriteLock_delete :: (self: *physx_PxSceneWriteLock) -> void #foreign physx_sys;
+PxContactPairVelocity_new :: () -> PxContactPairVelocity #foreign sys;
 
-PxContactPairExtraDataItem_new :: () -> physx_PxContactPairExtraDataItem #foreign physx_sys;
+PxContactPairPose_new :: () -> PxContactPairPose #foreign sys;
 
-PxContactPairVelocity_new :: () -> physx_PxContactPairVelocity #foreign physx_sys;
+PxContactPairIndex_new :: () -> PxContactPairIndex #foreign sys;
 
-PxContactPairPose_new :: () -> physx_PxContactPairPose #foreign physx_sys;
+PxContactPairExtraDataIterator_new :: (stream: *u8, size: u32) -> PxContactPairExtraDataIterator #foreign sys;
 
-PxContactPairIndex_new :: () -> physx_PxContactPairIndex #foreign physx_sys;
+PxContactPairExtraDataIterator_nextItemSet :: (self: *PxContactPairExtraDataIterator) -> bool #foreign sys "PxContactPairExtraDataIterator_nextItemSet_mut";
 
-PxContactPairExtraDataIterator_new :: (stream: *u8, size: u32) -> physx_PxContactPairExtraDataIterator #foreign physx_sys;
+PxContactPairHeader_new :: () -> PxContactPairHeader #foreign sys;
 
-PxContactPairExtraDataIterator_nextItemSet :: (self: *physx_PxContactPairExtraDataIterator) -> bool #foreign physx_sys "PxContactPairExtraDataIterator_nextItemSet_mut";
+PxContactPair_new :: () -> PxContactPair #foreign sys;
 
-PxContactPairHeader_new :: () -> physx_PxContactPairHeader #foreign physx_sys;
+PxContactPair_extractContacts :: (self: *PxContactPair, userBuffer: *PxContactPairPoint, bufferSize: u32) -> u32 #foreign sys;
 
-PxContactPair_new :: () -> physx_PxContactPair #foreign physx_sys;
+PxContactPair_bufferContacts :: (self: *PxContactPair, newPair: *PxContactPair, bufferMemory: *u8) -> void #foreign sys;
 
-PxContactPair_extractContacts :: (self: *physx_PxContactPair, userBuffer: *physx_PxContactPairPoint, bufferSize: u32) -> u32 #foreign physx_sys;
+PxContactPair_getInternalFaceIndices :: (self: *PxContactPair) -> *u32 #foreign sys;
 
-PxContactPair_bufferContacts :: (self: *physx_PxContactPair, newPair: *physx_PxContactPair, bufferMemory: *u8) -> void #foreign physx_sys;
+PxTriggerPair_new :: () -> PxTriggerPair #foreign sys;
 
-PxContactPair_getInternalFaceIndices :: (self: *physx_PxContactPair) -> *u32 #foreign physx_sys;
+PxConstraintInfo_new :: () -> PxConstraintInfo #foreign sys;
 
-PxTriggerPair_new :: () -> physx_PxTriggerPair #foreign physx_sys;
+PxConstraintInfo_new :: (c: *PxConstraint, extRef: *void, t: u32) -> PxConstraintInfo #foreign sys "PxConstraintInfo_new_1";
 
-PxConstraintInfo_new :: () -> physx_PxConstraintInfo #foreign physx_sys;
+PxSimulationEventCallback_onConstraintBreak :: (self: *PxSimulationEventCallback, constraints: *PxConstraintInfo, count: u32) -> void #foreign sys "PxSimulationEventCallback_onConstraintBreak_mut";
 
-PxConstraintInfo_new_1 :: (c: *physx_PxConstraint, extRef: *void, t: u32) -> physx_PxConstraintInfo #foreign physx_sys;
+PxSimulationEventCallback_onWake :: (self: *PxSimulationEventCallback, actors: **PxActor, count: u32) -> void #foreign sys "PxSimulationEventCallback_onWake_mut";
 
-PxSimulationEventCallback_onConstraintBreak :: (self: *physx_PxSimulationEventCallback, constraints: *physx_PxConstraintInfo, count: u32) -> void #foreign physx_sys "PxSimulationEventCallback_onConstraintBreak_mut";
+PxSimulationEventCallback_onSleep :: (self: *PxSimulationEventCallback, actors: **PxActor, count: u32) -> void #foreign sys "PxSimulationEventCallback_onSleep_mut";
 
-PxSimulationEventCallback_onWake :: (self: *physx_PxSimulationEventCallback, actors: **physx_PxActor, count: u32) -> void #foreign physx_sys "PxSimulationEventCallback_onWake_mut";
+PxSimulationEventCallback_onContact :: (self: *PxSimulationEventCallback, pairHeader: *PxContactPairHeader, pairs: *PxContactPair, nbPairs: u32) -> void #foreign sys "PxSimulationEventCallback_onContact_mut";
 
-PxSimulationEventCallback_onSleep :: (self: *physx_PxSimulationEventCallback, actors: **physx_PxActor, count: u32) -> void #foreign physx_sys "PxSimulationEventCallback_onSleep_mut";
+PxSimulationEventCallback_onTrigger :: (self: *PxSimulationEventCallback, pairs: *PxTriggerPair, count: u32) -> void #foreign sys "PxSimulationEventCallback_onTrigger_mut";
 
-PxSimulationEventCallback_onContact :: (self: *physx_PxSimulationEventCallback, pairHeader: *physx_PxContactPairHeader, pairs: *physx_PxContactPair, nbPairs: u32) -> void #foreign physx_sys "PxSimulationEventCallback_onContact_mut";
+PxSimulationEventCallback_onAdvance :: (self: *PxSimulationEventCallback, bodyBuffer: **PxRigidBody, poseBuffer: *PxTransform, count: u32) -> void #foreign sys "PxSimulationEventCallback_onAdvance_mut";
 
-PxSimulationEventCallback_onTrigger :: (self: *physx_PxSimulationEventCallback, pairs: *physx_PxTriggerPair, count: u32) -> void #foreign physx_sys "PxSimulationEventCallback_onTrigger_mut";
+PxSimulationEventCallback_delete :: (self: *PxSimulationEventCallback) -> void #foreign sys;
 
-PxSimulationEventCallback_onAdvance :: (self: *physx_PxSimulationEventCallback, bodyBuffer: **physx_PxRigidBody, poseBuffer: *physx_PxTransform, count: u32) -> void #foreign physx_sys "PxSimulationEventCallback_onAdvance_mut";
+PxFEMParameters_new :: () -> PxFEMParameters #foreign sys;
 
-PxSimulationEventCallback_delete :: (self: *physx_PxSimulationEventCallback) -> void #foreign physx_sys;
+PxPruningStructure_release :: (self: *PxPruningStructure) -> void #foreign sys "PxPruningStructure_release_mut";
 
-PxFEMParameters_new :: () -> physx_PxFEMParameters #foreign physx_sys;
+PxPruningStructure_getRigidActors :: (self: *PxPruningStructure, userBuffer: **PxRigidActor, bufferSize: u32, startIndex: u32) -> u32 #foreign sys;
 
-PxPruningStructure_release :: (self: *physx_PxPruningStructure) -> void #foreign physx_sys "PxPruningStructure_release_mut";
+PxPruningStructure_getNbRigidActors :: (self: *PxPruningStructure) -> u32 #foreign sys;
 
-PxPruningStructure_getRigidActors :: (self: *physx_PxPruningStructure, userBuffer: **physx_PxRigidActor, bufferSize: u32, startIndex: u32) -> u32 #foreign physx_sys;
+PxPruningStructure_getStaticMergeData :: (self: *PxPruningStructure) -> *void #foreign sys;
 
-PxPruningStructure_getNbRigidActors :: (self: *physx_PxPruningStructure) -> u32 #foreign physx_sys;
+PxPruningStructure_getDynamicMergeData :: (self: *PxPruningStructure) -> *void #foreign sys;
 
-PxPruningStructure_getStaticMergeData :: (self: *physx_PxPruningStructure) -> *void #foreign physx_sys;
+PxPruningStructure_getConcreteTypeName :: (self: *PxPruningStructure) -> *u8 #foreign sys;
 
-PxPruningStructure_getDynamicMergeData :: (self: *physx_PxPruningStructure) -> *void #foreign physx_sys;
+PxExtendedVec3_new :: () -> PxExtendedVec3 #foreign sys;
 
-PxPruningStructure_getConcreteTypeName :: (self: *physx_PxPruningStructure) -> *u8 #foreign physx_sys;
+PxExtendedVec3_new :: (_x: float64, _y: float64, _z: float64) -> PxExtendedVec3 #foreign sys "PxExtendedVec3_new_1";
 
-PxExtendedVec3_new :: () -> physx_PxExtendedVec3 #foreign physx_sys;
+PxExtendedVec3_isZero :: (self: *PxExtendedVec3) -> bool #foreign sys;
 
-PxExtendedVec3_new_1 :: (_x: float64, _y: float64, _z: float64) -> physx_PxExtendedVec3 #foreign physx_sys;
+PxExtendedVec3_dot :: (self: *PxExtendedVec3, v: *Vector3) -> float64 #foreign sys;
 
-PxExtendedVec3_isZero :: (self: *physx_PxExtendedVec3) -> bool #foreign physx_sys;
+PxExtendedVec3_distanceSquared :: (self: *PxExtendedVec3, v: *PxExtendedVec3) -> float64 #foreign sys;
 
-PxExtendedVec3_dot :: (self: *physx_PxExtendedVec3, v: *Vector3) -> float64 #foreign physx_sys;
+PxExtendedVec3_magnitudeSquared :: (self: *PxExtendedVec3) -> float64 #foreign sys;
 
-PxExtendedVec3_distanceSquared :: (self: *physx_PxExtendedVec3, v: *physx_PxExtendedVec3) -> float64 #foreign physx_sys;
+PxExtendedVec3_magnitude :: (self: *PxExtendedVec3) -> float64 #foreign sys;
 
-PxExtendedVec3_magnitudeSquared :: (self: *physx_PxExtendedVec3) -> float64 #foreign physx_sys;
+PxExtendedVec3_normalize :: (self: *PxExtendedVec3) -> float64 #foreign sys "PxExtendedVec3_normalize_mut";
 
-PxExtendedVec3_magnitude :: (self: *physx_PxExtendedVec3) -> float64 #foreign physx_sys;
+PxExtendedVec3_isFinite :: (self: *PxExtendedVec3) -> bool #foreign sys;
 
-PxExtendedVec3_normalize :: (self: *physx_PxExtendedVec3) -> float64 #foreign physx_sys "PxExtendedVec3_normalize_mut";
+PxExtendedVec3_maximum :: (self: *PxExtendedVec3, v: *PxExtendedVec3) -> void #foreign sys "PxExtendedVec3_maximum_mut";
 
-PxExtendedVec3_isFinite :: (self: *physx_PxExtendedVec3) -> bool #foreign physx_sys;
+PxExtendedVec3_minimum :: (self: *PxExtendedVec3, v: *PxExtendedVec3) -> void #foreign sys "PxExtendedVec3_minimum_mut";
 
-PxExtendedVec3_maximum :: (self: *physx_PxExtendedVec3, v: *physx_PxExtendedVec3) -> void #foreign physx_sys "PxExtendedVec3_maximum_mut";
+PxExtendedVec3_set :: (self: *PxExtendedVec3, x_: float64, y_: float64, z_: float64) -> void #foreign sys "PxExtendedVec3_set_mut";
 
-PxExtendedVec3_minimum :: (self: *physx_PxExtendedVec3, v: *physx_PxExtendedVec3) -> void #foreign physx_sys "PxExtendedVec3_minimum_mut";
+PxExtendedVec3_setPlusInfinity :: (self: *PxExtendedVec3) -> void #foreign sys "PxExtendedVec3_setPlusInfinity_mut";
 
-PxExtendedVec3_set :: (self: *physx_PxExtendedVec3, x_: float64, y_: float64, z_: float64) -> void #foreign physx_sys "PxExtendedVec3_set_mut";
+PxExtendedVec3_setMinusInfinity :: (self: *PxExtendedVec3) -> void #foreign sys "PxExtendedVec3_setMinusInfinity_mut";
 
-PxExtendedVec3_setPlusInfinity :: (self: *physx_PxExtendedVec3) -> void #foreign physx_sys "PxExtendedVec3_setPlusInfinity_mut";
+PxExtendedVec3_cross :: (self: *PxExtendedVec3, left: *PxExtendedVec3, right: *Vector3) -> void #foreign sys "PxExtendedVec3_cross_mut";
 
-PxExtendedVec3_setMinusInfinity :: (self: *physx_PxExtendedVec3) -> void #foreign physx_sys "PxExtendedVec3_setMinusInfinity_mut";
+PxExtendedVec3_cross_mut :: (self: *PxExtendedVec3, left: *PxExtendedVec3, right: *PxExtendedVec3) -> void #foreign sys "PxExtendedVec3_cross_mut_1";
 
-PxExtendedVec3_cross :: (self: *physx_PxExtendedVec3, left: *physx_PxExtendedVec3, right: *Vector3) -> void #foreign physx_sys "PxExtendedVec3_cross_mut";
+PxExtendedVec3_cross :: (self: *PxExtendedVec3, v: *PxExtendedVec3) -> PxExtendedVec3 #foreign sys;
 
-PxExtendedVec3_cross :: (self: *physx_PxExtendedVec3, left: *physx_PxExtendedVec3, right: *physx_PxExtendedVec3) -> void #foreign physx_sys "PxExtendedVec3_cross_mut_1";
+PxExtendedVec3_cross_mut :: (self: *PxExtendedVec3, left: *Vector3, right: *PxExtendedVec3) -> void #foreign sys "PxExtendedVec3_cross_mut_2";
 
-PxExtendedVec3_cross :: (self: *physx_PxExtendedVec3, v: *physx_PxExtendedVec3) -> physx_PxExtendedVec3 #foreign physx_sys;
+toVec3 :: (v: *PxExtendedVec3) -> Vector3 #foreign sys "phys_toVec3";
 
-PxExtendedVec3_cross :: (self: *physx_PxExtendedVec3, left: *Vector3, right: *physx_PxExtendedVec3) -> void #foreign physx_sys "PxExtendedVec3_cross_mut_2";
+PxObstacle_getType :: (self: *PxObstacle) -> s32 #foreign sys;
 
-phys_toVec3 :: (v: *physx_PxExtendedVec3) -> Vector3 #foreign physx_sys;
+PxBoxObstacle_new :: () -> PxBoxObstacle #foreign sys;
 
-PxObstacle_getType :: (self: *physx_PxObstacle) -> s32 #foreign physx_sys;
+PxCapsuleObstacle_new :: () -> PxCapsuleObstacle #foreign sys;
 
-PxBoxObstacle_new :: () -> physx_PxBoxObstacle #foreign physx_sys;
+PxObstacleContext_release :: (self: *PxObstacleContext) -> void #foreign sys "PxObstacleContext_release_mut";
 
-PxCapsuleObstacle_new :: () -> physx_PxCapsuleObstacle #foreign physx_sys;
+PxObstacleContext_getControllerManager :: (self: *PxObstacleContext) -> *PxControllerManager #foreign sys;
 
-PxObstacleContext_release :: (self: *physx_PxObstacleContext) -> void #foreign physx_sys "PxObstacleContext_release_mut";
+PxObstacleContext_addObstacle :: (self: *PxObstacleContext, obstacle: *PxObstacle) -> u32 #foreign sys "PxObstacleContext_addObstacle_mut";
 
-PxObstacleContext_getControllerManager :: (self: *physx_PxObstacleContext) -> *physx_PxControllerManager #foreign physx_sys;
+PxObstacleContext_removeObstacle :: (self: *PxObstacleContext, handle: u32) -> bool #foreign sys "PxObstacleContext_removeObstacle_mut";
 
-PxObstacleContext_addObstacle :: (self: *physx_PxObstacleContext, obstacle: *physx_PxObstacle) -> u32 #foreign physx_sys "PxObstacleContext_addObstacle_mut";
+PxObstacleContext_updateObstacle :: (self: *PxObstacleContext, handle: u32, obstacle: *PxObstacle) -> bool #foreign sys "PxObstacleContext_updateObstacle_mut";
 
-PxObstacleContext_removeObstacle :: (self: *physx_PxObstacleContext, handle: u32) -> bool #foreign physx_sys "PxObstacleContext_removeObstacle_mut";
+PxObstacleContext_getNbObstacles :: (self: *PxObstacleContext) -> u32 #foreign sys;
 
-PxObstacleContext_updateObstacle :: (self: *physx_PxObstacleContext, handle: u32, obstacle: *physx_PxObstacle) -> bool #foreign physx_sys "PxObstacleContext_updateObstacle_mut";
+PxObstacleContext_getObstacle :: (self: *PxObstacleContext, i: u32) -> *PxObstacle #foreign sys;
 
-PxObstacleContext_getNbObstacles :: (self: *physx_PxObstacleContext) -> u32 #foreign physx_sys;
+PxObstacleContext_getObstacleByHandle :: (self: *PxObstacleContext, handle: u32) -> *PxObstacle #foreign sys;
 
-PxObstacleContext_getObstacle :: (self: *physx_PxObstacleContext, i: u32) -> *physx_PxObstacle #foreign physx_sys;
+PxUserControllerHitReport_onShapeHit :: (self: *PxUserControllerHitReport, hit: *PxControllerShapeHit) -> void #foreign sys "PxUserControllerHitReport_onShapeHit_mut";
 
-PxObstacleContext_getObstacleByHandle :: (self: *physx_PxObstacleContext, handle: u32) -> *physx_PxObstacle #foreign physx_sys;
+PxUserControllerHitReport_onControllerHit :: (self: *PxUserControllerHitReport, hit: *PxControllersHit) -> void #foreign sys "PxUserControllerHitReport_onControllerHit_mut";
 
-PxUserControllerHitReport_onShapeHit :: (self: *physx_PxUserControllerHitReport, hit: *physx_PxControllerShapeHit) -> void #foreign physx_sys "PxUserControllerHitReport_onShapeHit_mut";
+PxUserControllerHitReport_onObstacleHit :: (self: *PxUserControllerHitReport, hit: *PxControllerObstacleHit) -> void #foreign sys "PxUserControllerHitReport_onObstacleHit_mut";
 
-PxUserControllerHitReport_onControllerHit :: (self: *physx_PxUserControllerHitReport, hit: *physx_PxControllersHit) -> void #foreign physx_sys "PxUserControllerHitReport_onControllerHit_mut";
+PxControllerFilterCallback_delete :: (self: *PxControllerFilterCallback) -> void #foreign sys;
 
-PxUserControllerHitReport_onObstacleHit :: (self: *physx_PxUserControllerHitReport, hit: *physx_PxControllerObstacleHit) -> void #foreign physx_sys "PxUserControllerHitReport_onObstacleHit_mut";
+PxControllerFilterCallback_filter :: (self: *PxControllerFilterCallback, a: *PxController, b: *PxController) -> bool #foreign sys "PxControllerFilterCallback_filter_mut";
 
-PxControllerFilterCallback_delete :: (self: *physx_PxControllerFilterCallback) -> void #foreign physx_sys;
+PxControllerFilters_new :: (filterData: *PxFilterData, cb: *PxQueryFilterCallback, cctFilterCb: *PxControllerFilterCallback) -> PxControllerFilters #foreign sys;
 
-PxControllerFilterCallback_filter :: (self: *physx_PxControllerFilterCallback, a: *physx_PxController, b: *physx_PxController) -> bool #foreign physx_sys "PxControllerFilterCallback_filter_mut";
+PxControllerDesc_isValid :: (self: *PxControllerDesc) -> bool #foreign sys;
 
-PxControllerFilters_new :: (filterData: *physx_PxFilterData, cb: *physx_PxQueryFilterCallback, cctFilterCb: *physx_PxControllerFilterCallback) -> physx_PxControllerFilters #foreign physx_sys;
+PxControllerDesc_getType :: (self: *PxControllerDesc) -> s32 #foreign sys;
 
-PxControllerDesc_isValid :: (self: *physx_PxControllerDesc) -> bool #foreign physx_sys;
+PxController_getType :: (self: *PxController) -> s32 #foreign sys;
 
-PxControllerDesc_getType :: (self: *physx_PxControllerDesc) -> s32 #foreign physx_sys;
+PxController_release :: (self: *PxController) -> void #foreign sys "PxController_release_mut";
 
-PxController_getType :: (self: *physx_PxController) -> s32 #foreign physx_sys;
+PxController_move :: (self: *PxController, disp: *Vector3, minDist: float, elapsedTime: float, filters: *PxControllerFilters, obstacles: *PxObstacleContext) -> u8 #foreign sys "PxController_move_mut";
 
-PxController_release :: (self: *physx_PxController) -> void #foreign physx_sys "PxController_release_mut";
+PxController_setPosition :: (self: *PxController, position: *PxExtendedVec3) -> bool #foreign sys "PxController_setPosition_mut";
 
-PxController_move :: (self: *physx_PxController, disp: *Vector3, minDist: float, elapsedTime: float, filters: *physx_PxControllerFilters, obstacles: *physx_PxObstacleContext) -> u8 #foreign physx_sys "PxController_move_mut";
+PxController_getPosition :: (self: *PxController) -> *PxExtendedVec3 #foreign sys;
 
-PxController_setPosition :: (self: *physx_PxController, position: *physx_PxExtendedVec3) -> bool #foreign physx_sys "PxController_setPosition_mut";
+PxController_setFootPosition :: (self: *PxController, position: *PxExtendedVec3) -> bool #foreign sys "PxController_setFootPosition_mut";
 
-PxController_getPosition :: (self: *physx_PxController) -> *physx_PxExtendedVec3 #foreign physx_sys;
+PxController_getFootPosition :: (self: *PxController) -> PxExtendedVec3 #foreign sys;
 
-PxController_setFootPosition :: (self: *physx_PxController, position: *physx_PxExtendedVec3) -> bool #foreign physx_sys "PxController_setFootPosition_mut";
+PxController_getActor :: (self: *PxController) -> *PxRigidDynamic #foreign sys;
 
-PxController_getFootPosition :: (self: *physx_PxController) -> physx_PxExtendedVec3 #foreign physx_sys;
+PxController_setStepOffset :: (self: *PxController, offset: float) -> void #foreign sys "PxController_setStepOffset_mut";
 
-PxController_getActor :: (self: *physx_PxController) -> *physx_PxRigidDynamic #foreign physx_sys;
+PxController_getStepOffset :: (self: *PxController) -> float #foreign sys;
 
-PxController_setStepOffset :: (self: *physx_PxController, offset: float) -> void #foreign physx_sys "PxController_setStepOffset_mut";
+PxController_setNonWalkableMode :: (self: *PxController, flag: s32) -> void #foreign sys "PxController_setNonWalkableMode_mut";
 
-PxController_getStepOffset :: (self: *physx_PxController) -> float #foreign physx_sys;
+PxController_getNonWalkableMode :: (self: *PxController) -> s32 #foreign sys;
 
-PxController_setNonWalkableMode :: (self: *physx_PxController, flag: s32) -> void #foreign physx_sys "PxController_setNonWalkableMode_mut";
+PxController_getContactOffset :: (self: *PxController) -> float #foreign sys;
 
-PxController_getNonWalkableMode :: (self: *physx_PxController) -> s32 #foreign physx_sys;
+PxController_setContactOffset :: (self: *PxController, offset: float) -> void #foreign sys "PxController_setContactOffset_mut";
 
-PxController_getContactOffset :: (self: *physx_PxController) -> float #foreign physx_sys;
+PxController_getUpDirection :: (self: *PxController) -> Vector3 #foreign sys;
 
-PxController_setContactOffset :: (self: *physx_PxController, offset: float) -> void #foreign physx_sys "PxController_setContactOffset_mut";
+PxController_setUpDirection :: (self: *PxController, up: *Vector3) -> void #foreign sys "PxController_setUpDirection_mut";
 
-PxController_getUpDirection :: (self: *physx_PxController) -> Vector3 #foreign physx_sys;
+PxController_getSlopeLimit :: (self: *PxController) -> float #foreign sys;
 
-PxController_setUpDirection :: (self: *physx_PxController, up: *Vector3) -> void #foreign physx_sys "PxController_setUpDirection_mut";
+PxController_setSlopeLimit :: (self: *PxController, slopeLimit: float) -> void #foreign sys "PxController_setSlopeLimit_mut";
 
-PxController_getSlopeLimit :: (self: *physx_PxController) -> float #foreign physx_sys;
+PxController_invalidateCache :: (self: *PxController) -> void #foreign sys "PxController_invalidateCache_mut";
 
-PxController_setSlopeLimit :: (self: *physx_PxController, slopeLimit: float) -> void #foreign physx_sys "PxController_setSlopeLimit_mut";
+PxController_getScene :: (self: *PxController) -> *PxScene #foreign sys "PxController_getScene_mut";
 
-PxController_invalidateCache :: (self: *physx_PxController) -> void #foreign physx_sys "PxController_invalidateCache_mut";
+PxController_getUserData :: (self: *PxController) -> *void #foreign sys;
 
-PxController_getScene :: (self: *physx_PxController) -> *physx_PxScene #foreign physx_sys "PxController_getScene_mut";
+PxController_setUserData :: (self: *PxController, userData: *void) -> void #foreign sys "PxController_setUserData_mut";
 
-PxController_getUserData :: (self: *physx_PxController) -> *void #foreign physx_sys;
+PxController_getState :: (self: *PxController, state: *PxControllerState) -> void #foreign sys;
 
-PxController_setUserData :: (self: *physx_PxController, userData: *void) -> void #foreign physx_sys "PxController_setUserData_mut";
+PxController_getStats :: (self: *PxController, stats: *PxControllerStats) -> void #foreign sys;
 
-PxController_getState :: (self: *physx_PxController, state: *physx_PxControllerState) -> void #foreign physx_sys;
+PxController_resize :: (self: *PxController, height: float) -> void #foreign sys "PxController_resize_mut";
 
-PxController_getStats :: (self: *physx_PxController, stats: *physx_PxControllerStats) -> void #foreign physx_sys;
+PxBoxControllerDesc_new_alloc :: () -> *PxBoxControllerDesc #foreign sys;
 
-PxController_resize :: (self: *physx_PxController, height: float) -> void #foreign physx_sys "PxController_resize_mut";
+PxBoxControllerDesc_delete :: (self: *PxBoxControllerDesc) -> void #foreign sys;
 
-PxBoxControllerDesc_new_alloc :: () -> *physx_PxBoxControllerDesc #foreign physx_sys;
+PxBoxControllerDesc_setToDefault :: (self: *PxBoxControllerDesc) -> void #foreign sys "PxBoxControllerDesc_setToDefault_mut";
 
-PxBoxControllerDesc_delete :: (self: *physx_PxBoxControllerDesc) -> void #foreign physx_sys;
+PxBoxControllerDesc_isValid :: (self: *PxBoxControllerDesc) -> bool #foreign sys;
 
-PxBoxControllerDesc_setToDefault :: (self: *physx_PxBoxControllerDesc) -> void #foreign physx_sys "PxBoxControllerDesc_setToDefault_mut";
+PxBoxController_getHalfHeight :: (self: *PxBoxController) -> float #foreign sys;
 
-PxBoxControllerDesc_isValid :: (self: *physx_PxBoxControllerDesc) -> bool #foreign physx_sys;
+PxBoxController_getHalfSideExtent :: (self: *PxBoxController) -> float #foreign sys;
 
-PxBoxController_getHalfHeight :: (self: *physx_PxBoxController) -> float #foreign physx_sys;
+PxBoxController_getHalfForwardExtent :: (self: *PxBoxController) -> float #foreign sys;
 
-PxBoxController_getHalfSideExtent :: (self: *physx_PxBoxController) -> float #foreign physx_sys;
+PxBoxController_setHalfHeight :: (self: *PxBoxController, halfHeight: float) -> bool #foreign sys "PxBoxController_setHalfHeight_mut";
 
-PxBoxController_getHalfForwardExtent :: (self: *physx_PxBoxController) -> float #foreign physx_sys;
+PxBoxController_setHalfSideExtent :: (self: *PxBoxController, halfSideExtent: float) -> bool #foreign sys "PxBoxController_setHalfSideExtent_mut";
 
-PxBoxController_setHalfHeight :: (self: *physx_PxBoxController, halfHeight: float) -> bool #foreign physx_sys "PxBoxController_setHalfHeight_mut";
+PxBoxController_setHalfForwardExtent :: (self: *PxBoxController, halfForwardExtent: float) -> bool #foreign sys "PxBoxController_setHalfForwardExtent_mut";
 
-PxBoxController_setHalfSideExtent :: (self: *physx_PxBoxController, halfSideExtent: float) -> bool #foreign physx_sys "PxBoxController_setHalfSideExtent_mut";
+PxCapsuleControllerDesc_new_alloc :: () -> *PxCapsuleControllerDesc #foreign sys;
 
-PxBoxController_setHalfForwardExtent :: (self: *physx_PxBoxController, halfForwardExtent: float) -> bool #foreign physx_sys "PxBoxController_setHalfForwardExtent_mut";
+PxCapsuleControllerDesc_delete :: (self: *PxCapsuleControllerDesc) -> void #foreign sys;
 
-PxCapsuleControllerDesc_new_alloc :: () -> *physx_PxCapsuleControllerDesc #foreign physx_sys;
+PxCapsuleControllerDesc_setToDefault :: (self: *PxCapsuleControllerDesc) -> void #foreign sys "PxCapsuleControllerDesc_setToDefault_mut";
 
-PxCapsuleControllerDesc_delete :: (self: *physx_PxCapsuleControllerDesc) -> void #foreign physx_sys;
+PxCapsuleControllerDesc_isValid :: (self: *PxCapsuleControllerDesc) -> bool #foreign sys;
 
-PxCapsuleControllerDesc_setToDefault :: (self: *physx_PxCapsuleControllerDesc) -> void #foreign physx_sys "PxCapsuleControllerDesc_setToDefault_mut";
+PxCapsuleController_getRadius :: (self: *PxCapsuleController) -> float #foreign sys;
 
-PxCapsuleControllerDesc_isValid :: (self: *physx_PxCapsuleControllerDesc) -> bool #foreign physx_sys;
+PxCapsuleController_setRadius :: (self: *PxCapsuleController, radius: float) -> bool #foreign sys "PxCapsuleController_setRadius_mut";
 
-PxCapsuleController_getRadius :: (self: *physx_PxCapsuleController) -> float #foreign physx_sys;
+PxCapsuleController_getHeight :: (self: *PxCapsuleController) -> float #foreign sys;
 
-PxCapsuleController_setRadius :: (self: *physx_PxCapsuleController, radius: float) -> bool #foreign physx_sys "PxCapsuleController_setRadius_mut";
+PxCapsuleController_setHeight :: (self: *PxCapsuleController, height: float) -> bool #foreign sys "PxCapsuleController_setHeight_mut";
 
-PxCapsuleController_getHeight :: (self: *physx_PxCapsuleController) -> float #foreign physx_sys;
+PxCapsuleController_getClimbingMode :: (self: *PxCapsuleController) -> s32 #foreign sys;
 
-PxCapsuleController_setHeight :: (self: *physx_PxCapsuleController, height: float) -> bool #foreign physx_sys "PxCapsuleController_setHeight_mut";
+PxCapsuleController_setClimbingMode :: (self: *PxCapsuleController, mode: s32) -> bool #foreign sys "PxCapsuleController_setClimbingMode_mut";
 
-PxCapsuleController_getClimbingMode :: (self: *physx_PxCapsuleController) -> s32 #foreign physx_sys;
+PxControllerBehaviorCallback_getBehaviorFlags :: (self: *PxControllerBehaviorCallback, shape: *PxShape, actor: *PxActor) -> u8 #foreign sys "PxControllerBehaviorCallback_getBehaviorFlags_mut";
 
-PxCapsuleController_setClimbingMode :: (self: *physx_PxCapsuleController, mode: s32) -> bool #foreign physx_sys "PxCapsuleController_setClimbingMode_mut";
+PxControllerBehaviorCallback_getBehaviorFlags_mut :: (self: *PxControllerBehaviorCallback, controller: *PxController) -> u8 #foreign sys "PxControllerBehaviorCallback_getBehaviorFlags_mut_1";
 
-PxControllerBehaviorCallback_getBehaviorFlags :: (self: *physx_PxControllerBehaviorCallback, shape: *physx_PxShape, actor: *physx_PxActor) -> u8 #foreign physx_sys "PxControllerBehaviorCallback_getBehaviorFlags_mut";
+PxControllerBehaviorCallback_getBehaviorFlags_mut :: (self: *PxControllerBehaviorCallback, obstacle: *PxObstacle) -> u8 #foreign sys "PxControllerBehaviorCallback_getBehaviorFlags_mut_2";
 
-PxControllerBehaviorCallback_getBehaviorFlags :: (self: *physx_PxControllerBehaviorCallback, controller: *physx_PxController) -> u8 #foreign physx_sys "PxControllerBehaviorCallback_getBehaviorFlags_mut_1";
+PxControllerManager_release :: (self: *PxControllerManager) -> void #foreign sys "PxControllerManager_release_mut";
 
-PxControllerBehaviorCallback_getBehaviorFlags :: (self: *physx_PxControllerBehaviorCallback, obstacle: *physx_PxObstacle) -> u8 #foreign physx_sys "PxControllerBehaviorCallback_getBehaviorFlags_mut_2";
+PxControllerManager_getScene :: (self: *PxControllerManager) -> *PxScene #foreign sys;
 
-PxControllerManager_release :: (self: *physx_PxControllerManager) -> void #foreign physx_sys "PxControllerManager_release_mut";
+PxControllerManager_getNbControllers :: (self: *PxControllerManager) -> u32 #foreign sys;
 
-PxControllerManager_getScene :: (self: *physx_PxControllerManager) -> *physx_PxScene #foreign physx_sys;
+PxControllerManager_getController :: (self: *PxControllerManager, index: u32) -> *PxController #foreign sys "PxControllerManager_getController_mut";
 
-PxControllerManager_getNbControllers :: (self: *physx_PxControllerManager) -> u32 #foreign physx_sys;
+PxControllerManager_createController :: (self: *PxControllerManager, desc: *PxControllerDesc) -> *PxController #foreign sys "PxControllerManager_createController_mut";
 
-PxControllerManager_getController :: (self: *physx_PxControllerManager, index: u32) -> *physx_PxController #foreign physx_sys "PxControllerManager_getController_mut";
+PxControllerManager_purgeControllers :: (self: *PxControllerManager) -> void #foreign sys "PxControllerManager_purgeControllers_mut";
 
-PxControllerManager_createController :: (self: *physx_PxControllerManager, desc: *physx_PxControllerDesc) -> *physx_PxController #foreign physx_sys "PxControllerManager_createController_mut";
+PxControllerManager_getRenderBuffer :: (self: *PxControllerManager) -> *PxRenderBuffer #foreign sys "PxControllerManager_getRenderBuffer_mut";
 
-PxControllerManager_purgeControllers :: (self: *physx_PxControllerManager) -> void #foreign physx_sys "PxControllerManager_purgeControllers_mut";
+PxControllerManager_setDebugRenderingFlags :: (self: *PxControllerManager, flags: u32) -> void #foreign sys "PxControllerManager_setDebugRenderingFlags_mut";
 
-PxControllerManager_getRenderBuffer :: (self: *physx_PxControllerManager) -> *physx_PxRenderBuffer #foreign physx_sys "PxControllerManager_getRenderBuffer_mut";
+PxControllerManager_getNbObstacleContexts :: (self: *PxControllerManager) -> u32 #foreign sys;
 
-PxControllerManager_setDebugRenderingFlags :: (self: *physx_PxControllerManager, flags: u32) -> void #foreign physx_sys "PxControllerManager_setDebugRenderingFlags_mut";
+PxControllerManager_getObstacleContext :: (self: *PxControllerManager, index: u32) -> *PxObstacleContext #foreign sys "PxControllerManager_getObstacleContext_mut";
 
-PxControllerManager_getNbObstacleContexts :: (self: *physx_PxControllerManager) -> u32 #foreign physx_sys;
+PxControllerManager_createObstacleContext :: (self: *PxControllerManager) -> *PxObstacleContext #foreign sys "PxControllerManager_createObstacleContext_mut";
 
-PxControllerManager_getObstacleContext :: (self: *physx_PxControllerManager, index: u32) -> *physx_PxObstacleContext #foreign physx_sys "PxControllerManager_getObstacleContext_mut";
+PxControllerManager_computeInteractions :: (self: *PxControllerManager, elapsedTime: float, cctFilterCb: *PxControllerFilterCallback) -> void #foreign sys "PxControllerManager_computeInteractions_mut";
 
-PxControllerManager_createObstacleContext :: (self: *physx_PxControllerManager) -> *physx_PxObstacleContext #foreign physx_sys "PxControllerManager_createObstacleContext_mut";
+PxControllerManager_setTessellation :: (self: *PxControllerManager, flag: bool, maxEdgeLength: float) -> void #foreign sys "PxControllerManager_setTessellation_mut";
 
-PxControllerManager_computeInteractions :: (self: *physx_PxControllerManager, elapsedTime: float, cctFilterCb: *physx_PxControllerFilterCallback) -> void #foreign physx_sys "PxControllerManager_computeInteractions_mut";
+PxControllerManager_setOverlapRecoveryModule :: (self: *PxControllerManager, flag: bool) -> void #foreign sys "PxControllerManager_setOverlapRecoveryModule_mut";
 
-PxControllerManager_setTessellation :: (self: *physx_PxControllerManager, flag: bool, maxEdgeLength: float) -> void #foreign physx_sys "PxControllerManager_setTessellation_mut";
+PxControllerManager_setPreciseSweeps :: (self: *PxControllerManager, flag: bool) -> void #foreign sys "PxControllerManager_setPreciseSweeps_mut";
 
-PxControllerManager_setOverlapRecoveryModule :: (self: *physx_PxControllerManager, flag: bool) -> void #foreign physx_sys "PxControllerManager_setOverlapRecoveryModule_mut";
+PxControllerManager_setPreventVerticalSlidingAgainstCeiling :: (self: *PxControllerManager, flag: bool) -> void #foreign sys "PxControllerManager_setPreventVerticalSlidingAgainstCeiling_mut";
 
-PxControllerManager_setPreciseSweeps :: (self: *physx_PxControllerManager, flag: bool) -> void #foreign physx_sys "PxControllerManager_setPreciseSweeps_mut";
+PxControllerManager_shiftOrigin :: (self: *PxControllerManager, shift: *Vector3) -> void #foreign sys "PxControllerManager_shiftOrigin_mut";
 
-PxControllerManager_setPreventVerticalSlidingAgainstCeiling :: (self: *physx_PxControllerManager, flag: bool) -> void #foreign physx_sys "PxControllerManager_setPreventVerticalSlidingAgainstCeiling_mut";
+PxCreateControllerManager :: (scene: *PxScene, lockingEnabled: bool) -> *PxControllerManager #foreign sys "phys_PxCreateControllerManager";
 
-PxControllerManager_shiftOrigin :: (self: *physx_PxControllerManager, shift: *Vector3) -> void #foreign physx_sys "PxControllerManager_shiftOrigin_mut";
+PxDim3_new :: () -> PxDim3 #foreign sys;
 
-phys_PxCreateControllerManager :: (scene: *physx_PxScene, lockingEnabled: bool) -> *physx_PxControllerManager #foreign physx_sys;
+PxSDFDesc_new :: () -> PxSDFDesc #foreign sys;
 
-PxDim3_new :: () -> physx_PxDim3 #foreign physx_sys;
+PxSDFDesc_isValid :: (self: *PxSDFDesc) -> bool #foreign sys;
 
-PxSDFDesc_new :: () -> physx_PxSDFDesc #foreign physx_sys;
+PxConvexMeshDesc_new :: () -> PxConvexMeshDesc #foreign sys;
 
-PxSDFDesc_isValid :: (self: *physx_PxSDFDesc) -> bool #foreign physx_sys;
+PxConvexMeshDesc_setToDefault :: (self: *PxConvexMeshDesc) -> void #foreign sys "PxConvexMeshDesc_setToDefault_mut";
 
-PxConvexMeshDesc_new :: () -> physx_PxConvexMeshDesc #foreign physx_sys;
+PxConvexMeshDesc_isValid :: (self: *PxConvexMeshDesc) -> bool #foreign sys;
 
-PxConvexMeshDesc_setToDefault :: (self: *physx_PxConvexMeshDesc) -> void #foreign physx_sys "PxConvexMeshDesc_setToDefault_mut";
+PxTriangleMeshDesc_new :: () -> PxTriangleMeshDesc #foreign sys;
 
-PxConvexMeshDesc_isValid :: (self: *physx_PxConvexMeshDesc) -> bool #foreign physx_sys;
+PxTriangleMeshDesc_setToDefault :: (self: *PxTriangleMeshDesc) -> void #foreign sys "PxTriangleMeshDesc_setToDefault_mut";
 
-PxTriangleMeshDesc_new :: () -> physx_PxTriangleMeshDesc #foreign physx_sys;
+PxTriangleMeshDesc_isValid :: (self: *PxTriangleMeshDesc) -> bool #foreign sys;
 
-PxTriangleMeshDesc_setToDefault :: (self: *physx_PxTriangleMeshDesc) -> void #foreign physx_sys "PxTriangleMeshDesc_setToDefault_mut";
+PxTetrahedronMeshDesc_new :: () -> PxTetrahedronMeshDesc #foreign sys;
 
-PxTriangleMeshDesc_isValid :: (self: *physx_PxTriangleMeshDesc) -> bool #foreign physx_sys;
+PxTetrahedronMeshDesc_isValid :: (self: *PxTetrahedronMeshDesc) -> bool #foreign sys;
 
-PxTetrahedronMeshDesc_new :: () -> physx_PxTetrahedronMeshDesc #foreign physx_sys;
+PxSoftBodySimulationDataDesc_new :: () -> PxSoftBodySimulationDataDesc #foreign sys;
 
-PxTetrahedronMeshDesc_isValid :: (self: *physx_PxTetrahedronMeshDesc) -> bool #foreign physx_sys;
+PxSoftBodySimulationDataDesc_isValid :: (self: *PxSoftBodySimulationDataDesc) -> bool #foreign sys;
 
-PxSoftBodySimulationDataDesc_new :: () -> physx_PxSoftBodySimulationDataDesc #foreign physx_sys;
+PxBVH34MidphaseDesc_setToDefault :: (self: *PxBVH34MidphaseDesc) -> void #foreign sys "PxBVH34MidphaseDesc_setToDefault_mut";
 
-PxSoftBodySimulationDataDesc_isValid :: (self: *physx_PxSoftBodySimulationDataDesc) -> bool #foreign physx_sys;
+PxBVH34MidphaseDesc_isValid :: (self: *PxBVH34MidphaseDesc) -> bool #foreign sys;
 
-PxBVH34MidphaseDesc_setToDefault :: (self: *physx_PxBVH34MidphaseDesc) -> void #foreign physx_sys "PxBVH34MidphaseDesc_setToDefault_mut";
+PxMidphaseDesc_new :: () -> PxMidphaseDesc #foreign sys;
 
-PxBVH34MidphaseDesc_isValid :: (self: *physx_PxBVH34MidphaseDesc) -> bool #foreign physx_sys;
+PxMidphaseDesc_getType :: (self: *PxMidphaseDesc) -> s32 #foreign sys;
 
-PxMidphaseDesc_new :: () -> physx_PxMidphaseDesc #foreign physx_sys;
+PxMidphaseDesc_setToDefault :: (self: *PxMidphaseDesc, type: s32) -> void #foreign sys "PxMidphaseDesc_setToDefault_mut";
 
-PxMidphaseDesc_getType :: (self: *physx_PxMidphaseDesc) -> s32 #foreign physx_sys;
+PxMidphaseDesc_isValid :: (self: *PxMidphaseDesc) -> bool #foreign sys;
 
-PxMidphaseDesc_setToDefault :: (self: *physx_PxMidphaseDesc, type: s32) -> void #foreign physx_sys "PxMidphaseDesc_setToDefault_mut";
+PxBVHDesc_new :: () -> PxBVHDesc #foreign sys;
 
-PxMidphaseDesc_isValid :: (self: *physx_PxMidphaseDesc) -> bool #foreign physx_sys;
+PxBVHDesc_setToDefault :: (self: *PxBVHDesc) -> void #foreign sys "PxBVHDesc_setToDefault_mut";
 
-PxBVHDesc_new :: () -> physx_PxBVHDesc #foreign physx_sys;
+PxBVHDesc_isValid :: (self: *PxBVHDesc) -> bool #foreign sys;
 
-PxBVHDesc_setToDefault :: (self: *physx_PxBVHDesc) -> void #foreign physx_sys "PxBVHDesc_setToDefault_mut";
+PxCookingParams_new :: (sc: *PxTolerancesScale) -> PxCookingParams #foreign sys;
 
-PxBVHDesc_isValid :: (self: *physx_PxBVHDesc) -> bool #foreign physx_sys;
+PxGetStandaloneInsertionCallback :: () -> *PxInsertionCallback #foreign sys "phys_PxGetStandaloneInsertionCallback";
 
-PxCookingParams_new :: (sc: *physx_PxTolerancesScale) -> physx_PxCookingParams #foreign physx_sys;
+PxCookBVH :: (desc: *PxBVHDesc, stream: *PxOutputStream) -> bool #foreign sys "phys_PxCookBVH";
 
-phys_PxGetStandaloneInsertionCallback :: () -> *physx_PxInsertionCallback #foreign physx_sys;
+PxCreateBVH :: (desc: *PxBVHDesc, insertionCallback: *PxInsertionCallback) -> *PxBVH #foreign sys "phys_PxCreateBVH";
 
-phys_PxCookBVH :: (desc: *physx_PxBVHDesc, stream: *physx_PxOutputStream) -> bool #foreign physx_sys;
+PxCookHeightField :: (desc: *PxHeightFieldDesc, stream: *PxOutputStream) -> bool #foreign sys "phys_PxCookHeightField";
 
-phys_PxCreateBVH :: (desc: *physx_PxBVHDesc, insertionCallback: *physx_PxInsertionCallback) -> *physx_PxBVH #foreign physx_sys;
+PxCreateHeightField :: (desc: *PxHeightFieldDesc, insertionCallback: *PxInsertionCallback) -> *PxHeightField #foreign sys "phys_PxCreateHeightField";
 
-phys_PxCookHeightField :: (desc: *physx_PxHeightFieldDesc, stream: *physx_PxOutputStream) -> bool #foreign physx_sys;
+PxCookConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc, stream: *PxOutputStream, condition: *s32) -> bool #foreign sys "phys_PxCookConvexMesh";
 
-phys_PxCreateHeightField :: (desc: *physx_PxHeightFieldDesc, insertionCallback: *physx_PxInsertionCallback) -> *physx_PxHeightField #foreign physx_sys;
+PxCreateConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc, insertionCallback: *PxInsertionCallback, condition: *s32) -> *PxConvexMesh #foreign sys "phys_PxCreateConvexMesh";
 
-phys_PxCookConvexMesh :: (params: *physx_PxCookingParams, desc: *physx_PxConvexMeshDesc, stream: *physx_PxOutputStream, condition: *s32) -> bool #foreign physx_sys;
+PxValidateConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc) -> bool #foreign sys "phys_PxValidateConvexMesh";
 
-phys_PxCreateConvexMesh :: (params: *physx_PxCookingParams, desc: *physx_PxConvexMeshDesc, insertionCallback: *physx_PxInsertionCallback, condition: *s32) -> *physx_PxConvexMesh #foreign physx_sys;
+PxComputeHullPolygons :: (params: *PxCookingParams, mesh: *PxSimpleTriangleMesh, inCallback: *PxAllocatorCallback, nbVerts: *u32, vertices: **Vector3, nbIndices: *u32, indices: **u32, nbPolygons: *u32, hullPolygons: **PxHullPolygon) -> bool #foreign sys "phys_PxComputeHullPolygons";
 
-phys_PxValidateConvexMesh :: (params: *physx_PxCookingParams, desc: *physx_PxConvexMeshDesc) -> bool #foreign physx_sys;
+PxValidateTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc) -> bool #foreign sys "phys_PxValidateTriangleMesh";
 
-phys_PxComputeHullPolygons :: (params: *physx_PxCookingParams, mesh: *physx_PxSimpleTriangleMesh, inCallback: *physx_PxAllocatorCallback, nbVerts: *u32, vertices: **Vector3, nbIndices: *u32, indices: **u32, nbPolygons: *u32, hullPolygons: **physx_PxHullPolygon) -> bool #foreign physx_sys;
+PxCreateTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc, insertionCallback: *PxInsertionCallback, condition: *s32) -> *PxTriangleMesh #foreign sys "phys_PxCreateTriangleMesh";
 
-phys_PxValidateTriangleMesh :: (params: *physx_PxCookingParams, desc: *physx_PxTriangleMeshDesc) -> bool #foreign physx_sys;
+PxCookTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc, stream: *PxOutputStream, condition: *s32) -> bool #foreign sys "phys_PxCookTriangleMesh";
 
-phys_PxCreateTriangleMesh :: (params: *physx_PxCookingParams, desc: *physx_PxTriangleMeshDesc, insertionCallback: *physx_PxInsertionCallback, condition: *s32) -> *physx_PxTriangleMesh #foreign physx_sys;
+PxDefaultMemoryOutputStream_new_alloc :: (allocator: *PxAllocatorCallback) -> *PxDefaultMemoryOutputStream #foreign sys;
 
-phys_PxCookTriangleMesh :: (params: *physx_PxCookingParams, desc: *physx_PxTriangleMeshDesc, stream: *physx_PxOutputStream, condition: *s32) -> bool #foreign physx_sys;
+PxDefaultMemoryOutputStream_delete :: (self: *PxDefaultMemoryOutputStream) -> void #foreign sys;
 
-PxDefaultMemoryOutputStream_new_alloc :: (allocator: *physx_PxAllocatorCallback) -> *physx_PxDefaultMemoryOutputStream #foreign physx_sys;
+PxDefaultMemoryOutputStream_write :: (self: *PxDefaultMemoryOutputStream, src: *void, count: u32) -> u32 #foreign sys "PxDefaultMemoryOutputStream_write_mut";
 
-PxDefaultMemoryOutputStream_delete :: (self: *physx_PxDefaultMemoryOutputStream) -> void #foreign physx_sys;
+PxDefaultMemoryOutputStream_getSize :: (self: *PxDefaultMemoryOutputStream) -> u32 #foreign sys;
 
-PxDefaultMemoryOutputStream_write :: (self: *physx_PxDefaultMemoryOutputStream, src: *void, count: u32) -> u32 #foreign physx_sys "PxDefaultMemoryOutputStream_write_mut";
+PxDefaultMemoryOutputStream_getData :: (self: *PxDefaultMemoryOutputStream) -> *u8 #foreign sys;
 
-PxDefaultMemoryOutputStream_getSize :: (self: *physx_PxDefaultMemoryOutputStream) -> u32 #foreign physx_sys;
+PxDefaultMemoryInputData_new_alloc :: (data: *u8, length: u32) -> *PxDefaultMemoryInputData #foreign sys;
 
-PxDefaultMemoryOutputStream_getData :: (self: *physx_PxDefaultMemoryOutputStream) -> *u8 #foreign physx_sys;
+PxDefaultMemoryInputData_read :: (self: *PxDefaultMemoryInputData, dest: *void, count: u32) -> u32 #foreign sys "PxDefaultMemoryInputData_read_mut";
 
-PxDefaultMemoryInputData_new_alloc :: (data: *u8, length: u32) -> *physx_PxDefaultMemoryInputData #foreign physx_sys;
+PxDefaultMemoryInputData_getLength :: (self: *PxDefaultMemoryInputData) -> u32 #foreign sys;
 
-PxDefaultMemoryInputData_read :: (self: *physx_PxDefaultMemoryInputData, dest: *void, count: u32) -> u32 #foreign physx_sys "PxDefaultMemoryInputData_read_mut";
+PxDefaultMemoryInputData_seek :: (self: *PxDefaultMemoryInputData, pos: u32) -> void #foreign sys "PxDefaultMemoryInputData_seek_mut";
 
-PxDefaultMemoryInputData_getLength :: (self: *physx_PxDefaultMemoryInputData) -> u32 #foreign physx_sys;
+PxDefaultMemoryInputData_tell :: (self: *PxDefaultMemoryInputData) -> u32 #foreign sys;
 
-PxDefaultMemoryInputData_seek :: (self: *physx_PxDefaultMemoryInputData, pos: u32) -> void #foreign physx_sys "PxDefaultMemoryInputData_seek_mut";
+PxDefaultFileOutputStream_new_alloc :: (name: *u8) -> *PxDefaultFileOutputStream #foreign sys;
 
-PxDefaultMemoryInputData_tell :: (self: *physx_PxDefaultMemoryInputData) -> u32 #foreign physx_sys;
+PxDefaultFileOutputStream_delete :: (self: *PxDefaultFileOutputStream) -> void #foreign sys;
 
-PxDefaultFileOutputStream_new_alloc :: (name: *u8) -> *physx_PxDefaultFileOutputStream #foreign physx_sys;
+PxDefaultFileOutputStream_write :: (self: *PxDefaultFileOutputStream, src: *void, count: u32) -> u32 #foreign sys "PxDefaultFileOutputStream_write_mut";
 
-PxDefaultFileOutputStream_delete :: (self: *physx_PxDefaultFileOutputStream) -> void #foreign physx_sys;
+PxDefaultFileOutputStream_isValid :: (self: *PxDefaultFileOutputStream) -> bool #foreign sys "PxDefaultFileOutputStream_isValid_mut";
 
-PxDefaultFileOutputStream_write :: (self: *physx_PxDefaultFileOutputStream, src: *void, count: u32) -> u32 #foreign physx_sys "PxDefaultFileOutputStream_write_mut";
+PxDefaultFileInputData_new_alloc :: (name: *u8) -> *PxDefaultFileInputData #foreign sys;
 
-PxDefaultFileOutputStream_isValid :: (self: *physx_PxDefaultFileOutputStream) -> bool #foreign physx_sys "PxDefaultFileOutputStream_isValid_mut";
+PxDefaultFileInputData_delete :: (self: *PxDefaultFileInputData) -> void #foreign sys;
 
-PxDefaultFileInputData_new_alloc :: (name: *u8) -> *physx_PxDefaultFileInputData #foreign physx_sys;
+PxDefaultFileInputData_read :: (self: *PxDefaultFileInputData, dest: *void, count: u32) -> u32 #foreign sys "PxDefaultFileInputData_read_mut";
 
-PxDefaultFileInputData_delete :: (self: *physx_PxDefaultFileInputData) -> void #foreign physx_sys;
+PxDefaultFileInputData_seek :: (self: *PxDefaultFileInputData, pos: u32) -> void #foreign sys "PxDefaultFileInputData_seek_mut";
 
-PxDefaultFileInputData_read :: (self: *physx_PxDefaultFileInputData, dest: *void, count: u32) -> u32 #foreign physx_sys "PxDefaultFileInputData_read_mut";
+PxDefaultFileInputData_tell :: (self: *PxDefaultFileInputData) -> u32 #foreign sys;
 
-PxDefaultFileInputData_seek :: (self: *physx_PxDefaultFileInputData, pos: u32) -> void #foreign physx_sys "PxDefaultFileInputData_seek_mut";
+PxDefaultFileInputData_getLength :: (self: *PxDefaultFileInputData) -> u32 #foreign sys;
 
-PxDefaultFileInputData_tell :: (self: *physx_PxDefaultFileInputData) -> u32 #foreign physx_sys;
+PxDefaultFileInputData_isValid :: (self: *PxDefaultFileInputData) -> bool #foreign sys;
 
-PxDefaultFileInputData_getLength :: (self: *physx_PxDefaultFileInputData) -> u32 #foreign physx_sys;
+platformAlignedAlloc :: (size: u64) -> *void #foreign sys "phys_platformAlignedAlloc";
 
-PxDefaultFileInputData_isValid :: (self: *physx_PxDefaultFileInputData) -> bool #foreign physx_sys;
+platformAlignedFree :: (ptr: *void) -> void #foreign sys "phys_platformAlignedFree";
 
-phys_platformAlignedAlloc :: (size: u64) -> *void #foreign physx_sys;
+PxDefaultAllocator_allocate :: (self: *PxDefaultAllocator, size: u64, anon_param1: *u8, anon_param2: *u8, anon_param3: s32) -> *void #foreign sys "PxDefaultAllocator_allocate_mut";
 
-phys_platformAlignedFree :: (ptr: *void) -> void #foreign physx_sys;
+PxDefaultAllocator_deallocate :: (self: *PxDefaultAllocator, ptr: *void) -> void #foreign sys "PxDefaultAllocator_deallocate_mut";
 
-PxDefaultAllocator_allocate :: (self: *physx_PxDefaultAllocator, size: u64, anon_param1: *u8, anon_param2: *u8, anon_param3: s32) -> *void #foreign physx_sys "PxDefaultAllocator_allocate_mut";
+PxDefaultAllocator_delete :: (self: *PxDefaultAllocator) -> void #foreign sys;
 
-PxDefaultAllocator_deallocate :: (self: *physx_PxDefaultAllocator, ptr: *void) -> void #foreign physx_sys "PxDefaultAllocator_deallocate_mut";
+PxJoint_setActors :: (self: *PxJoint, actor0: *PxRigidActor, actor1: *PxRigidActor) -> void #foreign sys "PxJoint_setActors_mut";
 
-PxDefaultAllocator_delete :: (self: *physx_PxDefaultAllocator) -> void #foreign physx_sys;
+PxJoint_getActors :: (self: *PxJoint, actor0: **PxRigidActor, actor1: **PxRigidActor) -> void #foreign sys;
 
-PxJoint_setActors :: (self: *physx_PxJoint, actor0: *physx_PxRigidActor, actor1: *physx_PxRigidActor) -> void #foreign physx_sys "PxJoint_setActors_mut";
+PxJoint_setLocalPose :: (self: *PxJoint, actor: s32, localPose: *PxTransform) -> void #foreign sys "PxJoint_setLocalPose_mut";
 
-PxJoint_getActors :: (self: *physx_PxJoint, actor0: **physx_PxRigidActor, actor1: **physx_PxRigidActor) -> void #foreign physx_sys;
+PxJoint_getLocalPose :: (self: *PxJoint, actor: s32) -> PxTransform #foreign sys;
 
-PxJoint_setLocalPose :: (self: *physx_PxJoint, actor: s32, localPose: *physx_PxTransform) -> void #foreign physx_sys "PxJoint_setLocalPose_mut";
+PxJoint_getRelativeTransform :: (self: *PxJoint) -> PxTransform #foreign sys;
 
-PxJoint_getLocalPose :: (self: *physx_PxJoint, actor: s32) -> physx_PxTransform #foreign physx_sys;
+PxJoint_getRelativeLinearVelocity :: (self: *PxJoint) -> Vector3 #foreign sys;
 
-PxJoint_getRelativeTransform :: (self: *physx_PxJoint) -> physx_PxTransform #foreign physx_sys;
+PxJoint_getRelativeAngularVelocity :: (self: *PxJoint) -> Vector3 #foreign sys;
 
-PxJoint_getRelativeLinearVelocity :: (self: *physx_PxJoint) -> Vector3 #foreign physx_sys;
+PxJoint_setBreakForce :: (self: *PxJoint, force: float, torque: float) -> void #foreign sys "PxJoint_setBreakForce_mut";
 
-PxJoint_getRelativeAngularVelocity :: (self: *physx_PxJoint) -> Vector3 #foreign physx_sys;
+PxJoint_getBreakForce :: (self: *PxJoint, force: *float, torque: *float) -> void #foreign sys;
 
-PxJoint_setBreakForce :: (self: *physx_PxJoint, force: float, torque: float) -> void #foreign physx_sys "PxJoint_setBreakForce_mut";
+PxJoint_setConstraintFlags :: (self: *PxJoint, flags: u16) -> void #foreign sys "PxJoint_setConstraintFlags_mut";
 
-PxJoint_getBreakForce :: (self: *physx_PxJoint, force: *float, torque: *float) -> void #foreign physx_sys;
+PxJoint_setConstraintFlag :: (self: *PxJoint, flag: s32, value: bool) -> void #foreign sys "PxJoint_setConstraintFlag_mut";
 
-PxJoint_setConstraintFlags :: (self: *physx_PxJoint, flags: u16) -> void #foreign physx_sys "PxJoint_setConstraintFlags_mut";
+PxJoint_getConstraintFlags :: (self: *PxJoint) -> u16 #foreign sys;
 
-PxJoint_setConstraintFlag :: (self: *physx_PxJoint, flag: s32, value: bool) -> void #foreign physx_sys "PxJoint_setConstraintFlag_mut";
+PxJoint_setInvMassScale0 :: (self: *PxJoint, invMassScale: float) -> void #foreign sys "PxJoint_setInvMassScale0_mut";
 
-PxJoint_getConstraintFlags :: (self: *physx_PxJoint) -> u16 #foreign physx_sys;
+PxJoint_getInvMassScale0 :: (self: *PxJoint) -> float #foreign sys;
 
-PxJoint_setInvMassScale0 :: (self: *physx_PxJoint, invMassScale: float) -> void #foreign physx_sys "PxJoint_setInvMassScale0_mut";
+PxJoint_setInvInertiaScale0 :: (self: *PxJoint, invInertiaScale: float) -> void #foreign sys "PxJoint_setInvInertiaScale0_mut";
 
-PxJoint_getInvMassScale0 :: (self: *physx_PxJoint) -> float #foreign physx_sys;
+PxJoint_getInvInertiaScale0 :: (self: *PxJoint) -> float #foreign sys;
 
-PxJoint_setInvInertiaScale0 :: (self: *physx_PxJoint, invInertiaScale: float) -> void #foreign physx_sys "PxJoint_setInvInertiaScale0_mut";
+PxJoint_setInvMassScale1 :: (self: *PxJoint, invMassScale: float) -> void #foreign sys "PxJoint_setInvMassScale1_mut";
 
-PxJoint_getInvInertiaScale0 :: (self: *physx_PxJoint) -> float #foreign physx_sys;
+PxJoint_getInvMassScale1 :: (self: *PxJoint) -> float #foreign sys;
 
-PxJoint_setInvMassScale1 :: (self: *physx_PxJoint, invMassScale: float) -> void #foreign physx_sys "PxJoint_setInvMassScale1_mut";
+PxJoint_setInvInertiaScale1 :: (self: *PxJoint, invInertiaScale: float) -> void #foreign sys "PxJoint_setInvInertiaScale1_mut";
 
-PxJoint_getInvMassScale1 :: (self: *physx_PxJoint) -> float #foreign physx_sys;
+PxJoint_getInvInertiaScale1 :: (self: *PxJoint) -> float #foreign sys;
 
-PxJoint_setInvInertiaScale1 :: (self: *physx_PxJoint, invInertiaScale: float) -> void #foreign physx_sys "PxJoint_setInvInertiaScale1_mut";
+PxJoint_getConstraint :: (self: *PxJoint) -> *PxConstraint #foreign sys;
 
-PxJoint_getInvInertiaScale1 :: (self: *physx_PxJoint) -> float #foreign physx_sys;
+PxJoint_setName :: (self: *PxJoint, name: *u8) -> void #foreign sys "PxJoint_setName_mut";
 
-PxJoint_getConstraint :: (self: *physx_PxJoint) -> *physx_PxConstraint #foreign physx_sys;
+PxJoint_getName :: (self: *PxJoint) -> *u8 #foreign sys;
 
-PxJoint_setName :: (self: *physx_PxJoint, name: *u8) -> void #foreign physx_sys "PxJoint_setName_mut";
+PxJoint_release :: (self: *PxJoint) -> void #foreign sys "PxJoint_release_mut";
 
-PxJoint_getName :: (self: *physx_PxJoint) -> *u8 #foreign physx_sys;
+PxJoint_getScene :: (self: *PxJoint) -> *PxScene #foreign sys;
 
-PxJoint_release :: (self: *physx_PxJoint) -> void #foreign physx_sys "PxJoint_release_mut";
+PxJoint_getBinaryMetaData :: (stream: *PxOutputStream) -> void #foreign sys;
 
-PxJoint_getScene :: (self: *physx_PxJoint) -> *physx_PxScene #foreign physx_sys;
+PxSpring_new :: (stiffness_: float, damping_: float) -> PxSpring #foreign sys;
 
-PxJoint_getBinaryMetaData :: (stream: *physx_PxOutputStream) -> void #foreign physx_sys;
+PxSetJointGlobalFrame :: (joint: *PxJoint, wsAnchor: *Vector3, wsAxis: *Vector3) -> void #foreign sys "phys_PxSetJointGlobalFrame";
 
-PxSpring_new :: (stiffness_: float, damping_: float) -> physx_PxSpring #foreign physx_sys;
+PxDistanceJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxDistanceJoint #foreign sys "phys_PxDistanceJointCreate";
 
-phys_PxSetJointGlobalFrame :: (joint: *physx_PxJoint, wsAnchor: *Vector3, wsAxis: *Vector3) -> void #foreign physx_sys;
+PxDistanceJoint_getDistance :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-phys_PxDistanceJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxDistanceJoint #foreign physx_sys;
+PxDistanceJoint_setMinDistance :: (self: *PxDistanceJoint, distance: float) -> void #foreign sys "PxDistanceJoint_setMinDistance_mut";
 
-PxDistanceJoint_getDistance :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_getMinDistance :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-PxDistanceJoint_setMinDistance :: (self: *physx_PxDistanceJoint, distance: float) -> void #foreign physx_sys "PxDistanceJoint_setMinDistance_mut";
+PxDistanceJoint_setMaxDistance :: (self: *PxDistanceJoint, distance: float) -> void #foreign sys "PxDistanceJoint_setMaxDistance_mut";
 
-PxDistanceJoint_getMinDistance :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_getMaxDistance :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-PxDistanceJoint_setMaxDistance :: (self: *physx_PxDistanceJoint, distance: float) -> void #foreign physx_sys "PxDistanceJoint_setMaxDistance_mut";
+PxDistanceJoint_setTolerance :: (self: *PxDistanceJoint, tolerance: float) -> void #foreign sys "PxDistanceJoint_setTolerance_mut";
 
-PxDistanceJoint_getMaxDistance :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_getTolerance :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-PxDistanceJoint_setTolerance :: (self: *physx_PxDistanceJoint, tolerance: float) -> void #foreign physx_sys "PxDistanceJoint_setTolerance_mut";
+PxDistanceJoint_setStiffness :: (self: *PxDistanceJoint, stiffness: float) -> void #foreign sys "PxDistanceJoint_setStiffness_mut";
 
-PxDistanceJoint_getTolerance :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_getStiffness :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-PxDistanceJoint_setStiffness :: (self: *physx_PxDistanceJoint, stiffness: float) -> void #foreign physx_sys "PxDistanceJoint_setStiffness_mut";
+PxDistanceJoint_setDamping :: (self: *PxDistanceJoint, damping: float) -> void #foreign sys "PxDistanceJoint_setDamping_mut";
 
-PxDistanceJoint_getStiffness :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_getDamping :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-PxDistanceJoint_setDamping :: (self: *physx_PxDistanceJoint, damping: float) -> void #foreign physx_sys "PxDistanceJoint_setDamping_mut";
+PxDistanceJoint_setContactDistance :: (self: *PxDistanceJoint, contactDistance: float) -> void #foreign sys "PxDistanceJoint_setContactDistance_mut";
 
-PxDistanceJoint_getDamping :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_getContactDistance :: (self: *PxDistanceJoint) -> float #foreign sys;
 
-PxDistanceJoint_setContactDistance :: (self: *physx_PxDistanceJoint, contactDistance: float) -> void #foreign physx_sys "PxDistanceJoint_setContactDistance_mut";
+PxDistanceJoint_setDistanceJointFlags :: (self: *PxDistanceJoint, flags: u16) -> void #foreign sys "PxDistanceJoint_setDistanceJointFlags_mut";
 
-PxDistanceJoint_getContactDistance :: (self: *physx_PxDistanceJoint) -> float #foreign physx_sys;
+PxDistanceJoint_setDistanceJointFlag :: (self: *PxDistanceJoint, flag: s32, value: bool) -> void #foreign sys "PxDistanceJoint_setDistanceJointFlag_mut";
 
-PxDistanceJoint_setDistanceJointFlags :: (self: *physx_PxDistanceJoint, flags: u16) -> void #foreign physx_sys "PxDistanceJoint_setDistanceJointFlags_mut";
+PxDistanceJoint_getDistanceJointFlags :: (self: *PxDistanceJoint) -> u16 #foreign sys;
 
-PxDistanceJoint_setDistanceJointFlag :: (self: *physx_PxDistanceJoint, flag: s32, value: bool) -> void #foreign physx_sys "PxDistanceJoint_setDistanceJointFlag_mut";
+PxDistanceJoint_getConcreteTypeName :: (self: *PxDistanceJoint) -> *u8 #foreign sys;
 
-PxDistanceJoint_getDistanceJointFlags :: (self: *physx_PxDistanceJoint) -> u16 #foreign physx_sys;
+PxContactJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxContactJoint #foreign sys "phys_PxContactJointCreate";
 
-PxDistanceJoint_getConcreteTypeName :: (self: *physx_PxDistanceJoint) -> *u8 #foreign physx_sys;
+PxJacobianRow_new :: () -> PxJacobianRow #foreign sys;
 
-phys_PxContactJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxContactJoint #foreign physx_sys;
+PxJacobianRow_new :: (lin0: *Vector3, lin1: *Vector3, ang0: *Vector3, ang1: *Vector3) -> PxJacobianRow #foreign sys "PxJacobianRow_new_1";
 
-PxJacobianRow_new :: () -> physx_PxJacobianRow #foreign physx_sys;
+PxContactJoint_setContact :: (self: *PxContactJoint, contact: *Vector3) -> void #foreign sys "PxContactJoint_setContact_mut";
 
-PxJacobianRow_new_1 :: (lin0: *Vector3, lin1: *Vector3, ang0: *Vector3, ang1: *Vector3) -> physx_PxJacobianRow #foreign physx_sys;
+PxContactJoint_setContactNormal :: (self: *PxContactJoint, contactNormal: *Vector3) -> void #foreign sys "PxContactJoint_setContactNormal_mut";
 
-PxContactJoint_setContact :: (self: *physx_PxContactJoint, contact: *Vector3) -> void #foreign physx_sys "PxContactJoint_setContact_mut";
+PxContactJoint_setPenetration :: (self: *PxContactJoint, penetration: float) -> void #foreign sys "PxContactJoint_setPenetration_mut";
 
-PxContactJoint_setContactNormal :: (self: *physx_PxContactJoint, contactNormal: *Vector3) -> void #foreign physx_sys "PxContactJoint_setContactNormal_mut";
+PxContactJoint_getContact :: (self: *PxContactJoint) -> Vector3 #foreign sys;
 
-PxContactJoint_setPenetration :: (self: *physx_PxContactJoint, penetration: float) -> void #foreign physx_sys "PxContactJoint_setPenetration_mut";
+PxContactJoint_getContactNormal :: (self: *PxContactJoint) -> Vector3 #foreign sys;
 
-PxContactJoint_getContact :: (self: *physx_PxContactJoint) -> Vector3 #foreign physx_sys;
+PxContactJoint_getPenetration :: (self: *PxContactJoint) -> float #foreign sys;
 
-PxContactJoint_getContactNormal :: (self: *physx_PxContactJoint) -> Vector3 #foreign physx_sys;
+PxContactJoint_getRestitution :: (self: *PxContactJoint) -> float #foreign sys;
 
-PxContactJoint_getPenetration :: (self: *physx_PxContactJoint) -> float #foreign physx_sys;
+PxContactJoint_setRestitution :: (self: *PxContactJoint, restitution: float) -> void #foreign sys "PxContactJoint_setRestitution_mut";
 
-PxContactJoint_getRestitution :: (self: *physx_PxContactJoint) -> float #foreign physx_sys;
+PxContactJoint_getBounceThreshold :: (self: *PxContactJoint) -> float #foreign sys;
 
-PxContactJoint_setRestitution :: (self: *physx_PxContactJoint, restitution: float) -> void #foreign physx_sys "PxContactJoint_setRestitution_mut";
+PxContactJoint_setBounceThreshold :: (self: *PxContactJoint, bounceThreshold: float) -> void #foreign sys "PxContactJoint_setBounceThreshold_mut";
 
-PxContactJoint_getBounceThreshold :: (self: *physx_PxContactJoint) -> float #foreign physx_sys;
+PxContactJoint_getConcreteTypeName :: (self: *PxContactJoint) -> *u8 #foreign sys;
 
-PxContactJoint_setBounceThreshold :: (self: *physx_PxContactJoint, bounceThreshold: float) -> void #foreign physx_sys "PxContactJoint_setBounceThreshold_mut";
+PxContactJoint_computeJacobians :: (self: *PxContactJoint, jacobian: *PxJacobianRow) -> void #foreign sys;
 
-PxContactJoint_getConcreteTypeName :: (self: *physx_PxContactJoint) -> *u8 #foreign physx_sys;
+PxContactJoint_getNbJacobianRows :: (self: *PxContactJoint) -> u32 #foreign sys;
 
-PxContactJoint_computeJacobians :: (self: *physx_PxContactJoint, jacobian: *physx_PxJacobianRow) -> void #foreign physx_sys;
+PxFixedJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxFixedJoint #foreign sys "phys_PxFixedJointCreate";
 
-PxContactJoint_getNbJacobianRows :: (self: *physx_PxContactJoint) -> u32 #foreign physx_sys;
+PxFixedJoint_getConcreteTypeName :: (self: *PxFixedJoint) -> *u8 #foreign sys;
 
-phys_PxFixedJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxFixedJoint #foreign physx_sys;
+PxJointLimitParameters_new_alloc :: () -> *PxJointLimitParameters #foreign sys;
 
-PxFixedJoint_getConcreteTypeName :: (self: *physx_PxFixedJoint) -> *u8 #foreign physx_sys;
+PxJointLimitParameters_isValid :: (self: *PxJointLimitParameters) -> bool #foreign sys;
 
-PxJointLimitParameters_new_alloc :: () -> *physx_PxJointLimitParameters #foreign physx_sys;
+PxJointLimitParameters_isSoft :: (self: *PxJointLimitParameters) -> bool #foreign sys;
 
-PxJointLimitParameters_isValid :: (self: *physx_PxJointLimitParameters) -> bool #foreign physx_sys;
+PxJointLinearLimit_new :: (scale: *PxTolerancesScale, extent: float, contactDist_deprecated: float) -> PxJointLinearLimit #foreign sys;
 
-PxJointLimitParameters_isSoft :: (self: *physx_PxJointLimitParameters) -> bool #foreign physx_sys;
+PxJointLinearLimit_new :: (extent: float, spring: *PxSpring) -> PxJointLinearLimit #foreign sys "PxJointLinearLimit_new_1";
 
-PxJointLinearLimit_new :: (scale: *physx_PxTolerancesScale, extent: float, contactDist_deprecated: float) -> physx_PxJointLinearLimit #foreign physx_sys;
+PxJointLinearLimit_isValid :: (self: *PxJointLinearLimit) -> bool #foreign sys;
 
-PxJointLinearLimit_new_1 :: (extent: float, spring: *physx_PxSpring) -> physx_PxJointLinearLimit #foreign physx_sys;
+PxJointLinearLimit_delete :: (self: *PxJointLinearLimit) -> void #foreign sys;
 
-PxJointLinearLimit_isValid :: (self: *physx_PxJointLinearLimit) -> bool #foreign physx_sys;
+PxJointLinearLimitPair_new :: (scale: *PxTolerancesScale, lowerLimit: float, upperLimit: float, contactDist_deprecated: float) -> PxJointLinearLimitPair #foreign sys;
 
-PxJointLinearLimit_delete :: (self: *physx_PxJointLinearLimit) -> void #foreign physx_sys;
+PxJointLinearLimitPair_new :: (lowerLimit: float, upperLimit: float, spring: *PxSpring) -> PxJointLinearLimitPair #foreign sys "PxJointLinearLimitPair_new_1";
 
-PxJointLinearLimitPair_new :: (scale: *physx_PxTolerancesScale, lowerLimit: float, upperLimit: float, contactDist_deprecated: float) -> physx_PxJointLinearLimitPair #foreign physx_sys;
+PxJointLinearLimitPair_isValid :: (self: *PxJointLinearLimitPair) -> bool #foreign sys;
 
-PxJointLinearLimitPair_new_1 :: (lowerLimit: float, upperLimit: float, spring: *physx_PxSpring) -> physx_PxJointLinearLimitPair #foreign physx_sys;
+PxJointLinearLimitPair_delete :: (self: *PxJointLinearLimitPair) -> void #foreign sys;
 
-PxJointLinearLimitPair_isValid :: (self: *physx_PxJointLinearLimitPair) -> bool #foreign physx_sys;
+PxJointAngularLimitPair_new :: (lowerLimit: float, upperLimit: float, contactDist_deprecated: float) -> PxJointAngularLimitPair #foreign sys;
 
-PxJointLinearLimitPair_delete :: (self: *physx_PxJointLinearLimitPair) -> void #foreign physx_sys;
+PxJointAngularLimitPair_new :: (lowerLimit: float, upperLimit: float, spring: *PxSpring) -> PxJointAngularLimitPair #foreign sys "PxJointAngularLimitPair_new_1";
 
-PxJointAngularLimitPair_new :: (lowerLimit: float, upperLimit: float, contactDist_deprecated: float) -> physx_PxJointAngularLimitPair #foreign physx_sys;
+PxJointAngularLimitPair_isValid :: (self: *PxJointAngularLimitPair) -> bool #foreign sys;
 
-PxJointAngularLimitPair_new_1 :: (lowerLimit: float, upperLimit: float, spring: *physx_PxSpring) -> physx_PxJointAngularLimitPair #foreign physx_sys;
+PxJointAngularLimitPair_delete :: (self: *PxJointAngularLimitPair) -> void #foreign sys;
 
-PxJointAngularLimitPair_isValid :: (self: *physx_PxJointAngularLimitPair) -> bool #foreign physx_sys;
+PxJointLimitCone_new :: (yLimitAngle: float, zLimitAngle: float, contactDist_deprecated: float) -> PxJointLimitCone #foreign sys;
 
-PxJointAngularLimitPair_delete :: (self: *physx_PxJointAngularLimitPair) -> void #foreign physx_sys;
+PxJointLimitCone_new :: (yLimitAngle: float, zLimitAngle: float, spring: *PxSpring) -> PxJointLimitCone #foreign sys "PxJointLimitCone_new_1";
 
-PxJointLimitCone_new :: (yLimitAngle: float, zLimitAngle: float, contactDist_deprecated: float) -> physx_PxJointLimitCone #foreign physx_sys;
+PxJointLimitCone_isValid :: (self: *PxJointLimitCone) -> bool #foreign sys;
 
-PxJointLimitCone_new_1 :: (yLimitAngle: float, zLimitAngle: float, spring: *physx_PxSpring) -> physx_PxJointLimitCone #foreign physx_sys;
+PxJointLimitCone_delete :: (self: *PxJointLimitCone) -> void #foreign sys;
 
-PxJointLimitCone_isValid :: (self: *physx_PxJointLimitCone) -> bool #foreign physx_sys;
+PxJointLimitPyramid_new :: (yLimitAngleMin: float, yLimitAngleMax: float, zLimitAngleMin: float, zLimitAngleMax: float, contactDist_deprecated: float) -> PxJointLimitPyramid #foreign sys;
 
-PxJointLimitCone_delete :: (self: *physx_PxJointLimitCone) -> void #foreign physx_sys;
+PxJointLimitPyramid_new :: (yLimitAngleMin: float, yLimitAngleMax: float, zLimitAngleMin: float, zLimitAngleMax: float, spring: *PxSpring) -> PxJointLimitPyramid #foreign sys "PxJointLimitPyramid_new_1";
 
-PxJointLimitPyramid_new :: (yLimitAngleMin: float, yLimitAngleMax: float, zLimitAngleMin: float, zLimitAngleMax: float, contactDist_deprecated: float) -> physx_PxJointLimitPyramid #foreign physx_sys;
+PxJointLimitPyramid_isValid :: (self: *PxJointLimitPyramid) -> bool #foreign sys;
 
-PxJointLimitPyramid_new_1 :: (yLimitAngleMin: float, yLimitAngleMax: float, zLimitAngleMin: float, zLimitAngleMax: float, spring: *physx_PxSpring) -> physx_PxJointLimitPyramid #foreign physx_sys;
+PxJointLimitPyramid_delete :: (self: *PxJointLimitPyramid) -> void #foreign sys;
 
-PxJointLimitPyramid_isValid :: (self: *physx_PxJointLimitPyramid) -> bool #foreign physx_sys;
+PxPrismaticJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxPrismaticJoint #foreign sys "phys_PxPrismaticJointCreate";
 
-PxJointLimitPyramid_delete :: (self: *physx_PxJointLimitPyramid) -> void #foreign physx_sys;
+PxPrismaticJoint_getPosition :: (self: *PxPrismaticJoint) -> float #foreign sys;
 
-phys_PxPrismaticJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxPrismaticJoint #foreign physx_sys;
+PxPrismaticJoint_getVelocity :: (self: *PxPrismaticJoint) -> float #foreign sys;
 
-PxPrismaticJoint_getPosition :: (self: *physx_PxPrismaticJoint) -> float #foreign physx_sys;
+PxPrismaticJoint_setLimit :: (self: *PxPrismaticJoint, anon_param0: *PxJointLinearLimitPair) -> void #foreign sys "PxPrismaticJoint_setLimit_mut";
 
-PxPrismaticJoint_getVelocity :: (self: *physx_PxPrismaticJoint) -> float #foreign physx_sys;
+PxPrismaticJoint_getLimit :: (self: *PxPrismaticJoint) -> PxJointLinearLimitPair #foreign sys;
 
-PxPrismaticJoint_setLimit :: (self: *physx_PxPrismaticJoint, anon_param0: *physx_PxJointLinearLimitPair) -> void #foreign physx_sys "PxPrismaticJoint_setLimit_mut";
+PxPrismaticJoint_setPrismaticJointFlags :: (self: *PxPrismaticJoint, flags: u16) -> void #foreign sys "PxPrismaticJoint_setPrismaticJointFlags_mut";
 
-PxPrismaticJoint_getLimit :: (self: *physx_PxPrismaticJoint) -> physx_PxJointLinearLimitPair #foreign physx_sys;
+PxPrismaticJoint_setPrismaticJointFlag :: (self: *PxPrismaticJoint, flag: s32, value: bool) -> void #foreign sys "PxPrismaticJoint_setPrismaticJointFlag_mut";
 
-PxPrismaticJoint_setPrismaticJointFlags :: (self: *physx_PxPrismaticJoint, flags: u16) -> void #foreign physx_sys "PxPrismaticJoint_setPrismaticJointFlags_mut";
+PxPrismaticJoint_getPrismaticJointFlags :: (self: *PxPrismaticJoint) -> u16 #foreign sys;
 
-PxPrismaticJoint_setPrismaticJointFlag :: (self: *physx_PxPrismaticJoint, flag: s32, value: bool) -> void #foreign physx_sys "PxPrismaticJoint_setPrismaticJointFlag_mut";
+PxPrismaticJoint_getConcreteTypeName :: (self: *PxPrismaticJoint) -> *u8 #foreign sys;
 
-PxPrismaticJoint_getPrismaticJointFlags :: (self: *physx_PxPrismaticJoint) -> u16 #foreign physx_sys;
+PxRevoluteJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxRevoluteJoint #foreign sys "phys_PxRevoluteJointCreate";
 
-PxPrismaticJoint_getConcreteTypeName :: (self: *physx_PxPrismaticJoint) -> *u8 #foreign physx_sys;
+PxRevoluteJoint_getAngle :: (self: *PxRevoluteJoint) -> float #foreign sys;
 
-phys_PxRevoluteJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxRevoluteJoint #foreign physx_sys;
+PxRevoluteJoint_getVelocity :: (self: *PxRevoluteJoint) -> float #foreign sys;
 
-PxRevoluteJoint_getAngle :: (self: *physx_PxRevoluteJoint) -> float #foreign physx_sys;
+PxRevoluteJoint_setLimit :: (self: *PxRevoluteJoint, limits: *PxJointAngularLimitPair) -> void #foreign sys "PxRevoluteJoint_setLimit_mut";
 
-PxRevoluteJoint_getVelocity :: (self: *physx_PxRevoluteJoint) -> float #foreign physx_sys;
+PxRevoluteJoint_getLimit :: (self: *PxRevoluteJoint) -> PxJointAngularLimitPair #foreign sys;
 
-PxRevoluteJoint_setLimit :: (self: *physx_PxRevoluteJoint, limits: *physx_PxJointAngularLimitPair) -> void #foreign physx_sys "PxRevoluteJoint_setLimit_mut";
+PxRevoluteJoint_setDriveVelocity :: (self: *PxRevoluteJoint, velocity: float, autowake: bool) -> void #foreign sys "PxRevoluteJoint_setDriveVelocity_mut";
 
-PxRevoluteJoint_getLimit :: (self: *physx_PxRevoluteJoint) -> physx_PxJointAngularLimitPair #foreign physx_sys;
+PxRevoluteJoint_getDriveVelocity :: (self: *PxRevoluteJoint) -> float #foreign sys;
 
-PxRevoluteJoint_setDriveVelocity :: (self: *physx_PxRevoluteJoint, velocity: float, autowake: bool) -> void #foreign physx_sys "PxRevoluteJoint_setDriveVelocity_mut";
+PxRevoluteJoint_setDriveForceLimit :: (self: *PxRevoluteJoint, limit: float) -> void #foreign sys "PxRevoluteJoint_setDriveForceLimit_mut";
 
-PxRevoluteJoint_getDriveVelocity :: (self: *physx_PxRevoluteJoint) -> float #foreign physx_sys;
+PxRevoluteJoint_getDriveForceLimit :: (self: *PxRevoluteJoint) -> float #foreign sys;
 
-PxRevoluteJoint_setDriveForceLimit :: (self: *physx_PxRevoluteJoint, limit: float) -> void #foreign physx_sys "PxRevoluteJoint_setDriveForceLimit_mut";
+PxRevoluteJoint_setDriveGearRatio :: (self: *PxRevoluteJoint, ratio: float) -> void #foreign sys "PxRevoluteJoint_setDriveGearRatio_mut";
 
-PxRevoluteJoint_getDriveForceLimit :: (self: *physx_PxRevoluteJoint) -> float #foreign physx_sys;
+PxRevoluteJoint_getDriveGearRatio :: (self: *PxRevoluteJoint) -> float #foreign sys;
 
-PxRevoluteJoint_setDriveGearRatio :: (self: *physx_PxRevoluteJoint, ratio: float) -> void #foreign physx_sys "PxRevoluteJoint_setDriveGearRatio_mut";
+PxRevoluteJoint_setRevoluteJointFlags :: (self: *PxRevoluteJoint, flags: u16) -> void #foreign sys "PxRevoluteJoint_setRevoluteJointFlags_mut";
 
-PxRevoluteJoint_getDriveGearRatio :: (self: *physx_PxRevoluteJoint) -> float #foreign physx_sys;
+PxRevoluteJoint_setRevoluteJointFlag :: (self: *PxRevoluteJoint, flag: s32, value: bool) -> void #foreign sys "PxRevoluteJoint_setRevoluteJointFlag_mut";
 
-PxRevoluteJoint_setRevoluteJointFlags :: (self: *physx_PxRevoluteJoint, flags: u16) -> void #foreign physx_sys "PxRevoluteJoint_setRevoluteJointFlags_mut";
+PxRevoluteJoint_getRevoluteJointFlags :: (self: *PxRevoluteJoint) -> u16 #foreign sys;
 
-PxRevoluteJoint_setRevoluteJointFlag :: (self: *physx_PxRevoluteJoint, flag: s32, value: bool) -> void #foreign physx_sys "PxRevoluteJoint_setRevoluteJointFlag_mut";
+PxRevoluteJoint_getConcreteTypeName :: (self: *PxRevoluteJoint) -> *u8 #foreign sys;
 
-PxRevoluteJoint_getRevoluteJointFlags :: (self: *physx_PxRevoluteJoint) -> u16 #foreign physx_sys;
+PxSphericalJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxSphericalJoint #foreign sys "phys_PxSphericalJointCreate";
 
-PxRevoluteJoint_getConcreteTypeName :: (self: *physx_PxRevoluteJoint) -> *u8 #foreign physx_sys;
+PxSphericalJoint_getLimitCone :: (self: *PxSphericalJoint) -> PxJointLimitCone #foreign sys;
 
-phys_PxSphericalJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxSphericalJoint #foreign physx_sys;
+PxSphericalJoint_setLimitCone :: (self: *PxSphericalJoint, limit: *PxJointLimitCone) -> void #foreign sys "PxSphericalJoint_setLimitCone_mut";
 
-PxSphericalJoint_getLimitCone :: (self: *physx_PxSphericalJoint) -> physx_PxJointLimitCone #foreign physx_sys;
+PxSphericalJoint_getSwingYAngle :: (self: *PxSphericalJoint) -> float #foreign sys;
 
-PxSphericalJoint_setLimitCone :: (self: *physx_PxSphericalJoint, limit: *physx_PxJointLimitCone) -> void #foreign physx_sys "PxSphericalJoint_setLimitCone_mut";
+PxSphericalJoint_getSwingZAngle :: (self: *PxSphericalJoint) -> float #foreign sys;
 
-PxSphericalJoint_getSwingYAngle :: (self: *physx_PxSphericalJoint) -> float #foreign physx_sys;
+PxSphericalJoint_setSphericalJointFlags :: (self: *PxSphericalJoint, flags: u16) -> void #foreign sys "PxSphericalJoint_setSphericalJointFlags_mut";
 
-PxSphericalJoint_getSwingZAngle :: (self: *physx_PxSphericalJoint) -> float #foreign physx_sys;
+PxSphericalJoint_setSphericalJointFlag :: (self: *PxSphericalJoint, flag: s32, value: bool) -> void #foreign sys "PxSphericalJoint_setSphericalJointFlag_mut";
 
-PxSphericalJoint_setSphericalJointFlags :: (self: *physx_PxSphericalJoint, flags: u16) -> void #foreign physx_sys "PxSphericalJoint_setSphericalJointFlags_mut";
+PxSphericalJoint_getSphericalJointFlags :: (self: *PxSphericalJoint) -> u16 #foreign sys;
 
-PxSphericalJoint_setSphericalJointFlag :: (self: *physx_PxSphericalJoint, flag: s32, value: bool) -> void #foreign physx_sys "PxSphericalJoint_setSphericalJointFlag_mut";
+PxSphericalJoint_getConcreteTypeName :: (self: *PxSphericalJoint) -> *u8 #foreign sys;
 
-PxSphericalJoint_getSphericalJointFlags :: (self: *physx_PxSphericalJoint) -> u16 #foreign physx_sys;
+PxD6JointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxD6Joint #foreign sys "phys_PxD6JointCreate";
 
-PxSphericalJoint_getConcreteTypeName :: (self: *physx_PxSphericalJoint) -> *u8 #foreign physx_sys;
+PxD6JointDrive_new :: () -> PxD6JointDrive #foreign sys;
 
-phys_PxD6JointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxD6Joint #foreign physx_sys;
+PxD6JointDrive_new :: (driveStiffness: float, driveDamping: float, driveForceLimit: float, isAcceleration: bool) -> PxD6JointDrive #foreign sys "PxD6JointDrive_new_1";
 
-PxD6JointDrive_new :: () -> physx_PxD6JointDrive #foreign physx_sys;
+PxD6JointDrive_isValid :: (self: *PxD6JointDrive) -> bool #foreign sys;
 
-PxD6JointDrive_new_1 :: (driveStiffness: float, driveDamping: float, driveForceLimit: float, isAcceleration: bool) -> physx_PxD6JointDrive #foreign physx_sys;
+PxD6Joint_setMotion :: (self: *PxD6Joint, axis: s32, type: s32) -> void #foreign sys "PxD6Joint_setMotion_mut";
 
-PxD6JointDrive_isValid :: (self: *physx_PxD6JointDrive) -> bool #foreign physx_sys;
+PxD6Joint_getMotion :: (self: *PxD6Joint, axis: s32) -> s32 #foreign sys;
 
-PxD6Joint_setMotion :: (self: *physx_PxD6Joint, axis: s32, type: s32) -> void #foreign physx_sys "PxD6Joint_setMotion_mut";
+PxD6Joint_getTwistAngle :: (self: *PxD6Joint) -> float #foreign sys;
 
-PxD6Joint_getMotion :: (self: *physx_PxD6Joint, axis: s32) -> s32 #foreign physx_sys;
+PxD6Joint_getSwingYAngle :: (self: *PxD6Joint) -> float #foreign sys;
 
-PxD6Joint_getTwistAngle :: (self: *physx_PxD6Joint) -> float #foreign physx_sys;
+PxD6Joint_getSwingZAngle :: (self: *PxD6Joint) -> float #foreign sys;
 
-PxD6Joint_getSwingYAngle :: (self: *physx_PxD6Joint) -> float #foreign physx_sys;
+PxD6Joint_setDistanceLimit :: (self: *PxD6Joint, limit: *PxJointLinearLimit) -> void #foreign sys "PxD6Joint_setDistanceLimit_mut";
 
-PxD6Joint_getSwingZAngle :: (self: *physx_PxD6Joint) -> float #foreign physx_sys;
+PxD6Joint_getDistanceLimit :: (self: *PxD6Joint) -> PxJointLinearLimit #foreign sys;
 
-PxD6Joint_setDistanceLimit :: (self: *physx_PxD6Joint, limit: *physx_PxJointLinearLimit) -> void #foreign physx_sys "PxD6Joint_setDistanceLimit_mut";
+PxD6Joint_setLinearLimit :: (self: *PxD6Joint, axis: s32, limit: *PxJointLinearLimitPair) -> void #foreign sys "PxD6Joint_setLinearLimit_mut";
 
-PxD6Joint_getDistanceLimit :: (self: *physx_PxD6Joint) -> physx_PxJointLinearLimit #foreign physx_sys;
+PxD6Joint_getLinearLimit :: (self: *PxD6Joint, axis: s32) -> PxJointLinearLimitPair #foreign sys;
 
-PxD6Joint_setLinearLimit :: (self: *physx_PxD6Joint, axis: s32, limit: *physx_PxJointLinearLimitPair) -> void #foreign physx_sys "PxD6Joint_setLinearLimit_mut";
+PxD6Joint_setTwistLimit :: (self: *PxD6Joint, limit: *PxJointAngularLimitPair) -> void #foreign sys "PxD6Joint_setTwistLimit_mut";
 
-PxD6Joint_getLinearLimit :: (self: *physx_PxD6Joint, axis: s32) -> physx_PxJointLinearLimitPair #foreign physx_sys;
+PxD6Joint_getTwistLimit :: (self: *PxD6Joint) -> PxJointAngularLimitPair #foreign sys;
 
-PxD6Joint_setTwistLimit :: (self: *physx_PxD6Joint, limit: *physx_PxJointAngularLimitPair) -> void #foreign physx_sys "PxD6Joint_setTwistLimit_mut";
+PxD6Joint_setSwingLimit :: (self: *PxD6Joint, limit: *PxJointLimitCone) -> void #foreign sys "PxD6Joint_setSwingLimit_mut";
 
-PxD6Joint_getTwistLimit :: (self: *physx_PxD6Joint) -> physx_PxJointAngularLimitPair #foreign physx_sys;
+PxD6Joint_getSwingLimit :: (self: *PxD6Joint) -> PxJointLimitCone #foreign sys;
 
-PxD6Joint_setSwingLimit :: (self: *physx_PxD6Joint, limit: *physx_PxJointLimitCone) -> void #foreign physx_sys "PxD6Joint_setSwingLimit_mut";
+PxD6Joint_setPyramidSwingLimit :: (self: *PxD6Joint, limit: *PxJointLimitPyramid) -> void #foreign sys "PxD6Joint_setPyramidSwingLimit_mut";
 
-PxD6Joint_getSwingLimit :: (self: *physx_PxD6Joint) -> physx_PxJointLimitCone #foreign physx_sys;
+PxD6Joint_getPyramidSwingLimit :: (self: *PxD6Joint) -> PxJointLimitPyramid #foreign sys;
 
-PxD6Joint_setPyramidSwingLimit :: (self: *physx_PxD6Joint, limit: *physx_PxJointLimitPyramid) -> void #foreign physx_sys "PxD6Joint_setPyramidSwingLimit_mut";
+PxD6Joint_setDrive :: (self: *PxD6Joint, index: s32, drive: *PxD6JointDrive) -> void #foreign sys "PxD6Joint_setDrive_mut";
 
-PxD6Joint_getPyramidSwingLimit :: (self: *physx_PxD6Joint) -> physx_PxJointLimitPyramid #foreign physx_sys;
+PxD6Joint_getDrive :: (self: *PxD6Joint, index: s32) -> PxD6JointDrive #foreign sys;
 
-PxD6Joint_setDrive :: (self: *physx_PxD6Joint, index: s32, drive: *physx_PxD6JointDrive) -> void #foreign physx_sys "PxD6Joint_setDrive_mut";
+PxD6Joint_setDrivePosition :: (self: *PxD6Joint, pose: *PxTransform, autowake: bool) -> void #foreign sys "PxD6Joint_setDrivePosition_mut";
 
-PxD6Joint_getDrive :: (self: *physx_PxD6Joint, index: s32) -> physx_PxD6JointDrive #foreign physx_sys;
+PxD6Joint_getDrivePosition :: (self: *PxD6Joint) -> PxTransform #foreign sys;
 
-PxD6Joint_setDrivePosition :: (self: *physx_PxD6Joint, pose: *physx_PxTransform, autowake: bool) -> void #foreign physx_sys "PxD6Joint_setDrivePosition_mut";
+PxD6Joint_setDriveVelocity :: (self: *PxD6Joint, linear: *Vector3, angular: *Vector3, autowake: bool) -> void #foreign sys "PxD6Joint_setDriveVelocity_mut";
 
-PxD6Joint_getDrivePosition :: (self: *physx_PxD6Joint) -> physx_PxTransform #foreign physx_sys;
+PxD6Joint_getDriveVelocity :: (self: *PxD6Joint, linear: *Vector3, angular: *Vector3) -> void #foreign sys;
 
-PxD6Joint_setDriveVelocity :: (self: *physx_PxD6Joint, linear: *Vector3, angular: *Vector3, autowake: bool) -> void #foreign physx_sys "PxD6Joint_setDriveVelocity_mut";
+PxD6Joint_setProjectionLinearTolerance :: (self: *PxD6Joint, tolerance: float) -> void #foreign sys "PxD6Joint_setProjectionLinearTolerance_mut";
 
-PxD6Joint_getDriveVelocity :: (self: *physx_PxD6Joint, linear: *Vector3, angular: *Vector3) -> void #foreign physx_sys;
+PxD6Joint_getProjectionLinearTolerance :: (self: *PxD6Joint) -> float #foreign sys;
 
-PxD6Joint_setProjectionLinearTolerance :: (self: *physx_PxD6Joint, tolerance: float) -> void #foreign physx_sys "PxD6Joint_setProjectionLinearTolerance_mut";
+PxD6Joint_setProjectionAngularTolerance :: (self: *PxD6Joint, tolerance: float) -> void #foreign sys "PxD6Joint_setProjectionAngularTolerance_mut";
 
-PxD6Joint_getProjectionLinearTolerance :: (self: *physx_PxD6Joint) -> float #foreign physx_sys;
+PxD6Joint_getProjectionAngularTolerance :: (self: *PxD6Joint) -> float #foreign sys;
 
-PxD6Joint_setProjectionAngularTolerance :: (self: *physx_PxD6Joint, tolerance: float) -> void #foreign physx_sys "PxD6Joint_setProjectionAngularTolerance_mut";
+PxD6Joint_getConcreteTypeName :: (self: *PxD6Joint) -> *u8 #foreign sys;
 
-PxD6Joint_getProjectionAngularTolerance :: (self: *physx_PxD6Joint) -> float #foreign physx_sys;
+PxGearJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxGearJoint #foreign sys "phys_PxGearJointCreate";
 
-PxD6Joint_getConcreteTypeName :: (self: *physx_PxD6Joint) -> *u8 #foreign physx_sys;
+PxGearJoint_setHinges :: (self: *PxGearJoint, hinge0: *PxBase, hinge1: *PxBase) -> bool #foreign sys "PxGearJoint_setHinges_mut";
 
-phys_PxGearJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxGearJoint #foreign physx_sys;
+PxGearJoint_setGearRatio :: (self: *PxGearJoint, ratio: float) -> void #foreign sys "PxGearJoint_setGearRatio_mut";
 
-PxGearJoint_setHinges :: (self: *physx_PxGearJoint, hinge0: *physx_PxBase, hinge1: *physx_PxBase) -> bool #foreign physx_sys "PxGearJoint_setHinges_mut";
+PxGearJoint_getGearRatio :: (self: *PxGearJoint) -> float #foreign sys;
 
-PxGearJoint_setGearRatio :: (self: *physx_PxGearJoint, ratio: float) -> void #foreign physx_sys "PxGearJoint_setGearRatio_mut";
+PxGearJoint_getConcreteTypeName :: (self: *PxGearJoint) -> *u8 #foreign sys;
 
-PxGearJoint_getGearRatio :: (self: *physx_PxGearJoint) -> float #foreign physx_sys;
+PxRackAndPinionJointCreate :: (physics: *PxPhysics, actor0: *PxRigidActor, localFrame0: *PxTransform, actor1: *PxRigidActor, localFrame1: *PxTransform) -> *PxRackAndPinionJoint #foreign sys "phys_PxRackAndPinionJointCreate";
 
-PxGearJoint_getConcreteTypeName :: (self: *physx_PxGearJoint) -> *u8 #foreign physx_sys;
+PxRackAndPinionJoint_setJoints :: (self: *PxRackAndPinionJoint, hinge: *PxBase, prismatic: *PxBase) -> bool #foreign sys "PxRackAndPinionJoint_setJoints_mut";
 
-phys_PxRackAndPinionJointCreate :: (physics: *physx_PxPhysics, actor0: *physx_PxRigidActor, localFrame0: *physx_PxTransform, actor1: *physx_PxRigidActor, localFrame1: *physx_PxTransform) -> *physx_PxRackAndPinionJoint #foreign physx_sys;
+PxRackAndPinionJoint_setRatio :: (self: *PxRackAndPinionJoint, ratio: float) -> void #foreign sys "PxRackAndPinionJoint_setRatio_mut";
 
-PxRackAndPinionJoint_setJoints :: (self: *physx_PxRackAndPinionJoint, hinge: *physx_PxBase, prismatic: *physx_PxBase) -> bool #foreign physx_sys "PxRackAndPinionJoint_setJoints_mut";
+PxRackAndPinionJoint_getRatio :: (self: *PxRackAndPinionJoint) -> float #foreign sys;
 
-PxRackAndPinionJoint_setRatio :: (self: *physx_PxRackAndPinionJoint, ratio: float) -> void #foreign physx_sys "PxRackAndPinionJoint_setRatio_mut";
+PxRackAndPinionJoint_setData :: (self: *PxRackAndPinionJoint, nbRackTeeth: u32, nbPinionTeeth: u32, rackLength: float) -> bool #foreign sys "PxRackAndPinionJoint_setData_mut";
 
-PxRackAndPinionJoint_getRatio :: (self: *physx_PxRackAndPinionJoint) -> float #foreign physx_sys;
+PxRackAndPinionJoint_getConcreteTypeName :: (self: *PxRackAndPinionJoint) -> *u8 #foreign sys;
 
-PxRackAndPinionJoint_setData :: (self: *physx_PxRackAndPinionJoint, nbRackTeeth: u32, nbPinionTeeth: u32, rackLength: float) -> bool #foreign physx_sys "PxRackAndPinionJoint_setData_mut";
+PxGroupsMask_new_alloc :: () -> *PxGroupsMask #foreign sys;
 
-PxRackAndPinionJoint_getConcreteTypeName :: (self: *physx_PxRackAndPinionJoint) -> *u8 #foreign physx_sys;
+PxGroupsMask_delete :: (self: *PxGroupsMask) -> void #foreign sys;
 
-PxGroupsMask_new_alloc :: () -> *physx_PxGroupsMask #foreign physx_sys;
+PxDefaultSimulationFilterShader :: (attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, pairFlags: *u16, constantBlock: *void, constantBlockSize: u32) -> u16 #foreign sys "phys_PxDefaultSimulationFilterShader";
 
-PxGroupsMask_delete :: (self: *physx_PxGroupsMask) -> void #foreign physx_sys;
+PxGetGroupCollisionFlag :: (group1: u16, group2: u16) -> bool #foreign sys "phys_PxGetGroupCollisionFlag";
 
-phys_PxDefaultSimulationFilterShader :: (attributes0: u32, filterData0: physx_PxFilterData, attributes1: u32, filterData1: physx_PxFilterData, pairFlags: *u16, constantBlock: *void, constantBlockSize: u32) -> u16 #foreign physx_sys;
+PxSetGroupCollisionFlag :: (group1: u16, group2: u16, enable: bool) -> void #foreign sys "phys_PxSetGroupCollisionFlag";
 
-phys_PxGetGroupCollisionFlag :: (group1: u16, group2: u16) -> bool #foreign physx_sys;
+PxGetGroup :: (actor: *PxActor) -> u16 #foreign sys "phys_PxGetGroup";
 
-phys_PxSetGroupCollisionFlag :: (group1: u16, group2: u16, enable: bool) -> void #foreign physx_sys;
+PxSetGroup :: (actor: *PxActor, collisionGroup: u16) -> void #foreign sys "phys_PxSetGroup";
 
-phys_PxGetGroup :: (actor: *physx_PxActor) -> u16 #foreign physx_sys;
+PxGetFilterOps :: (op0: *s32, op1: *s32, op2: *s32) -> void #foreign sys "phys_PxGetFilterOps";
 
-phys_PxSetGroup :: (actor: *physx_PxActor, collisionGroup: u16) -> void #foreign physx_sys;
+PxSetFilterOps :: (op0: *s32, op1: *s32, op2: *s32) -> void #foreign sys "phys_PxSetFilterOps";
 
-phys_PxGetFilterOps :: (op0: *s32, op1: *s32, op2: *s32) -> void #foreign physx_sys;
+PxGetFilterBool :: () -> bool #foreign sys "phys_PxGetFilterBool";
 
-phys_PxSetFilterOps :: (op0: *s32, op1: *s32, op2: *s32) -> void #foreign physx_sys;
+PxSetFilterBool :: (enable: bool) -> void #foreign sys "phys_PxSetFilterBool";
 
-phys_PxGetFilterBool :: () -> bool #foreign physx_sys;
+PxGetFilterConstants :: (c0: *PxGroupsMask, c1: *PxGroupsMask) -> void #foreign sys "phys_PxGetFilterConstants";
 
-phys_PxSetFilterBool :: (enable: bool) -> void #foreign physx_sys;
+PxSetFilterConstants :: (c0: *PxGroupsMask, c1: *PxGroupsMask) -> void #foreign sys "phys_PxSetFilterConstants";
 
-phys_PxGetFilterConstants :: (c0: *physx_PxGroupsMask, c1: *physx_PxGroupsMask) -> void #foreign physx_sys;
+PxGetGroupsMask :: (actor: *PxActor) -> PxGroupsMask #foreign sys "phys_PxGetGroupsMask";
 
-phys_PxSetFilterConstants :: (c0: *physx_PxGroupsMask, c1: *physx_PxGroupsMask) -> void #foreign physx_sys;
+PxSetGroupsMask :: (actor: *PxActor, mask: *PxGroupsMask) -> void #foreign sys "phys_PxSetGroupsMask";
 
-phys_PxGetGroupsMask :: (actor: *physx_PxActor) -> physx_PxGroupsMask #foreign physx_sys;
+PxDefaultErrorCallback_new_alloc :: () -> *PxDefaultErrorCallback #foreign sys;
 
-phys_PxSetGroupsMask :: (actor: *physx_PxActor, mask: *physx_PxGroupsMask) -> void #foreign physx_sys;
+PxDefaultErrorCallback_delete :: (self: *PxDefaultErrorCallback) -> void #foreign sys;
 
-PxDefaultErrorCallback_new_alloc :: () -> *physx_PxDefaultErrorCallback #foreign physx_sys;
+PxDefaultErrorCallback_reportError :: (self: *PxDefaultErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign sys "PxDefaultErrorCallback_reportError_mut";
 
-PxDefaultErrorCallback_delete :: (self: *physx_PxDefaultErrorCallback) -> void #foreign physx_sys;
+PxRigidActorExt_createExclusiveShape :: (actor: *PxRigidActor, geometry: *PxGeometry, materials: **PxMaterial, materialCount: u16, shapeFlags: u8) -> *PxShape #foreign sys;
 
-PxDefaultErrorCallback_reportError :: (self: *physx_PxDefaultErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign physx_sys "PxDefaultErrorCallback_reportError_mut";
+PxRigidActorExt_createExclusiveShape :: (actor: *PxRigidActor, geometry: *PxGeometry, material: *PxMaterial, shapeFlags: u8) -> *PxShape #foreign sys "PxRigidActorExt_createExclusiveShape_1";
 
-PxRigidActorExt_createExclusiveShape :: (actor: *physx_PxRigidActor, geometry: *physx_PxGeometry, materials: **physx_PxMaterial, materialCount: u16, shapeFlags: u8) -> *physx_PxShape #foreign physx_sys;
+PxRigidActorExt_getRigidActorShapeLocalBoundsList :: (actor: *PxRigidActor, numBounds: *u32) -> *PxBounds3 #foreign sys;
 
-PxRigidActorExt_createExclusiveShape_1 :: (actor: *physx_PxRigidActor, geometry: *physx_PxGeometry, material: *physx_PxMaterial, shapeFlags: u8) -> *physx_PxShape #foreign physx_sys;
+PxRigidActorExt_createBVHFromActor :: (physics: *PxPhysics, actor: *PxRigidActor) -> *PxBVH #foreign sys;
 
-PxRigidActorExt_getRigidActorShapeLocalBoundsList :: (actor: *physx_PxRigidActor, numBounds: *u32) -> *physx_PxBounds3 #foreign physx_sys;
+PxMassProperties_new :: () -> PxMassProperties #foreign sys;
 
-PxRigidActorExt_createBVHFromActor :: (physics: *physx_PxPhysics, actor: *physx_PxRigidActor) -> *physx_PxBVH #foreign physx_sys;
+PxMassProperties_new :: (m: float, inertiaT: *PxMat33, com: *Vector3) -> PxMassProperties #foreign sys "PxMassProperties_new_1";
 
-PxMassProperties_new :: () -> physx_PxMassProperties #foreign physx_sys;
+PxMassProperties_new :: (geometry: *PxGeometry) -> PxMassProperties #foreign sys "PxMassProperties_new_2";
 
-PxMassProperties_new_1 :: (m: float, inertiaT: *physx_PxMat33, com: *Vector3) -> physx_PxMassProperties #foreign physx_sys;
+PxMassProperties_translate :: (self: *PxMassProperties, t: *Vector3) -> void #foreign sys "PxMassProperties_translate_mut";
 
-PxMassProperties_new_2 :: (geometry: *physx_PxGeometry) -> physx_PxMassProperties #foreign physx_sys;
+PxMassProperties_getMassSpaceInertia :: (inertia: *PxMat33, massFrame: *Quaternion) -> Vector3 #foreign sys;
 
-PxMassProperties_translate :: (self: *physx_PxMassProperties, t: *Vector3) -> void #foreign physx_sys "PxMassProperties_translate_mut";
+PxMassProperties_translateInertia :: (inertia: *PxMat33, mass: float, t: *Vector3) -> PxMat33 #foreign sys;
 
-PxMassProperties_getMassSpaceInertia :: (inertia: *physx_PxMat33, massFrame: *Quaternion) -> Vector3 #foreign physx_sys;
+PxMassProperties_rotateInertia :: (inertia: *PxMat33, q: *Quaternion) -> PxMat33 #foreign sys;
 
-PxMassProperties_translateInertia :: (inertia: *physx_PxMat33, mass: float, t: *Vector3) -> physx_PxMat33 #foreign physx_sys;
+PxMassProperties_scaleInertia :: (inertia: *PxMat33, scaleRotation: *Quaternion, scale: *Vector3) -> PxMat33 #foreign sys;
 
-PxMassProperties_rotateInertia :: (inertia: *physx_PxMat33, q: *Quaternion) -> physx_PxMat33 #foreign physx_sys;
+PxMassProperties_sum :: (props: *PxMassProperties, transforms: *PxTransform, count: u32) -> PxMassProperties #foreign sys;
 
-PxMassProperties_scaleInertia :: (inertia: *physx_PxMat33, scaleRotation: *Quaternion, scale: *Vector3) -> physx_PxMat33 #foreign physx_sys;
+PxRigidBodyExt_updateMassAndInertia :: (body: *PxRigidBody, shapeDensities: *float, shapeDensityCount: u32, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign sys;
 
-PxMassProperties_sum :: (props: *physx_PxMassProperties, transforms: *physx_PxTransform, count: u32) -> physx_PxMassProperties #foreign physx_sys;
+PxRigidBodyExt_updateMassAndInertia :: (body: *PxRigidBody, density: float, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign sys "PxRigidBodyExt_updateMassAndInertia_1";
 
-PxRigidBodyExt_updateMassAndInertia :: (body: *physx_PxRigidBody, shapeDensities: *float, shapeDensityCount: u32, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign physx_sys;
+PxRigidBodyExt_setMassAndUpdateInertia :: (body: *PxRigidBody, shapeMasses: *float, shapeMassCount: u32, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign sys;
 
-PxRigidBodyExt_updateMassAndInertia_1 :: (body: *physx_PxRigidBody, density: float, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign physx_sys;
+PxRigidBodyExt_setMassAndUpdateInertia :: (body: *PxRigidBody, mass: float, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign sys "PxRigidBodyExt_setMassAndUpdateInertia_1";
 
-PxRigidBodyExt_setMassAndUpdateInertia :: (body: *physx_PxRigidBody, shapeMasses: *float, shapeMassCount: u32, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign physx_sys;
+PxRigidBodyExt_computeMassPropertiesFromShapes :: (shapes: **PxShape, shapeCount: u32) -> PxMassProperties #foreign sys;
 
-PxRigidBodyExt_setMassAndUpdateInertia_1 :: (body: *physx_PxRigidBody, mass: float, massLocalPose: *Vector3, includeNonSimShapes: bool) -> bool #foreign physx_sys;
+PxRigidBodyExt_addForceAtPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign sys;
 
-PxRigidBodyExt_computeMassPropertiesFromShapes :: (shapes: **physx_PxShape, shapeCount: u32) -> physx_PxMassProperties #foreign physx_sys;
+PxRigidBodyExt_addForceAtLocalPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign sys;
 
-PxRigidBodyExt_addForceAtPos :: (body: *physx_PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx_sys;
+PxRigidBodyExt_addLocalForceAtPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign sys;
 
-PxRigidBodyExt_addForceAtLocalPos :: (body: *physx_PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx_sys;
+PxRigidBodyExt_addLocalForceAtLocalPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign sys;
 
-PxRigidBodyExt_addLocalForceAtPos :: (body: *physx_PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx_sys;
+PxRigidBodyExt_getVelocityAtPos :: (body: *PxRigidBody, pos: *Vector3) -> Vector3 #foreign sys;
 
-PxRigidBodyExt_addLocalForceAtLocalPos :: (body: *physx_PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx_sys;
+PxRigidBodyExt_getLocalVelocityAtLocalPos :: (body: *PxRigidBody, pos: *Vector3) -> Vector3 #foreign sys;
 
-PxRigidBodyExt_getVelocityAtPos :: (body: *physx_PxRigidBody, pos: *Vector3) -> Vector3 #foreign physx_sys;
+PxRigidBodyExt_getVelocityAtOffset :: (body: *PxRigidBody, pos: *Vector3) -> Vector3 #foreign sys;
 
-PxRigidBodyExt_getLocalVelocityAtLocalPos :: (body: *physx_PxRigidBody, pos: *Vector3) -> Vector3 #foreign physx_sys;
+PxRigidBodyExt_computeVelocityDeltaFromImpulse :: (body: *PxRigidBody, impulsiveForce: *Vector3, impulsiveTorque: *Vector3, deltaLinearVelocity: *Vector3, deltaAngularVelocity: *Vector3) -> void #foreign sys;
 
-PxRigidBodyExt_getVelocityAtOffset :: (body: *physx_PxRigidBody, pos: *Vector3) -> Vector3 #foreign physx_sys;
+PxRigidBodyExt_computeVelocityDeltaFromImpulse :: (body: *PxRigidBody, globalPose: *PxTransform, point: *Vector3, impulse: *Vector3, invMassScale: float, invInertiaScale: float, deltaLinearVelocity: *Vector3, deltaAngularVelocity: *Vector3) -> void #foreign sys "PxRigidBodyExt_computeVelocityDeltaFromImpulse_1";
 
-PxRigidBodyExt_computeVelocityDeltaFromImpulse :: (body: *physx_PxRigidBody, impulsiveForce: *Vector3, impulsiveTorque: *Vector3, deltaLinearVelocity: *Vector3, deltaAngularVelocity: *Vector3) -> void #foreign physx_sys;
+PxRigidBodyExt_computeLinearAngularImpulse :: (body: *PxRigidBody, globalPose: *PxTransform, point: *Vector3, impulse: *Vector3, invMassScale: float, invInertiaScale: float, linearImpulse: *Vector3, angularImpulse: *Vector3) -> void #foreign sys;
 
-PxRigidBodyExt_computeVelocityDeltaFromImpulse_1 :: (body: *physx_PxRigidBody, globalPose: *physx_PxTransform, point: *Vector3, impulse: *Vector3, invMassScale: float, invInertiaScale: float, deltaLinearVelocity: *Vector3, deltaAngularVelocity: *Vector3) -> void #foreign physx_sys;
+PxRigidBodyExt_linearSweepSingle :: (body: *PxRigidBody, scene: *PxScene, unitDir: *Vector3, distance: float, outputFlags: u16, closestHit: *PxSweepHit, shapeIndex: *u32, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign sys;
 
-PxRigidBodyExt_computeLinearAngularImpulse :: (body: *physx_PxRigidBody, globalPose: *physx_PxTransform, point: *Vector3, impulse: *Vector3, invMassScale: float, invInertiaScale: float, linearImpulse: *Vector3, angularImpulse: *Vector3) -> void #foreign physx_sys;
+PxRigidBodyExt_linearSweepMultiple :: (body: *PxRigidBody, scene: *PxScene, unitDir: *Vector3, distance: float, outputFlags: u16, touchHitBuffer: *PxSweepHit, touchHitShapeIndices: *u32, touchHitBufferSize: u32, block: *PxSweepHit, blockingShapeIndex: *s32, overflow: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> u32 #foreign sys;
 
-PxRigidBodyExt_linearSweepSingle :: (body: *physx_PxRigidBody, scene: *physx_PxScene, unitDir: *Vector3, distance: float, outputFlags: u16, closestHit: *physx_PxSweepHit, shapeIndex: *u32, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, inflation: float) -> bool #foreign physx_sys;
+PxShapeExt_getGlobalPose :: (shape: *PxShape, actor: *PxRigidActor) -> PxTransform #foreign sys;
 
-PxRigidBodyExt_linearSweepMultiple :: (body: *physx_PxRigidBody, scene: *physx_PxScene, unitDir: *Vector3, distance: float, outputFlags: u16, touchHitBuffer: *physx_PxSweepHit, touchHitShapeIndices: *u32, touchHitBufferSize: u32, block: *physx_PxSweepHit, blockingShapeIndex: *s32, overflow: *bool, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, inflation: float) -> u32 #foreign physx_sys;
+PxShapeExt_raycast :: (shape: *PxShape, actor: *PxRigidActor, rayOrigin: *Vector3, rayDir: *Vector3, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *PxRaycastHit) -> u32 #foreign sys;
 
-PxShapeExt_getGlobalPose :: (shape: *physx_PxShape, actor: *physx_PxRigidActor) -> physx_PxTransform #foreign physx_sys;
+PxShapeExt_overlap :: (shape: *PxShape, actor: *PxRigidActor, otherGeom: *PxGeometry, otherGeomPose: *PxTransform) -> bool #foreign sys;
 
-PxShapeExt_raycast :: (shape: *physx_PxShape, actor: *physx_PxRigidActor, rayOrigin: *Vector3, rayDir: *Vector3, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *physx_PxRaycastHit) -> u32 #foreign physx_sys;
+PxShapeExt_sweep :: (shape: *PxShape, actor: *PxRigidActor, unitDir: *Vector3, distance: float, otherGeom: *PxGeometry, otherGeomPose: *PxTransform, sweepHit: *PxSweepHit, hitFlags: u16) -> bool #foreign sys;
 
-PxShapeExt_overlap :: (shape: *physx_PxShape, actor: *physx_PxRigidActor, otherGeom: *physx_PxGeometry, otherGeomPose: *physx_PxTransform) -> bool #foreign physx_sys;
+PxShapeExt_getWorldBounds :: (shape: *PxShape, actor: *PxRigidActor, inflation: float) -> PxBounds3 #foreign sys;
 
-PxShapeExt_sweep :: (shape: *physx_PxShape, actor: *physx_PxRigidActor, unitDir: *Vector3, distance: float, otherGeom: *physx_PxGeometry, otherGeomPose: *physx_PxTransform, sweepHit: *physx_PxSweepHit, hitFlags: u16) -> bool #foreign physx_sys;
+PxMeshOverlapUtil_new_alloc :: () -> *PxMeshOverlapUtil #foreign sys;
 
-PxShapeExt_getWorldBounds :: (shape: *physx_PxShape, actor: *physx_PxRigidActor, inflation: float) -> physx_PxBounds3 #foreign physx_sys;
+PxMeshOverlapUtil_delete :: (self: *PxMeshOverlapUtil) -> void #foreign sys;
 
-PxMeshOverlapUtil_new_alloc :: () -> *physx_PxMeshOverlapUtil #foreign physx_sys;
+PxMeshOverlapUtil_findOverlap :: (self: *PxMeshOverlapUtil, geom: *PxGeometry, geomPose: *PxTransform, meshGeom: *PxTriangleMeshGeometry, meshPose: *PxTransform) -> u32 #foreign sys "PxMeshOverlapUtil_findOverlap_mut";
 
-PxMeshOverlapUtil_delete :: (self: *physx_PxMeshOverlapUtil) -> void #foreign physx_sys;
+PxMeshOverlapUtil_findOverlap_mut :: (self: *PxMeshOverlapUtil, geom: *PxGeometry, geomPose: *PxTransform, hfGeom: *PxHeightFieldGeometry, hfPose: *PxTransform) -> u32 #foreign sys "PxMeshOverlapUtil_findOverlap_mut_1";
 
-PxMeshOverlapUtil_findOverlap :: (self: *physx_PxMeshOverlapUtil, geom: *physx_PxGeometry, geomPose: *physx_PxTransform, meshGeom: *physx_PxTriangleMeshGeometry, meshPose: *physx_PxTransform) -> u32 #foreign physx_sys "PxMeshOverlapUtil_findOverlap_mut";
+PxMeshOverlapUtil_getResults :: (self: *PxMeshOverlapUtil) -> *u32 #foreign sys;
 
-PxMeshOverlapUtil_findOverlap :: (self: *physx_PxMeshOverlapUtil, geom: *physx_PxGeometry, geomPose: *physx_PxTransform, hfGeom: *physx_PxHeightFieldGeometry, hfPose: *physx_PxTransform) -> u32 #foreign physx_sys "PxMeshOverlapUtil_findOverlap_mut_1";
+PxMeshOverlapUtil_getNbResults :: (self: *PxMeshOverlapUtil) -> u32 #foreign sys;
 
-PxMeshOverlapUtil_getResults :: (self: *physx_PxMeshOverlapUtil) -> *u32 #foreign physx_sys;
+PxComputeTriangleMeshPenetration :: (direction: *Vector3, depth: *float, geom: *PxGeometry, geomPose: *PxTransform, meshGeom: *PxTriangleMeshGeometry, meshPose: *PxTransform, maxIter: u32, usedIter: *u32) -> bool #foreign sys "phys_PxComputeTriangleMeshPenetration";
 
-PxMeshOverlapUtil_getNbResults :: (self: *physx_PxMeshOverlapUtil) -> u32 #foreign physx_sys;
+PxComputeHeightFieldPenetration :: (direction: *Vector3, depth: *float, geom: *PxGeometry, geomPose: *PxTransform, heightFieldGeom: *PxHeightFieldGeometry, heightFieldPose: *PxTransform, maxIter: u32, usedIter: *u32) -> bool #foreign sys "phys_PxComputeHeightFieldPenetration";
 
-phys_PxComputeTriangleMeshPenetration :: (direction: *Vector3, depth: *float, geom: *physx_PxGeometry, geomPose: *physx_PxTransform, meshGeom: *physx_PxTriangleMeshGeometry, meshPose: *physx_PxTransform, maxIter: u32, usedIter: *u32) -> bool #foreign physx_sys;
+PxXmlMiscParameter_new :: () -> PxXmlMiscParameter #foreign sys;
 
-phys_PxComputeHeightFieldPenetration :: (direction: *Vector3, depth: *float, geom: *physx_PxGeometry, geomPose: *physx_PxTransform, heightFieldGeom: *physx_PxHeightFieldGeometry, heightFieldPose: *physx_PxTransform, maxIter: u32, usedIter: *u32) -> bool #foreign physx_sys;
+PxXmlMiscParameter_new :: (inUpVector: *Vector3, inScale: PxTolerancesScale) -> PxXmlMiscParameter #foreign sys "PxXmlMiscParameter_new_1";
 
-PxXmlMiscParameter_new :: () -> physx_PxXmlMiscParameter #foreign physx_sys;
+PxSerialization_isSerializable :: (collection: *PxCollection, sr: *PxSerializationRegistry, externalReferences: *PxCollection) -> bool #foreign sys;
 
-PxXmlMiscParameter_new_1 :: (inUpVector: *Vector3, inScale: physx_PxTolerancesScale) -> physx_PxXmlMiscParameter #foreign physx_sys;
+PxSerialization_complete :: (collection: *PxCollection, sr: *PxSerializationRegistry, exceptFor: *PxCollection, followJoints: bool) -> void #foreign sys;
 
-PxSerialization_isSerializable :: (collection: *physx_PxCollection, sr: *physx_PxSerializationRegistry, externalReferences: *physx_PxCollection) -> bool #foreign physx_sys;
+PxSerialization_createSerialObjectIds :: (collection: *PxCollection, base: u64) -> void #foreign sys;
 
-PxSerialization_complete :: (collection: *physx_PxCollection, sr: *physx_PxSerializationRegistry, exceptFor: *physx_PxCollection, followJoints: bool) -> void #foreign physx_sys;
+PxSerialization_createCollectionFromXml :: (inputData: *PxInputData, cooking: *PxCooking, sr: *PxSerializationRegistry, externalRefs: *PxCollection, stringTable: *PxStringTable, outArgs: *PxXmlMiscParameter) -> *PxCollection #foreign sys;
 
-PxSerialization_createSerialObjectIds :: (collection: *physx_PxCollection, base: u64) -> void #foreign physx_sys;
+PxSerialization_createCollectionFromBinary :: (memBlock: *void, sr: *PxSerializationRegistry, externalRefs: *PxCollection) -> *PxCollection #foreign sys;
 
-PxSerialization_createCollectionFromXml :: (inputData: *physx_PxInputData, cooking: *physx_PxCooking, sr: *physx_PxSerializationRegistry, externalRefs: *physx_PxCollection, stringTable: *physx_PxStringTable, outArgs: *physx_PxXmlMiscParameter) -> *physx_PxCollection #foreign physx_sys;
+PxSerialization_serializeCollectionToXml :: (outputStream: *PxOutputStream, collection: *PxCollection, sr: *PxSerializationRegistry, cooking: *PxCooking, externalRefs: *PxCollection, inArgs: *PxXmlMiscParameter) -> bool #foreign sys;
 
-PxSerialization_createCollectionFromBinary :: (memBlock: *void, sr: *physx_PxSerializationRegistry, externalRefs: *physx_PxCollection) -> *physx_PxCollection #foreign physx_sys;
+PxSerialization_serializeCollectionToBinary :: (outputStream: *PxOutputStream, collection: *PxCollection, sr: *PxSerializationRegistry, externalRefs: *PxCollection, exportNames: bool) -> bool #foreign sys;
 
-PxSerialization_serializeCollectionToXml :: (outputStream: *physx_PxOutputStream, collection: *physx_PxCollection, sr: *physx_PxSerializationRegistry, cooking: *physx_PxCooking, externalRefs: *physx_PxCollection, inArgs: *physx_PxXmlMiscParameter) -> bool #foreign physx_sys;
+PxSerialization_createSerializationRegistry :: (physics: *PxPhysics) -> *PxSerializationRegistry #foreign sys;
 
-PxSerialization_serializeCollectionToBinary :: (outputStream: *physx_PxOutputStream, collection: *physx_PxCollection, sr: *physx_PxSerializationRegistry, externalRefs: *physx_PxCollection, exportNames: bool) -> bool #foreign physx_sys;
+PxDefaultCpuDispatcher_release :: (self: *PxDefaultCpuDispatcher) -> void #foreign sys "PxDefaultCpuDispatcher_release_mut";
 
-PxSerialization_createSerializationRegistry :: (physics: *physx_PxPhysics) -> *physx_PxSerializationRegistry #foreign physx_sys;
+PxDefaultCpuDispatcher_setRunProfiled :: (self: *PxDefaultCpuDispatcher, runProfiled: bool) -> void #foreign sys "PxDefaultCpuDispatcher_setRunProfiled_mut";
 
-PxDefaultCpuDispatcher_release :: (self: *physx_PxDefaultCpuDispatcher) -> void #foreign physx_sys "PxDefaultCpuDispatcher_release_mut";
+PxDefaultCpuDispatcher_getRunProfiled :: (self: *PxDefaultCpuDispatcher) -> bool #foreign sys;
 
-PxDefaultCpuDispatcher_setRunProfiled :: (self: *physx_PxDefaultCpuDispatcher, runProfiled: bool) -> void #foreign physx_sys "PxDefaultCpuDispatcher_setRunProfiled_mut";
+PxDefaultCpuDispatcherCreate :: (numThreads: u32, affinityMasks: *u32, mode: s32, yieldProcessorCount: u32) -> *PxDefaultCpuDispatcher #foreign sys "phys_PxDefaultCpuDispatcherCreate";
 
-PxDefaultCpuDispatcher_getRunProfiled :: (self: *physx_PxDefaultCpuDispatcher) -> bool #foreign physx_sys;
+PxBuildSmoothNormals :: (nbTris: u32, nbVerts: u32, verts: *Vector3, dFaces: *u32, wFaces: *u16, normals: *Vector3, flip: bool) -> bool #foreign sys "phys_PxBuildSmoothNormals";
 
-phys_PxDefaultCpuDispatcherCreate :: (numThreads: u32, affinityMasks: *u32, mode: s32, yieldProcessorCount: u32) -> *physx_PxDefaultCpuDispatcher #foreign physx_sys;
+PxCreateDynamic :: (sdk: *PxPhysics, transform: *PxTransform, geometry: *PxGeometry, material: *PxMaterial, density: float, shapeOffset: *PxTransform) -> *PxRigidDynamic #foreign sys "phys_PxCreateDynamic";
 
-phys_PxBuildSmoothNormals :: (nbTris: u32, nbVerts: u32, verts: *Vector3, dFaces: *u32, wFaces: *u16, normals: *Vector3, flip: bool) -> bool #foreign physx_sys;
+PxCreateDynamic_1 :: (sdk: *PxPhysics, transform: *PxTransform, shape: *PxShape, density: float) -> *PxRigidDynamic #foreign sys "phys_PxCreateDynamic_1";
 
-phys_PxCreateDynamic :: (sdk: *physx_PxPhysics, transform: *physx_PxTransform, geometry: *physx_PxGeometry, material: *physx_PxMaterial, density: float, shapeOffset: *physx_PxTransform) -> *physx_PxRigidDynamic #foreign physx_sys;
+PxCreateKinematic :: (sdk: *PxPhysics, transform: *PxTransform, geometry: *PxGeometry, material: *PxMaterial, density: float, shapeOffset: *PxTransform) -> *PxRigidDynamic #foreign sys "phys_PxCreateKinematic";
 
-phys_PxCreateDynamic_1 :: (sdk: *physx_PxPhysics, transform: *physx_PxTransform, shape: *physx_PxShape, density: float) -> *physx_PxRigidDynamic #foreign physx_sys;
+PxCreateKinematic_1 :: (sdk: *PxPhysics, transform: *PxTransform, shape: *PxShape, density: float) -> *PxRigidDynamic #foreign sys "phys_PxCreateKinematic_1";
 
-phys_PxCreateKinematic :: (sdk: *physx_PxPhysics, transform: *physx_PxTransform, geometry: *physx_PxGeometry, material: *physx_PxMaterial, density: float, shapeOffset: *physx_PxTransform) -> *physx_PxRigidDynamic #foreign physx_sys;
+PxCreateStatic :: (sdk: *PxPhysics, transform: *PxTransform, geometry: *PxGeometry, material: *PxMaterial, shapeOffset: *PxTransform) -> *PxRigidStatic #foreign sys "phys_PxCreateStatic";
 
-phys_PxCreateKinematic_1 :: (sdk: *physx_PxPhysics, transform: *physx_PxTransform, shape: *physx_PxShape, density: float) -> *physx_PxRigidDynamic #foreign physx_sys;
+PxCreateStatic_1 :: (sdk: *PxPhysics, transform: *PxTransform, shape: *PxShape) -> *PxRigidStatic #foreign sys "phys_PxCreateStatic_1";
 
-phys_PxCreateStatic :: (sdk: *physx_PxPhysics, transform: *physx_PxTransform, geometry: *physx_PxGeometry, material: *physx_PxMaterial, shapeOffset: *physx_PxTransform) -> *physx_PxRigidStatic #foreign physx_sys;
+PxCloneShape :: (physicsSDK: *PxPhysics, shape: *PxShape, isExclusive: bool) -> *PxShape #foreign sys "phys_PxCloneShape";
 
-phys_PxCreateStatic_1 :: (sdk: *physx_PxPhysics, transform: *physx_PxTransform, shape: *physx_PxShape) -> *physx_PxRigidStatic #foreign physx_sys;
+PxCloneStatic :: (physicsSDK: *PxPhysics, transform: *PxTransform, actor: *PxRigidActor) -> *PxRigidStatic #foreign sys "phys_PxCloneStatic";
 
-phys_PxCloneShape :: (physicsSDK: *physx_PxPhysics, shape: *physx_PxShape, isExclusive: bool) -> *physx_PxShape #foreign physx_sys;
+PxCloneDynamic :: (physicsSDK: *PxPhysics, transform: *PxTransform, body: *PxRigidDynamic) -> *PxRigidDynamic #foreign sys "phys_PxCloneDynamic";
 
-phys_PxCloneStatic :: (physicsSDK: *physx_PxPhysics, transform: *physx_PxTransform, actor: *physx_PxRigidActor) -> *physx_PxRigidStatic #foreign physx_sys;
+PxCreatePlane :: (sdk: *PxPhysics, plane: *Plane3, material: *PxMaterial) -> *PxRigidStatic #foreign sys "phys_PxCreatePlane";
 
-phys_PxCloneDynamic :: (physicsSDK: *physx_PxPhysics, transform: *physx_PxTransform, body: *physx_PxRigidDynamic) -> *physx_PxRigidDynamic #foreign physx_sys;
+PxScaleRigidActor :: (actor: *PxRigidActor, scale: float, scaleMassProps: bool) -> void #foreign sys "phys_PxScaleRigidActor";
 
-phys_PxCreatePlane :: (sdk: *physx_PxPhysics, plane: *Plane3, material: *physx_PxMaterial) -> *physx_PxRigidStatic #foreign physx_sys;
+PxStringTableExt_createStringTable :: (inAllocator: *PxAllocatorCallback) -> *PxStringTable #foreign sys;
 
-phys_PxScaleRigidActor :: (actor: *physx_PxRigidActor, scale: float, scaleMassProps: bool) -> void #foreign physx_sys;
+PxBroadPhaseExt_createRegionsFromWorldBounds :: (regions: *PxBounds3, globalBounds: *PxBounds3, nbSubdiv: u32, upAxis: u32) -> u32 #foreign sys;
 
-PxStringTableExt_createStringTable :: (inAllocator: *physx_PxAllocatorCallback) -> *physx_PxStringTable #foreign physx_sys;
+PxSceneQueryExt_raycastAny :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, hit: *PxQueryHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> bool #foreign sys;
 
-PxBroadPhaseExt_createRegionsFromWorldBounds :: (regions: *physx_PxBounds3, globalBounds: *physx_PxBounds3, nbSubdiv: u32, upAxis: u32) -> u32 #foreign physx_sys;
+PxSceneQueryExt_raycastSingle :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: u16, hit: *PxRaycastHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> bool #foreign sys;
 
-PxSceneQueryExt_raycastAny :: (scene: *physx_PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, hit: *physx_PxQueryHit, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache) -> bool #foreign physx_sys;
+PxSceneQueryExt_raycastMultiple :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: u16, hitBuffer: *PxRaycastHit, hitBufferSize: u32, blockingHit: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> s32 #foreign sys;
 
-PxSceneQueryExt_raycastSingle :: (scene: *physx_PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: u16, hit: *physx_PxRaycastHit, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache) -> bool #foreign physx_sys;
+PxSceneQueryExt_sweepAny :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, queryFlags: u16, hit: *PxQueryHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign sys;
 
-PxSceneQueryExt_raycastMultiple :: (scene: *physx_PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: u16, hitBuffer: *physx_PxRaycastHit, hitBufferSize: u32, blockingHit: *bool, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache) -> s32 #foreign physx_sys;
+PxSceneQueryExt_sweepSingle :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, outputFlags: u16, hit: *PxSweepHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign sys;
 
-PxSceneQueryExt_sweepAny :: (scene: *physx_PxScene, geometry: *physx_PxGeometry, pose: *physx_PxTransform, unitDir: *Vector3, distance: float, queryFlags: u16, hit: *physx_PxQueryHit, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, inflation: float) -> bool #foreign physx_sys;
+PxSceneQueryExt_sweepMultiple :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, outputFlags: u16, hitBuffer: *PxSweepHit, hitBufferSize: u32, blockingHit: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> s32 #foreign sys;
 
-PxSceneQueryExt_sweepSingle :: (scene: *physx_PxScene, geometry: *physx_PxGeometry, pose: *physx_PxTransform, unitDir: *Vector3, distance: float, outputFlags: u16, hit: *physx_PxSweepHit, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, inflation: float) -> bool #foreign physx_sys;
+PxSceneQueryExt_overlapMultiple :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, hitBuffer: *PxOverlapHit, hitBufferSize: u32, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback) -> s32 #foreign sys;
 
-PxSceneQueryExt_sweepMultiple :: (scene: *physx_PxScene, geometry: *physx_PxGeometry, pose: *physx_PxTransform, unitDir: *Vector3, distance: float, outputFlags: u16, hitBuffer: *physx_PxSweepHit, hitBufferSize: u32, blockingHit: *bool, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback, cache: *physx_PxQueryCache, inflation: float) -> s32 #foreign physx_sys;
+PxSceneQueryExt_overlapAny :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, hit: *PxOverlapHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback) -> bool #foreign sys;
 
-PxSceneQueryExt_overlapMultiple :: (scene: *physx_PxScene, geometry: *physx_PxGeometry, pose: *physx_PxTransform, hitBuffer: *physx_PxOverlapHit, hitBufferSize: u32, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback) -> s32 #foreign physx_sys;
+PxBatchQueryExt_release :: (self: *PxBatchQueryExt) -> void #foreign sys "PxBatchQueryExt_release_mut";
 
-PxSceneQueryExt_overlapAny :: (scene: *physx_PxScene, geometry: *physx_PxGeometry, pose: *physx_PxTransform, hit: *physx_PxOverlapHit, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback) -> bool #foreign physx_sys;
+PxBatchQueryExt_raycast :: (self: *PxBatchQueryExt, origin: *Vector3, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: u16, filterData: *PxQueryFilterData, cache: *PxQueryCache) -> *PxRaycastBuffer #foreign sys "PxBatchQueryExt_raycast_mut";
 
-PxBatchQueryExt_release :: (self: *physx_PxBatchQueryExt) -> void #foreign physx_sys "PxBatchQueryExt_release_mut";
+PxBatchQueryExt_sweep :: (self: *PxBatchQueryExt, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: u16, filterData: *PxQueryFilterData, cache: *PxQueryCache, inflation: float) -> *PxSweepBuffer #foreign sys "PxBatchQueryExt_sweep_mut";
 
-PxBatchQueryExt_raycast :: (self: *physx_PxBatchQueryExt, origin: *Vector3, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: u16, filterData: *physx_PxQueryFilterData, cache: *physx_PxQueryCache) -> *physx_PxRaycastBuffer #foreign physx_sys "PxBatchQueryExt_raycast_mut";
+PxBatchQueryExt_overlap :: (self: *PxBatchQueryExt, geometry: *PxGeometry, pose: *PxTransform, maxNbTouches: u16, filterData: *PxQueryFilterData, cache: *PxQueryCache) -> *PxOverlapBuffer #foreign sys "PxBatchQueryExt_overlap_mut";
 
-PxBatchQueryExt_sweep :: (self: *physx_PxBatchQueryExt, geometry: *physx_PxGeometry, pose: *physx_PxTransform, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: u16, filterData: *physx_PxQueryFilterData, cache: *physx_PxQueryCache, inflation: float) -> *physx_PxSweepBuffer #foreign physx_sys "PxBatchQueryExt_sweep_mut";
+PxBatchQueryExt_execute :: (self: *PxBatchQueryExt) -> void #foreign sys "PxBatchQueryExt_execute_mut";
 
-PxBatchQueryExt_overlap :: (self: *physx_PxBatchQueryExt, geometry: *physx_PxGeometry, pose: *physx_PxTransform, maxNbTouches: u16, filterData: *physx_PxQueryFilterData, cache: *physx_PxQueryCache) -> *physx_PxOverlapBuffer #foreign physx_sys "PxBatchQueryExt_overlap_mut";
+PxCreateBatchQueryExt :: (scene: *PxScene, queryFilterCallback: *PxQueryFilterCallback, maxNbRaycasts: u32, maxNbRaycastTouches: u32, maxNbSweeps: u32, maxNbSweepTouches: u32, maxNbOverlaps: u32, maxNbOverlapTouches: u32) -> *PxBatchQueryExt #foreign sys "phys_PxCreateBatchQueryExt";
 
-PxBatchQueryExt_execute :: (self: *physx_PxBatchQueryExt) -> void #foreign physx_sys "PxBatchQueryExt_execute_mut";
+PxCreateBatchQueryExt_1 :: (scene: *PxScene, queryFilterCallback: *PxQueryFilterCallback, raycastBuffers: *PxRaycastBuffer, maxNbRaycasts: u32, raycastTouches: *PxRaycastHit, maxNbRaycastTouches: u32, sweepBuffers: *PxSweepBuffer, maxNbSweeps: u32, sweepTouches: *PxSweepHit, maxNbSweepTouches: u32, overlapBuffers: *PxOverlapBuffer, maxNbOverlaps: u32, overlapTouches: *PxOverlapHit, maxNbOverlapTouches: u32) -> *PxBatchQueryExt #foreign sys "phys_PxCreateBatchQueryExt_1";
 
-phys_PxCreateBatchQueryExt :: (scene: *physx_PxScene, queryFilterCallback: *physx_PxQueryFilterCallback, maxNbRaycasts: u32, maxNbRaycastTouches: u32, maxNbSweeps: u32, maxNbSweepTouches: u32, maxNbOverlaps: u32, maxNbOverlapTouches: u32) -> *physx_PxBatchQueryExt #foreign physx_sys;
+PxCreateExternalSceneQuerySystem :: (desc: *PxSceneQueryDesc, contextID: u64) -> *PxSceneQuerySystem #foreign sys "phys_PxCreateExternalSceneQuerySystem";
 
-phys_PxCreateBatchQueryExt_1 :: (scene: *physx_PxScene, queryFilterCallback: *physx_PxQueryFilterCallback, raycastBuffers: *physx_PxRaycastBuffer, maxNbRaycasts: u32, raycastTouches: *physx_PxRaycastHit, maxNbRaycastTouches: u32, sweepBuffers: *physx_PxSweepBuffer, maxNbSweeps: u32, sweepTouches: *physx_PxSweepHit, maxNbSweepTouches: u32, overlapBuffers: *physx_PxOverlapBuffer, maxNbOverlaps: u32, overlapTouches: *physx_PxOverlapHit, maxNbOverlapTouches: u32) -> *physx_PxBatchQueryExt #foreign physx_sys;
+PxCustomSceneQuerySystem_addPruner :: (self: *PxCustomSceneQuerySystem, primaryType: s32, secondaryType: s32, preallocated: u32) -> u32 #foreign sys "PxCustomSceneQuerySystem_addPruner_mut";
 
-phys_PxCreateExternalSceneQuerySystem :: (desc: *physx_PxSceneQueryDesc, contextID: u64) -> *physx_PxSceneQuerySystem #foreign physx_sys;
+PxCustomSceneQuerySystem_startCustomBuildstep :: (self: *PxCustomSceneQuerySystem) -> u32 #foreign sys "PxCustomSceneQuerySystem_startCustomBuildstep_mut";
 
-PxCustomSceneQuerySystem_addPruner :: (self: *physx_PxCustomSceneQuerySystem, primaryType: s32, secondaryType: s32, preallocated: u32) -> u32 #foreign physx_sys "PxCustomSceneQuerySystem_addPruner_mut";
+PxCustomSceneQuerySystem_customBuildstep :: (self: *PxCustomSceneQuerySystem, index: u32) -> void #foreign sys "PxCustomSceneQuerySystem_customBuildstep_mut";
 
-PxCustomSceneQuerySystem_startCustomBuildstep :: (self: *physx_PxCustomSceneQuerySystem) -> u32 #foreign physx_sys "PxCustomSceneQuerySystem_startCustomBuildstep_mut";
+PxCustomSceneQuerySystem_finishCustomBuildstep :: (self: *PxCustomSceneQuerySystem) -> void #foreign sys "PxCustomSceneQuerySystem_finishCustomBuildstep_mut";
 
-PxCustomSceneQuerySystem_customBuildstep :: (self: *physx_PxCustomSceneQuerySystem, index: u32) -> void #foreign physx_sys "PxCustomSceneQuerySystem_customBuildstep_mut";
+PxCustomSceneQuerySystemAdapter_delete :: (self: *PxCustomSceneQuerySystemAdapter) -> void #foreign sys;
 
-PxCustomSceneQuerySystem_finishCustomBuildstep :: (self: *physx_PxCustomSceneQuerySystem) -> void #foreign physx_sys "PxCustomSceneQuerySystem_finishCustomBuildstep_mut";
+PxCustomSceneQuerySystemAdapter_getPrunerIndex :: (self: *PxCustomSceneQuerySystemAdapter, actor: *PxRigidActor, shape: *PxShape) -> u32 #foreign sys;
 
-PxCustomSceneQuerySystemAdapter_delete :: (self: *physx_PxCustomSceneQuerySystemAdapter) -> void #foreign physx_sys;
+PxCustomSceneQuerySystemAdapter_processPruner :: (self: *PxCustomSceneQuerySystemAdapter, prunerIndex: u32, context_pod: *PxQueryThreadContext, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback) -> bool #foreign sys;
 
-PxCustomSceneQuerySystemAdapter_getPrunerIndex :: (self: *physx_PxCustomSceneQuerySystemAdapter, actor: *physx_PxRigidActor, shape: *physx_PxShape) -> u32 #foreign physx_sys;
+PxCreateCustomSceneQuerySystem :: (sceneQueryUpdateMode: s32, contextID: u64, adapter: *PxCustomSceneQuerySystemAdapter, usesTreeOfPruners: bool) -> *PxCustomSceneQuerySystem #foreign sys "phys_PxCreateCustomSceneQuerySystem";
 
-PxCustomSceneQuerySystemAdapter_processPruner :: (self: *physx_PxCustomSceneQuerySystemAdapter, prunerIndex: u32, context_pod: *physx_PxQueryThreadContext, filterData: *physx_PxQueryFilterData, filterCall: *physx_PxQueryFilterCallback) -> bool #foreign physx_sys;
+PxFindFaceIndex :: (convexGeom: *PxConvexMeshGeometry, geomPose: *PxTransform, impactPos: *Vector3, unitDir: *Vector3) -> u32 #foreign sys "phys_PxFindFaceIndex";
 
-phys_PxCreateCustomSceneQuerySystem :: (sceneQueryUpdateMode: s32, contextID: u64, adapter: *physx_PxCustomSceneQuerySystemAdapter, usesTreeOfPruners: bool) -> *physx_PxCustomSceneQuerySystem #foreign physx_sys;
+PxPoissonSampler_setSamplingRadius :: (self: *PxPoissonSampler, samplingRadius: float) -> bool #foreign sys "PxPoissonSampler_setSamplingRadius_mut";
 
-phys_PxFindFaceIndex :: (convexGeom: *physx_PxConvexMeshGeometry, geomPose: *physx_PxTransform, impactPos: *Vector3, unitDir: *Vector3) -> u32 #foreign physx_sys;
+PxPoissonSampler_addSamplesInSphere :: (self: *PxPoissonSampler, sphereCenter: *Vector3, sphereRadius: float, createVolumeSamples: bool) -> void #foreign sys "PxPoissonSampler_addSamplesInSphere_mut";
 
-PxPoissonSampler_setSamplingRadius :: (self: *physx_PxPoissonSampler, samplingRadius: float) -> bool #foreign physx_sys "PxPoissonSampler_setSamplingRadius_mut";
+PxPoissonSampler_addSamplesInBox :: (self: *PxPoissonSampler, axisAlignedBox: *PxBounds3, boxOrientation: *Quaternion, createVolumeSamples: bool) -> void #foreign sys "PxPoissonSampler_addSamplesInBox_mut";
 
-PxPoissonSampler_addSamplesInSphere :: (self: *physx_PxPoissonSampler, sphereCenter: *Vector3, sphereRadius: float, createVolumeSamples: bool) -> void #foreign physx_sys "PxPoissonSampler_addSamplesInSphere_mut";
+PxPoissonSampler_delete :: (self: *PxPoissonSampler) -> void #foreign sys;
 
-PxPoissonSampler_addSamplesInBox :: (self: *physx_PxPoissonSampler, axisAlignedBox: *physx_PxBounds3, boxOrientation: *Quaternion, createVolumeSamples: bool) -> void #foreign physx_sys "PxPoissonSampler_addSamplesInBox_mut";
+PxCreateShapeSampler :: (geometry: *PxGeometry, transform: *PxTransform, worldBounds: *PxBounds3, initialSamplingRadius: float, numSampleAttemptsAroundPoint: s32) -> *PxPoissonSampler #foreign sys "phys_PxCreateShapeSampler";
 
-PxPoissonSampler_delete :: (self: *physx_PxPoissonSampler) -> void #foreign physx_sys;
+PxTriangleMeshPoissonSampler_isPointInTriangleMesh :: (self: *PxTriangleMeshPoissonSampler, p: *Vector3) -> bool #foreign sys "PxTriangleMeshPoissonSampler_isPointInTriangleMesh_mut";
 
-phys_PxCreateShapeSampler :: (geometry: *physx_PxGeometry, transform: *physx_PxTransform, worldBounds: *physx_PxBounds3, initialSamplingRadius: float, numSampleAttemptsAroundPoint: s32) -> *physx_PxPoissonSampler #foreign physx_sys;
+PxTriangleMeshPoissonSampler_delete :: (self: *PxTriangleMeshPoissonSampler) -> void #foreign sys;
 
-PxTriangleMeshPoissonSampler_isPointInTriangleMesh :: (self: *physx_PxTriangleMeshPoissonSampler, p: *Vector3) -> bool #foreign physx_sys "PxTriangleMeshPoissonSampler_isPointInTriangleMesh_mut";
+PxCreateTriangleMeshSampler :: (triangles: *u32, numTriangles: u32, vertices: *Vector3, numVertices: u32, initialSamplingRadius: float, numSampleAttemptsAroundPoint: s32) -> *PxTriangleMeshPoissonSampler #foreign sys "phys_PxCreateTriangleMeshSampler";
 
-PxTriangleMeshPoissonSampler_delete :: (self: *physx_PxTriangleMeshPoissonSampler) -> void #foreign physx_sys;
+PxTetrahedronMeshExt_findTetrahedronContainingPoint :: (mesh: *PxTetrahedronMesh, point: *Vector3, bary: *Vector4, tolerance: float) -> s32 #foreign sys;
 
-phys_PxCreateTriangleMeshSampler :: (triangles: *u32, numTriangles: u32, vertices: *Vector3, numVertices: u32, initialSamplingRadius: float, numSampleAttemptsAroundPoint: s32) -> *physx_PxTriangleMeshPoissonSampler #foreign physx_sys;
+PxTetrahedronMeshExt_findTetrahedronClosestToPoint :: (mesh: *PxTetrahedronMesh, point: *Vector3, bary: *Vector4) -> s32 #foreign sys;
 
-PxTetrahedronMeshExt_findTetrahedronContainingPoint :: (mesh: *physx_PxTetrahedronMesh, point: *Vector3, bary: *Vector4, tolerance: float) -> s32 #foreign physx_sys;
+PxInitExtensions :: (physics: *PxPhysics, pvd: *PxPvd) -> bool #foreign sys "phys_PxInitExtensions";
 
-PxTetrahedronMeshExt_findTetrahedronClosestToPoint :: (mesh: *physx_PxTetrahedronMesh, point: *Vector3, bary: *Vector4) -> s32 #foreign physx_sys;
+PxCloseExtensions :: () -> void #foreign sys "phys_PxCloseExtensions";
 
-phys_PxInitExtensions :: (physics: *physx_PxPhysics, pvd: *physx_PxPvd) -> bool #foreign physx_sys;
+PxRepXObject_new :: (inTypeName: *u8, inSerializable: *void, inId: u64) -> PxRepXObject #foreign sys;
 
-phys_PxCloseExtensions :: () -> void #foreign physx_sys;
+PxRepXObject_isValid :: (self: *PxRepXObject) -> bool #foreign sys;
 
-PxRepXObject_new :: (inTypeName: *u8, inSerializable: *void, inId: u64) -> physx_PxRepXObject #foreign physx_sys;
+PxRepXInstantiationArgs_new :: (inPhysics: *PxPhysics, inCooking: *PxCooking, inStringTable: *PxStringTable) -> PxRepXInstantiationArgs #foreign sys;
 
-PxRepXObject_isValid :: (self: *physx_PxRepXObject) -> bool #foreign physx_sys;
+PxRepXSerializer_getTypeName :: (self: *PxRepXSerializer) -> *u8 #foreign sys "PxRepXSerializer_getTypeName_mut";
 
-PxRepXInstantiationArgs_new :: (inPhysics: *physx_PxPhysics, inCooking: *physx_PxCooking, inStringTable: *physx_PxStringTable) -> physx_PxRepXInstantiationArgs #foreign physx_sys;
+PxRepXSerializer_objectToFile :: (self: *PxRepXSerializer, inLiveObject: *PxRepXObject, inCollection: *PxCollection, inWriter: *XmlWriter, inTempBuffer: *MemoryBuffer, inArgs: *PxRepXInstantiationArgs) -> void #foreign sys "PxRepXSerializer_objectToFile_mut";
 
-PxRepXSerializer_getTypeName :: (self: *physx_PxRepXSerializer) -> *u8 #foreign physx_sys "PxRepXSerializer_getTypeName_mut";
+PxRepXSerializer_fileToObject :: (self: *PxRepXSerializer, inReader: *XmlReader, inAllocator: *XmlMemoryAllocator, inArgs: *PxRepXInstantiationArgs, inCollection: *PxCollection) -> PxRepXObject #foreign sys "PxRepXSerializer_fileToObject_mut";
 
-PxRepXSerializer_objectToFile :: (self: *physx_PxRepXSerializer, inLiveObject: *physx_PxRepXObject, inCollection: *physx_PxCollection, inWriter: *physx_XmlWriter, inTempBuffer: *physx_MemoryBuffer, inArgs: *physx_PxRepXInstantiationArgs) -> void #foreign physx_sys "PxRepXSerializer_objectToFile_mut";
+PxPvd_connect :: (self: *PxPvd, transport: *PxPvdTransport, flags: u8) -> bool #foreign sys "PxPvd_connect_mut";
 
-PxRepXSerializer_fileToObject :: (self: *physx_PxRepXSerializer, inReader: *physx_XmlReader, inAllocator: *physx_XmlMemoryAllocator, inArgs: *physx_PxRepXInstantiationArgs, inCollection: *physx_PxCollection) -> physx_PxRepXObject #foreign physx_sys "PxRepXSerializer_fileToObject_mut";
+PxPvd_disconnect :: (self: *PxPvd) -> void #foreign sys "PxPvd_disconnect_mut";
 
-PxPvd_connect :: (self: *physx_PxPvd, transport: *physx_PxPvdTransport, flags: u8) -> bool #foreign physx_sys "PxPvd_connect_mut";
+PxPvd_isConnected :: (self: *PxPvd, useCachedStatus: bool) -> bool #foreign sys "PxPvd_isConnected_mut";
 
-PxPvd_disconnect :: (self: *physx_PxPvd) -> void #foreign physx_sys "PxPvd_disconnect_mut";
+PxPvd_getTransport :: (self: *PxPvd) -> *PxPvdTransport #foreign sys "PxPvd_getTransport_mut";
 
-PxPvd_isConnected :: (self: *physx_PxPvd, useCachedStatus: bool) -> bool #foreign physx_sys "PxPvd_isConnected_mut";
+PxPvd_getInstrumentationFlags :: (self: *PxPvd) -> u8 #foreign sys "PxPvd_getInstrumentationFlags_mut";
 
-PxPvd_getTransport :: (self: *physx_PxPvd) -> *physx_PxPvdTransport #foreign physx_sys "PxPvd_getTransport_mut";
+PxPvd_release :: (self: *PxPvd) -> void #foreign sys "PxPvd_release_mut";
 
-PxPvd_getInstrumentationFlags :: (self: *physx_PxPvd) -> u8 #foreign physx_sys "PxPvd_getInstrumentationFlags_mut";
+PxCreatePvd :: (foundation: *PxFoundation) -> *PxPvd #foreign sys "phys_PxCreatePvd";
 
-PxPvd_release :: (self: *physx_PxPvd) -> void #foreign physx_sys "PxPvd_release_mut";
+PxPvdTransport_connect :: (self: *PxPvdTransport) -> bool #foreign sys "PxPvdTransport_connect_mut";
 
-phys_PxCreatePvd :: (foundation: *physx_PxFoundation) -> *physx_PxPvd #foreign physx_sys;
+PxPvdTransport_disconnect :: (self: *PxPvdTransport) -> void #foreign sys "PxPvdTransport_disconnect_mut";
 
-PxPvdTransport_connect :: (self: *physx_PxPvdTransport) -> bool #foreign physx_sys "PxPvdTransport_connect_mut";
+PxPvdTransport_isConnected :: (self: *PxPvdTransport) -> bool #foreign sys "PxPvdTransport_isConnected_mut";
 
-PxPvdTransport_disconnect :: (self: *physx_PxPvdTransport) -> void #foreign physx_sys "PxPvdTransport_disconnect_mut";
+PxPvdTransport_write :: (self: *PxPvdTransport, inBytes: *u8, inLength: u32) -> bool #foreign sys "PxPvdTransport_write_mut";
 
-PxPvdTransport_isConnected :: (self: *physx_PxPvdTransport) -> bool #foreign physx_sys "PxPvdTransport_isConnected_mut";
+PxPvdTransport_lock :: (self: *PxPvdTransport) -> *PxPvdTransport #foreign sys "PxPvdTransport_lock_mut";
 
-PxPvdTransport_write :: (self: *physx_PxPvdTransport, inBytes: *u8, inLength: u32) -> bool #foreign physx_sys "PxPvdTransport_write_mut";
+PxPvdTransport_unlock :: (self: *PxPvdTransport) -> void #foreign sys "PxPvdTransport_unlock_mut";
 
-PxPvdTransport_lock :: (self: *physx_PxPvdTransport) -> *physx_PxPvdTransport #foreign physx_sys "PxPvdTransport_lock_mut";
+PxPvdTransport_flush :: (self: *PxPvdTransport) -> void #foreign sys "PxPvdTransport_flush_mut";
 
-PxPvdTransport_unlock :: (self: *physx_PxPvdTransport) -> void #foreign physx_sys "PxPvdTransport_unlock_mut";
+PxPvdTransport_getWrittenDataSize :: (self: *PxPvdTransport) -> u64 #foreign sys "PxPvdTransport_getWrittenDataSize_mut";
 
-PxPvdTransport_flush :: (self: *physx_PxPvdTransport) -> void #foreign physx_sys "PxPvdTransport_flush_mut";
+PxPvdTransport_release :: (self: *PxPvdTransport) -> void #foreign sys "PxPvdTransport_release_mut";
 
-PxPvdTransport_getWrittenDataSize :: (self: *physx_PxPvdTransport) -> u64 #foreign physx_sys "PxPvdTransport_getWrittenDataSize_mut";
+PxDefaultPvdSocketTransportCreate :: (host: *u8, port: s32, timeoutInMilliseconds: u32) -> *PxPvdTransport #foreign sys "phys_PxDefaultPvdSocketTransportCreate";
 
-PxPvdTransport_release :: (self: *physx_PxPvdTransport) -> void #foreign physx_sys "PxPvdTransport_release_mut";
-
-phys_PxDefaultPvdSocketTransportCreate :: (host: *u8, port: s32, timeoutInMilliseconds: u32) -> *physx_PxPvdTransport #foreign physx_sys;
-
-phys_PxDefaultPvdFileTransportCreate :: (name: *u8) -> *physx_PxPvdTransport #foreign physx_sys;
+PxDefaultPvdFileTransportCreate :: (name: *u8) -> *PxPvdTransport #foreign sys "phys_PxDefaultPvdFileTransportCreate";
 
 FilterShaderCallbackInfo :: struct {
     attributes0:       u32;
     attributes1:       u32;
-    filterData0:       physx_PxFilterData;
-    filterData1:       physx_PxFilterData;
-    pairFlags:         *physx_PxPairFlags;
+    filterData0:       PxFilterData;
+    filterData1:       PxFilterData;
+    pairFlags:         *PxPairFlags;
     constantBlock:     *void;
     constantBlockSize: u32;
 }
 
-CollisionCallback :: #type (unknown0: *void, unknown1: *physx_PxContactPairHeader, unknown2: *physx_PxContactPair, unknown3: u32) -> void #c_call;
+CollisionCallback :: #type (unknown0: *void, unknown1: *PxContactPairHeader, unknown2: *PxContactPair, unknown3: u32) -> void #c_call;
 SimulationShaderFilter :: #type (unknown0: *FilterShaderCallbackInfo) -> u16 #c_call;
 
 FilterCallbackData :: struct {
@@ -6222,10 +6696,10 @@ FilterCallbackData :: struct {
     call_default_filter_shader_first: bool;
 }
 
-TriggerCallback :: #type (unknown0: *void, unknown1: *physx_PxTriggerPair, unknown2: u32) -> void #c_call;
-ConstraintBreakCallback :: #type (unknown0: *void, unknown1: *physx_PxConstraintInfo, unknown2: u32) -> void #c_call;
-WakeSleepCallback :: #type (unknown0: *void, unknown1: **physx_PxActor, unknown2: u32, unknown3: bool) -> void #c_call;
-AdvanceCallback :: #type (unknown0: *void, unknown1: **physx_PxRigidBody, unknown2: *physx_PxTransform, unknown3: u32) -> void #c_call;
+TriggerCallback :: #type (unknown0: *void, unknown1: *PxTriggerPair, unknown2: u32) -> void #c_call;
+ConstraintBreakCallback :: #type (unknown0: *void, unknown1: *PxConstraintInfo, unknown2: u32) -> void #c_call;
+WakeSleepCallback :: #type (unknown0: *void, unknown1: **PxActor, unknown2: u32, unknown3: bool) -> void #c_call;
+AdvanceCallback :: #type (unknown0: *void, unknown1: **PxRigidBody, unknown2: *PxTransform, unknown3: u32) -> void #c_call;
 
 SimulationEventCallbackInfo :: struct {
     // Callback for collision events.
@@ -6250,12 +6724,12 @@ SimulationEventCallbackInfo :: struct {
 }
 
 // TODO: Shouldn't we rename this to PreFilterCallback?
-RaycastHitCallback :: #type (actor: *physx_PxRigidActor, filterData: *physx_PxFilterData, shape: *physx_PxShape, hitFlags: u32, userData: *void) -> u32 #c_call;
-PostFilterCallback :: #type (filterData: *physx_PxFilterData, hit: *physx_PxQueryHit, userData: *void) -> u32 #c_call;
+RaycastHitCallback :: #type (actor: *PxRigidActor, filterData: *PxFilterData, shape: *PxShape, hitFlags: u32, userData: *void) -> u32 #c_call;
+PostFilterCallback :: #type (filterData: *PxFilterData, hit: *PxQueryHit, userData: *void) -> u32 #c_call;
 
-RaycastHitProcessTouchesCallback :: #type (buffer: *physx_PxRaycastHit, nbHits: u32, userdata: *void) -> bool #c_call;
-SweepHitProcessTouchesCallback :: #type (buffer: *physx_PxSweepHit, nbHits: u32, userdata: *void) -> bool #c_call;
-OverlapHitProcessTouchesCallback :: #type (buffer: *physx_PxOverlapHit, nbHits: u32, userdata: *void) -> bool #c_call;
+RaycastHitProcessTouchesCallback :: #type (buffer: *PxRaycastHit, nbHits: u32, userdata: *void) -> bool #c_call;
+SweepHitProcessTouchesCallback :: #type (buffer: *PxSweepHit, nbHits: u32, userdata: *void) -> bool #c_call;
+OverlapHitProcessTouchesCallback :: #type (buffer: *PxOverlapHit, nbHits: u32, userdata: *void) -> bool #c_call;
 HitFinalizeQueryCallback :: #type (userdata: *void) -> void #c_call;
 
 AllocCallback :: #type (size: u64, typeName: *u8, filename: *u8, line: s32, userdata: *void) -> *void #c_call;
@@ -6268,68 +6742,68 @@ ErrorCallback :: #type (code: s32, message: *u8, file: *u8, line: s32, userdata:
 
 AssertHandler :: #type (expr: *u8, file: *u8, line: s32, should_ignore: *bool, userdata: *void) -> void #c_call;
 
-physx_create_foundation :: () -> *physx_PxFoundation #foreign physx_sys;
+create_foundation :: () -> *PxFoundation #foreign sys "create_foundation";
 
-physx_create_foundation_with_alloc :: (allocator: *physx_PxAllocatorCallback) -> *physx_PxFoundation #foreign physx_sys;
-
-// fixme[tolsson]: this might be iffy on Windows with DLLs if we have multiple packages
-// linking against the raw interface
-get_default_allocator :: () -> *physx_PxAllocatorCallback #foreign physx_sys;
+create_foundation_with_alloc :: (allocator: *PxAllocatorCallback) -> *PxFoundation #foreign sys "create_foundation_with_alloc";
 
 // fixme[tolsson]: this might be iffy on Windows with DLLs if we have multiple packages
 // linking against the raw interface
-get_default_error_callback :: () -> *physx_PxErrorCallback #foreign physx_sys;
+get_default_allocator :: () -> *PxAllocatorCallback #foreign sys;
 
-physx_create_physics :: (foundation: *physx_PxFoundation) -> *physx_PxPhysics #foreign physx_sys;
+// fixme[tolsson]: this might be iffy on Windows with DLLs if we have multiple packages
+// linking against the raw interface
+get_default_error_callback :: () -> *PxErrorCallback #foreign sys;
 
-create_raycast_filter_callback :: (actor_to_ignore: *physx_PxRigidActor) -> *physx_PxQueryFilterCallback #foreign physx_sys;
+create_physics :: (foundation: *PxFoundation) -> *PxPhysics #foreign sys "create_physics";
 
-create_raycast_filter_callback_func :: (callback: RaycastHitCallback, userData: *void) -> *physx_PxQueryFilterCallback #foreign physx_sys;
+create_raycast_filter_callback :: (actor_to_ignore: *PxRigidActor) -> *PxQueryFilterCallback #foreign sys;
 
-create_pre_and_post_raycast_filter_callback_func :: (preFilter: RaycastHitCallback, postFilter: PostFilterCallback, userData: *void) -> *physx_PxQueryFilterCallback #foreign physx_sys;
+create_raycast_filter_callback_func :: (callback: RaycastHitCallback, userData: *void) -> *PxQueryFilterCallback #foreign sys;
 
-create_raycast_buffer :: () -> *physx_PxRaycastCallback #foreign physx_sys;
+create_pre_and_post_raycast_filter_callback_func :: (preFilter: RaycastHitCallback, postFilter: PostFilterCallback, userData: *void) -> *PxQueryFilterCallback #foreign sys;
 
-create_sweep_buffer :: () -> *physx_PxSweepCallback #foreign physx_sys;
+create_raycast_buffer :: () -> *PxRaycastCallback #foreign sys;
 
-create_overlap_buffer :: () -> *physx_PxOverlapCallback #foreign physx_sys;
+create_sweep_buffer :: () -> *PxSweepCallback #foreign sys;
 
-create_raycast_callback :: (process_touches_callback: RaycastHitProcessTouchesCallback, finalize_query_callback: HitFinalizeQueryCallback, touchesBuffer: *physx_PxRaycastHit, numTouches: u32, userdata: *void) -> *physx_PxRaycastCallback #foreign physx_sys;
+create_overlap_buffer :: () -> *PxOverlapCallback #foreign sys;
 
-delete_raycast_callback :: (callback: *physx_PxRaycastCallback) -> void #foreign physx_sys;
+create_raycast_callback :: (process_touches_callback: RaycastHitProcessTouchesCallback, finalize_query_callback: HitFinalizeQueryCallback, touchesBuffer: *PxRaycastHit, numTouches: u32, userdata: *void) -> *PxRaycastCallback #foreign sys;
 
-delete_sweep_callback :: (callback: *physx_PxSweepCallback) -> void #foreign physx_sys;
+delete_raycast_callback :: (callback: *PxRaycastCallback) -> void #foreign sys;
 
-delete_overlap_callback :: (callback: *physx_PxOverlapCallback) -> void #foreign physx_sys;
+delete_sweep_callback :: (callback: *PxSweepCallback) -> void #foreign sys;
 
-create_sweep_callback :: (process_touches_callback: SweepHitProcessTouchesCallback, finalize_query_callback: HitFinalizeQueryCallback, touchesBuffer: *physx_PxSweepHit, numTouches: u32, userdata: *void) -> *physx_PxSweepCallback #foreign physx_sys;
+delete_overlap_callback :: (callback: *PxOverlapCallback) -> void #foreign sys;
 
-create_overlap_callback :: (process_touches_callback: OverlapHitProcessTouchesCallback, finalize_query_callback: HitFinalizeQueryCallback, touchesBuffer: *physx_PxOverlapHit, numTouches: u32, userdata: *void) -> *physx_PxOverlapCallback #foreign physx_sys;
+create_sweep_callback :: (process_touches_callback: SweepHitProcessTouchesCallback, finalize_query_callback: HitFinalizeQueryCallback, touchesBuffer: *PxSweepHit, numTouches: u32, userdata: *void) -> *PxSweepCallback #foreign sys;
 
-create_alloc_callback :: (alloc_callback: AllocCallback, dealloc_callback: DeallocCallback, userdata: *void) -> *physx_PxAllocatorCallback #foreign physx_sys;
+create_overlap_callback :: (process_touches_callback: OverlapHitProcessTouchesCallback, finalize_query_callback: HitFinalizeQueryCallback, touchesBuffer: *PxOverlapHit, numTouches: u32, userdata: *void) -> *PxOverlapCallback #foreign sys;
 
-get_alloc_callback_user_data :: (allocator: *physx_PxAllocatorCallback) -> *void #foreign physx_sys;
+create_alloc_callback :: (alloc_callback: AllocCallback, dealloc_callback: DeallocCallback, userdata: *void) -> *PxAllocatorCallback #foreign sys;
 
-create_profiler_callback :: (zone_start_callback: ZoneStartCallback, zone_end_callback: ZoneEndCallback, userdata: *void) -> *physx_PxProfilerCallback #foreign physx_sys;
+get_alloc_callback_user_data :: (allocator: *PxAllocatorCallback) -> *void #foreign sys;
 
-create_error_callback :: (error_callback: ErrorCallback, userdata: *void) -> *physx_PxErrorCallback #foreign physx_sys;
+create_profiler_callback :: (zone_start_callback: ZoneStartCallback, zone_end_callback: ZoneEndCallback, userdata: *void) -> *PxProfilerCallback #foreign sys;
 
-create_assert_handler :: (on_assert: AssertHandler, userdata: *void) -> *physx_PxAssertHandler #foreign physx_sys;
+create_error_callback :: (error_callback: ErrorCallback, userdata: *void) -> *PxErrorCallback #foreign sys;
 
-get_default_simulation_filter_shader :: () -> *void #foreign physx_sys;
+create_assert_handler :: (on_assert: AssertHandler, userdata: *void) -> *PxAssertHandler #foreign sys;
 
-create_simulation_event_callbacks :: (callbacks: *SimulationEventCallbackInfo) -> *physx_PxSimulationEventCallback #foreign physx_sys;
+get_default_simulation_filter_shader :: () -> *void #foreign sys;
 
-get_simulation_event_info :: (callback: *physx_PxSimulationEventCallback) -> *SimulationEventCallbackInfo #foreign physx_sys;
+create_simulation_event_callbacks :: (callbacks: *SimulationEventCallbackInfo) -> *PxSimulationEventCallback #foreign sys;
 
-destroy_simulation_event_callbacks :: (callback: *physx_PxSimulationEventCallback) -> void #foreign physx_sys;
+get_simulation_event_info :: (callback: *PxSimulationEventCallback) -> *SimulationEventCallbackInfo #foreign sys;
 
-enable_custom_filter_shader :: (desc: *physx_PxSceneDesc, filter: SimulationShaderFilter, call_default_filter_shader_first: u32) -> void #foreign physx_sys;
+destroy_simulation_event_callbacks :: (callback: *PxSimulationEventCallback) -> void #foreign sys;
+
+enable_custom_filter_shader :: (desc: *PxSceneDesc, filter: SimulationShaderFilter, call_default_filter_shader_first: u32) -> void #foreign sys;
 
 // Not generated, used only for testing and examples!
-PxAssertHandler_opCall :: (self: *physx_PxErrorCallback, expr: *u8, file: *u8, line: s32, ignore: *bool) -> void #foreign physx_sys "PxAssertHandler_opCall_mut";
+PxAssertHandler_opCall :: (self: *PxErrorCallback, expr: *u8, file: *u8, line: s32, ignore: *bool) -> void #foreign sys "PxAssertHandler_opCall_mut";
 
 #scope_file
 
-physx_sys :: #library,no_dll "windows/physx_sys";
+sys :: #library,no_dll "windows/sys";
 #import "Math";

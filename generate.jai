@@ -95,7 +95,7 @@
             if conv[0] == decl.name {
                 decl.output_name = conv[1];
                 decl.decl_flags = .OMIT_FROM_OUTPUT;
-                print("Found:\n%\n%\n\n", decl.*, decl.expression.*);
+                return .RECURSE;
             }
         }
 
@@ -106,124 +106,55 @@
             }
         }
 
+        bad_functions :: string.[
+            "PxMat44_new_1",
+            "PxMat44_new_2",
+        ];
+
+        for bad_function: bad_functions {
+            if decl.name == bad_function {
+                decl.decl_flags = .OMIT_FROM_OUTPUT;
+                return .STOP;
+            }
+        }
+
         if ends_with(decl.name, "_mut") {
-            print("Replacing foreign name for: %\n", decl.*);
-            decl.output_name = replace(decl.name, "_mut", "");
-            // decl.foreign_name = decl.name;
+            output_name := decl.name;
+            output_name.count -= 4;
+            decl.output_name = output_name;
         }
-        if ends_with(decl.name, "_mut_1") {
-            print("Replacing foreign name for: %\n", decl.*);
-            decl.output_name = replace(decl.name, "_mut_1", "");
-            // decl.foreign_name = decl.name;
+        if ends_with(decl.name, "_mut_1") || ends_with(decl.name, "_mut_2") {
+            output_name := decl.name;
+            output_name.count -= 6;
+            decl.output_name = output_name;
         }
-        if ends_with(decl.name, "_mut_2") {
-            print("Replacing foreign name for: %\n", decl.*);
-            decl.output_name = replace(decl.name, "_mut_2", "");
-            // decl.foreign_name = decl.name;
+        if ends_with(decl.name, "_1") || ends_with(decl.name, "_2") || ends_with(decl.name, "_3") || ends_with(decl.name, "_4") || ends_with(decl.name, "_5") || ends_with(decl.name, "_6") || ends_with(decl.name, "_7") || ends_with(decl.name, "_8") || ends_with(decl.name, "_9") {
+            output_name := decl.name;
+            output_name.count -= 2;
+            decl.output_name = output_name;
+        }
+        if ends_with(decl.name, "_10") {
+            output_name := decl.name;
+            output_name.count -= 3;
+            decl.output_name = output_name;
+        }
+        if starts_with(decl.name, "physx_") {
+            output_name := decl.name;
+            output_name.data += 6;
+            output_name.count -= 6;
+            decl.output_name = output_name;
+        }
+        if starts_with(decl.name, "phys_") {
+            output_name := decl.name;
+            output_name.data += 5;
+            output_name.count -= 5;
+            decl.output_name = output_name;
         }
 
         return .RECURSE;
     };
 
-    header = #string ___jai
-physx_PxPairFlags :: enum_flags u16 {
-    SolveContact :: 1 << 0;
-    ModifyContacts :: 1 << 1;
-    NotifyTouchFound :: 1 << 2;
-    NotifyTouchPersists :: 1 << 3;
-    NotifyTouchLost :: 1 << 4;
-    NotifyTouchCcd :: 1 << 5;
-    NotifyThresholdForceFound :: 1 << 6;
-    NotifyThresholdForcePersists :: 1 << 7;
-    NotifyThresholdForceLost :: 1 << 8;
-    NotifyContactPoints :: 1 << 9;
-    DetectDiscreteContact :: 1 << 10;
-    DetectCcdContact :: 1 << 11;
-    PreSolverVelocity :: 1 << 12;
-    PostSolverVelocity :: 1 << 13;
-    ContactEventPose :: 1 << 14;
-    NextFree :: 1 << 15;
-    ContactDefault :: SolveContact | DetectDiscreteContact;
-    TriggerDefault :: NotifyTouchFound | NotifyTouchLost | DetectDiscreteContact;
-}
-
-physx_PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
-    WaitForWork :: 0;
-    YieldThread :: 1;
-    YieldProcessor :: 2;
-}
-
-physx_PxConvexMeshCookingType :: enum s32 {
-    Quickhull :: 0;
-}
-
-physx_PxConvexFlag :: enum_flags s32 {
-    /// Denotes the use of 16-bit vertex indices in PxConvexMeshDesc::triangles or PxConvexMeshDesc::polygons.
-    /// (otherwise, 32-bit indices are assumed)
-    E16BitIndices :: 1;
-    /// Automatically recomputes the hull from the vertices. If this flag is not set, you must provide the entire geometry manually.
-    ///
-    /// There are two different algorithms for hull computation, please see PxConvexMeshCookingType.
-    ComputeConvex :: 2;
-    /// Checks and removes almost zero-area triangles during convex hull computation.
-    /// The rejected area size is specified in PxCookingParams::areaTestEpsilon
-    ///
-    /// This flag is only used in combination with eCOMPUTE_CONVEX.
-    CheckZeroAreaTriangles :: 4;
-    /// Quantizes the input vertices using the k-means clustering
-    ///
-    /// The input vertices are quantized to PxConvexMeshDesc::quantizedCount
-    /// see http://en.wikipedia.org/wiki/K-means_clustering
-    QuantizeInput :: 8;
-    /// Disables the convex mesh validation to speed-up hull creation. Please use separate validation
-    /// function in checked/debug builds. Creating a convex mesh with invalid input data without prior validation
-    /// may result in undefined behavior.
-    DisableMeshValidation :: 16;
-    /// Enables plane shifting vertex limit algorithm.
-    ///
-    /// Plane shifting is an alternative algorithm for the case when the computed hull has more vertices
-    /// than the specified vertex limit.
-    ///
-    /// The default algorithm computes the full hull, and an OBB around the input vertices. This OBB is then sliced
-    /// with the hull planes until the vertex limit is reached.The default algorithm requires the vertex limit
-    /// to be set to at least 8, and typically produces results that are much better quality than are produced
-    /// by plane shifting.
-    ///
-    /// When plane shifting is enabled, the hull computation stops when vertex limit is reached. The hull planes
-    /// are then shifted to contain all input vertices, and the new plane intersection points are then used to
-    /// generate the final hull with the given vertex limit.Plane shifting may produce sharp edges to vertices
-    /// very far away from the input cloud, and does not guarantee that all input vertices are inside the resulting
-    /// hull.However, it can be used with a vertex limit as low as 4.
-    PlaneShifting :: 32;
-    /// Inertia tensor computation is faster using SIMD code, but the precision is lower, which may result
-    /// in incorrect inertia for very thin hulls.
-    FastInertiaComputation :: 64;
-    /// Convex hulls are created with respect to GPU simulation limitations. Vertex limit and polygon limit
-    /// is set to 64 and vertex limit per face is internally set to 32.
-    ///
-    /// Can be used only with eCOMPUTE_CONVEX flag.
-    GpuCompatible :: 128;
-    /// Convex hull input vertices are shifted to be around origin to provide better computation stability.
-    /// It is recommended to provide input vertices around the origin, otherwise use this flag to improve
-    /// numerical stability.
-    ///
-    /// Is used only with eCOMPUTE_CONVEX flag.
-    ShiftVertices :: 256;
-}
-
-PxConvexMeshCookingResult :: enum s32 {
-    /// Convex mesh cooking succeeded.
-    Success :: 0;
-    /// Convex mesh cooking failed, algorithm couldn't find 4 initial vertices without a small triangle.
-    ZeroAreaTestFailed :: 1;
-    /// Convex mesh cooking succeeded, but the algorithm has reached the 255 polygons limit.
-    /// The produced hull does not contain all input vertices. Try to simplify the input vertices
-    /// or try to use the eINFLATE_CONVEX or the eQUANTIZE_INPUT flags.
-    PolygonsLimitReached :: 2;
-    /// Something unrecoverable happened. Check the error stream to find out what.
-    Failure :: 3;
-}
-    ___jai
+    header = read_entire_file("generate_enums.jai");
 
     footer = #string ___jai
 #import "Math";
@@ -258,9 +189,23 @@ PxConvexMeshCookingResult :: enum s32 {
     output = replace_and_free(output, "physx.PxU32", "u32");
     output = replace_and_free(output, "physx.PxAgain", "bool");
     output = replace_and_free(output, "physx.", "physx_");
+    output = replace_and_free(output, "physx_", "");
     output = replace_and_free(output, "__pod", "");
     output = replace_and_free(output, "_pod", "");
     output = replace_and_free(output, "context:", "context_pod:");
+    output = force_inheritance(output, "#place structgen_pad0; #as geometry: PxGeometry = ---;", .[
+        "PxBoxGeometry",
+        "PxCapsuleGeometry",
+        "PxConvexMeshGeometry",
+        "PxSphereGeometry",
+        "PxPlaneGeometry",
+        "PxTriangleMeshGeometry",
+        "PxHeightFieldGeometry",
+        "PxParticleSystemGeometry",
+        "PxHairSystemGeometry",
+        "PxTetrahedronMeshGeometry",
+        "PxCustomGeometry",
+    ]);
 
     write_entire_file("module.jai", output);
 }
@@ -269,4 +214,52 @@ replace_and_free :: (input: string, old: string, new: string) -> string {
     output := replace(input, old, new);
     free(input);
     return output;
+}
+
+force_inheritance :: (input: string, place: string, struct_names: [] string) -> string {
+    current := input;
+
+    struct_part :: " :: struct {";
+    for struct_name: struct_names {
+        index := 0;
+        while index < current.count - struct_name.count - struct_part.count {
+            potential_name: string;
+            potential_name.data = current.data + index;
+            potential_name.count = struct_name.count;
+
+            if potential_name == struct_name {
+                potential_struct_part: string;
+                potential_struct_part.data = potential_name.data + potential_name.count;
+                potential_struct_part.count = struct_part.count;
+
+                if potential_struct_part == struct_part {
+                    last_colon := index;
+                    while current[index] != #char "}" {
+                        if current[index] == #char ";" {
+                            last_colon = index;
+                        }
+
+                        index += 1;
+                    }
+
+                    first_string: string;
+                    first_string.data = current.data;
+                    first_string.count = last_colon + 1;
+                    second_string: string;
+                    second_string.data = current.data + (last_colon + 1);
+                    second_string.count = current.count - (last_colon + 1);
+
+                    old_current := current;
+                    current = sprint("%1\n%2%3", first_string, place, second_string);
+                    free(old_current);
+
+                    continue struct_name;
+                }
+            }
+
+            index += 1;
+        }
+    }
+
+    return current;
 }
