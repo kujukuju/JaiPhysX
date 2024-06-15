@@ -562,3 +562,9 @@ PxConvexMeshCookingResult :: enum s32 {
     /// Something unrecoverable happened. Check the error stream to find out what.
     Failure :: 3;
 }
+
+PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
+    WaitForWork :: 0;
+    YieldThread :: 1;
+    YieldProcessor :: 2;
+}

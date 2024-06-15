@@ -12,7 +12,7 @@
 
     array_add(*libpaths, "windows");
 
-    array_add(*libnames, "physx_sys");
+    array_add(*libnames, "physx");
 
     array_add(*include_paths, "physx/physx-sys/src/generated/x86_64-pc-windows-msvc/");
     array_add(*include_paths, "physx/physx-sys/src/");
@@ -73,8 +73,6 @@
     ];
 
     remove_self_and_parents :: (decl: *Declaration) {
-        print("removing: %\n%\n\n", decl.*, decl.library.*);
-
         decl.decl_flags = .OMIT_FROM_OUTPUT;
         if decl.parent {
             remove_self_and_parents(decl.parent);
@@ -106,9 +104,31 @@
             }
         }
 
+        // the names of the functions to remove from the bindings, before the _mut and _1 stuff gets stripped
         bad_functions :: string.[
             "PxMat44_new_1",
             "PxMat44_new_2",
+            "PxMat33_new_1",
+            "PxMat33_new_2",
+            "PxGeometryHolder_any",
+            "PxGeometryHolder_sphere",
+            "PxGeometryHolder_plane",
+            "PxGeometryHolder_capsule",
+            "PxGeometryHolder_box",
+            "PxGeometryHolder_convexMesh",
+            "PxGeometryHolder_tetMesh",
+            "PxGeometryHolder_triangleMesh",
+            "PxGeometryHolder_heightField",
+            "PxGeometryHolder_particleSystem",
+            "PxGeometryHolder_hairSystem",
+            "PxGeometryHolder_custom",
+            "PxSoftBodyMesh_getCollisionMesh",
+            "PxSoftBodyMesh_getSimulationMesh",
+            "PxSoftBodyMesh_getSoftBodyAuxData",
+            "PxCollisionTetrahedronMeshData_getMesh",
+            "PxCollisionTetrahedronMeshData_getData",
+            "PxTransform_new",
+            "PxQuat_new",
         ];
 
         for bad_function: bad_functions {
@@ -188,8 +208,12 @@
     output = replace_and_free(output, "physx.PxI32", "s32");
     output = replace_and_free(output, "physx.PxU32", "u32");
     output = replace_and_free(output, "physx.PxAgain", "bool");
+    // change the function mapping names to something that won't get replaced
+    output = replace_and_free(output, "\"physx_", "\"PHYSX_");
     output = replace_and_free(output, "physx.", "physx_");
     output = replace_and_free(output, "physx_", "");
+    // change the function mapping names back
+    output = replace_and_free(output, "\"PHYSX_", "\"physx_");
     output = replace_and_free(output, "__pod", "");
     output = replace_and_free(output, "_pod", "");
     output = replace_and_free(output, "context:", "context_pod:");
@@ -205,6 +229,34 @@
         "PxHairSystemGeometry",
         "PxTetrahedronMeshGeometry",
         "PxCustomGeometry",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as actor: PxActor = ---;", .[
+        "PxRigidActor",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as rigid_actor: PxRigidActor = ---;", .[
+        "PxRigidStatic",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as rigid_actor: PxRigidActor = ---;", .[
+        "PxRigidBody",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as rigid_body: PxRigidBody = ---;", .[
+        "PxRigidDynamic",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as rigid_body: PxRigidBody = ---;", .[
+        "PxArticulationLink",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as ref_counted: PxRefCounted = ---;", .[
+        "PxBaseMaterial",
+        "PxConvexMesh",
+        "PxHeightField",
+        "PxShape",
+        "PxSoftBodyAuxData",
+        "PxSoftBodyMesh",
+        "PxTetrahedronMesh",
+        "PxTriangleMesh",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as base_material: PxBaseMaterial = ---;", .[
+        "PxMaterial",
     ]);
 
     write_entire_file("module.jai", output);

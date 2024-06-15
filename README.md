@@ -8,6 +8,12 @@ Nearly complete jai physx bindings. Based on the rust physx-sys bindings.
 
 * I'd like to have a way to pass in an allocator based on jai to the actual physx cpp wrapper library so anything allocated can be freed with jai free.
 
+* I want to make all integer flags in the generated api actually refer to the flag it generates. It's really annoying having to casts this all.
+
+* In the generator I have a function to force inheritance and I applied it to some things but not everything. It should work with everything.
+
+* I'd like to see if it's possible to replace the MatNN structs with jai Matrix structs. PhysX seems to be column major while jai is row major, but the physx docs somehow implied that it'll work with row major structs which I don't understand.
+
 
 ### Build
 
