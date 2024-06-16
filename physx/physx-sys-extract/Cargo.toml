@@ -1,0 +1,7 @@
+[package]
+name = "physx-sys-extract"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+physx-sys = { path = "../physx-sys" }

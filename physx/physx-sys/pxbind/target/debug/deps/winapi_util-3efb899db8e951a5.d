@@ -1,0 +1,11 @@
+C:\Users\Kuju\Projects\JaiPhysX\physx\physx-sys\pxbind\target\debug\deps\libwinapi_util-3efb899db8e951a5.rmeta: C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\lib.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\console.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\file.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\sysinfo.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\win.rs
+
+C:\Users\Kuju\Projects\JaiPhysX\physx\physx-sys\pxbind\target\debug\deps\libwinapi_util-3efb899db8e951a5.rlib: C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\lib.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\console.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\file.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\sysinfo.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\win.rs
+
+C:\Users\Kuju\Projects\JaiPhysX\physx\physx-sys\pxbind\target\debug\deps\winapi_util-3efb899db8e951a5.d: C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\lib.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\console.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\file.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\sysinfo.rs C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\win.rs
+
+C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\lib.rs:
+C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\console.rs:
+C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\file.rs:
+C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\sysinfo.rs:
+C:\Users\Kuju\.cargo\registry\src\index.crates.io-6f17d22bba15001f\winapi-util-0.1.8\src\win.rs:
