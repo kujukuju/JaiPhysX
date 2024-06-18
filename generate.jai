@@ -10,6 +10,24 @@
     // array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
     // array_add(*system_include_paths, ..get_default_system_include_paths(opts.os, opts.cpu));
 
+    found_lib_name: string;
+    for file: file_list("physx/physx-sys-extract/target/release/deps/") {
+        filename: string;
+        filename.data = file.data + (find_index_from_right(file, "/") + 1);
+        filename.count = file.count - (find_index_from_right(file, "/") + 1);
+        if starts_with(filename, "physx_sys") && ends_with(filename, ".lib") {
+            found_lib_name = file;
+            break;
+        }
+    }
+    if found_lib_name {
+        copy_file(found_lib_name, "windows/physx.lib");
+    }
+    if !file_exists("windows/physx.lib") {
+        print("Physx library doesn't exist, and could not find extracted physx library to copy.\n");
+        return;
+    }
+
     array_add(*libpaths, "windows");
 
     array_add(*libnames, "physx");
@@ -257,6 +275,14 @@
     ]);
     output = force_inheritance(output, "#place structgen_pad0; #as base_material: PxBaseMaterial = ---;", .[
         "PxMaterial",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as controller_desc: PxControllerDesc = ---;", .[
+        "PxBoxControllerDesc",
+        "PxCapsuleControllerDesc",
+    ]);
+    output = force_inheritance(output, "#place vtable_; #as controller: PxController = ---;", .[
+        "PxBoxController",
+        "PxCapsuleController",
     ]);
 
     write_entire_file("module.jai", output);

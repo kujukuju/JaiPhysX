@@ -383,6 +383,45 @@ private:
     void* mUserdata = nullptr;
 };
 
+using ShapeHitCallback = void (*)(void *, PxControllerShapeHit const *);
+using ControllerHitCallback = void (*)(void *, PxControllersHit const *);
+using ObstacleHitCallback = void (*)(void *, PxControllerObstacleHit const *);
+
+struct UserControllerHitReportInfo {
+    ShapeHitCallback shapeHitCallback = nullptr;
+    void* shapeHitUserData = nullptr;
+    ControllerHitCallback controllerHitCallback = nullptr;
+    void* controllerHitUserData = nullptr;
+    ObstacleHitCallback obstacleHitCallback = nullptr;
+    void* obstacleHitUserData = nullptr;
+};
+
+class UserControllerHitReport : public PxUserControllerHitReport {
+public:
+    UserControllerHitReport(const UserControllerHitReportInfo *callbacks) : mCallbacks(*callbacks) {}
+
+    void onShapeHit(const PxControllerShapeHit& hit) override {
+        if (mCallbacks.shapeHitCallback) {
+            mCallbacks.shapeHitCallback(mCallbacks.shapeHitUserData, &hit);
+        }
+    }
+
+    void onControllerHit(const PxControllersHit& hit) override {
+        if (mCallbacks.controllerHitCallback) {
+            mCallbacks.controllerHitCallback(mCallbacks.controllerHitUserData, &hit);
+        }
+    }
+
+    void onObstacleHit(const PxControllerObstacleHit& hit) override {
+        if (mCallbacks.obstacleHitCallback) {
+            mCallbacks.obstacleHitCallback(mCallbacks.obstacleHitUserData, &hit);
+        }
+    }
+
+    UserControllerHitReportInfo mCallbacks;
+    
+};
+
 extern "C"
 {
     PxFoundation *physx_create_foundation()
@@ -551,6 +590,24 @@ extern "C"
     {
         SimulationEventTrampoline *trampoline = static_cast<SimulationEventTrampoline *>(callback);
         delete trampoline;
+    }
+
+    PxUserControllerHitReport *create_user_controller_hit_report(const UserControllerHitReportInfo *callbacks)
+    {
+        UserControllerHitReport *report = new UserControllerHitReport(callbacks);
+        return static_cast<PxUserControllerHitReport *>(report);
+    }
+
+    UserControllerHitReportInfo *get_user_controller_hit_info(PxUserControllerHitReport *callback)
+    {
+        UserControllerHitReport *report = static_cast<UserControllerHitReport *>(callback);
+        return &report->mCallbacks;
+    }
+
+    void destroy_user_controller_hit_report(PxUserControllerHitReport *callback)
+    {
+        UserControllerHitReport *report = static_cast<UserControllerHitReport *>(callback);
+        delete report;
     }
 
     void enable_custom_filter_shader(PxSceneDesc *desc, SimulationShaderFilter filter, uint32_t call_default_filter_shader_first)

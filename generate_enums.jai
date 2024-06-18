@@ -568,3 +568,44 @@ PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
     YieldThread :: 1;
     YieldProcessor :: 2;
 }
+
+PxControllerShapeType :: enum s32 {
+    /// A box controller.
+    Box :: 0;
+    /// A capsule controller
+    Capsule :: 1;
+    /// A capsule controller
+    ForceDword :: 2147483647;
+}
+
+PxControllerNonWalkableMode :: enum s32 {
+    /// Stops character from climbing up non-walkable slopes, but doesn't move it otherwise
+    PreventClimbing :: 0;
+    /// Stops character from climbing up non-walkable slopes, and forces it to slide down those slopes
+    PreventClimbingAndForceSliding :: 1;
+}
+
+PxControllerCollisionFlags :: enum_flags u8 {
+    CollisionSides :: 1 << 0;
+    CollisionUp :: 1 << 1;
+    CollisionDown :: 1 << 2;
+}
+
+PxCapsuleClimbingMode :: enum s32 {
+    /// Standard mode, let the capsule climb over surfaces according to impact normal
+    Easy :: 0;
+    /// Constrained mode, try to limit climbing according to the step offset
+    Constrained :: 1;
+    Last :: 2;
+}
+
+PxControllerBehaviorFlag :: enum_flags s32 {
+    /// Controller can ride on touched object (i.e. when this touched object is moving horizontally).
+    ///
+    /// The CCT vs. CCT case is not supported.
+    CctCanRideOnObject :: 1;
+    /// Controller should slide on touched object
+    CctSlide :: 2;
+    /// Disable all code dealing with controllers riding on objects, let users define it outside of the SDK.
+    CctUserDefinedRide :: 4;
+}

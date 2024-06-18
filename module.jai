@@ -574,6 +574,47 @@ PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
     YieldProcessor :: 2;
 }
 
+PxControllerShapeType :: enum s32 {
+    /// A box controller.
+    Box :: 0;
+    /// A capsule controller
+    Capsule :: 1;
+    /// A capsule controller
+    ForceDword :: 2147483647;
+}
+
+PxControllerNonWalkableMode :: enum s32 {
+    /// Stops character from climbing up non-walkable slopes, but doesn't move it otherwise
+    PreventClimbing :: 0;
+    /// Stops character from climbing up non-walkable slopes, and forces it to slide down those slopes
+    PreventClimbingAndForceSliding :: 1;
+}
+
+PxControllerCollisionFlags :: enum_flags u8 {
+    CollisionSides :: 1 << 0;
+    CollisionUp :: 1 << 1;
+    CollisionDown :: 1 << 2;
+}
+
+PxCapsuleClimbingMode :: enum s32 {
+    /// Standard mode, let the capsule climb over surfaces according to impact normal
+    Easy :: 0;
+    /// Constrained mode, try to limit climbing according to the step offset
+    Constrained :: 1;
+    Last :: 2;
+}
+
+PxControllerBehaviorFlag :: enum_flags s32 {
+    /// Controller can ride on touched object (i.e. when this touched object is moving horizontally).
+    ///
+    /// The CCT vs. CCT case is not supported.
+    CctCanRideOnObject :: 1;
+    /// Controller should slide on touched object
+    CctSlide :: 2;
+    /// Disable all code dealing with controllers riding on objects, let users define it outside of the SDK.
+    CctUserDefinedRide :: 4;
+}
+
 
 
 NDEBUG :: 1;
@@ -2501,10 +2542,12 @@ PxBoxControllerDesc :: struct {
     halfSideExtent:           float;
     halfForwardExtent:        float;
     structgen_pad5:           [4] u8;
+#place structgen_pad0; #as controller_desc: PxControllerDesc = ---;
 }
 
 PxBoxController :: struct {
     vtable_: *void;
+#place vtable_; #as controller: PxController = ---;
 }
 
 PxCapsuleControllerDesc :: struct {
@@ -2534,10 +2577,12 @@ PxCapsuleControllerDesc :: struct {
     height:                   float;
     climbingMode:             s32;
     structgen_pad5:           [4] u8;
+#place structgen_pad0; #as controller_desc: PxControllerDesc = ---;
 }
 
 PxCapsuleController :: struct {
     vtable_: *void;
+#place vtable_; #as controller: PxController = ---;
 }
 
 PxControllerBehaviorCallback :: struct {
@@ -3081,8 +3126,6 @@ PxVec3Padded_delete :: (self: *PxVec3Padded) -> void #foreign physx;
 PxVec3Padded_new_alloc :: (p: *Vector3) -> *PxVec3Padded #foreign physx "PxVec3Padded_new_alloc_1";
 
 PxVec3Padded_new_alloc :: (f: float) -> *PxVec3Padded #foreign physx "PxVec3Padded_new_alloc_2";
-
-PxQuat_new :: () -> Quaternion #foreign physx;
 
 PxQuat_new :: (anon_param0: s32) -> Quaternion #foreign physx "PxQuat_new_1";
 
@@ -6722,6 +6765,19 @@ ErrorCallback :: #type (code: s32, message: *u8, file: *u8, line: s32, userdata:
 
 AssertHandler :: #type (expr: *u8, file: *u8, line: s32, should_ignore: *bool, userdata: *void) -> void #c_call;
 
+ShapeHitCallback :: #type (unknown0: *void, unknown1: *PxControllerShapeHit) -> void #c_call;
+ControllerHitCallback :: #type (unknown0: *void, unknown1: *PxControllersHit) -> void #c_call;
+ObstacleHitCallback :: #type (unknown0: *void, unknown1: *PxControllerObstacleHit) -> void #c_call;
+
+UserControllerHitReportInfo :: struct {
+    shapeHitCallback:      ShapeHitCallback = null;
+    shapeHitUserData:      *void = null;
+    controllerHitCallback: ControllerHitCallback = null;
+    controllerHitUserData: *void = null;
+    obstacleHitCallback:   ObstacleHitCallback = null;
+    obstacleHitUserData:   *void = null;
+}
+
 create_foundation :: () -> *PxFoundation #foreign physx "physx_create_foundation";
 
 create_foundation_with_alloc :: (allocator: *PxAllocatorCallback) -> *PxFoundation #foreign physx "physx_create_foundation_with_alloc";
@@ -6777,6 +6833,12 @@ create_simulation_event_callbacks :: (callbacks: *SimulationEventCallbackInfo) -
 get_simulation_event_info :: (callback: *PxSimulationEventCallback) -> *SimulationEventCallbackInfo #foreign physx;
 
 destroy_simulation_event_callbacks :: (callback: *PxSimulationEventCallback) -> void #foreign physx;
+
+create_user_controller_hit_report :: (callbacks: *UserControllerHitReportInfo) -> *PxUserControllerHitReport #foreign physx;
+
+get_user_controller_hit_info :: (callback: *PxUserControllerHitReport) -> *UserControllerHitReportInfo #foreign physx;
+
+destroy_user_controller_hit_report :: (callback: *PxUserControllerHitReport) -> void #foreign physx;
 
 enable_custom_filter_shader :: (desc: *PxSceneDesc, filter: SimulationShaderFilter, call_default_filter_shader_first: u32) -> void #foreign physx;
 
