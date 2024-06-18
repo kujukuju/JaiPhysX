@@ -604,7 +604,7 @@ PxCapsuleClimbingMode :: enum s32 {
     Last :: 2;
 }
 
-PxControllerBehaviorFlag :: enum_flags s32 {
+PxControllerBehaviorFlags :: enum_flags u8 {
     /// Controller can ride on touched object (i.e. when this touched object is moving horizontally).
     ///
     /// The CCT vs. CCT case is not supported.
@@ -6778,6 +6778,19 @@ UserControllerHitReportInfo :: struct {
     obstacleHitUserData:   *void = null;
 }
 
+ShapeBehaviorCallback :: #type (data: *void, shape: *PxShape, actor: *PxActor) -> PxControllerBehaviorFlags #c_call;
+CharacterBehaviorCallback :: #type (data: *void, controller: *PxController) -> PxControllerBehaviorFlags #c_call;
+ObstacleBehaviorCallback :: #type (data: *void, obstacle: *PxObstacle) -> PxControllerBehaviorFlags #c_call;
+
+ControllerBehaviorCallbackInfo :: struct {
+    shapeBehaviorCallback:      ShapeBehaviorCallback = null;
+    shapeBehaviorUserData:      *void = null;
+    controllerBehaviorCallback: CharacterBehaviorCallback = null;
+    controllerBehaviorUserData: *void = null;
+    obstacleBehaviorCallback:   ObstacleBehaviorCallback = null;
+    obstacleBehaviorUserData:   *void = null;
+}
+
 create_foundation :: () -> *PxFoundation #foreign physx "physx_create_foundation";
 
 create_foundation_with_alloc :: (allocator: *PxAllocatorCallback) -> *PxFoundation #foreign physx "physx_create_foundation_with_alloc";
@@ -6839,6 +6852,12 @@ create_user_controller_hit_report :: (callbacks: *UserControllerHitReportInfo) -
 get_user_controller_hit_info :: (callback: *PxUserControllerHitReport) -> *UserControllerHitReportInfo #foreign physx;
 
 destroy_user_controller_hit_report :: (callback: *PxUserControllerHitReport) -> void #foreign physx;
+
+create_controller_behavior_callbacks :: (callbacks: *ControllerBehaviorCallbackInfo) -> *PxControllerBehaviorCallback #foreign physx;
+
+get_controller_behavior_info :: (callback: *PxControllerBehaviorCallback) -> *ControllerBehaviorCallbackInfo #foreign physx;
+
+destroy_controller_behavior_callbacks :: (callback: *PxControllerBehaviorCallback) -> void #foreign physx;
 
 enable_custom_filter_shader :: (desc: *PxSceneDesc, filter: SimulationShaderFilter, call_default_filter_shader_first: u32) -> void #foreign physx;
 

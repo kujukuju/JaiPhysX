@@ -599,7 +599,7 @@ PxCapsuleClimbingMode :: enum s32 {
     Last :: 2;
 }
 
-PxControllerBehaviorFlag :: enum_flags s32 {
+PxControllerBehaviorFlags :: enum_flags u8 {
     /// Controller can ride on touched object (i.e. when this touched object is moving horizontally).
     ///
     /// The CCT vs. CCT case is not supported.

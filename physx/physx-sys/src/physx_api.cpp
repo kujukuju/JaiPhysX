@@ -419,7 +419,47 @@ public:
     }
 
     UserControllerHitReportInfo mCallbacks;
-    
+};
+
+using ShapeBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxShape* shape, const PxActor* actor);
+using CharacterBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxController* controller);
+using ObstacleBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxObstacle* obstacle);
+
+struct ControllerBehaviorCallbackInfo {
+    ShapeBehaviorCallback shapeBehaviorCallback = nullptr;
+    void* shapeBehaviorUserData = nullptr;
+    CharacterBehaviorCallback controllerBehaviorCallback = nullptr;
+    void* controllerBehaviorUserData = nullptr;
+    ObstacleBehaviorCallback obstacleBehaviorCallback = nullptr;
+    void* obstacleBehaviorUserData = nullptr;
+};
+
+class ControllerBehaviorCallback : public PxControllerBehaviorCallback {
+public:
+    ControllerBehaviorCallback(const ControllerBehaviorCallbackInfo *callbacks) : mCallbacks(*callbacks) {}
+
+    PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor) override {
+        if (mCallbacks.shapeBehaviorCallback) {
+            return mCallbacks.shapeBehaviorCallback(mCallbacks.shapeBehaviorUserData, &shape, &actor);
+        }
+        return static_cast<PxControllerBehaviorFlags>(0);
+    }
+
+    PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) override {
+        if (mCallbacks.controllerBehaviorCallback) {
+            return mCallbacks.controllerBehaviorCallback(mCallbacks.controllerBehaviorUserData, &controller);
+        }
+        return static_cast<PxControllerBehaviorFlags>(0);
+    }
+
+    PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) override {
+        if (mCallbacks.obstacleBehaviorCallback) {
+            return mCallbacks.obstacleBehaviorCallback(mCallbacks.obstacleBehaviorUserData, &obstacle);
+        }
+        return PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
+    }
+
+    ControllerBehaviorCallbackInfo mCallbacks;
 };
 
 extern "C"
@@ -608,6 +648,24 @@ extern "C"
     {
         UserControllerHitReport *report = static_cast<UserControllerHitReport *>(callback);
         delete report;
+    }
+
+    PxControllerBehaviorCallback *create_controller_behavior_callbacks(const ControllerBehaviorCallbackInfo *callbacks)
+    {
+        ControllerBehaviorCallback *behavior = new ControllerBehaviorCallback(callbacks);
+        return static_cast<PxControllerBehaviorCallback *>(behavior);
+    }
+
+    ControllerBehaviorCallbackInfo *get_controller_behavior_info(PxControllerBehaviorCallback *callback)
+    {
+        ControllerBehaviorCallback *behavior = static_cast<ControllerBehaviorCallback *>(callback);
+        return &behavior->mCallbacks;
+    }
+
+    void destroy_controller_behavior_callbacks(PxControllerBehaviorCallback *callback)
+    {
+        ControllerBehaviorCallback *behavior = static_cast<ControllerBehaviorCallback *>(callback);
+        delete behavior;
     }
 
     void enable_custom_filter_shader(PxSceneDesc *desc, SimulationShaderFilter filter, uint32_t call_default_filter_shader_first)
