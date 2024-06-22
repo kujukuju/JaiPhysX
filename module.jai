@@ -473,6 +473,7 @@ PxPairFlags :: enum_flags u16 {
 }
 
 PxFilterFlags :: enum_flags u16 {
+    Default :: 0;
     Kill :: 1 << 0;
     Suppress :: 1 << 1;
     Callback :: 1 << 2;
@@ -613,6 +614,40 @@ PxControllerBehaviorFlags :: enum_flags u8 {
     CctSlide :: 2;
     /// Disable all code dealing with controllers riding on objects, let users define it outside of the SDK.
     CctUserDefinedRide :: 4;
+}
+
+PxQueryHitType :: enum s32 {
+    /// the query should ignore this shape
+    None :: 0;
+    /// a hit on the shape touches the intersection geometry of the query but does not block it
+    Touch :: 1;
+    /// a hit on the shape blocks the query (does not block overlap queries)
+    Block :: 2;
+}
+
+PxQueryFlags :: enum_flags u16 {
+    Static :: 1 << 0;
+    Dynamic :: 1 << 1;
+    Prefilter :: 1 << 2;
+    Postfilter :: 1 << 3;
+    AnyHit :: 1 << 4;
+    NoBlock :: 1 << 5;
+    DisableHardcodedFilter :: 1 << 6;
+    Reserved :: 1 << 15;
+}
+
+PxBroadPhaseType :: enum s32 {
+    /// 3-axes sweep-and-prune
+    Sap :: 0;
+    /// Multi box pruning
+    Mbp :: 1;
+    /// Automatic box pruning
+    Abp :: 2;
+    /// Parallel automatic box pruning
+    Pabp :: 3;
+    /// GPU broad phase
+    Gpu :: 4;
+    Last :: 5;
 }
 
 
@@ -6701,22 +6736,20 @@ PxDefaultPvdSocketTransportCreate :: (host: *u8, port: s32, timeoutInMillisecond
 
 PxDefaultPvdFileTransportCreate :: (name: *u8) -> *PxPvdTransport #foreign physx "phys_PxDefaultPvdFileTransportCreate";
 
-FilterShaderCallbackInfo :: struct {
-    attributes0:       u32;
-    attributes1:       u32;
-    filterData0:       PxFilterData;
-    filterData1:       PxFilterData;
-    pairFlags:         *PxPairFlags;
-    constantBlock:     *void;
-    constantBlockSize: u32;
-}
-
 CollisionCallback :: #type (unknown0: *void, unknown1: *PxContactPairHeader, unknown2: *PxContactPair, unknown3: u32) -> void #c_call;
-SimulationShaderFilter :: #type (unknown0: *FilterShaderCallbackInfo) -> u16 #c_call;
 
-FilterCallbackData :: struct {
-    filter:                           SimulationShaderFilter;
-    call_default_filter_shader_first: bool;
+// struct FilterShaderInfo
+// {
+//     PxFilterObjectAttributes attributes0;
+//     PxFilterData filterData0;
+//     PxFilterObjectAttributes attributes1;
+//     PxFilterData filterData1;
+//     PxPairFlags *pairFlags;
+// };
+SimulationFilterShader :: #type (attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, pairFlags: *PxPairFlags) -> u16 #c_call;
+
+FilterShaderHandle :: struct {
+    shader: SimulationFilterShader;
 }
 
 TriggerCallback :: #type (unknown0: *void, unknown1: *PxTriggerPair, unknown2: u32) -> void #c_call;
@@ -6746,9 +6779,8 @@ SimulationEventCallbackInfo :: struct {
     advanceUserData:         *void = null;
 }
 
-// TODO: Shouldn't we rename this to PreFilterCallback?
-RaycastHitCallback :: #type (actor: *PxRigidActor, filterData: *PxFilterData, shape: *PxShape, hitFlags: u32, userData: *void) -> u32 #c_call;
-PostFilterCallback :: #type (filterData: *PxFilterData, hit: *PxQueryHit, userData: *void) -> u32 #c_call;
+RaycastHitCallback :: #type (actor: *PxRigidActor, filterData: *PxFilterData, shape: *PxShape, hitFlags: u32, userData: *void) -> s32 #c_call;
+PostFilterCallback :: #type (filterData: *PxFilterData, hit: *PxQueryHit, userData: *void) -> s32 #c_call;
 
 RaycastHitProcessTouchesCallback :: #type (buffer: *PxRaycastHit, nbHits: u32, userdata: *void) -> bool #c_call;
 SweepHitProcessTouchesCallback :: #type (buffer: *PxSweepHit, nbHits: u32, userdata: *void) -> bool #c_call;
@@ -6791,6 +6823,13 @@ ControllerBehaviorCallbackInfo :: struct {
     obstacleBehaviorUserData:   *void = null;
 }
 
+OnContactModify :: #type (data: *void, pairs: *PxContactModifyPair, count: u32) -> void #c_call;
+
+ContactModifyCallbackInfo :: struct {
+    onContactModify:         OnContactModify = null;
+    onContactModifyUserData: *void = null;
+}
+
 create_foundation :: () -> *PxFoundation #foreign physx "physx_create_foundation";
 
 create_foundation_with_alloc :: (allocator: *PxAllocatorCallback) -> *PxFoundation #foreign physx "physx_create_foundation_with_alloc";
@@ -6807,9 +6846,15 @@ create_physics :: (foundation: *PxFoundation) -> *PxPhysics #foreign physx "phys
 
 create_raycast_filter_callback :: (actor_to_ignore: *PxRigidActor) -> *PxQueryFilterCallback #foreign physx;
 
+destroy_raycast_filter_callback :: (callback: *PxQueryFilterCallback) -> void #foreign physx;
+
 create_raycast_filter_callback_func :: (callback: RaycastHitCallback, userData: *void) -> *PxQueryFilterCallback #foreign physx;
 
+destroy_raycast_filter_callback_func :: (callback: *PxQueryFilterCallback) -> void #foreign physx;
+
 create_pre_and_post_raycast_filter_callback_func :: (preFilter: RaycastHitCallback, postFilter: PostFilterCallback, userData: *void) -> *PxQueryFilterCallback #foreign physx;
+
+destroy_pre_and_post_raycast_filter_callback_func :: (callback: *PxQueryFilterCallback) -> void #foreign physx;
 
 create_raycast_buffer :: () -> *PxRaycastCallback #foreign physx;
 
@@ -6839,27 +6884,53 @@ create_error_callback :: (error_callback: ErrorCallback, userdata: *void) -> *Px
 
 create_assert_handler :: (on_assert: AssertHandler, userdata: *void) -> *PxAssertHandler #foreign physx;
 
-get_default_simulation_filter_shader :: () -> *void #foreign physx;
-
+// simulation event
 create_simulation_event_callbacks :: (callbacks: *SimulationEventCallbackInfo) -> *PxSimulationEventCallback #foreign physx;
 
 get_simulation_event_info :: (callback: *PxSimulationEventCallback) -> *SimulationEventCallbackInfo #foreign physx;
 
 destroy_simulation_event_callbacks :: (callback: *PxSimulationEventCallback) -> void #foreign physx;
 
+// hit report
 create_user_controller_hit_report :: (callbacks: *UserControllerHitReportInfo) -> *PxUserControllerHitReport #foreign physx;
 
 get_user_controller_hit_info :: (callback: *PxUserControllerHitReport) -> *UserControllerHitReportInfo #foreign physx;
 
 destroy_user_controller_hit_report :: (callback: *PxUserControllerHitReport) -> void #foreign physx;
 
+// controller behavior
 create_controller_behavior_callbacks :: (callbacks: *ControllerBehaviorCallbackInfo) -> *PxControllerBehaviorCallback #foreign physx;
 
 get_controller_behavior_info :: (callback: *PxControllerBehaviorCallback) -> *ControllerBehaviorCallbackInfo #foreign physx;
 
 destroy_controller_behavior_callbacks :: (callback: *PxControllerBehaviorCallback) -> void #foreign physx;
 
-enable_custom_filter_shader :: (desc: *PxSceneDesc, filter: SimulationShaderFilter, call_default_filter_shader_first: u32) -> void #foreign physx;
+// contact modify
+create_contact_modify_callbacks :: (callbacks: *ContactModifyCallbackInfo) -> *PxContactModifyCallback #foreign physx;
+
+get_contact_modify_info :: (callback: *PxContactModifyCallback) -> *ContactModifyCallbackInfo #foreign physx;
+
+destroy_contact_modify_callbacks :: (callback: *PxContactModifyCallback) -> void #foreign physx;
+
+// ccd contact modify
+create_ccd_contact_modify_callbacks :: (callbacks: *ContactModifyCallbackInfo) -> *PxCCDContactModifyCallback #foreign physx;
+
+get_ccd_contact_modify_info :: (callback: *PxCCDContactModifyCallback) -> *ContactModifyCallbackInfo #foreign physx;
+
+destroy_ccd_contact_modify_callbacks :: (callback: *PxCCDContactModifyCallback) -> void #foreign physx;
+
+// filter shader
+get_default_simulation_filter_shader :: () -> SimulationFilterShader #foreign physx;
+
+set_default_filter_shader :: (desc: *PxSceneDesc) -> void #foreign physx;
+
+create_custom_filter_shader :: (filter: SimulationFilterShader) -> *FilterShaderHandle #foreign physx;
+
+destroy_custom_filter_shader :: (filterHandle: *FilterShaderHandle) -> void #foreign physx;
+
+set_custom_filter_shader :: (desc: *PxSceneDesc, filterHandle: *FilterShaderHandle) -> void #foreign physx;
+
+set_custom_filter_shader_with_default :: (desc: *PxSceneDesc, filterHandle: *FilterShaderHandle) -> void #foreign physx;
 
 // Not generated, used only for testing and examples!
 PxAssertHandler_opCall :: (self: *PxErrorCallback, expr: *u8, file: *u8, line: s32, ignore: *bool) -> void #foreign physx "PxAssertHandler_opCall_mut";
@@ -6868,3 +6939,4 @@ PxAssertHandler_opCall :: (self: *PxErrorCallback, expr: *u8, file: *u8, line: s
 
 physx :: #library,no_dll "windows/physx";
 #import "Math";
+#import "Socket";

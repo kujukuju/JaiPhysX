@@ -5,51 +5,62 @@
 PxDefaultAllocator gAllocator;
 PxDefaultErrorCallback gErrorCallback;
 
-struct FilterShaderCallbackInfo
-{
-    PxFilterObjectAttributes attributes0;
-    PxFilterObjectAttributes attributes1;
-    PxFilterData filterData0;
-    PxFilterData filterData1;
-    PxPairFlags *pairFlags;
-    const void *constantBlock;
-    PxU32 constantBlockSize;
-};
-
 typedef void (*CollisionCallback)(void *, PxContactPairHeader const *, PxContactPair const *, PxU32);
-extern "C" typedef PxU16 (*SimulationShaderFilter)(FilterShaderCallbackInfo *);
 
-struct FilterCallbackData {
-    SimulationShaderFilter filter;
-    bool call_default_filter_shader_first;
+typedef PxU16 (*SimulationFilterShader)(
+    PxFilterObjectAttributes attributes0,
+    PxFilterData filterData0,
+    PxFilterObjectAttributes attributes1,
+    PxFilterData filterData1,
+    PxPairFlags *pairFlags);
+
+struct FilterShaderHandle
+{
+    SimulationFilterShader shader;
 };
+
+
+PxU16 DefaultSimulationFilterShader(PxFilterObjectAttributes attributes0,
+                                    PxFilterData filterData0,
+                                    PxFilterObjectAttributes attributes1,
+                                    PxFilterData filterData1,
+                                    PxPairFlags *pairFlags)
+{
+    return PxDefaultSimulationFilterShader(attributes0, filterData0, attributes1, filterData1, *pairFlags, nullptr, 0);
+}
 
 PxFilterFlags FilterShaderTrampoline(PxFilterObjectAttributes attributes0,
                                      PxFilterData filterData0,
                                      PxFilterObjectAttributes attributes1,
                                      PxFilterData filterData1,
-                                     PxPairFlags &pairFlags,
-                                     const void *constantBlock,
+                                     PxPairFlags& pairFlags,
+                                     const void* constantBlock,
                                      PxU32 constantBlockSize)
 {
-    const FilterCallbackData *data = static_cast<const FilterCallbackData *>(constantBlock);
-
-    if (data->call_default_filter_shader_first) {
-        // Let the default handler set the pair flags, but ignore the collision filtering
-        PxDefaultSimulationFilterShader(attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock,
-                                        constantBlockSize);
-    }
-
-    // Get the filter shader from the constant block
-    SimulationShaderFilter shaderfilter = data->filter;
-
-    // This is a bit expensive since we're putting things on the stack but with LTO this should optimize OK,
-    // and I was having issues with corrupted values when passing by value
-    FilterShaderCallbackInfo info{attributes0, attributes1, filterData0, filterData1, &pairFlags, nullptr, 0};
+    FilterShaderHandle* handle = static_cast<FilterShaderHandle*>(const_cast<void*>(constantBlock));
 
     // We return a u16 since PxFilterFlags is a complex type and C++ wants it to be returned on the stack,
     // but Rust thinks it's simple due to the codegen and wants to return it in EAX.
-    return PxFilterFlags{shaderfilter(&info)};
+    return PxFilterFlags{handle->shader(attributes0, filterData0, attributes1, filterData1, &pairFlags)};
+}
+
+PxFilterFlags FilterShaderTrampolineWithDefault(PxFilterObjectAttributes attributes0,
+                                     PxFilterData filterData0,
+                                     PxFilterObjectAttributes attributes1,
+                                     PxFilterData filterData1,
+                                     PxPairFlags& pairFlags,
+                                     const void* constantBlock,
+                                     PxU32 constantBlockSize)
+{
+    // Let the default handler set the pair flags, but ignore the collision filtering
+    PxDefaultSimulationFilterShader(attributes0, filterData0, attributes1, filterData1, pairFlags, nullptr, 0);
+
+    FilterShaderHandle* handle = static_cast<FilterShaderHandle*>(const_cast<void*>(constantBlock));
+
+    // We return a u16 since PxFilterFlags is a complex type and C++ wants it to be returned on the stack,
+    // but Rust thinks it's simple due to the codegen and wants to return it in EAX.
+    // PxU16 value = callback(attributes0, filterData0, attributes1, filterData1, pairFlags, nullptr, 0);
+    return PxFilterFlags{handle->shader(attributes0, filterData0, attributes1, filterData1, &pairFlags)};
 }
 
 using CollisionCallback = void (*)(void *, PxContactPairHeader const *, PxContactPair const *, PxU32);
@@ -149,11 +160,10 @@ class RaycastFilterCallback : public PxQueryFilterCallback
     }
 };
 
-// TODO: Shouldn't we rename this to PreFilterCallback?
-typedef uint32_t (*RaycastHitCallback)(const PxRigidActor *actor, const PxFilterData *filterData, const PxShape *shape, uint32_t hitFlags, const void *userData);
-typedef uint32_t (*PostFilterCallback)(const PxFilterData *filterData, const PxQueryHit* hit, const void *userData);
+typedef int32_t (*RaycastHitCallback)(const PxRigidActor *actor, const PxFilterData *filterData, const PxShape *shape, uint32_t hitFlags, const void *userData);
+typedef int32_t (*PostFilterCallback)(const PxFilterData *filterData, const PxQueryHit* hit, const void *userData);
 
-PxQueryHitType::Enum sanitize_hit_type(uint32_t hit_type) {
+PxQueryHitType::Enum sanitize_hit_type(int32_t hit_type) {
     switch (hit_type) {
         case PxQueryHitType::eNONE:
         case PxQueryHitType::eTOUCH:
@@ -462,6 +472,39 @@ public:
     ControllerBehaviorCallbackInfo mCallbacks;
 };
 
+using OnContactModify = void (*)(void* data, const PxContactModifyPair* pairs, PxU32 count);
+
+struct ContactModifyCallbackInfo {
+    OnContactModify onContactModify = nullptr;
+    void* onContactModifyUserData = nullptr;
+};
+
+class ContactModifyCallback : public PxContactModifyCallback {
+public:
+    ContactModifyCallback(const ContactModifyCallbackInfo *callbacks) : mCallbacks(*callbacks) {}
+
+    void onContactModify(PxContactModifyPair* const pairs, PxU32 count) override {
+        if (mCallbacks.onContactModify) {
+            mCallbacks.onContactModify(mCallbacks.onContactModifyUserData, pairs, count);
+        }
+    }
+
+    ContactModifyCallbackInfo mCallbacks;
+};
+
+class CCDContactModifyCallback : public PxCCDContactModifyCallback {
+public:
+    CCDContactModifyCallback(const ContactModifyCallbackInfo *callbacks) : mCallbacks(*callbacks) {}
+
+    void onCCDContactModify(PxContactModifyPair* const pairs, PxU32 count) override {
+        if (mCallbacks.onContactModify) {
+            mCallbacks.onContactModify(mCallbacks.onContactModifyUserData, pairs, count);
+        }
+    }
+
+    ContactModifyCallbackInfo mCallbacks;
+};
+
 extern "C"
 {
     PxFoundation *physx_create_foundation()
@@ -495,17 +538,38 @@ extern "C"
 
     PxQueryFilterCallback *create_raycast_filter_callback(PxRigidActor *actor_to_ignore)
     {
-        return new RaycastFilterCallback(actor_to_ignore);
+        RaycastFilterCallback* filter = new RaycastFilterCallback(actor_to_ignore);
+        return static_cast<PxQueryFilterCallback*>(filter);
+    }
+
+    void destroy_raycast_filter_callback(PxQueryFilterCallback *callback)
+    {
+        RaycastFilterCallback *filter = static_cast<RaycastFilterCallback *>(callback);
+        delete filter;
     }
 
     PxQueryFilterCallback *create_raycast_filter_callback_func(RaycastHitCallback callback, void *userData)
     {
-        return new RaycastFilterTrampoline(callback, userData);
+        RaycastFilterTrampoline* filter = new RaycastFilterTrampoline(callback, userData);
+        return static_cast<PxQueryFilterCallback*>(filter);
+    }
+
+    void destroy_raycast_filter_callback_func(PxQueryFilterCallback *callback)
+    {
+        RaycastFilterTrampoline *filter = static_cast<RaycastFilterTrampoline *>(callback);
+        delete filter;
     }
 
     PxQueryFilterCallback *create_pre_and_post_raycast_filter_callback_func(RaycastHitCallback preFilter, PostFilterCallback postFilter, void *userData)
     {
-        return new RaycastFilterPrePostTrampoline(preFilter, postFilter, userData);
+        RaycastFilterPrePostTrampoline* filter = new RaycastFilterPrePostTrampoline(preFilter, postFilter, userData);
+        return static_cast<PxQueryFilterCallback*>(filter);
+    }
+
+    void destroy_pre_and_post_raycast_filter_callback_func(PxQueryFilterCallback *callback)
+    {
+        RaycastFilterPrePostTrampoline *filter = static_cast<RaycastFilterPrePostTrampoline *>(callback);
+        delete filter;
     }
 
     PxRaycastCallback *create_raycast_buffer()
@@ -609,10 +673,7 @@ extern "C"
         return new AssertTrampoline(on_assert, userdata);
     }
 
-    void *get_default_simulation_filter_shader()
-    {
-        return (void *)PxDefaultSimulationFilterShader;
-    }
+    // simulation event
 
     PxSimulationEventCallback *create_simulation_event_callbacks(const SimulationEventCallbackInfo *callbacks)
     {
@@ -632,6 +693,8 @@ extern "C"
         delete trampoline;
     }
 
+    // hit report
+
     PxUserControllerHitReport *create_user_controller_hit_report(const UserControllerHitReportInfo *callbacks)
     {
         UserControllerHitReport *report = new UserControllerHitReport(callbacks);
@@ -649,6 +712,8 @@ extern "C"
         UserControllerHitReport *report = static_cast<UserControllerHitReport *>(callback);
         delete report;
     }
+
+    // controller behavior
 
     PxControllerBehaviorCallback *create_controller_behavior_callbacks(const ControllerBehaviorCallbackInfo *callbacks)
     {
@@ -668,17 +733,81 @@ extern "C"
         delete behavior;
     }
 
-    void enable_custom_filter_shader(PxSceneDesc *desc, SimulationShaderFilter filter, uint32_t call_default_filter_shader_first)
+    // contact modify
+
+    PxContactModifyCallback *create_contact_modify_callbacks(const ContactModifyCallbackInfo *callbacks)
     {
-        /* Note: This is a workaround to PhysX copying the filter data */
-        static FilterCallbackData filterShaderData = {
-            filter,
-            call_default_filter_shader_first != 0
-        };
+        ContactModifyCallback *modify = new ContactModifyCallback(callbacks);
+        return static_cast<PxContactModifyCallback *>(modify);
+    }
+
+    ContactModifyCallbackInfo *get_contact_modify_info(PxContactModifyCallback *callback)
+    {
+        ContactModifyCallback *modify = static_cast<ContactModifyCallback *>(callback);
+        return &modify->mCallbacks;
+    }
+
+    void destroy_contact_modify_callbacks(PxContactModifyCallback *callback)
+    {
+        ContactModifyCallback *modify = static_cast<ContactModifyCallback *>(callback);
+        delete modify;
+    }
+
+    // ccd contact modify
+
+    PxCCDContactModifyCallback *create_ccd_contact_modify_callbacks(const ContactModifyCallbackInfo *callbacks)
+    {
+        CCDContactModifyCallback *modify = new CCDContactModifyCallback(callbacks);
+        return static_cast<PxCCDContactModifyCallback *>(modify);
+    }
+
+    ContactModifyCallbackInfo *get_ccd_contact_modify_info(PxCCDContactModifyCallback *callback)
+    {
+        CCDContactModifyCallback *modify = static_cast<CCDContactModifyCallback *>(callback);
+        return &modify->mCallbacks;
+    }
+
+    void destroy_ccd_contact_modify_callbacks(PxCCDContactModifyCallback *callback)
+    {
+        CCDContactModifyCallback *modify = static_cast<CCDContactModifyCallback *>(callback);
+        delete modify;
+    }
+
+    // filter shader
+
+    SimulationFilterShader get_default_simulation_filter_shader()
+    {
+        return DefaultSimulationFilterShader;
+    }
+
+    void set_default_filter_shader(PxSceneDesc* desc)
+    {
+        desc->filterShader = PxDefaultSimulationFilterShader;
+        desc->filterShaderData = nullptr;
+        desc->filterShaderDataSize = 0;
+    }
+
+    FilterShaderHandle* create_custom_filter_shader(SimulationFilterShader filter)
+    {
+        return new FilterShaderHandle{filter};
+    }
+
+    void destroy_custom_filter_shader(FilterShaderHandle* filterHandle) {
+        delete filterHandle;
+    }
+
+    void set_custom_filter_shader(PxSceneDesc* desc, FilterShaderHandle* filterHandle)
+    {
         desc->filterShader = FilterShaderTrampoline;
-        // printf("Setting pointer to %p\n", filter);
-        desc->filterShaderData     = (void *)&filterShaderData;
-        desc->filterShaderDataSize = sizeof(FilterCallbackData);
+        desc->filterShaderData = filterHandle;
+        desc->filterShaderDataSize = sizeof(FilterShaderHandle);
+    }
+
+    void set_custom_filter_shader_with_default(PxSceneDesc* desc, FilterShaderHandle* filterHandle)
+    {
+        desc->filterShader = FilterShaderTrampolineWithDefault;
+        desc->filterShaderData = filterHandle;
+        desc->filterShaderDataSize = sizeof(FilterShaderHandle);
     }
 
 	// Not generated, used only for testing and examples!

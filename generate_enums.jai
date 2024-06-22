@@ -468,6 +468,7 @@ PxPairFlags :: enum_flags u16 {
 }
 
 PxFilterFlags :: enum_flags u16 {
+    Default :: 0;
     Kill :: 1 << 0;
     Suppress :: 1 << 1;
     Callback :: 1 << 2;
@@ -608,4 +609,38 @@ PxControllerBehaviorFlags :: enum_flags u8 {
     CctSlide :: 2;
     /// Disable all code dealing with controllers riding on objects, let users define it outside of the SDK.
     CctUserDefinedRide :: 4;
+}
+
+PxQueryHitType :: enum s32 {
+    /// the query should ignore this shape
+    None :: 0;
+    /// a hit on the shape touches the intersection geometry of the query but does not block it
+    Touch :: 1;
+    /// a hit on the shape blocks the query (does not block overlap queries)
+    Block :: 2;
+}
+
+PxQueryFlags :: enum_flags u16 {
+    Static :: 1 << 0;
+    Dynamic :: 1 << 1;
+    Prefilter :: 1 << 2;
+    Postfilter :: 1 << 3;
+    AnyHit :: 1 << 4;
+    NoBlock :: 1 << 5;
+    DisableHardcodedFilter :: 1 << 6;
+    Reserved :: 1 << 15;
+}
+
+PxBroadPhaseType :: enum s32 {
+    /// 3-axes sweep-and-prune
+    Sap :: 0;
+    /// Multi box pruning
+    Mbp :: 1;
+    /// Automatic box pruning
+    Abp :: 2;
+    /// Parallel automatic box pruning
+    Pabp :: 3;
+    /// GPU broad phase
+    Gpu :: 4;
+    Last :: 5;
 }

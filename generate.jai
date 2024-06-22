@@ -102,9 +102,23 @@
         defer clang_disposeString(filename_clang);
         filename := to_lower_copy_new(to_string(clang_getCString(filename_clang)),, temp);
 
+        // things to allow through no matter what, but it won't recurse to these necessarily since I stop in some cases
+        okay_things :: string.[
+            "PxSimulationFilterShader",
+        ];
+
+        for okay_thing: okay_things {
+            if decl.name == okay_thing {
+                return .RECURSE;
+            }
+        }
+
         if contains(filename, "physx/physx/") {
+            if contains(decl.name, "PxSimulationFilterShader") {
+                print("\n\n\n\nFOUND SOMETHING... %\n\n\n\n\n", decl.*);
+            }
             decl.decl_flags = .OMIT_FROM_OUTPUT;
-            return .STOP;
+            return .RECURSE;
         }
 
         for conv: convlist {
@@ -122,8 +136,8 @@
             }
         }
 
-        // the names of the functions to remove from the bindings, before the _mut and _1 stuff gets stripped
-        bad_functions :: string.[
+        // the names of the things to remove from the bindings, before the _mut and _1 stuff gets stripped
+        bad_things :: string.[
             "PxMat44_new_1",
             "PxMat44_new_2",
             "PxMat33_new_1",
@@ -149,8 +163,8 @@
             "PxQuat_new",
         ];
 
-        for bad_function: bad_functions {
-            if decl.name == bad_function {
+        for bad_thing: bad_things {
+            if decl.name == bad_thing {
                 decl.decl_flags = .OMIT_FROM_OUTPUT;
                 return .STOP;
             }
@@ -196,6 +210,7 @@
 
     footer = #string ___jai
 #import "Math";
+#import "Socket";
     ___jai
 
     string_builder := generate_bindings(opts, true);
