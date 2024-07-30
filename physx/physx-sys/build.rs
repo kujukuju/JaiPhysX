@@ -523,9 +523,7 @@ fn main() {
         physx_cc.define("PX_PROFILE", Some("1"));
     }
 
-    println!("About to say clang.");
     if compiler.is_none() && host.contains("-linux-") {
-        println!("Clang!");
         physx_cc.compiler("clang++");
     }
 
@@ -534,6 +532,11 @@ fn main() {
     } else {
         "-std=c++14"
     });
+
+    if target.contains("-linux-") {
+        physx_cc.flag("-lstdc++");
+        physx_cc.flag("-lm");
+    }
 
     use std::ffi::OsString;
     let output_dir_path =
@@ -616,7 +619,6 @@ fn main() {
         if target == "x86_64-pc-windows-msvc" {
             include.push(target);
         } else if target.contains("-linux-") || target.ends_with("apple-darwin") {
-            println!("Definitely linux.");
             // Note that (currently) the x86_64 and aarch64 structures we bind
             // are the exact same for linux/android and MacOS (unsure about iOS, but also don't care)
             include.push("unix");
