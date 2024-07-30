@@ -644,3 +644,45 @@ PxBroadPhaseType :: enum s32 {
     Gpu :: 4;
     Last :: 5;
 }
+
+PxCombineMode :: enum s32 {
+    /// Average: (a + b)/2
+    Average :: 0;
+    /// Minimum: minimum(a,b)
+    Min :: 1;
+    /// Multiply: a*b
+    Multiply :: 2;
+    /// Maximum: maximum(a,b)
+    Max :: 3;
+}
+
+PxD6Axis :: enum s32 {
+    /// motion along the X axis
+    X :: 0;
+    /// motion along the Y axis
+    Y :: 1;
+    /// motion along the Z axis
+    Z :: 2;
+    /// motion around the X axis
+    Twist :: 3;
+    /// motion around the Y axis
+    Swing1 :: 4;
+    /// motion around the Z axis
+    Swing2 :: 5;
+    Count :: 6;
+}
+
+PxD6Motion :: enum s32 {
+    /// The DOF is locked, it does not allow relative motion.
+    Locked :: 0;
+    /// The DOF is limited, it only allows motion within a specific range.
+    Limited :: 1;
+    /// The DOF is free and has its full range of motion.
+    Free :: 2;
+}
+
+PxRevoluteJointFlags :: enum_flags u16 {
+    LimitEnabled :: 1 << 0;
+    DriveEnabled :: 1 << 1;
+    DriveFreespin :: 1 << 2;
+}

@@ -8,38 +8,72 @@
 #run {
     using opts: Generate_Bindings_Options;
     // array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
-    // array_add(*system_include_paths, ..get_default_system_include_paths(opts.os, opts.cpu));
 
     found_lib_name: string;
-    for file: file_list("physx/physx-sys-extract/target/release/deps/") {
+    for file: file_list("physx/physx-sys-extract/target/debug/deps/") {
         filename: string;
         filename.data = file.data + (find_index_from_right(file, "/") + 1);
         filename.count = file.count - (find_index_from_right(file, "/") + 1);
-        if starts_with(filename, "physx_sys") && ends_with(filename, ".lib") {
-            found_lib_name = file;
-            break;
+        #if OS == .WINDOWS {
+            if starts_with(filename, "physx_sys") && ends_with(filename, ".lib") {
+                found_lib_name = file;
+                break;
+            }
+        } else #if OS == .LINUX {
+            print("Checking %\n", filename);
+            if starts_with(filename, "libphysx_sys") && ends_with(filename, ".a") {
+                found_lib_name = file;
+                break;
+            }
         }
     }
     if found_lib_name {
-        copy_file(found_lib_name, "windows/physx.lib");
+        #if OS == .WINDOWS {
+            copy_file(found_lib_name, "windows/physx.lib");
+        } else #if OS == .LINUX {
+            copy_file(found_lib_name, "linux/libphysx.a");
+        }
     }
-    if !file_exists("windows/physx.lib") {
-        print("Physx library doesn't exist, and could not find extracted physx library to copy.\n");
-        return;
+    #if OS == .WINDOWS {
+        if !file_exists("windows/physx.lib") {
+            print("Physx library doesn't exist, and could not find extracted physx library to copy.\n");
+            return;
+        }
+    } else #if OS == .LINUX {
+        if !file_exists("linux/libphysx.a") {
+            print("Physx library doesn't exist, and could not find extracted physx library to copy.\n");
+            return;
+        }
     }
 
-    array_add(*libpaths, "windows");
+    #if OS == .WINDOWS {
+        array_add(*libpaths, "windows");
+        array_add(*libnames, "physx");
 
-    array_add(*libnames, "physx");
+        array_add(*include_paths, "physx/physx-sys/src/generated/x86_64-pc-windows-msvc/");
+        array_add(*extra_clang_arguments, "-D_MSC_VER=1939");
+        array_add(*system_include_paths, "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/lib/clang/17/include\"");
+    } else #if OS == .LINUX {
+        array_add(*libpaths, "linux");
+        array_add(*libnames, "libphysx");
 
-    array_add(*include_paths, "physx/physx-sys/src/generated/x86_64-pc-windows-msvc/");
+        array_add(*extra_clang_arguments, "-D__clang__");
+        array_add(*extra_clang_arguments, "-std=c++14");
+
+        array_add(*include_paths, "physx/physx-sys/src/generated/unix/");
+        // array_add(*source_files, "/usr/include/linux/types.h");
+        array_add(*system_include_paths, "/usr/lib/llvm-18/lib/clang/18/include");
+        array_add(*system_include_paths, "/usr/include/c++/14");
+        // array_add(*system_include_paths, ..get_default_system_include_paths(opts.os, opts.cpu));
+        // array_add(*system_include_paths, "/usr/include/c++/14/tr1");
+        // array_add(*system_include_paths, "/usr/include/linux");
+        // array_add(*system_include_paths, "/usr/include/x86_64-linux-gnu");
+    }
+
     array_add(*include_paths, "physx/physx-sys/src/");
     array_add(*include_paths, "physx/physx-sys/physx/physx/include/");
 
     array_add(*extra_clang_arguments, "-DNDEBUG");
-    array_add(*extra_clang_arguments, "-D_MSC_VER=1939");
-
-    array_add(*system_include_paths, "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/lib/clang/17/include\"");
 
     array_add(*source_files, "physx/physx-sys/physx/physx/include/PxPhysicsAPI.h");
 
@@ -130,7 +164,7 @@
         }
 
         if contains(filename, "physx_api") {
-            if starts_with(decl.foreign_name, "?") {
+            if starts_with(decl.foreign_name, "?") || starts_with(decl.foreign_name, "_") {
                 remove_self_and_parents(decl);
                 return .STOP;
             }
@@ -278,6 +312,9 @@
     output = force_inheritance(output, "#place structgen_pad0; #as rigid_body: PxRigidBody = ---;", .[
         "PxArticulationLink",
     ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as base: PxBase = ---;", .[
+        "PxRefCounted",
+    ]);
     output = force_inheritance(output, "#place structgen_pad0; #as ref_counted: PxRefCounted = ---;", .[
         "PxBaseMaterial",
         "PxConvexMesh",
@@ -299,8 +336,25 @@
         "PxBoxController",
         "PxCapsuleController",
     ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as base: PxBase = ---;", .[
+        "PxJoint",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as joint: PxJoint = ---;", .[
+        "PxContactJoint",
+        "PxD6Joint",
+        "PxDistanceJoint",
+        "PxFixedJoint",
+        "PxPrismaticJoint",
+        "PxRevoluteJoint",
+        "PxSphericalJoint",
+        "PxGearJoint",
+    ]);
 
-    write_entire_file("module.jai", output);
+    #if OS == .WINDOWS {
+        write_entire_file("module_windows.jai", output);
+    } else #if OS == .LINUX {
+        write_entire_file("module_linux.jai", output);
+    }
 }
 
 replace_and_free :: (input: string, old: string, new: string) -> string {
