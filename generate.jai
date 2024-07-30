@@ -10,7 +10,7 @@
     // array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
 
     found_lib_name: string;
-    for file: file_list("physx/physx-sys-extract/target/debug/deps/") {
+    for file: file_list("physx/physx-sys-extract/target/release/deps/") {
         filename: string;
         filename.data = file.data + (find_index_from_right(file, "/") + 1);
         filename.count = file.count - (find_index_from_right(file, "/") + 1);
