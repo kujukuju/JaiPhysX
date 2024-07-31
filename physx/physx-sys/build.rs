@@ -533,11 +533,6 @@ fn main() {
         "-std=c++14"
     });
 
-    if target.contains("-linux-") {
-        physx_cc.flag("-lstdc++");
-        physx_cc.flag("-lm");
-    }
-
     use std::ffi::OsString;
     let output_dir_path =
         PathBuf::from(env::var("OUT_DIR").expect("output directory not specified"));
