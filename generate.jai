@@ -9,8 +9,16 @@
     using opts: Generate_Bindings_Options;
     // array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
 
+    dependency_path: string;
+    #if OS == .WINDOWS {
+        dependency_path = "physx/physx-sys-extract/target/release/deps/";
+    } else #if OS == .LINUX {
+        dependency_path = "physx/physx-sys-extract/target/release/deps/";
+    }
+
     found_lib_name: string;
-    for file: file_list("physx/physx-sys-extract/target/release/deps/") {
+    // we'll now pull directly from physx-sys... because I need to compile forcing all static links or something
+    for file: file_list(dependency_path) {
         filename: string;
         filename.data = file.data + (find_index_from_right(file, "/") + 1);
         filename.count = file.count - (find_index_from_right(file, "/") + 1);
