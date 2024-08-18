@@ -23,4 +23,4 @@ To build it again `cargo build --release` while inside the physx-sys-extract fol
 
 If you need to change the generated bindings you'll need to rerun the pxbind rust script.
 
-NOTE: I think it needs to be regenerated and different module.jai file for different operating systems... Untested.
+On linux I'm manually swapping the cargo.toml file in physx-sys from "staticlib" to "cdylib" to try and get back a shared library since the static doesn't seem to work.

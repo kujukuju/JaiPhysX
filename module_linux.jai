@@ -2756,10 +2756,12 @@ PxCookingParams :: struct {
 
 PxDefaultMemoryOutputStream :: struct {
     structgen_pad0: [32] u8;
+#place structgen_pad0; #as output_stream: PxOutputStream = ---;
 }
 
 PxDefaultMemoryInputData :: struct {
     structgen_pad0: [32] u8;
+#place structgen_pad0; #as input_stream: PxInputStream = ---;
 }
 
 PxDefaultFileOutputStream :: struct {
@@ -6786,7 +6788,7 @@ gErrorCallback: PxDefaultErrorCallback #elsewhere libphysx;
 
 CollisionCallback :: #type (unknown0: *void, unknown1: *PxContactPairHeader, unknown2: *PxContactPair, unknown3: u32) -> void #c_call;
 
-SimulationFilterShader :: #type (attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, pairFlags: *PxPairFlags) -> u16 #c_call;
+SimulationFilterShader :: #type (attributes0: *u32, filterData0: *PxFilterData, attributes1: *u32, filterData1: *PxFilterData, pairFlags: *PxPairFlags) -> u16 #c_call;
 
 FilterShaderHandle :: struct {
     shader: SimulationFilterShader;
@@ -6977,6 +6979,6 @@ PxAssertHandler_opCall :: (self: *PxErrorCallback, expr: *u8, file: *u8, line: s
 
 #scope_file
 
-libphysx :: #library,no_dll "linux/libphysx";
+libphysx :: #library "linux/libphysx";
 #import "Math";
 #import "Socket";

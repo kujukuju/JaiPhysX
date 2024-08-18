@@ -228,7 +228,7 @@ family shortcuts
 // os
 #define PX_WINDOWS_FAMILY (PX_WIN32 || PX_WIN64)
 #define PX_LINUX_FAMILY PX_LINUX
-#define PX_APPLE_FAMILY PX_OSX                              // equivalent to #if __APPLE__
+#define PX_APPLE_FAMILY c                              // equivalent to #if __APPLE__
 #define PX_UNIX_FAMILY (PX_LINUX_FAMILY || PX_APPLE_FAMILY) // shortcut for unix/posix platforms
 #if defined(__EMSCRIPTEN__)
 	#define PX_EMSCRIPTEN 1

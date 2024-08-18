@@ -1,3 +1,63 @@
+
+/*
+Program Exception: SEGV_MAPERR
+The program crashed because it tried to write to or read from an invalid memory location.
+Segmentation fault. The faulty address is 0xffffffff00000020, from 0x328d00.
+./main(physx_filter_shader_500000241+0x50) [0x328d00]
+/root/FatGoblinsServer/libphysx_build.so(_Z22FilterShaderTrampolinejN5physx12PxFilterDataEjS0_RNS_7PxFlagsINS_10PxPairFlag4EnumEtEEPKvj+0x47) [0x79a2c484d277]
+/root/FatGoblinsServer/libphysx_build.so(_ZN5physx2Sc10NPhaseCore17runOverlapFiltersEjPKNS_2Bp11AABBOverlapEPNS_12PxFilterInfoERjS8_S8_PjS9_+0xad6) [0x79a2c4e82                                                       3f6]
+/root/FatGoblinsServer/libphysx_build.so(_ZN17OverlapFilterTask11runInternalEv+0x45) [0x79a2c4eaa9f5]
+/root/FatGoblinsServer/libphysx_build.so(_ZN5physx2Cm4Task3runEv+0x25) [0x79a2c4aff505]
+/root/FatGoblinsServer/libphysx_build.so(_ZN5physx3Ext15CpuWorkerThread7executeEv+0x57) [0x79a2c4c95237]
+/root/FatGoblinsServer/libphysx_build.so(+0x26c537) [0x79a2c486c537]
+/lib/x86_64-linux-gnu/libc.so.6(+0x9ca94) [0x79a2c509ca94]
+/lib/x86_64-linux-gnu/libc.so.6(+0x129c3c) [0x79a2c5129c3c]
+
+
+
+
+Thread 6 "main" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7ffff1c006c0 (LWP 31950)]
+0x0000000000328b50 in physx_filter_shader_70000015a (attributes0=<optimized out>, filterData0=..., attributes1=4055889920,
+    filterData1=..., pairFlags=0xffffffff00000020)
+    at /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/shared/physics/SharedPhysics.jai:483
+warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/shared/physics/SharedPhysics.jai: No such file or directory
+(gdb) where
+#0  0x0000000000328b50 in physx_filter_shader_70000015a (attributes0=<optimized out>, filterData0=..., attributes1=4055889920,
+    filterData1=..., pairFlags=0xffffffff00000020)
+    at /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/shared/physics/SharedPhysics.jai:483
+#1  0x00007ffff744d277 in FilterShaderTrampoline(unsigned int, physx::PxFilterData, unsigned int, physx::PxFilterData, physx::PxFlags<physx::PxPairFlag::Enum, unsigned short>&, void const*, unsigned int) () from /root/FatGoblinsServer/libphysx_build.so
+#2  0x00007ffff7a823f6 in physx::Sc::NPhaseCore::runOverlapFilters(unsigned int, physx::Bp::AABBOverlap const*, physx::PxFilterInfo*, unsigned int&, unsigned int&, unsigned int&, unsigned int*, unsigned int*) () from /root/FatGoblinsServer/libphysx_build.so
+#3  0x00007ffff7aaa9f5 in OverlapFilterTask::runInternal() () from /root/FatGoblinsServer/libphysx_build.so
+#4  0x00007ffff76ff505 in physx::Cm::Task::run() () from /root/FatGoblinsServer/libphysx_build.so
+#5  0x00007ffff7895237 in physx::Ext::CpuWorkerThread::execute() () from /root/FatGoblinsServer/libphysx_build.so
+#6  0x00007ffff746c537 in physx::(anonymous namespace)::PxThreadStart(void*) () from /root/FatGoblinsServer/libphysx_build.so
+#7  0x00007ffff7c9ca94 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+#8  0x00007ffff7d29c3c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+(gdb)
+*/
+
+
+
+
+// windows
+// linux
+
+// 00000000000000000000000000000000
+// 00000000000000000000000000000000
+
+// 00000000000000000000000000000010111111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000
+// 01011111110111111111011111000000000000000000000001110100101000010000000000000000000000000000000100000000000000000000000000000000
+
+// 00000000000000000000000000000001
+
+// 00000000000000000000000010000000111111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+
+
 #import "Bindings_Generator";
 #import "Basic";
 #import "File";
@@ -11,9 +71,9 @@
 
     dependency_path: string;
     #if OS == .WINDOWS {
-        dependency_path = "physx/physx-sys-extract/target/release/deps/";
+        dependency_path = "physx/physx-sys-extract/target/release/deps";
     } else #if OS == .LINUX {
-        dependency_path = "physx/physx-sys-extract/target/release/deps/";
+        dependency_path = "physx/physx-build/build";
     }
 
     found_lib_name: string;
@@ -23,15 +83,13 @@
         filename.data = file.data + (find_index_from_right(file, "/") + 1);
         filename.count = file.count - (find_index_from_right(file, "/") + 1);
         #if OS == .WINDOWS {
-            if starts_with(filename, "physx_sys") && ends_with(filename, ".lib") {
+            if starts_with(filename, "physx") && ends_with(filename, ".lib") {
                 found_lib_name = file;
-                break;
             }
         } else #if OS == .LINUX {
             print("Checking %\n", filename);
-            if starts_with(filename, "libphysx_sys") && ends_with(filename, ".a") {
+            if starts_with(filename, "libphysx") && ends_with(filename, ".so") {
                 found_lib_name = file;
-                break;
             }
         }
     }
@@ -39,7 +97,7 @@
         #if OS == .WINDOWS {
             copy_file(found_lib_name, "windows/physx.lib");
         } else #if OS == .LINUX {
-            copy_file(found_lib_name, "linux/libphysx.a");
+            copy_file(found_lib_name, "linux/libphysx.so");
         }
     }
     #if OS == .WINDOWS {
@@ -48,7 +106,7 @@
             return;
         }
     } else #if OS == .LINUX {
-        if !file_exists("linux/libphysx.a") {
+        if !file_exists("linux/libphysx.so") {
             print("Physx library doesn't exist, and could not find extracted physx library to copy.\n");
             return;
         }
@@ -356,6 +414,12 @@
         "PxRevoluteJoint",
         "PxSphericalJoint",
         "PxGearJoint",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as output_stream: PxOutputStream = ---;", .[
+        "PxDefaultMemoryOutputStream",
+    ]);
+    output = force_inheritance(output, "#place structgen_pad0; #as input_stream: PxInputStream = ---;", .[
+        "PxDefaultMemoryInputData",
     ]);
 
     #if OS == .WINDOWS {

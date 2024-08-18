@@ -1,7 +1,7 @@
 //
 // This file was auto-generated using the following command:
 //
-// jai ../ ./generate.jai
+// jai generate.jai
 //
 
 PxEMPTY :: enum s32 {
@@ -2763,10 +2763,12 @@ PxCookingParams :: struct {
 
 PxDefaultMemoryOutputStream :: struct {
     structgen_pad0: [32] u8;
+#place structgen_pad0; #as output_stream: PxOutputStream = ---;
 }
 
 PxDefaultMemoryInputData :: struct {
     structgen_pad0: [32] u8;
+#place structgen_pad0; #as input_stream: PxInputStream = ---;
 }
 
 PxDefaultFileOutputStream :: struct {
@@ -6790,7 +6792,7 @@ PxDefaultPvdFileTransportCreate :: (name: *u8) -> *PxPvdTransport #foreign physx
 
 CollisionCallback :: #type (unknown0: *void, unknown1: *PxContactPairHeader, unknown2: *PxContactPair, unknown3: u32) -> void #c_call;
 
-SimulationFilterShader :: #type (attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, pairFlags: *PxPairFlags) -> u16 #c_call;
+SimulationFilterShader :: #type (attributes0: *u32, filterData0: *PxFilterData, attributes1: *u32, filterData1: *PxFilterData, pairFlags: *PxPairFlags) -> u16 #c_call;
 
 FilterShaderHandle :: struct {
     shader: SimulationFilterShader;

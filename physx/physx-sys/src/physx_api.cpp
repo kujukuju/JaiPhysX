@@ -1,18 +1,23 @@
 #include "PxPhysicsAPI.h"
 #include <cstdint>
 #include "physx_generated.hpp"
+#include <iostream>
 
 PxDefaultAllocator gAllocator;
 PxDefaultErrorCallback gErrorCallback;
 
-typedef void (*CollisionCallback)(void *, PxContactPairHeader const *, PxContactPair const *, PxU32);
+extern "C" {
+    typedef void (*CollisionCallback)(void *, PxContactPairHeader const *, PxContactPair const *, PxU32);
+}
 
-typedef PxU16 (*SimulationFilterShader)(
-    PxFilterObjectAttributes attributes0,
-    PxFilterData filterData0,
-    PxFilterObjectAttributes attributes1,
-    PxFilterData filterData1,
-    PxPairFlags *pairFlags);
+extern "C" {
+    typedef PxU16 (*SimulationFilterShader)(
+        PxFilterObjectAttributes* attributes0,
+        PxFilterData* filterData0,
+        PxFilterObjectAttributes* attributes1,
+        PxFilterData* filterData1,
+        PxPairFlags* pairFlags);
+}
 
 struct FilterShaderHandle
 {
@@ -20,13 +25,13 @@ struct FilterShaderHandle
 };
 
 
-PxU16 DefaultSimulationFilterShader(PxFilterObjectAttributes attributes0,
-                                    PxFilterData filterData0,
-                                    PxFilterObjectAttributes attributes1,
-                                    PxFilterData filterData1,
-                                    PxPairFlags *pairFlags)
+PxU16 DefaultSimulationFilterShader(PxFilterObjectAttributes* attributes0,
+                                    PxFilterData* filterData0,
+                                    PxFilterObjectAttributes* attributes1,
+                                    PxFilterData* filterData1,
+                                    PxPairFlags* pairFlags)
 {
-    return PxDefaultSimulationFilterShader(attributes0, filterData0, attributes1, filterData1, *pairFlags, nullptr, 0);
+    return PxDefaultSimulationFilterShader(*attributes0, *filterData0, *attributes1, *filterData1, *pairFlags, nullptr, 0);
 }
 
 PxFilterFlags FilterShaderTrampoline(PxFilterObjectAttributes attributes0,
@@ -37,11 +42,19 @@ PxFilterFlags FilterShaderTrampoline(PxFilterObjectAttributes attributes0,
                                      const void* constantBlock,
                                      PxU32 constantBlockSize)
 {
+    // std::cout << "attributes0 " << attributes0 << std::endl;
+    // std::cout << "filterData0 " << filterData0.word0 << " " << filterData0.word1 << " " << filterData0.word2 << " " << filterData0.word3 << std::endl;
+    // std::cout << "attributes1 " << attributes1 << std::endl;
+    // std::cout << "filterData1 " << filterData1.word0 << " " << filterData1.word1 << " " << filterData1.word2 << " " << filterData1.word3 << std::endl;
+    // std::cout << "pairFlags " << &pairFlags << std::endl;
+    // std::cout << "constantBlock " << constantBlock << std::endl;
+    // std::cout << "constantBlockSize " << constantBlockSize << std::endl;
+
     FilterShaderHandle* handle = static_cast<FilterShaderHandle*>(const_cast<void*>(constantBlock));
 
     // We return a u16 since PxFilterFlags is a complex type and C++ wants it to be returned on the stack,
     // but Rust thinks it's simple due to the codegen and wants to return it in EAX.
-    return PxFilterFlags{handle->shader(attributes0, filterData0, attributes1, filterData1, &pairFlags)};
+    return PxFilterFlags{handle->shader(&attributes0, &filterData0, &attributes1, &filterData1, &pairFlags)};
 }
 
 PxFilterFlags FilterShaderTrampolineWithDefault(PxFilterObjectAttributes attributes0,
@@ -60,14 +73,17 @@ PxFilterFlags FilterShaderTrampolineWithDefault(PxFilterObjectAttributes attribu
     // We return a u16 since PxFilterFlags is a complex type and C++ wants it to be returned on the stack,
     // but Rust thinks it's simple due to the codegen and wants to return it in EAX.
     // PxU16 value = callback(attributes0, filterData0, attributes1, filterData1, pairFlags, nullptr, 0);
-    return PxFilterFlags{handle->shader(attributes0, filterData0, attributes1, filterData1, &pairFlags)};
+    return PxFilterFlags{handle->shader(&attributes0, &filterData0, &attributes1, &filterData1, &pairFlags)};
 }
 
-using CollisionCallback = void (*)(void *, PxContactPairHeader const *, PxContactPair const *, PxU32);
-using TriggerCallback = void (*)(void *, PxTriggerPair const *, PxU32);
-using ConstraintBreakCallback = void (*)(void *, PxConstraintInfo const *, PxU32);
-using WakeSleepCallback = void (*)(void *, PxActor **const, PxU32, bool);
-using AdvanceCallback = void (*)(void *, const PxRigidBody *const *, const PxTransform *const, PxU32);
+
+extern "C" {
+    using CollisionCallback = void (*)(void *, PxContactPairHeader const *, PxContactPair const *, PxU32);
+    using TriggerCallback = void (*)(void *, PxTriggerPair const *, PxU32);
+    using ConstraintBreakCallback = void (*)(void *, PxConstraintInfo const *, PxU32);
+    using WakeSleepCallback = void (*)(void *, PxActor **const, PxU32, bool);
+    using AdvanceCallback = void (*)(void *, const PxRigidBody *const *, const PxTransform *const, PxU32);
+}
 
 struct SimulationEventCallbackInfo {
     // Callback for collision events.
@@ -160,8 +176,10 @@ class RaycastFilterCallback : public PxQueryFilterCallback
     }
 };
 
-typedef int32_t (*RaycastHitCallback)(const PxRigidActor *actor, const PxFilterData *filterData, const PxShape *shape, uint32_t hitFlags, const void *userData);
-typedef int32_t (*PostFilterCallback)(const PxFilterData *filterData, const PxQueryHit* hit, const void *userData);
+extern "C" {
+    typedef int32_t (*RaycastHitCallback)(const PxRigidActor *actor, const PxFilterData *filterData, const PxShape *shape, uint32_t hitFlags, const void *userData);
+    typedef int32_t (*PostFilterCallback)(const PxFilterData *filterData, const PxQueryHit* hit, const void *userData);
+}
 
 PxQueryHitType::Enum sanitize_hit_type(int32_t hit_type) {
     switch (hit_type) {
@@ -216,10 +234,12 @@ class RaycastFilterPrePostTrampoline : public PxQueryFilterCallback
     }
 };
 
-typedef PxAgain (*RaycastHitProcessTouchesCallback)(const PxRaycastHit *buffer, PxU32 nbHits, void *userdata);
-typedef PxAgain (*SweepHitProcessTouchesCallback)(const PxSweepHit *buffer, PxU32 nbHits, void *userdata);
-typedef PxAgain (*OverlapHitProcessTouchesCallback)(const PxOverlapHit *buffer, PxU32 nbHits, void *userdata);
-typedef void (*HitFinalizeQueryCallback)(void *userdata);
+extern "C" {
+    typedef PxAgain (*RaycastHitProcessTouchesCallback)(const PxRaycastHit *buffer, PxU32 nbHits, void *userdata);
+    typedef PxAgain (*SweepHitProcessTouchesCallback)(const PxSweepHit *buffer, PxU32 nbHits, void *userdata);
+    typedef PxAgain (*OverlapHitProcessTouchesCallback)(const PxOverlapHit *buffer, PxU32 nbHits, void *userdata);
+    typedef void (*HitFinalizeQueryCallback)(void *userdata);
+}
 
 class RaycastHitCallbackTrampoline : public PxRaycastCallback
 {
@@ -308,8 +328,10 @@ class OverlapHitCallbackTrampoline : public PxOverlapCallback
     }
 };
 
-typedef void * (*AllocCallback)(uint64_t size, const char *typeName, const char *filename, int line, void *userdata);
-typedef void (*DeallocCallback)(void *ptr, void *userdata);
+extern "C" {
+    typedef void * (*AllocCallback)(uint64_t size, const char *typeName, const char *filename, int line, void *userdata);
+    typedef void (*DeallocCallback)(void *ptr, void *userdata);
+}
 
 class CustomAllocatorTrampoline : public PxAllocatorCallback {
 public:
@@ -333,8 +355,10 @@ public:
     void *mUserData;
 };
 
-typedef void * (*ZoneStartCallback)(const char *typeName, bool detached, uint64_t context  , void *userdata);
-typedef void  (*ZoneEndCallback)(void* profilerData, const char *typeName, bool detached, uint64_t context , void *userdata);
+extern "C" {
+    typedef void * (*ZoneStartCallback)(const char *typeName, bool detached, uint64_t context  , void *userdata);
+    typedef void (*ZoneEndCallback)(void* profilerData, const char *typeName, bool detached, uint64_t context , void *userdata);
+}
 
 class CustomProfilerTrampoline : public PxProfilerCallback {
 public:
@@ -359,7 +383,9 @@ public:
     void *mUserData;
 };
 
-using ErrorCallback = void (*)(int code, const char* message, const char* file, int line, void* userdata);
+extern "C" {
+    using ErrorCallback = void (*)(int code, const char* message, const char* file, int line, void* userdata);
+}
 
 class ErrorTrampoline : public PxErrorCallback {
 public:
@@ -376,7 +402,9 @@ private:
     void* mUserdata = nullptr;
 };
 
-using AssertHandler = void (*)(const char* expr, const char* file, int line, bool* should_ignore, void* userdata);
+extern "C" {
+    using AssertHandler = void (*)(const char* expr, const char* file, int line, bool* should_ignore, void* userdata);
+}
 
 class AssertTrampoline : public PxAssertHandler {
 public:
@@ -393,9 +421,11 @@ private:
     void* mUserdata = nullptr;
 };
 
-using ShapeHitCallback = void (*)(void *, PxControllerShapeHit const *);
-using ControllerHitCallback = void (*)(void *, PxControllersHit const *);
-using ObstacleHitCallback = void (*)(void *, PxControllerObstacleHit const *);
+extern "C" {
+    using ShapeHitCallback = void (*)(void *, PxControllerShapeHit const *);
+    using ControllerHitCallback = void (*)(void *, PxControllersHit const *);
+    using ObstacleHitCallback = void (*)(void *, PxControllerObstacleHit const *);
+}
 
 struct UserControllerHitReportInfo {
     ShapeHitCallback shapeHitCallback = nullptr;
@@ -431,9 +461,11 @@ public:
     UserControllerHitReportInfo mCallbacks;
 };
 
-using ShapeBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxShape* shape, const PxActor* actor);
-using CharacterBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxController* controller);
-using ObstacleBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxObstacle* obstacle);
+extern "C" {
+    using ShapeBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxShape* shape, const PxActor* actor);
+    using CharacterBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxController* controller);
+    using ObstacleBehaviorCallback = PxControllerBehaviorFlags (*)(void* data, const PxObstacle* obstacle);
+}
 
 struct ControllerBehaviorCallbackInfo {
     ShapeBehaviorCallback shapeBehaviorCallback = nullptr;
@@ -472,7 +504,9 @@ public:
     ControllerBehaviorCallbackInfo mCallbacks;
 };
 
-using OnContactModify = void (*)(void* data, const PxContactModifyPair* pairs, PxU32 count);
+extern "C" {
+    using OnContactModify = void (*)(void* data, const PxContactModifyPair* pairs, PxU32 count);
+}
 
 struct ContactModifyCallbackInfo {
     OnContactModify onContactModify = nullptr;
