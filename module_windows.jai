@@ -692,6 +692,12 @@ PxRevoluteJointFlags :: enum_flags u16 {
     DriveFreespin :: 1 << 2;
 }
 
+PxDistanceJointFlags :: enum_flags u16 {
+    MaxDistanceEnabled :: 1 << 1;
+    MinDistanceEnabled :: 1 << 2;
+    SpringEnabled :: 1 << 3;
+}
+
 
 
 _MSC_VER :: 1939;
@@ -6983,6 +6989,6 @@ PxAssertHandler_opCall :: (self: *PxErrorCallback, expr: *u8, file: *u8, line: s
 
 #scope_file
 
-physx :: #library,no_dll "windows/physx";
+physx :: #library "windows/physx";
 #import "Math";
 #import "Socket";

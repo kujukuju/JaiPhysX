@@ -7,6 +7,10 @@ set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDISABLE_CUDA_PHYSX)
 add_definitions(-DPX_SUPPORT_PVD)
 
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_definitions(-DNDEBUG)
+endif()
+
 if(WIN32)
     include_directories(${CMAKE_SOURCE_DIR}/../physx-sys/src/generated/x86_64-pc-windows-msvc)
 elseif(UNIX AND NOT APPLE)

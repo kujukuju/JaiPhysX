@@ -3,6 +3,12 @@
 #include "physx_generated.hpp"
 #include <iostream>
 
+#ifdef _WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT
+#endif
+
 PxDefaultAllocator gAllocator;
 PxDefaultErrorCallback gErrorCallback;
 
@@ -541,87 +547,87 @@ public:
 
 extern "C"
 {
-    PxFoundation *physx_create_foundation()
+    DLLEXPORT PxFoundation *physx_create_foundation()
     {
         return PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
     }
 
-    PxFoundation *physx_create_foundation_with_alloc(PxAllocatorCallback *allocator)
+    DLLEXPORT PxFoundation *physx_create_foundation_with_alloc(PxAllocatorCallback *allocator)
     {
         return PxCreateFoundation(PX_PHYSICS_VERSION, *allocator, gErrorCallback);
     }
 
     // fixme[tolsson]: this might be iffy on Windows with DLLs if we have multiple packages
     // linking against the raw interface
-    PxAllocatorCallback* get_default_allocator()
+    DLLEXPORT PxAllocatorCallback* get_default_allocator()
     {
         return &gAllocator;
     }
 
     // fixme[tolsson]: this might be iffy on Windows with DLLs if we have multiple packages
     // linking against the raw interface
-    PxErrorCallback* get_default_error_callback()
+    DLLEXPORT PxErrorCallback* get_default_error_callback()
     {
         return &gErrorCallback;
     }
 
-    PxPhysics *physx_create_physics(PxFoundation *foundation)
+    DLLEXPORT PxPhysics *physx_create_physics(PxFoundation *foundation)
     {
         return PxCreatePhysics(PX_PHYSICS_VERSION, *foundation, PxTolerancesScale(), true, nullptr, nullptr);
     }
 
-    PxQueryFilterCallback *create_raycast_filter_callback(PxRigidActor *actor_to_ignore)
+    DLLEXPORT PxQueryFilterCallback *create_raycast_filter_callback(PxRigidActor *actor_to_ignore)
     {
         RaycastFilterCallback* filter = new RaycastFilterCallback(actor_to_ignore);
         return static_cast<PxQueryFilterCallback*>(filter);
     }
 
-    void destroy_raycast_filter_callback(PxQueryFilterCallback *callback)
+    DLLEXPORT void destroy_raycast_filter_callback(PxQueryFilterCallback *callback)
     {
         RaycastFilterCallback *filter = static_cast<RaycastFilterCallback *>(callback);
         delete filter;
     }
 
-    PxQueryFilterCallback *create_raycast_filter_callback_func(RaycastHitCallback callback, void *userData)
+    DLLEXPORT PxQueryFilterCallback *create_raycast_filter_callback_func(RaycastHitCallback callback, void *userData)
     {
         RaycastFilterTrampoline* filter = new RaycastFilterTrampoline(callback, userData);
         return static_cast<PxQueryFilterCallback*>(filter);
     }
 
-    void destroy_raycast_filter_callback_func(PxQueryFilterCallback *callback)
+    DLLEXPORT void destroy_raycast_filter_callback_func(PxQueryFilterCallback *callback)
     {
         RaycastFilterTrampoline *filter = static_cast<RaycastFilterTrampoline *>(callback);
         delete filter;
     }
 
-    PxQueryFilterCallback *create_pre_and_post_raycast_filter_callback_func(RaycastHitCallback preFilter, PostFilterCallback postFilter, void *userData)
+    DLLEXPORT PxQueryFilterCallback *create_pre_and_post_raycast_filter_callback_func(RaycastHitCallback preFilter, PostFilterCallback postFilter, void *userData)
     {
         RaycastFilterPrePostTrampoline* filter = new RaycastFilterPrePostTrampoline(preFilter, postFilter, userData);
         return static_cast<PxQueryFilterCallback*>(filter);
     }
 
-    void destroy_pre_and_post_raycast_filter_callback_func(PxQueryFilterCallback *callback)
+    DLLEXPORT void destroy_pre_and_post_raycast_filter_callback_func(PxQueryFilterCallback *callback)
     {
         RaycastFilterPrePostTrampoline *filter = static_cast<RaycastFilterPrePostTrampoline *>(callback);
         delete filter;
     }
 
-    PxRaycastCallback *create_raycast_buffer()
+    DLLEXPORT PxRaycastCallback *create_raycast_buffer()
     {
         return new PxRaycastBuffer;
     }
 
-    PxSweepCallback *create_sweep_buffer()
+    DLLEXPORT PxSweepCallback *create_sweep_buffer()
     {
         return new PxSweepBuffer;
     }
 
-    PxOverlapCallback *create_overlap_buffer()
+    DLLEXPORT PxOverlapCallback *create_overlap_buffer()
     {
         return new PxOverlapBuffer;
     }
 
-    PxRaycastCallback *create_raycast_callback(
+    DLLEXPORT PxRaycastCallback *create_raycast_callback(
         RaycastHitProcessTouchesCallback process_touches_callback,
         HitFinalizeQueryCallback finalize_query_callback,
         PxRaycastHit *touchesBuffer,
@@ -632,22 +638,22 @@ extern "C"
             process_touches_callback, finalize_query_callback, touchesBuffer, numTouches, userdata);
     }
 
-    void delete_raycast_callback(PxRaycastCallback *callback)
+    DLLEXPORT void delete_raycast_callback(PxRaycastCallback *callback)
     {
         delete callback;
     }
 
-    void delete_sweep_callback(PxSweepCallback *callback)
+    DLLEXPORT void delete_sweep_callback(PxSweepCallback *callback)
     {
         delete callback;
     }
 
-    void delete_overlap_callback(PxOverlapCallback *callback)
+    DLLEXPORT void delete_overlap_callback(PxOverlapCallback *callback)
     {
         delete callback;
     }
 
-    PxSweepCallback *create_sweep_callback(
+    DLLEXPORT PxSweepCallback *create_sweep_callback(
         SweepHitProcessTouchesCallback process_touches_callback,
         HitFinalizeQueryCallback finalize_query_callback,
         PxSweepHit *touchesBuffer,
@@ -659,7 +665,7 @@ extern "C"
         );
     }
 
-    PxOverlapCallback *create_overlap_callback(
+    DLLEXPORT PxOverlapCallback *create_overlap_callback(
         OverlapHitProcessTouchesCallback process_touches_callback,
         HitFinalizeQueryCallback finalize_query_callback,
         PxOverlapHit *touchesBuffer,
@@ -671,7 +677,7 @@ extern "C"
         );
     }
 
-    PxAllocatorCallback *create_alloc_callback(
+    DLLEXPORT PxAllocatorCallback *create_alloc_callback(
         AllocCallback alloc_callback,
         DeallocCallback dealloc_callback,
         void *userdata
@@ -679,12 +685,12 @@ extern "C"
         return new CustomAllocatorTrampoline(alloc_callback, dealloc_callback, userdata);
     }
 
-    void *get_alloc_callback_user_data(PxAllocatorCallback *allocator) {
+    DLLEXPORT void *get_alloc_callback_user_data(PxAllocatorCallback *allocator) {
         CustomAllocatorTrampoline *trampoline = static_cast<CustomAllocatorTrampoline *>(allocator);
         return trampoline->mUserData;
     }
 
-	PxProfilerCallback *create_profiler_callback(
+    DLLEXPORT PxProfilerCallback *create_profiler_callback(
         ZoneStartCallback zone_start_callback,
         ZoneEndCallback zone_end_callback,
         void *userdata
@@ -692,7 +698,7 @@ extern "C"
         return new CustomProfilerTrampoline(zone_start_callback, zone_end_callback, userdata);
     }
 
-    PxErrorCallback *create_error_callback(
+    DLLEXPORT PxErrorCallback *create_error_callback(
         ErrorCallback error_callback,
         void* userdata
     ) {
@@ -700,7 +706,7 @@ extern "C"
     }
 
 
-    PxAssertHandler *create_assert_handler(
+    DLLEXPORT PxAssertHandler *create_assert_handler(
         AssertHandler on_assert,
         void* userdata
     ) {
@@ -709,19 +715,19 @@ extern "C"
 
     // simulation event
 
-    PxSimulationEventCallback *create_simulation_event_callbacks(const SimulationEventCallbackInfo *callbacks)
+    DLLEXPORT PxSimulationEventCallback *create_simulation_event_callbacks(const SimulationEventCallbackInfo *callbacks)
     {
         SimulationEventTrampoline *trampoline = new SimulationEventTrampoline(callbacks);
         return static_cast<PxSimulationEventCallback *>(trampoline);
     }
 
-    SimulationEventCallbackInfo *get_simulation_event_info(PxSimulationEventCallback *callback)
+    DLLEXPORT SimulationEventCallbackInfo *get_simulation_event_info(PxSimulationEventCallback *callback)
     {
         SimulationEventTrampoline *trampoline = static_cast<SimulationEventTrampoline *>(callback);
         return &trampoline->mCallbacks;
     }
 
-    void destroy_simulation_event_callbacks(PxSimulationEventCallback *callback)
+    DLLEXPORT void destroy_simulation_event_callbacks(PxSimulationEventCallback *callback)
     {
         SimulationEventTrampoline *trampoline = static_cast<SimulationEventTrampoline *>(callback);
         delete trampoline;
@@ -729,19 +735,19 @@ extern "C"
 
     // hit report
 
-    PxUserControllerHitReport *create_user_controller_hit_report(const UserControllerHitReportInfo *callbacks)
+    DLLEXPORT PxUserControllerHitReport *create_user_controller_hit_report(const UserControllerHitReportInfo *callbacks)
     {
         UserControllerHitReport *report = new UserControllerHitReport(callbacks);
         return static_cast<PxUserControllerHitReport *>(report);
     }
 
-    UserControllerHitReportInfo *get_user_controller_hit_info(PxUserControllerHitReport *callback)
+    DLLEXPORT UserControllerHitReportInfo *get_user_controller_hit_info(PxUserControllerHitReport *callback)
     {
         UserControllerHitReport *report = static_cast<UserControllerHitReport *>(callback);
         return &report->mCallbacks;
     }
 
-    void destroy_user_controller_hit_report(PxUserControllerHitReport *callback)
+    DLLEXPORT void destroy_user_controller_hit_report(PxUserControllerHitReport *callback)
     {
         UserControllerHitReport *report = static_cast<UserControllerHitReport *>(callback);
         delete report;
@@ -749,19 +755,19 @@ extern "C"
 
     // controller behavior
 
-    PxControllerBehaviorCallback *create_controller_behavior_callbacks(const ControllerBehaviorCallbackInfo *callbacks)
+    DLLEXPORT PxControllerBehaviorCallback *create_controller_behavior_callbacks(const ControllerBehaviorCallbackInfo *callbacks)
     {
         ControllerBehaviorCallback *behavior = new ControllerBehaviorCallback(callbacks);
         return static_cast<PxControllerBehaviorCallback *>(behavior);
     }
 
-    ControllerBehaviorCallbackInfo *get_controller_behavior_info(PxControllerBehaviorCallback *callback)
+    DLLEXPORT ControllerBehaviorCallbackInfo *get_controller_behavior_info(PxControllerBehaviorCallback *callback)
     {
         ControllerBehaviorCallback *behavior = static_cast<ControllerBehaviorCallback *>(callback);
         return &behavior->mCallbacks;
     }
 
-    void destroy_controller_behavior_callbacks(PxControllerBehaviorCallback *callback)
+    DLLEXPORT void destroy_controller_behavior_callbacks(PxControllerBehaviorCallback *callback)
     {
         ControllerBehaviorCallback *behavior = static_cast<ControllerBehaviorCallback *>(callback);
         delete behavior;
@@ -769,19 +775,19 @@ extern "C"
 
     // contact modify
 
-    PxContactModifyCallback *create_contact_modify_callbacks(const ContactModifyCallbackInfo *callbacks)
+    DLLEXPORT PxContactModifyCallback *create_contact_modify_callbacks(const ContactModifyCallbackInfo *callbacks)
     {
         ContactModifyCallback *modify = new ContactModifyCallback(callbacks);
         return static_cast<PxContactModifyCallback *>(modify);
     }
 
-    ContactModifyCallbackInfo *get_contact_modify_info(PxContactModifyCallback *callback)
+    DLLEXPORT ContactModifyCallbackInfo *get_contact_modify_info(PxContactModifyCallback *callback)
     {
         ContactModifyCallback *modify = static_cast<ContactModifyCallback *>(callback);
         return &modify->mCallbacks;
     }
 
-    void destroy_contact_modify_callbacks(PxContactModifyCallback *callback)
+    DLLEXPORT void destroy_contact_modify_callbacks(PxContactModifyCallback *callback)
     {
         ContactModifyCallback *modify = static_cast<ContactModifyCallback *>(callback);
         delete modify;
@@ -789,19 +795,19 @@ extern "C"
 
     // ccd contact modify
 
-    PxCCDContactModifyCallback *create_ccd_contact_modify_callbacks(const ContactModifyCallbackInfo *callbacks)
+    DLLEXPORT PxCCDContactModifyCallback *create_ccd_contact_modify_callbacks(const ContactModifyCallbackInfo *callbacks)
     {
         CCDContactModifyCallback *modify = new CCDContactModifyCallback(callbacks);
         return static_cast<PxCCDContactModifyCallback *>(modify);
     }
 
-    ContactModifyCallbackInfo *get_ccd_contact_modify_info(PxCCDContactModifyCallback *callback)
+    DLLEXPORT ContactModifyCallbackInfo *get_ccd_contact_modify_info(PxCCDContactModifyCallback *callback)
     {
         CCDContactModifyCallback *modify = static_cast<CCDContactModifyCallback *>(callback);
         return &modify->mCallbacks;
     }
 
-    void destroy_ccd_contact_modify_callbacks(PxCCDContactModifyCallback *callback)
+    DLLEXPORT void destroy_ccd_contact_modify_callbacks(PxCCDContactModifyCallback *callback)
     {
         CCDContactModifyCallback *modify = static_cast<CCDContactModifyCallback *>(callback);
         delete modify;
@@ -809,35 +815,35 @@ extern "C"
 
     // filter shader
 
-    SimulationFilterShader get_default_simulation_filter_shader()
+    DLLEXPORT SimulationFilterShader get_default_simulation_filter_shader()
     {
         return DefaultSimulationFilterShader;
     }
 
-    void set_default_filter_shader(PxSceneDesc* desc)
+    DLLEXPORT void set_default_filter_shader(PxSceneDesc* desc)
     {
         desc->filterShader = PxDefaultSimulationFilterShader;
         desc->filterShaderData = nullptr;
         desc->filterShaderDataSize = 0;
     }
 
-    FilterShaderHandle* create_custom_filter_shader(SimulationFilterShader filter)
+    DLLEXPORT FilterShaderHandle* create_custom_filter_shader(SimulationFilterShader filter)
     {
         return new FilterShaderHandle{filter};
     }
 
-    void destroy_custom_filter_shader(FilterShaderHandle* filterHandle) {
+    DLLEXPORT void destroy_custom_filter_shader(FilterShaderHandle* filterHandle) {
         delete filterHandle;
     }
 
-    void set_custom_filter_shader(PxSceneDesc* desc, FilterShaderHandle* filterHandle)
+    DLLEXPORT void set_custom_filter_shader(PxSceneDesc* desc, FilterShaderHandle* filterHandle)
     {
         desc->filterShader = FilterShaderTrampoline;
         desc->filterShaderData = filterHandle;
         desc->filterShaderDataSize = sizeof(FilterShaderHandle);
     }
 
-    void set_custom_filter_shader_with_default(PxSceneDesc* desc, FilterShaderHandle* filterHandle)
+    DLLEXPORT void set_custom_filter_shader_with_default(PxSceneDesc* desc, FilterShaderHandle* filterHandle)
     {
         desc->filterShader = FilterShaderTrampolineWithDefault;
         desc->filterShaderData = filterHandle;
@@ -845,7 +851,7 @@ extern "C"
     }
 
 	// Not generated, used only for testing and examples!
-    void PxAssertHandler_opCall_mut(physx_PxErrorCallback* self__pod, char const* expr, char const* file, int32_t line, bool* ignore ) {
+    DLLEXPORT void PxAssertHandler_opCall_mut(physx_PxErrorCallback* self__pod, char const* expr, char const* file, int32_t line, bool* ignore ) {
 		physx::PxAssertHandler* self_ = reinterpret_cast<physx::PxAssertHandler*>(self__pod);
 		(*self_)(expr, file, line, *ignore);
 	};

@@ -686,3 +686,9 @@ PxRevoluteJointFlags :: enum_flags u16 {
     DriveEnabled :: 1 << 1;
     DriveFreespin :: 1 << 2;
 }
+
+PxDistanceJointFlags :: enum_flags u16 {
+    MaxDistanceEnabled :: 1 << 1;
+    MinDistanceEnabled :: 1 << 2;
+    SpringEnabled :: 1 << 3;
+}
