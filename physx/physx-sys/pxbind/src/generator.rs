@@ -130,11 +130,54 @@ impl Generator {
     }
 
     pub fn generate_cpp(&self, ast: &AstConsumer<'_>, out: &mut impl Write) -> anyhow::Result<()> {
+        self.generate_cpp_enums(ast, out, 0)?;
         self.generate_size_asserts(ast, out)?;
         self.generate_cpp_functions(ast, out, 0)?;
 
         Ok(())
     }
+
+    pub fn generate_cpp_enums(
+        &self,
+        ast: &AstConsumer<'_>,
+        writer: &mut impl Write,
+        level: u32,
+    ) -> anyhow::Result<u32> {
+        let mut fiter = ast.flags.iter().peekable();
+        let mut acc = String::new();
+
+        for (enum_binding, flags_binding) in ast.enums.iter().enumerate().filter_map(|(i, eb)| {
+            let fb = if fiter.peek().map_or(false, |f| f.enums_index == i) {
+                fiter.next()
+            } else {
+                None
+            };
+
+            if (self.enum_filter)(eb) {
+                Some((eb, fb))
+            } else {
+                None
+            }
+        }) {
+            if !acc.is_empty() {
+                acc.clear();
+                writesln!(acc);
+            }
+
+            enum_binding.emit_cpp(&mut acc, level);
+
+            if let Some(flags) = flags_binding {
+                writesln!(acc);
+                flags.emit_cpp(enum_binding, &mut acc, level);
+            }
+
+            write!(writer, "{acc}")?;
+        }
+
+        Ok((ast.enums.len() + ast.flags.len()) as u32)
+    }
+
+
 
     /// Generates the static assert code used to verify that every structgen
     /// POD type is the same size as the C++ type it is wrapping

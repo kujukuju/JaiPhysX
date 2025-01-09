@@ -149,8 +149,8 @@ impl<'ast> FuncBinding<'ast> {
                             "{indent}memcpy(&{RET_POD}, &{RET}, sizeof({RET_POD}));"
                         );
                     }
-                    QualType::Enum { repr, .. } | QualType::Flags { repr, .. } => {
-                        writesln!(acc, "{indent}{} {RET_POD};", repr.c_type());
+                    QualType::Enum { name, .. } | QualType::Flags { name, .. } => {
+                        writesln!(acc, "{indent}{} {RET_POD};", name);
                         writesln!(
                             acc,
                             "{indent}memcpy(&{RET_POD}, &{RET}, sizeof({RET_POD}));"

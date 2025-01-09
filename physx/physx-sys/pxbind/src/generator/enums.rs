@@ -64,7 +64,7 @@ impl<'ast> EnumBinding<'ast> {
             );
         }
 
-        writesln!(w, "{indent}}}");
+        writesln!(w, "{indent}}};");
     }
 
     pub fn emit_rust_conversion(&self, w: &mut String, level: u32, from: Builtin, default: &str) {
@@ -179,7 +179,7 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
                 continue;
             }
 
-            writes!(w, "{indent1}const {} = ", fix_variant_name(var.name));
+            writes!(w, "{indent1}{}_Bit = ", fix_variant_name(var.name));
 
             // Since bitflags are made up of power of 2 values that can
             // be combined, and the PhysX API sometimes defines named
@@ -219,6 +219,6 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
             writesln!(w, ",");
         }
 
-        writesln!(w, "{indent}}}");
+        writesln!(w, "{indent}}};");
     }
 }
