@@ -590,7 +590,7 @@ int main() {
             sg.add_field("float mTypePadding", "mTypePadding", "f32", sizeof(float), unsafe_offsetof(physx_PxConvexMeshGeometry, mTypePadding));
             sg.add_field("physx_PxMeshScale scale", "scale", "PxMeshScale", sizeof(physx::PxMeshScale), unsafe_offsetof(physx_PxConvexMeshGeometry, scale));
             sg.add_field("physx_PxConvexMesh* convexMesh", "convexMesh", "*mut PxConvexMesh", sizeof(physx::PxConvexMesh*), unsafe_offsetof(physx_PxConvexMeshGeometry, convexMesh));
-            sg.add_field("PxConvexMeshGeometryFlags meshFlags", "meshFlags", "PxConvexMeshGeometryFlags", sizeof(physx::PxConvexMeshGeometryFlags), unsafe_offsetof(physx_PxConvexMeshGeometry, meshFlags));
+            sg.add_field("physx_PxConvexMeshGeometryFlags meshFlags", "meshFlags", "PxConvexMeshGeometryFlags", sizeof(physx::PxConvexMeshGeometryFlags), unsafe_offsetof(physx_PxConvexMeshGeometry, meshFlags));
             sg.end_struct(sizeof(physx::PxConvexMeshGeometry));
         }
     };
@@ -620,7 +620,7 @@ int main() {
             sg.begin_struct("physx_PxTriangleMeshGeometry", "PxTriangleMeshGeometry");
             sg.add_field("float mTypePadding", "mTypePadding", "f32", sizeof(float), unsafe_offsetof(physx_PxTriangleMeshGeometry, mTypePadding));
             sg.add_field("physx_PxMeshScale scale", "scale", "PxMeshScale", sizeof(physx::PxMeshScale), unsafe_offsetof(physx_PxTriangleMeshGeometry, scale));
-            sg.add_field("PxMeshGeometryFlags meshFlags", "meshFlags", "PxMeshGeometryFlags", sizeof(physx::PxMeshGeometryFlags), unsafe_offsetof(physx_PxTriangleMeshGeometry, meshFlags));
+            sg.add_field("physx_PxMeshGeometryFlags meshFlags", "meshFlags", "PxMeshGeometryFlags", sizeof(physx::PxMeshGeometryFlags), unsafe_offsetof(physx_PxTriangleMeshGeometry, meshFlags));
             sg.add_field("physx_PxTriangleMesh* triangleMesh", "triangleMesh", "*mut PxTriangleMesh", sizeof(physx::PxTriangleMesh*), unsafe_offsetof(physx_PxTriangleMeshGeometry, triangleMesh));
             sg.end_struct(sizeof(physx::PxTriangleMeshGeometry));
         }
@@ -635,7 +635,7 @@ int main() {
             sg.add_field("float heightScale", "heightScale", "f32", sizeof(float), unsafe_offsetof(physx_PxHeightFieldGeometry, heightScale));
             sg.add_field("float rowScale", "rowScale", "f32", sizeof(float), unsafe_offsetof(physx_PxHeightFieldGeometry, rowScale));
             sg.add_field("float columnScale", "columnScale", "f32", sizeof(float), unsafe_offsetof(physx_PxHeightFieldGeometry, columnScale));
-            sg.add_field("PxMeshGeometryFlags heightFieldFlags", "heightFieldFlags", "PxMeshGeometryFlags", sizeof(physx::PxMeshGeometryFlags), unsafe_offsetof(physx_PxHeightFieldGeometry, heightFieldFlags));
+            sg.add_field("physx_PxMeshGeometryFlags heightFieldFlags", "heightFieldFlags", "PxMeshGeometryFlags", sizeof(physx::PxMeshGeometryFlags), unsafe_offsetof(physx_PxHeightFieldGeometry, heightFieldFlags));
             sg.end_struct(sizeof(physx::PxHeightFieldGeometry));
         }
     };
@@ -645,7 +645,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxParticleSystemGeometry", "PxParticleSystemGeometry");
             sg.add_field("float mTypePadding", "mTypePadding", "f32", sizeof(float), unsafe_offsetof(physx_PxParticleSystemGeometry, mTypePadding));
-            sg.add_field("PxParticleSolverType mSolverType", "mSolverType", "PxParticleSolverType", sizeof(physx::PxParticleSolverType::Enum), unsafe_offsetof(physx_PxParticleSystemGeometry, mSolverType));
+            sg.add_field("physx_PxParticleSolverType mSolverType", "mSolverType", "PxParticleSolverType", sizeof(physx::PxParticleSolverType::Enum), unsafe_offsetof(physx_PxParticleSystemGeometry, mSolverType));
             sg.end_struct(sizeof(physx::PxParticleSystemGeometry));
         }
     };
@@ -683,7 +683,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxLocationHit", "PxLocationHit");
             sg.add_field("uint32_t faceIndex", "faceIndex", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxLocationHit, faceIndex));
-            sg.add_field("PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxLocationHit, flags));
+            sg.add_field("physx_PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxLocationHit, flags));
             sg.add_field("physx_PxVec3 position", "position", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxLocationHit, position));
             sg.add_field("physx_PxVec3 normal", "normal", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxLocationHit, normal));
             sg.add_field("float distance", "distance", "f32", sizeof(float), unsafe_offsetof(physx_PxLocationHit, distance));
@@ -696,7 +696,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxGeomRaycastHit", "PxGeomRaycastHit");
             sg.add_field("uint32_t faceIndex", "faceIndex", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxGeomRaycastHit, faceIndex));
-            sg.add_field("PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxGeomRaycastHit, flags));
+            sg.add_field("physx_PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxGeomRaycastHit, flags));
             sg.add_field("physx_PxVec3 position", "position", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxGeomRaycastHit, position));
             sg.add_field("physx_PxVec3 normal", "normal", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxGeomRaycastHit, normal));
             sg.add_field("float distance", "distance", "f32", sizeof(float), unsafe_offsetof(physx_PxGeomRaycastHit, distance));
@@ -720,7 +720,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxGeomSweepHit", "PxGeomSweepHit");
             sg.add_field("uint32_t faceIndex", "faceIndex", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxGeomSweepHit, faceIndex));
-            sg.add_field("PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxGeomSweepHit, flags));
+            sg.add_field("physx_PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxGeomSweepHit, flags));
             sg.add_field("physx_PxVec3 position", "position", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxGeomSweepHit, position));
             sg.add_field("physx_PxVec3 normal", "normal", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxGeomSweepHit, normal));
             sg.add_field("float distance", "distance", "f32", sizeof(float), unsafe_offsetof(physx_PxGeomSweepHit, distance));
@@ -810,10 +810,10 @@ int main() {
             sg.begin_struct("physx_PxHeightFieldDesc", "PxHeightFieldDesc");
             sg.add_field("uint32_t nbRows", "nbRows", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxHeightFieldDesc, nbRows));
             sg.add_field("uint32_t nbColumns", "nbColumns", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxHeightFieldDesc, nbColumns));
-            sg.add_field("PxHeightFieldFormat format", "format", "PxHeightFieldFormat", sizeof(physx::PxHeightFieldFormat::Enum), unsafe_offsetof(physx_PxHeightFieldDesc, format));
+            sg.add_field("physx_PxHeightFieldFormat format", "format", "PxHeightFieldFormat", sizeof(physx::PxHeightFieldFormat::Enum), unsafe_offsetof(physx_PxHeightFieldDesc, format));
             sg.add_field("physx_PxStridedData samples", "samples", "PxStridedData", sizeof(physx::PxStridedData), unsafe_offsetof(physx_PxHeightFieldDesc, samples));
             sg.add_field("float convexEdgeThreshold", "convexEdgeThreshold", "f32", sizeof(float), unsafe_offsetof(physx_PxHeightFieldDesc, convexEdgeThreshold));
-            sg.add_field("PxHeightFieldFlags flags", "flags", "PxHeightFieldFlags", sizeof(physx::PxHeightFieldFlags), unsafe_offsetof(physx_PxHeightFieldDesc, flags));
+            sg.add_field("physx_PxHeightFieldFlags flags", "flags", "PxHeightFieldFlags", sizeof(physx::PxHeightFieldFlags), unsafe_offsetof(physx_PxHeightFieldDesc, flags));
             sg.end_struct(sizeof(physx::PxHeightFieldDesc));
         }
     };
@@ -833,7 +833,7 @@ int main() {
             sg.begin_struct("physx_PxSimpleTriangleMesh", "PxSimpleTriangleMesh");
             sg.add_field("physx_PxBoundedData points", "points", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxSimpleTriangleMesh, points));
             sg.add_field("physx_PxBoundedData triangles", "triangles", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxSimpleTriangleMesh, triangles));
-            sg.add_field("PxMeshFlags flags", "flags", "PxMeshFlags", sizeof(physx::PxMeshFlags), unsafe_offsetof(physx_PxSimpleTriangleMesh, flags));
+            sg.add_field("physx_PxMeshFlags flags", "flags", "PxMeshFlags", sizeof(physx::PxMeshFlags), unsafe_offsetof(physx_PxSimpleTriangleMesh, flags));
             sg.end_struct(sizeof(physx::PxSimpleTriangleMesh));
         }
     };
@@ -1120,8 +1120,8 @@ int main() {
             sg.add_field("physx_PxSolverBodyData const* data1", "data1", "*const PxSolverBodyData", sizeof(physx::PxSolverBodyData const*), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, data1));
             sg.add_field("physx_PxTransform bodyFrame0", "bodyFrame0", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, bodyFrame0));
             sg.add_field("physx_PxTransform bodyFrame1", "bodyFrame1", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, bodyFrame1));
-            sg.add_field("BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, bodyState0));
-            sg.add_field("BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, bodyState1));
+            sg.add_field("physx_BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, bodyState0));
+            sg.add_field("physx_BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDescBase, bodyState1));
             sg.end_struct(sizeof(physx::PxSolverConstraintPrepDescBase));
         }
     };
@@ -1138,8 +1138,8 @@ int main() {
             sg.add_field("physx_PxSolverBodyData const* data1", "data1", "*const PxSolverBodyData", sizeof(physx::PxSolverBodyData const*), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, data1));
             sg.add_field("physx_PxTransform bodyFrame0", "bodyFrame0", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, bodyFrame0));
             sg.add_field("physx_PxTransform bodyFrame1", "bodyFrame1", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, bodyFrame1));
-            sg.add_field("BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, bodyState0));
-            sg.add_field("BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, bodyState1));
+            sg.add_field("physx_BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, bodyState0));
+            sg.add_field("physx_BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, bodyState1));
             sg.add_field("physx_Px1DConstraint* rows", "rows", "*mut Px1DConstraint", sizeof(physx::Px1DConstraint*), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, rows));
             sg.add_field("uint32_t numRows", "numRows", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, numRows));
             sg.add_field("float linBreakForce", "linBreakForce", "f32", sizeof(float), unsafe_offsetof(physx_PxSolverConstraintPrepDesc, linBreakForce));
@@ -1168,8 +1168,8 @@ int main() {
             sg.add_field("physx_PxSolverBodyData const* data1", "data1", "*const PxSolverBodyData", sizeof(physx::PxSolverBodyData const*), unsafe_offsetof(physx_PxSolverContactDesc, data1));
             sg.add_field("physx_PxTransform bodyFrame0", "bodyFrame0", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxSolverContactDesc, bodyFrame0));
             sg.add_field("physx_PxTransform bodyFrame1", "bodyFrame1", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxSolverContactDesc, bodyFrame1));
-            sg.add_field("BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverContactDesc, bodyState0));
-            sg.add_field("BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverContactDesc, bodyState1));
+            sg.add_field("physx_BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverContactDesc, bodyState0));
+            sg.add_field("physx_BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxSolverContactDesc, bodyState1));
             sg.add_field("void* shapeInteraction", "shapeInteraction", "*mut std::ffi::c_void", sizeof(void*), unsafe_offsetof(physx_PxSolverContactDesc, shapeInteraction));
             sg.add_field("physx_PxContactPoint* contacts", "contacts", "*mut PxContactPoint", sizeof(physx::PxContactPoint*), unsafe_offsetof(physx_PxSolverContactDesc, contacts));
             sg.add_field("uint32_t numContacts", "numContacts", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSolverContactDesc, numContacts));
@@ -1209,7 +1209,7 @@ int main() {
             sg.add_field("float stiffness", "stiffness", "f32", sizeof(float), unsafe_offsetof(physx_PxArticulationDrive, stiffness));
             sg.add_field("float damping", "damping", "f32", sizeof(float), unsafe_offsetof(physx_PxArticulationDrive, damping));
             sg.add_field("float maxForce", "maxForce", "f32", sizeof(float), unsafe_offsetof(physx_PxArticulationDrive, maxForce));
-            sg.add_field("PxArticulationDriveType driveType", "driveType", "PxArticulationDriveType", sizeof(physx::PxArticulationDriveType::Enum), unsafe_offsetof(physx_PxArticulationDrive, driveType));
+            sg.add_field("physx_PxArticulationDriveType driveType", "driveType", "PxArticulationDriveType", sizeof(physx::PxArticulationDriveType::Enum), unsafe_offsetof(physx_PxArticulationDrive, driveType));
             sg.end_struct(sizeof(physx::PxArticulationDrive));
         }
     };
@@ -1273,8 +1273,8 @@ int main() {
             sg.add_field("physx_PxTGSSolverBodyData const* bodyData1", "bodyData1", "*const PxTGSSolverBodyData", sizeof(physx::PxTGSSolverBodyData const*), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyData1));
             sg.add_field("physx_PxTransform bodyFrame0", "bodyFrame0", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyFrame0));
             sg.add_field("physx_PxTransform bodyFrame1", "bodyFrame1", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyFrame1));
-            sg.add_field("BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyState0));
-            sg.add_field("BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyState1));
+            sg.add_field("physx_BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyState0));
+            sg.add_field("physx_BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDescBase, bodyState1));
             sg.end_struct(sizeof(physx::PxTGSSolverConstraintPrepDescBase));
         }
     };
@@ -1293,8 +1293,8 @@ int main() {
             sg.add_field("physx_PxTGSSolverBodyData const* bodyData1", "bodyData1", "*const PxTGSSolverBodyData", sizeof(physx::PxTGSSolverBodyData const*), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyData1));
             sg.add_field("physx_PxTransform bodyFrame0", "bodyFrame0", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyFrame0));
             sg.add_field("physx_PxTransform bodyFrame1", "bodyFrame1", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyFrame1));
-            sg.add_field("BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyState0));
-            sg.add_field("BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyState1));
+            sg.add_field("physx_BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyState0));
+            sg.add_field("physx_BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, bodyState1));
             sg.add_field("physx_Px1DConstraint* rows", "rows", "*mut Px1DConstraint", sizeof(physx::Px1DConstraint*), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, rows));
             sg.add_field("uint32_t numRows", "numRows", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, numRows));
             sg.add_field("float linBreakForce", "linBreakForce", "f32", sizeof(float), unsafe_offsetof(physx_PxTGSSolverConstraintPrepDesc, linBreakForce));
@@ -1327,8 +1327,8 @@ int main() {
             sg.add_field("physx_PxTGSSolverBodyData const* bodyData1", "bodyData1", "*const PxTGSSolverBodyData", sizeof(physx::PxTGSSolverBodyData const*), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyData1));
             sg.add_field("physx_PxTransform bodyFrame0", "bodyFrame0", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyFrame0));
             sg.add_field("physx_PxTransform bodyFrame1", "bodyFrame1", "PxTransform", sizeof(physx::PxTransform), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyFrame1));
-            sg.add_field("BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyState0));
-            sg.add_field("BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyState1));
+            sg.add_field("physx_BodyState bodyState0", "bodyState0", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyState0));
+            sg.add_field("physx_BodyState bodyState1", "bodyState1", "BodyState", sizeof(physx::PxSolverConstraintPrepDescBase::BodyState), unsafe_offsetof(physx_PxTGSSolverContactDesc, bodyState1));
             sg.add_field("void* shapeInteraction", "shapeInteraction", "*mut std::ffi::c_void", sizeof(void*), unsafe_offsetof(physx_PxTGSSolverContactDesc, shapeInteraction));
             sg.add_field("physx_PxContactPoint* contacts", "contacts", "*mut PxContactPoint", sizeof(physx::PxContactPoint*), unsafe_offsetof(physx_PxTGSSolverContactDesc, contacts));
             sg.add_field("uint32_t numContacts", "numContacts", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxTGSSolverContactDesc, numContacts));
@@ -1573,7 +1573,7 @@ int main() {
             sg.begin_struct("physx_PxConstraintShaderTable", "PxConstraintShaderTable");
             sg.add_field("void * solverPrep", "solverPrep", "*mut std::ffi::c_void", sizeof(void *), unsafe_offsetof(physx_PxConstraintShaderTable, solverPrep));
             sg.add_field("void * visualize", "visualize", "*mut std::ffi::c_void", sizeof(void *), unsafe_offsetof(physx_PxConstraintShaderTable, visualize));
-            sg.add_field("PxConstraintFlag flag", "flag", "PxConstraintFlag", sizeof(physx::PxConstraintFlag::Enum), unsafe_offsetof(physx_PxConstraintShaderTable, flag));
+            sg.add_field("physx_PxConstraintFlag flag", "flag", "PxConstraintFlag", sizeof(physx::PxConstraintFlag::Enum), unsafe_offsetof(physx_PxConstraintShaderTable, flag));
             sg.end_struct(sizeof(physx::PxConstraintShaderTable));
         }
     };
@@ -1675,7 +1675,7 @@ int main() {
             sg.add_field("uint32_t nextPatchIndex", "nextPatchIndex", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxContactStreamIterator, nextPatchIndex));
             sg.add_field("uint32_t contactPatchHeaderSize", "contactPatchHeaderSize", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxContactStreamIterator, contactPatchHeaderSize));
             sg.add_field("uint32_t contactPointSize", "contactPointSize", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxContactStreamIterator, contactPointSize));
-            sg.add_field("StreamFormat mStreamFormat", "mStreamFormat", "StreamFormat", sizeof(physx::PxContactStreamIterator::StreamFormat), unsafe_offsetof(physx_PxContactStreamIterator, mStreamFormat));
+            sg.add_field("physx_StreamFormat mStreamFormat", "mStreamFormat", "StreamFormat", sizeof(physx::PxContactStreamIterator::StreamFormat), unsafe_offsetof(physx_PxContactStreamIterator, mStreamFormat));
             sg.add_field("uint32_t forceNoResponse", "forceNoResponse", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxContactStreamIterator, forceNoResponse));
             sg.add_field("bool pointStepped", "pointStepped", "bool", sizeof(bool), unsafe_offsetof(physx_PxContactStreamIterator, pointStepped));
             sg.add_field("uint32_t hasFaceIndices", "hasFaceIndices", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxContactStreamIterator, hasFaceIndices));
@@ -1859,7 +1859,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxRaycastHit", "PxRaycastHit");
             sg.add_field("uint32_t faceIndex", "faceIndex", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxRaycastHit, faceIndex));
-            sg.add_field("PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxRaycastHit, flags));
+            sg.add_field("physx_PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxRaycastHit, flags));
             sg.add_field("physx_PxVec3 position", "position", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxRaycastHit, position));
             sg.add_field("physx_PxVec3 normal", "normal", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxRaycastHit, normal));
             sg.add_field("float distance", "distance", "f32", sizeof(float), unsafe_offsetof(physx_PxRaycastHit, distance));
@@ -1887,7 +1887,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxSweepHit", "PxSweepHit");
             sg.add_field("uint32_t faceIndex", "faceIndex", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSweepHit, faceIndex));
-            sg.add_field("PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxSweepHit, flags));
+            sg.add_field("physx_PxHitFlags flags", "flags", "PxHitFlags", sizeof(physx::PxHitFlags), unsafe_offsetof(physx_PxSweepHit, flags));
             sg.add_field("physx_PxVec3 position", "position", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxSweepHit, position));
             sg.add_field("physx_PxVec3 normal", "normal", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxSweepHit, normal));
             sg.add_field("float distance", "distance", "f32", sizeof(float), unsafe_offsetof(physx_PxSweepHit, distance));
@@ -1991,7 +1991,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxQueryFilterData", "PxQueryFilterData");
             sg.add_field("physx_PxFilterData data", "data", "PxFilterData", sizeof(physx::PxFilterData), unsafe_offsetof(physx_PxQueryFilterData, data));
-            sg.add_field("PxQueryFlags flags", "flags", "PxQueryFlags", sizeof(physx::PxQueryFlags), unsafe_offsetof(physx_PxQueryFilterData, flags));
+            sg.add_field("physx_PxQueryFlags flags", "flags", "PxQueryFlags", sizeof(physx::PxQueryFlags), unsafe_offsetof(physx_PxQueryFilterData, flags));
             sg.end_struct(sizeof(physx::PxQueryFilterData));
         }
     };
@@ -2020,15 +2020,15 @@ int main() {
     struct physx_PxSceneQueryDesc: public physx::PxSceneQueryDesc {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxSceneQueryDesc", "PxSceneQueryDesc");
-            sg.add_field("PxPruningStructureType staticStructure", "staticStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, staticStructure));
-            sg.add_field("PxPruningStructureType dynamicStructure", "dynamicStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicStructure));
+            sg.add_field("physx_PxPruningStructureType staticStructure", "staticStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, staticStructure));
+            sg.add_field("physx_PxPruningStructureType dynamicStructure", "dynamicStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicStructure));
             sg.add_field("uint32_t dynamicTreeRebuildRateHint", "dynamicTreeRebuildRateHint", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicTreeRebuildRateHint));
-            sg.add_field("PxDynamicTreeSecondaryPruner dynamicTreeSecondaryPruner", "dynamicTreeSecondaryPruner", "PxDynamicTreeSecondaryPruner", sizeof(physx::PxDynamicTreeSecondaryPruner::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicTreeSecondaryPruner));
-            sg.add_field("PxBVHBuildStrategy staticBVHBuildStrategy", "staticBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, staticBVHBuildStrategy));
-            sg.add_field("PxBVHBuildStrategy dynamicBVHBuildStrategy", "dynamicBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicBVHBuildStrategy));
+            sg.add_field("physx_PxDynamicTreeSecondaryPruner dynamicTreeSecondaryPruner", "dynamicTreeSecondaryPruner", "PxDynamicTreeSecondaryPruner", sizeof(physx::PxDynamicTreeSecondaryPruner::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicTreeSecondaryPruner));
+            sg.add_field("physx_PxBVHBuildStrategy staticBVHBuildStrategy", "staticBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, staticBVHBuildStrategy));
+            sg.add_field("physx_PxBVHBuildStrategy dynamicBVHBuildStrategy", "dynamicBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicBVHBuildStrategy));
             sg.add_field("uint32_t staticNbObjectsPerNode", "staticNbObjectsPerNode", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneQueryDesc, staticNbObjectsPerNode));
             sg.add_field("uint32_t dynamicNbObjectsPerNode", "dynamicNbObjectsPerNode", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneQueryDesc, dynamicNbObjectsPerNode));
-            sg.add_field("PxSceneQueryUpdateMode sceneQueryUpdateMode", "sceneQueryUpdateMode", "PxSceneQueryUpdateMode", sizeof(physx::PxSceneQueryUpdateMode::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, sceneQueryUpdateMode));
+            sg.add_field("physx_PxSceneQueryUpdateMode sceneQueryUpdateMode", "sceneQueryUpdateMode", "PxSceneQueryUpdateMode", sizeof(physx::PxSceneQueryUpdateMode::Enum), unsafe_offsetof(physx_PxSceneQueryDesc, sceneQueryUpdateMode));
             sg.end_struct(sizeof(physx::PxSceneQueryDesc));
         }
     };
@@ -2072,7 +2072,7 @@ int main() {
     struct physx_PxBroadPhaseDesc: public physx::PxBroadPhaseDesc {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxBroadPhaseDesc", "PxBroadPhaseDesc");
-            sg.add_field("PxBroadPhaseType mType", "mType", "PxBroadPhaseType", sizeof(physx::PxBroadPhaseType::Enum), unsafe_offsetof(physx_PxBroadPhaseDesc, mType));
+            sg.add_field("physx_PxBroadPhaseType mType", "mType", "PxBroadPhaseType", sizeof(physx::PxBroadPhaseType::Enum), unsafe_offsetof(physx_PxBroadPhaseDesc, mType));
             sg.add_field("uint64_t mContextID", "mContextID", "u64", sizeof(uint64_t), unsafe_offsetof(physx_PxBroadPhaseDesc, mContextID));
             sg.add_field("uint32_t mFoundLostPairsCapacity", "mFoundLostPairsCapacity", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxBroadPhaseDesc, mFoundLostPairsCapacity));
             sg.add_field("bool mDiscardStaticVsKinematic", "mDiscardStaticVsKinematic", "bool", sizeof(bool), unsafe_offsetof(physx_PxBroadPhaseDesc, mDiscardStaticVsKinematic));
@@ -2166,15 +2166,15 @@ int main() {
     struct physx_PxSceneDesc: public physx::PxSceneDesc {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxSceneDesc", "PxSceneDesc");
-            sg.add_field("PxPruningStructureType staticStructure", "staticStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneDesc, staticStructure));
-            sg.add_field("PxPruningStructureType dynamicStructure", "dynamicStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneDesc, dynamicStructure));
+            sg.add_field("physx_PxPruningStructureType staticStructure", "staticStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneDesc, staticStructure));
+            sg.add_field("physx_PxPruningStructureType dynamicStructure", "dynamicStructure", "PxPruningStructureType", sizeof(physx::PxPruningStructureType::Enum), unsafe_offsetof(physx_PxSceneDesc, dynamicStructure));
             sg.add_field("uint32_t dynamicTreeRebuildRateHint", "dynamicTreeRebuildRateHint", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneDesc, dynamicTreeRebuildRateHint));
-            sg.add_field("PxDynamicTreeSecondaryPruner dynamicTreeSecondaryPruner", "dynamicTreeSecondaryPruner", "PxDynamicTreeSecondaryPruner", sizeof(physx::PxDynamicTreeSecondaryPruner::Enum), unsafe_offsetof(physx_PxSceneDesc, dynamicTreeSecondaryPruner));
-            sg.add_field("PxBVHBuildStrategy staticBVHBuildStrategy", "staticBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneDesc, staticBVHBuildStrategy));
-            sg.add_field("PxBVHBuildStrategy dynamicBVHBuildStrategy", "dynamicBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneDesc, dynamicBVHBuildStrategy));
+            sg.add_field("physx_PxDynamicTreeSecondaryPruner dynamicTreeSecondaryPruner", "dynamicTreeSecondaryPruner", "PxDynamicTreeSecondaryPruner", sizeof(physx::PxDynamicTreeSecondaryPruner::Enum), unsafe_offsetof(physx_PxSceneDesc, dynamicTreeSecondaryPruner));
+            sg.add_field("physx_PxBVHBuildStrategy staticBVHBuildStrategy", "staticBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneDesc, staticBVHBuildStrategy));
+            sg.add_field("physx_PxBVHBuildStrategy dynamicBVHBuildStrategy", "dynamicBVHBuildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxSceneDesc, dynamicBVHBuildStrategy));
             sg.add_field("uint32_t staticNbObjectsPerNode", "staticNbObjectsPerNode", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneDesc, staticNbObjectsPerNode));
             sg.add_field("uint32_t dynamicNbObjectsPerNode", "dynamicNbObjectsPerNode", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneDesc, dynamicNbObjectsPerNode));
-            sg.add_field("PxSceneQueryUpdateMode sceneQueryUpdateMode", "sceneQueryUpdateMode", "PxSceneQueryUpdateMode", sizeof(physx::PxSceneQueryUpdateMode::Enum), unsafe_offsetof(physx_PxSceneDesc, sceneQueryUpdateMode));
+            sg.add_field("physx_PxSceneQueryUpdateMode sceneQueryUpdateMode", "sceneQueryUpdateMode", "PxSceneQueryUpdateMode", sizeof(physx::PxSceneQueryUpdateMode::Enum), unsafe_offsetof(physx_PxSceneDesc, sceneQueryUpdateMode));
             sg.add_field("physx_PxVec3 gravity", "gravity", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxSceneDesc, gravity));
             sg.add_field("physx_PxSimulationEventCallback* simulationEventCallback", "simulationEventCallback", "*mut PxSimulationEventCallback", sizeof(physx::PxSimulationEventCallback*), unsafe_offsetof(physx_PxSceneDesc, simulationEventCallback));
             sg.add_field("physx_PxContactModifyCallback* contactModifyCallback", "contactModifyCallback", "*mut PxContactModifyCallback", sizeof(physx::PxContactModifyCallback*), unsafe_offsetof(physx_PxSceneDesc, contactModifyCallback));
@@ -2183,17 +2183,17 @@ int main() {
             sg.add_field("uint32_t filterShaderDataSize", "filterShaderDataSize", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneDesc, filterShaderDataSize));
             sg.add_field("void * filterShader", "filterShader", "*mut std::ffi::c_void", sizeof(void *), unsafe_offsetof(physx_PxSceneDesc, filterShader));
             sg.add_field("physx_PxSimulationFilterCallback* filterCallback", "filterCallback", "*mut PxSimulationFilterCallback", sizeof(physx::PxSimulationFilterCallback*), unsafe_offsetof(physx_PxSceneDesc, filterCallback));
-            sg.add_field("PxPairFilteringMode kineKineFilteringMode", "kineKineFilteringMode", "PxPairFilteringMode", sizeof(physx::PxPairFilteringMode::Enum), unsafe_offsetof(physx_PxSceneDesc, kineKineFilteringMode));
-            sg.add_field("PxPairFilteringMode staticKineFilteringMode", "staticKineFilteringMode", "PxPairFilteringMode", sizeof(physx::PxPairFilteringMode::Enum), unsafe_offsetof(physx_PxSceneDesc, staticKineFilteringMode));
-            sg.add_field("PxBroadPhaseType broadPhaseType", "broadPhaseType", "PxBroadPhaseType", sizeof(physx::PxBroadPhaseType::Enum), unsafe_offsetof(physx_PxSceneDesc, broadPhaseType));
+            sg.add_field("physx_PxPairFilteringMode kineKineFilteringMode", "kineKineFilteringMode", "PxPairFilteringMode", sizeof(physx::PxPairFilteringMode::Enum), unsafe_offsetof(physx_PxSceneDesc, kineKineFilteringMode));
+            sg.add_field("physx_PxPairFilteringMode staticKineFilteringMode", "staticKineFilteringMode", "PxPairFilteringMode", sizeof(physx::PxPairFilteringMode::Enum), unsafe_offsetof(physx_PxSceneDesc, staticKineFilteringMode));
+            sg.add_field("physx_PxBroadPhaseType broadPhaseType", "broadPhaseType", "PxBroadPhaseType", sizeof(physx::PxBroadPhaseType::Enum), unsafe_offsetof(physx_PxSceneDesc, broadPhaseType));
             sg.add_field("physx_PxBroadPhaseCallback* broadPhaseCallback", "broadPhaseCallback", "*mut PxBroadPhaseCallback", sizeof(physx::PxBroadPhaseCallback*), unsafe_offsetof(physx_PxSceneDesc, broadPhaseCallback));
             sg.add_field("physx_PxSceneLimits limits", "limits", "PxSceneLimits", sizeof(physx::PxSceneLimits), unsafe_offsetof(physx_PxSceneDesc, limits));
-            sg.add_field("PxFrictionType frictionType", "frictionType", "PxFrictionType", sizeof(physx::PxFrictionType::Enum), unsafe_offsetof(physx_PxSceneDesc, frictionType));
-            sg.add_field("PxSolverType solverType", "solverType", "PxSolverType", sizeof(physx::PxSolverType::Enum), unsafe_offsetof(physx_PxSceneDesc, solverType));
+            sg.add_field("physx_PxFrictionType frictionType", "frictionType", "PxFrictionType", sizeof(physx::PxFrictionType::Enum), unsafe_offsetof(physx_PxSceneDesc, frictionType));
+            sg.add_field("physx_PxSolverType solverType", "solverType", "PxSolverType", sizeof(physx::PxSolverType::Enum), unsafe_offsetof(physx_PxSceneDesc, solverType));
             sg.add_field("float bounceThresholdVelocity", "bounceThresholdVelocity", "f32", sizeof(float), unsafe_offsetof(physx_PxSceneDesc, bounceThresholdVelocity));
             sg.add_field("float frictionOffsetThreshold", "frictionOffsetThreshold", "f32", sizeof(float), unsafe_offsetof(physx_PxSceneDesc, frictionOffsetThreshold));
             sg.add_field("float frictionCorrelationDistance", "frictionCorrelationDistance", "f32", sizeof(float), unsafe_offsetof(physx_PxSceneDesc, frictionCorrelationDistance));
-            sg.add_field("PxSceneFlags flags", "flags", "PxSceneFlags", sizeof(physx::PxSceneFlags), unsafe_offsetof(physx_PxSceneDesc, flags));
+            sg.add_field("physx_PxSceneFlags flags", "flags", "PxSceneFlags", sizeof(physx::PxSceneFlags), unsafe_offsetof(physx_PxSceneDesc, flags));
             sg.add_field("physx_PxCpuDispatcher* cpuDispatcher", "cpuDispatcher", "*mut PxCpuDispatcher", sizeof(physx::PxCpuDispatcher*), unsafe_offsetof(physx_PxSceneDesc, cpuDispatcher));
             sg.add_field("void* userData", "userData", "*mut std::ffi::c_void", sizeof(void*), unsafe_offsetof(physx_PxSceneDesc, userData));
             sg.add_field("uint32_t solverBatchSize", "solverBatchSize", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSceneDesc, solverBatchSize));
@@ -2404,7 +2404,7 @@ int main() {
             sg.add_field("physx_PxActor* actors[2]", "actors", "[*mut PxActor; 2]", sizeof(physx::PxActor*[2]), unsafe_offsetof(physx_PxContactPairHeader, actors));
             sg.add_field("uint8_t const* extraDataStream", "extraDataStream", "*const u8", sizeof(uint8_t const*), unsafe_offsetof(physx_PxContactPairHeader, extraDataStream));
             sg.add_field("uint16_t extraDataStreamSize", "extraDataStreamSize", "u16", sizeof(uint16_t), unsafe_offsetof(physx_PxContactPairHeader, extraDataStreamSize));
-            sg.add_field("PxContactPairHeaderFlags flags", "flags", "PxContactPairHeaderFlags", sizeof(physx::PxContactPairHeaderFlags), unsafe_offsetof(physx_PxContactPairHeader, flags));
+            sg.add_field("physx_PxContactPairHeaderFlags flags", "flags", "PxContactPairHeaderFlags", sizeof(physx::PxContactPairHeaderFlags), unsafe_offsetof(physx_PxContactPairHeader, flags));
             sg.add_field("physx_PxContactPair const* pairs", "pairs", "*const PxContactPair", sizeof(physx::PxContactPair const*), unsafe_offsetof(physx_PxContactPairHeader, pairs));
             sg.add_field("uint32_t nbPairs", "nbPairs", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxContactPairHeader, nbPairs));
             sg.end_struct(sizeof(physx::PxContactPairHeader));
@@ -2437,8 +2437,8 @@ int main() {
             sg.add_field("uint8_t contactCount", "contactCount", "u8", sizeof(uint8_t), unsafe_offsetof(physx_PxContactPair, contactCount));
             sg.add_field("uint8_t patchCount", "patchCount", "u8", sizeof(uint8_t), unsafe_offsetof(physx_PxContactPair, patchCount));
             sg.add_field("uint16_t contactStreamSize", "contactStreamSize", "u16", sizeof(uint16_t), unsafe_offsetof(physx_PxContactPair, contactStreamSize));
-            sg.add_field("PxContactPairFlags flags", "flags", "PxContactPairFlags", sizeof(physx::PxContactPairFlags), unsafe_offsetof(physx_PxContactPair, flags));
-            sg.add_field("PxPairFlags events", "events", "PxPairFlags", sizeof(physx::PxPairFlags), unsafe_offsetof(physx_PxContactPair, events));
+            sg.add_field("physx_PxContactPairFlags flags", "flags", "PxContactPairFlags", sizeof(physx::PxContactPairFlags), unsafe_offsetof(physx_PxContactPair, flags));
+            sg.add_field("physx_PxPairFlags events", "events", "PxPairFlags", sizeof(physx::PxPairFlags), unsafe_offsetof(physx_PxContactPair, events));
             sg.add_field("uint32_t internalData[2]", "internalData", "[u32; 2]", sizeof(uint32_t[2]), unsafe_offsetof(physx_PxContactPair, internalData));
             sg.end_struct(sizeof(physx::PxContactPair));
         }
@@ -2452,8 +2452,8 @@ int main() {
             sg.add_field("physx_PxActor* triggerActor", "triggerActor", "*mut PxActor", sizeof(physx::PxActor*), unsafe_offsetof(physx_PxTriggerPair, triggerActor));
             sg.add_field("physx_PxShape* otherShape", "otherShape", "*mut PxShape", sizeof(physx::PxShape*), unsafe_offsetof(physx_PxTriggerPair, otherShape));
             sg.add_field("physx_PxActor* otherActor", "otherActor", "*mut PxActor", sizeof(physx::PxActor*), unsafe_offsetof(physx_PxTriggerPair, otherActor));
-            sg.add_field("PxPairFlag status", "status", "PxPairFlag", sizeof(physx::PxPairFlag::Enum), unsafe_offsetof(physx_PxTriggerPair, status));
-            sg.add_field("PxTriggerPairFlags flags", "flags", "PxTriggerPairFlags", sizeof(physx::PxTriggerPairFlags), unsafe_offsetof(physx_PxTriggerPair, flags));
+            sg.add_field("physx_PxPairFlag status", "status", "PxPairFlag", sizeof(physx::PxPairFlag::Enum), unsafe_offsetof(physx_PxTriggerPair, status));
+            sg.add_field("physx_PxTriggerPairFlags flags", "flags", "PxTriggerPairFlags", sizeof(physx::PxTriggerPairFlags), unsafe_offsetof(physx_PxTriggerPair, flags));
             sg.end_struct(sizeof(physx::PxTriggerPair));
         }
     };
@@ -2636,7 +2636,7 @@ int main() {
             sg.begin_struct("physx_PxControllerFilters", "PxControllerFilters");
             sg.add_field("physx_PxFilterData const* mFilterData", "mFilterData", "*const PxFilterData", sizeof(physx::PxFilterData const*), unsafe_offsetof(physx_PxControllerFilters, mFilterData));
             sg.add_field("physx_PxQueryFilterCallback* mFilterCallback", "mFilterCallback", "*mut PxQueryFilterCallback", sizeof(physx::PxQueryFilterCallback*), unsafe_offsetof(physx_PxControllerFilters, mFilterCallback));
-            sg.add_field("PxQueryFlags mFilterFlags", "mFilterFlags", "PxQueryFlags", sizeof(physx::PxQueryFlags), unsafe_offsetof(physx_PxControllerFilters, mFilterFlags));
+            sg.add_field("physx_PxQueryFlags mFilterFlags", "mFilterFlags", "PxQueryFlags", sizeof(physx::PxQueryFlags), unsafe_offsetof(physx_PxControllerFilters, mFilterFlags));
             sg.add_field("physx_PxControllerFilterCallback* mCCTFilterCallback", "mCCTFilterCallback", "*mut PxControllerFilterCallback", sizeof(physx::PxControllerFilterCallback*), unsafe_offsetof(physx_PxControllerFilters, mCCTFilterCallback));
             sg.end_struct(sizeof(physx::PxControllerFilters));
         }
@@ -2658,7 +2658,7 @@ int main() {
             sg.add_field("float volumeGrowth", "volumeGrowth", "f32", sizeof(float), unsafe_offsetof(physx_PxControllerDesc, volumeGrowth));
             sg.add_field("physx_PxUserControllerHitReport* reportCallback", "reportCallback", "*mut PxUserControllerHitReport", sizeof(physx::PxUserControllerHitReport*), unsafe_offsetof(physx_PxControllerDesc, reportCallback));
             sg.add_field("physx_PxControllerBehaviorCallback* behaviorCallback", "behaviorCallback", "*mut PxControllerBehaviorCallback", sizeof(physx::PxControllerBehaviorCallback*), unsafe_offsetof(physx_PxControllerDesc, behaviorCallback));
-            sg.add_field("PxControllerNonWalkableMode nonWalkableMode", "nonWalkableMode", "PxControllerNonWalkableMode", sizeof(physx::PxControllerNonWalkableMode::Enum), unsafe_offsetof(physx_PxControllerDesc, nonWalkableMode));
+            sg.add_field("physx_PxControllerNonWalkableMode nonWalkableMode", "nonWalkableMode", "PxControllerNonWalkableMode", sizeof(physx::PxControllerNonWalkableMode::Enum), unsafe_offsetof(physx_PxControllerDesc, nonWalkableMode));
             sg.add_field("physx_PxMaterial* material", "material", "*mut PxMaterial", sizeof(physx::PxMaterial*), unsafe_offsetof(physx_PxControllerDesc, material));
             sg.add_field("bool registerDeletionListener", "registerDeletionListener", "bool", sizeof(bool), unsafe_offsetof(physx_PxControllerDesc, registerDeletionListener));
             sg.add_field("uint8_t clientID", "clientID", "u8", sizeof(uint8_t), unsafe_offsetof(physx_PxControllerDesc, clientID));
@@ -2684,7 +2684,7 @@ int main() {
             sg.add_field("float volumeGrowth", "volumeGrowth", "f32", sizeof(float), unsafe_offsetof(physx_PxBoxControllerDesc, volumeGrowth));
             sg.add_field("physx_PxUserControllerHitReport* reportCallback", "reportCallback", "*mut PxUserControllerHitReport", sizeof(physx::PxUserControllerHitReport*), unsafe_offsetof(physx_PxBoxControllerDesc, reportCallback));
             sg.add_field("physx_PxControllerBehaviorCallback* behaviorCallback", "behaviorCallback", "*mut PxControllerBehaviorCallback", sizeof(physx::PxControllerBehaviorCallback*), unsafe_offsetof(physx_PxBoxControllerDesc, behaviorCallback));
-            sg.add_field("PxControllerNonWalkableMode nonWalkableMode", "nonWalkableMode", "PxControllerNonWalkableMode", sizeof(physx::PxControllerNonWalkableMode::Enum), unsafe_offsetof(physx_PxBoxControllerDesc, nonWalkableMode));
+            sg.add_field("physx_PxControllerNonWalkableMode nonWalkableMode", "nonWalkableMode", "PxControllerNonWalkableMode", sizeof(physx::PxControllerNonWalkableMode::Enum), unsafe_offsetof(physx_PxBoxControllerDesc, nonWalkableMode));
             sg.add_field("physx_PxMaterial* material", "material", "*mut PxMaterial", sizeof(physx::PxMaterial*), unsafe_offsetof(physx_PxBoxControllerDesc, material));
             sg.add_field("bool registerDeletionListener", "registerDeletionListener", "bool", sizeof(bool), unsafe_offsetof(physx_PxBoxControllerDesc, registerDeletionListener));
             sg.add_field("uint8_t clientID", "clientID", "u8", sizeof(uint8_t), unsafe_offsetof(physx_PxBoxControllerDesc, clientID));
@@ -2713,14 +2713,14 @@ int main() {
             sg.add_field("float volumeGrowth", "volumeGrowth", "f32", sizeof(float), unsafe_offsetof(physx_PxCapsuleControllerDesc, volumeGrowth));
             sg.add_field("physx_PxUserControllerHitReport* reportCallback", "reportCallback", "*mut PxUserControllerHitReport", sizeof(physx::PxUserControllerHitReport*), unsafe_offsetof(physx_PxCapsuleControllerDesc, reportCallback));
             sg.add_field("physx_PxControllerBehaviorCallback* behaviorCallback", "behaviorCallback", "*mut PxControllerBehaviorCallback", sizeof(physx::PxControllerBehaviorCallback*), unsafe_offsetof(physx_PxCapsuleControllerDesc, behaviorCallback));
-            sg.add_field("PxControllerNonWalkableMode nonWalkableMode", "nonWalkableMode", "PxControllerNonWalkableMode", sizeof(physx::PxControllerNonWalkableMode::Enum), unsafe_offsetof(physx_PxCapsuleControllerDesc, nonWalkableMode));
+            sg.add_field("physx_PxControllerNonWalkableMode nonWalkableMode", "nonWalkableMode", "PxControllerNonWalkableMode", sizeof(physx::PxControllerNonWalkableMode::Enum), unsafe_offsetof(physx_PxCapsuleControllerDesc, nonWalkableMode));
             sg.add_field("physx_PxMaterial* material", "material", "*mut PxMaterial", sizeof(physx::PxMaterial*), unsafe_offsetof(physx_PxCapsuleControllerDesc, material));
             sg.add_field("bool registerDeletionListener", "registerDeletionListener", "bool", sizeof(bool), unsafe_offsetof(physx_PxCapsuleControllerDesc, registerDeletionListener));
             sg.add_field("uint8_t clientID", "clientID", "u8", sizeof(uint8_t), unsafe_offsetof(physx_PxCapsuleControllerDesc, clientID));
             sg.add_field("void* userData", "userData", "*mut std::ffi::c_void", sizeof(void*), unsafe_offsetof(physx_PxCapsuleControllerDesc, userData));
             sg.add_field("float radius", "radius", "f32", sizeof(float), unsafe_offsetof(physx_PxCapsuleControllerDesc, radius));
             sg.add_field("float height", "height", "f32", sizeof(float), unsafe_offsetof(physx_PxCapsuleControllerDesc, height));
-            sg.add_field("PxCapsuleClimbingMode climbingMode", "climbingMode", "PxCapsuleClimbingMode", sizeof(physx::PxCapsuleClimbingMode::Enum), unsafe_offsetof(physx_PxCapsuleControllerDesc, climbingMode));
+            sg.add_field("physx_PxCapsuleClimbingMode climbingMode", "climbingMode", "PxCapsuleClimbingMode", sizeof(physx::PxCapsuleClimbingMode::Enum), unsafe_offsetof(physx_PxCapsuleControllerDesc, climbingMode));
             sg.end_struct(sizeof(physx::PxCapsuleControllerDesc));
         }
     };
@@ -2748,7 +2748,7 @@ int main() {
             sg.add_field("physx_PxVec3 meshLower", "meshLower", "PxVec3", sizeof(physx::PxVec3), unsafe_offsetof(physx_PxSDFDesc, meshLower));
             sg.add_field("float spacing", "spacing", "f32", sizeof(float), unsafe_offsetof(physx_PxSDFDesc, spacing));
             sg.add_field("uint32_t subgridSize", "subgridSize", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxSDFDesc, subgridSize));
-            sg.add_field("PxSdfBitsPerSubgridPixel bitsPerSubgridPixel", "bitsPerSubgridPixel", "PxSdfBitsPerSubgridPixel", sizeof(physx::PxSdfBitsPerSubgridPixel::Enum), unsafe_offsetof(physx_PxSDFDesc, bitsPerSubgridPixel));
+            sg.add_field("physx_PxSdfBitsPerSubgridPixel bitsPerSubgridPixel", "bitsPerSubgridPixel", "PxSdfBitsPerSubgridPixel", sizeof(physx::PxSdfBitsPerSubgridPixel::Enum), unsafe_offsetof(physx_PxSDFDesc, bitsPerSubgridPixel));
             sg.add_field("physx_PxDim3 sdfSubgrids3DTexBlockDim", "sdfSubgrids3DTexBlockDim", "PxDim3", sizeof(physx::PxDim3), unsafe_offsetof(physx_PxSDFDesc, sdfSubgrids3DTexBlockDim));
             sg.add_field("physx_PxBoundedData sdfSubgrids", "sdfSubgrids", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxSDFDesc, sdfSubgrids));
             sg.add_field("physx_PxBoundedData sdfStartSlots", "sdfStartSlots", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxSDFDesc, sdfStartSlots));
@@ -2768,7 +2768,7 @@ int main() {
             sg.add_field("physx_PxBoundedData points", "points", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxConvexMeshDesc, points));
             sg.add_field("physx_PxBoundedData polygons", "polygons", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxConvexMeshDesc, polygons));
             sg.add_field("physx_PxBoundedData indices", "indices", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxConvexMeshDesc, indices));
-            sg.add_field("PxConvexFlags flags", "flags", "PxConvexFlags", sizeof(physx::PxConvexFlags), unsafe_offsetof(physx_PxConvexMeshDesc, flags));
+            sg.add_field("physx_PxConvexFlags flags", "flags", "PxConvexFlags", sizeof(physx::PxConvexFlags), unsafe_offsetof(physx_PxConvexMeshDesc, flags));
             sg.add_field("uint16_t vertexLimit", "vertexLimit", "u16", sizeof(uint16_t), unsafe_offsetof(physx_PxConvexMeshDesc, vertexLimit));
             sg.add_field("uint16_t polygonLimit", "polygonLimit", "u16", sizeof(uint16_t), unsafe_offsetof(physx_PxConvexMeshDesc, polygonLimit));
             sg.add_field("uint16_t quantizedCount", "quantizedCount", "u16", sizeof(uint16_t), unsafe_offsetof(physx_PxConvexMeshDesc, quantizedCount));
@@ -2783,7 +2783,7 @@ int main() {
             sg.begin_struct("physx_PxTriangleMeshDesc", "PxTriangleMeshDesc");
             sg.add_field("physx_PxBoundedData points", "points", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxTriangleMeshDesc, points));
             sg.add_field("physx_PxBoundedData triangles", "triangles", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxTriangleMeshDesc, triangles));
-            sg.add_field("PxMeshFlags flags", "flags", "PxMeshFlags", sizeof(physx::PxMeshFlags), unsafe_offsetof(physx_PxTriangleMeshDesc, flags));
+            sg.add_field("physx_PxMeshFlags flags", "flags", "PxMeshFlags", sizeof(physx::PxMeshFlags), unsafe_offsetof(physx_PxTriangleMeshDesc, flags));
             sg.add_field("physx_PxSDFDesc* sdfDesc", "sdfDesc", "*mut PxSDFDesc", sizeof(physx::PxSDFDesc*), unsafe_offsetof(physx_PxTriangleMeshDesc, sdfDesc));
             sg.end_struct(sizeof(physx::PxTriangleMeshDesc));
         }
@@ -2795,7 +2795,7 @@ int main() {
             sg.begin_struct("physx_PxTetrahedronMeshDesc", "PxTetrahedronMeshDesc");
             sg.add_field("physx_PxBoundedData points", "points", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxTetrahedronMeshDesc, points));
             sg.add_field("physx_PxBoundedData tetrahedrons", "tetrahedrons", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxTetrahedronMeshDesc, tetrahedrons));
-            sg.add_field("PxMeshFlags flags", "flags", "PxMeshFlags", sizeof(physx::PxMeshFlags), unsafe_offsetof(physx_PxTetrahedronMeshDesc, flags));
+            sg.add_field("physx_PxMeshFlags flags", "flags", "PxMeshFlags", sizeof(physx::PxMeshFlags), unsafe_offsetof(physx_PxTetrahedronMeshDesc, flags));
             sg.add_field("uint16_t tetsPerElement", "tetsPerElement", "u16", sizeof(uint16_t), unsafe_offsetof(physx_PxTetrahedronMeshDesc, tetsPerElement));
             sg.end_struct(sizeof(physx::PxTetrahedronMeshDesc));
         }
@@ -2815,7 +2815,7 @@ int main() {
         static void dump_layout(PodStructGen& sg) {
             sg.begin_struct("physx_PxBVH34MidphaseDesc", "PxBVH34MidphaseDesc");
             sg.add_field("uint32_t numPrimsPerLeaf", "numPrimsPerLeaf", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxBVH34MidphaseDesc, numPrimsPerLeaf));
-            sg.add_field("PxBVH34BuildStrategy buildStrategy", "buildStrategy", "PxBVH34BuildStrategy", sizeof(physx::PxBVH34BuildStrategy::Enum), unsafe_offsetof(physx_PxBVH34MidphaseDesc, buildStrategy));
+            sg.add_field("physx_PxBVH34BuildStrategy buildStrategy", "buildStrategy", "PxBVH34BuildStrategy", sizeof(physx::PxBVH34BuildStrategy::Enum), unsafe_offsetof(physx_PxBVH34MidphaseDesc, buildStrategy));
             sg.add_field("bool quantized", "quantized", "bool", sizeof(bool), unsafe_offsetof(physx_PxBVH34MidphaseDesc, quantized));
             sg.end_struct(sizeof(physx::PxBVH34MidphaseDesc));
         }
@@ -2836,7 +2836,7 @@ int main() {
             sg.add_field("physx_PxBoundedData bounds", "bounds", "PxBoundedData", sizeof(physx::PxBoundedData), unsafe_offsetof(physx_PxBVHDesc, bounds));
             sg.add_field("float enlargement", "enlargement", "f32", sizeof(float), unsafe_offsetof(physx_PxBVHDesc, enlargement));
             sg.add_field("uint32_t numPrimsPerLeaf", "numPrimsPerLeaf", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxBVHDesc, numPrimsPerLeaf));
-            sg.add_field("PxBVHBuildStrategy buildStrategy", "buildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxBVHDesc, buildStrategy));
+            sg.add_field("physx_PxBVHBuildStrategy buildStrategy", "buildStrategy", "PxBVHBuildStrategy", sizeof(physx::PxBVHBuildStrategy::Enum), unsafe_offsetof(physx_PxBVHDesc, buildStrategy));
             sg.end_struct(sizeof(physx::PxBVHDesc));
         }
     };
@@ -2847,12 +2847,12 @@ int main() {
             sg.begin_struct("physx_PxCookingParams", "PxCookingParams");
             sg.add_field("float areaTestEpsilon", "areaTestEpsilon", "f32", sizeof(float), unsafe_offsetof(physx_PxCookingParams, areaTestEpsilon));
             sg.add_field("float planeTolerance", "planeTolerance", "f32", sizeof(float), unsafe_offsetof(physx_PxCookingParams, planeTolerance));
-            sg.add_field("PxConvexMeshCookingType convexMeshCookingType", "convexMeshCookingType", "PxConvexMeshCookingType", sizeof(physx::PxConvexMeshCookingType::Enum), unsafe_offsetof(physx_PxCookingParams, convexMeshCookingType));
+            sg.add_field("physx_PxConvexMeshCookingType convexMeshCookingType", "convexMeshCookingType", "PxConvexMeshCookingType", sizeof(physx::PxConvexMeshCookingType::Enum), unsafe_offsetof(physx_PxCookingParams, convexMeshCookingType));
             sg.add_field("bool suppressTriangleMeshRemapTable", "suppressTriangleMeshRemapTable", "bool", sizeof(bool), unsafe_offsetof(physx_PxCookingParams, suppressTriangleMeshRemapTable));
             sg.add_field("bool buildTriangleAdjacencies", "buildTriangleAdjacencies", "bool", sizeof(bool), unsafe_offsetof(physx_PxCookingParams, buildTriangleAdjacencies));
             sg.add_field("bool buildGPUData", "buildGPUData", "bool", sizeof(bool), unsafe_offsetof(physx_PxCookingParams, buildGPUData));
             sg.add_field("physx_PxTolerancesScale scale", "scale", "PxTolerancesScale", sizeof(physx::PxTolerancesScale), unsafe_offsetof(physx_PxCookingParams, scale));
-            sg.add_field("PxMeshPreprocessingFlags meshPreprocessParams", "meshPreprocessParams", "PxMeshPreprocessingFlags", sizeof(physx::PxMeshPreprocessingFlags), unsafe_offsetof(physx_PxCookingParams, meshPreprocessParams));
+            sg.add_field("physx_PxMeshPreprocessingFlags meshPreprocessParams", "meshPreprocessParams", "PxMeshPreprocessingFlags", sizeof(physx::PxMeshPreprocessingFlags), unsafe_offsetof(physx_PxCookingParams, meshPreprocessParams));
             sg.add_field("float meshWeldTolerance", "meshWeldTolerance", "f32", sizeof(float), unsafe_offsetof(physx_PxCookingParams, meshWeldTolerance));
             sg.add_field("physx_PxMidphaseDesc midphaseDesc", "midphaseDesc", "PxMidphaseDesc", sizeof(physx::PxMidphaseDesc), unsafe_offsetof(physx_PxCookingParams, midphaseDesc));
             sg.add_field("uint32_t gaussMapLimit", "gaussMapLimit", "u32", sizeof(uint32_t), unsafe_offsetof(physx_PxCookingParams, gaussMapLimit));
@@ -3085,7 +3085,7 @@ int main() {
             sg.add_field("float stiffness", "stiffness", "f32", sizeof(float), unsafe_offsetof(physx_PxD6JointDrive, stiffness));
             sg.add_field("float damping", "damping", "f32", sizeof(float), unsafe_offsetof(physx_PxD6JointDrive, damping));
             sg.add_field("float forceLimit", "forceLimit", "f32", sizeof(float), unsafe_offsetof(physx_PxD6JointDrive, forceLimit));
-            sg.add_field("PxD6JointDriveFlags flags", "flags", "PxD6JointDriveFlags", sizeof(physx::PxD6JointDriveFlags), unsafe_offsetof(physx_PxD6JointDrive, flags));
+            sg.add_field("physx_PxD6JointDriveFlags flags", "flags", "PxD6JointDriveFlags", sizeof(physx::PxD6JointDriveFlags), unsafe_offsetof(physx_PxD6JointDrive, flags));
             sg.end_struct(sizeof(physx::PxD6JointDrive));
         }
     };

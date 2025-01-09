@@ -150,7 +150,7 @@ impl<'ast> FuncBinding<'ast> {
                         );
                     }
                     QualType::Enum { name, .. } | QualType::Flags { name, .. } => {
-                        writesln!(acc, "{indent}{} {RET_POD};", name);
+                        writesln!(acc, "{indent}physx_{} {RET_POD};", name);
                         writesln!(
                             acc,
                             "{indent}memcpy(&{RET_POD}, &{RET}, sizeof({RET_POD}));"

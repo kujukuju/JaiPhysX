@@ -49,7 +49,7 @@ impl<'ast> EnumBinding<'ast> {
 
         let indent = Indent(level);
         let indent1 = Indent(level + 1);
-        writesln!(w, "{indent}enum {} : {} {{", self.name, self.repr.c_type());
+        writesln!(w, "{indent}enum physx_{} : {} {{", self.name, self.repr.c_type());
 
         for var in &self.variants {
             if let Some(com) = &var.comment {
@@ -58,7 +58,8 @@ impl<'ast> EnumBinding<'ast> {
 
             writesln!(
                 w,
-                "{indent1}{} = {},",
+                "{indent1}{}_{} = {},",
+                self.name,
                 fix_variant_name(var.name),
                 var.value
             );
@@ -170,8 +171,11 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
     pub fn emit_cpp(&self, enum_binding: &EnumBinding<'ast>, w: &mut String, level: u32) {
         let indent = Indent(level);
         let indent1 = Indent(level + 1);
-        writesln!(w, "{indent}enum {} : {} {{", self.name, self.storage_type.c_type());
+        writesln!(w, "{indent}enum physx_{} : {} {{", self.name, self.storage_type.c_type());
 
+        // Since C declaration order matters, we do the non-combined flag variants first,
+        // then we do the combined versions afterwards.
+        
         for var in &enum_binding.variants {
             // If used as flags, ignore emitting any zero value, see
             // https://docs.rs/bitflags/1.3.2/bitflags/#zero-flags
@@ -179,7 +183,6 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
                 continue;
             }
 
-            writes!(w, "{indent1}{}_Bit = ", fix_variant_name(var.name));
 
             // Since bitflags are made up of power of 2 values that can
             // be combined, and the PhysX API sometimes defines named
@@ -187,8 +190,22 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
             // easier to read
             let val = var.value as u64;
             if val & (val - 1) == 0 {
+                writes!(w, "{indent1}{}_{} = ", self.name, fix_variant_name(var.name));
                 writes!(w, "1 << {}", val.ilog2());
-            } else {
+                writesln!(w, ",");
+            }
+
+        }
+
+        for var in &enum_binding.variants {
+            if var.value == 0 {
+                continue;
+            }
+
+            let val = var.value as u64;
+            if val & (val - 1) != 0 {
+                writes!(w, "{indent1}{}_{} = ", self.name, fix_variant_name(var.name));
+
                 let mut is_combo = false;
                 // If we're not a power of 2, we're a combination of flags,
                 // find which ones and emit them in a friendly way
@@ -206,7 +223,7 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
                         writes!(w, " | ");
                     }
 
-                    writes!(w, "{}", fix_variant_name(which));
+                    writes!(w, "{}_{}", self.name, fix_variant_name(which));
                 }
 
                 // There are a couple of cases where they're not combos, so just
@@ -214,9 +231,10 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
                 if !is_combo {
                     writes!(w, "0x{val:08x}");
                 }
+
+                writesln!(w, ",");
             }
 
-            writesln!(w, ",");
         }
 
         writesln!(w, "{indent}}};");

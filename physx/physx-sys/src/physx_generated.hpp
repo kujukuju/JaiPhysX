@@ -1,267 +1,267 @@
 /// enum for empty constructor tag
-enum PxEMPTY : int32_t {
-    PxEmpty = 0,
+enum physx_PxEMPTY : int32_t {
+    PxEMPTY_PxEmpty = 0,
 };
 
 /// enum for zero constructor tag for vectors and matrices
-enum PxZERO : int32_t {
-    PxZero = 0,
+enum physx_PxZERO : int32_t {
+    PxZERO_PxZero = 0,
 };
 
 /// enum for identity constructor flag for quaternions, transforms, and matrices
-enum PxIDENTITY : int32_t {
-    PxIdentity = 0,
+enum physx_PxIDENTITY : int32_t {
+    PxIDENTITY_PxIdentity = 0,
 };
 
 /// Error codes
 ///
 /// These error codes are passed to [`PxErrorCallback`]
-enum PxErrorCode : int32_t {
-    NoError = 0,
+enum physx_PxErrorCode : int32_t {
+    PxErrorCode_NoError = 0,
     /// An informational message.
-    DebugInfo = 1,
+    PxErrorCode_DebugInfo = 1,
     /// a warning message for the user to help with debugging
-    DebugWarning = 2,
+    PxErrorCode_DebugWarning = 2,
     /// method called with invalid parameter(s)
-    InvalidParameter = 4,
+    PxErrorCode_InvalidParameter = 4,
     /// method was called at a time when an operation is not possible
-    InvalidOperation = 8,
+    PxErrorCode_InvalidOperation = 8,
     /// method failed to allocate some memory
-    OutOfMemory = 16,
+    PxErrorCode_OutOfMemory = 16,
     /// The library failed for some reason.
     /// Possibly you have passed invalid values like NaNs, which are not checked for.
-    InternalError = 32,
+    PxErrorCode_InternalError = 32,
     /// An unrecoverable error, execution should be halted and log output flushed
-    Abort = 64,
+    PxErrorCode_Abort = 64,
     /// The SDK has determined that an operation may result in poor performance.
-    PerfWarning = 128,
+    PxErrorCode_PerfWarning = 128,
     /// A bit mask for including all errors
-    MaskAll = -1,
+    PxErrorCode_MaskAll = -1,
 };
 
-enum PxThreadPriority : uint32_t {
+enum physx_PxThreadPriority : uint32_t {
     /// High priority
-    High = 0,
+    PxThreadPriority_High = 0,
     /// Above Normal priority
-    AboveNormal = 1,
+    PxThreadPriority_AboveNormal = 1,
     /// Normal/default priority
-    Normal = 2,
+    PxThreadPriority_Normal = 2,
     /// Below Normal priority
-    BelowNormal = 3,
+    PxThreadPriority_BelowNormal = 3,
     /// Low priority.
-    Low = 4,
-    ForceDword = 4294967295,
+    PxThreadPriority_Low = 4,
+    PxThreadPriority_ForceDword = 4294967295,
 };
 
 /// Default color values used for debug rendering.
-enum PxDebugColor : uint32_t {
-    ArgbBlack = 4278190080,
-    ArgbRed = 4294901760,
-    ArgbGreen = 4278255360,
-    ArgbBlue = 4278190335,
-    ArgbYellow = 4294967040,
-    ArgbMagenta = 4294902015,
-    ArgbCyan = 4278255615,
-    ArgbWhite = 4294967295,
-    ArgbGrey = 4286611584,
-    ArgbDarkred = 4287102976,
-    ArgbDarkgreen = 4278224896,
-    ArgbDarkblue = 4278190216,
+enum physx_PxDebugColor : uint32_t {
+    PxDebugColor_ArgbBlack = 4278190080,
+    PxDebugColor_ArgbRed = 4294901760,
+    PxDebugColor_ArgbGreen = 4278255360,
+    PxDebugColor_ArgbBlue = 4278190335,
+    PxDebugColor_ArgbYellow = 4294967040,
+    PxDebugColor_ArgbMagenta = 4294902015,
+    PxDebugColor_ArgbCyan = 4278255615,
+    PxDebugColor_ArgbWhite = 4294967295,
+    PxDebugColor_ArgbGrey = 4286611584,
+    PxDebugColor_ArgbDarkred = 4287102976,
+    PxDebugColor_ArgbDarkgreen = 4278224896,
+    PxDebugColor_ArgbDarkblue = 4278190216,
 };
 
 /// an enumeration of concrete classes inheriting from PxBase
 ///
 /// Enumeration space is reserved for future PhysX core types, PhysXExtensions,
 /// PhysXVehicle and Custom application types.
-enum PxConcreteType : int32_t {
-    Undefined = 0,
-    Heightfield = 1,
-    ConvexMesh = 2,
-    TriangleMeshBvh33 = 3,
-    TriangleMeshBvh34 = 4,
-    TetrahedronMesh = 5,
-    SoftbodyMesh = 6,
-    RigidDynamic = 7,
-    RigidStatic = 8,
-    Shape = 9,
-    Material = 10,
-    SoftbodyMaterial = 11,
-    ClothMaterial = 12,
-    PbdMaterial = 13,
-    FlipMaterial = 14,
-    MpmMaterial = 15,
-    CustomMaterial = 16,
-    Constraint = 17,
-    Aggregate = 18,
-    ArticulationReducedCoordinate = 19,
-    ArticulationLink = 20,
-    ArticulationJointReducedCoordinate = 21,
-    ArticulationSensor = 22,
-    ArticulationSpatialTendon = 23,
-    ArticulationFixedTendon = 24,
-    ArticulationAttachment = 25,
-    ArticulationTendonJoint = 26,
-    PruningStructure = 27,
-    Bvh = 28,
-    SoftBody = 29,
-    SoftBodyState = 30,
-    PbdParticlesystem = 31,
-    FlipParticlesystem = 32,
-    MpmParticlesystem = 33,
-    CustomParticlesystem = 34,
-    FemCloth = 35,
-    HairSystem = 36,
-    ParticleBuffer = 37,
-    ParticleDiffuseBuffer = 38,
-    ParticleClothBuffer = 39,
-    ParticleRigidBuffer = 40,
-    PhysxCoreCount = 41,
-    FirstPhysxExtension = 256,
-    FirstVehicleExtension = 512,
-    FirstUserExtension = 1024,
+enum physx_PxConcreteType : int32_t {
+    PxConcreteType_Undefined = 0,
+    PxConcreteType_Heightfield = 1,
+    PxConcreteType_ConvexMesh = 2,
+    PxConcreteType_TriangleMeshBvh33 = 3,
+    PxConcreteType_TriangleMeshBvh34 = 4,
+    PxConcreteType_TetrahedronMesh = 5,
+    PxConcreteType_SoftbodyMesh = 6,
+    PxConcreteType_RigidDynamic = 7,
+    PxConcreteType_RigidStatic = 8,
+    PxConcreteType_Shape = 9,
+    PxConcreteType_Material = 10,
+    PxConcreteType_SoftbodyMaterial = 11,
+    PxConcreteType_ClothMaterial = 12,
+    PxConcreteType_PbdMaterial = 13,
+    PxConcreteType_FlipMaterial = 14,
+    PxConcreteType_MpmMaterial = 15,
+    PxConcreteType_CustomMaterial = 16,
+    PxConcreteType_Constraint = 17,
+    PxConcreteType_Aggregate = 18,
+    PxConcreteType_ArticulationReducedCoordinate = 19,
+    PxConcreteType_ArticulationLink = 20,
+    PxConcreteType_ArticulationJointReducedCoordinate = 21,
+    PxConcreteType_ArticulationSensor = 22,
+    PxConcreteType_ArticulationSpatialTendon = 23,
+    PxConcreteType_ArticulationFixedTendon = 24,
+    PxConcreteType_ArticulationAttachment = 25,
+    PxConcreteType_ArticulationTendonJoint = 26,
+    PxConcreteType_PruningStructure = 27,
+    PxConcreteType_Bvh = 28,
+    PxConcreteType_SoftBody = 29,
+    PxConcreteType_SoftBodyState = 30,
+    PxConcreteType_PbdParticlesystem = 31,
+    PxConcreteType_FlipParticlesystem = 32,
+    PxConcreteType_MpmParticlesystem = 33,
+    PxConcreteType_CustomParticlesystem = 34,
+    PxConcreteType_FemCloth = 35,
+    PxConcreteType_HairSystem = 36,
+    PxConcreteType_ParticleBuffer = 37,
+    PxConcreteType_ParticleDiffuseBuffer = 38,
+    PxConcreteType_ParticleClothBuffer = 39,
+    PxConcreteType_ParticleRigidBuffer = 40,
+    PxConcreteType_PhysxCoreCount = 41,
+    PxConcreteType_FirstPhysxExtension = 256,
+    PxConcreteType_FirstVehicleExtension = 512,
+    PxConcreteType_FirstUserExtension = 1024,
 };
 
 /// Flags for PxBase.
-enum PxBaseFlag : int32_t {
-    OwnsMemory = 1,
-    IsReleasable = 2,
+enum physx_PxBaseFlag : int32_t {
+    PxBaseFlag_OwnsMemory = 1,
+    PxBaseFlag_IsReleasable = 2,
 };
 
-enum PxBaseFlags : uint16_t {
-    OwnsMemory_Bit = 1 << 0,
-    IsReleasable_Bit = 1 << 1,
+enum physx_PxBaseFlags : uint16_t {
+    PxBaseFlags_OwnsMemory = 1 << 0,
+    PxBaseFlags_IsReleasable = 1 << 1,
 };
 
 /// Flags used to configure binary meta data entries, typically set through PX_DEF_BIN_METADATA defines.
-enum PxMetaDataFlag : int32_t {
+enum physx_PxMetaDataFlag : int32_t {
     /// declares a class
-    Class = 1,
+    PxMetaDataFlag_Class = 1,
     /// declares class to be virtual
-    Virtual = 2,
+    PxMetaDataFlag_Virtual = 2,
     /// declares a typedef
-    Typedef = 4,
+    PxMetaDataFlag_Typedef = 4,
     /// declares a pointer
-    Ptr = 8,
+    PxMetaDataFlag_Ptr = 8,
     /// declares a handle
-    Handle = 16,
+    PxMetaDataFlag_Handle = 16,
     /// declares extra data exported with PxSerializer::exportExtraData
-    ExtraData = 32,
+    PxMetaDataFlag_ExtraData = 32,
     /// specifies one element of extra data
-    ExtraItem = 64,
+    PxMetaDataFlag_ExtraItem = 64,
     /// specifies an array of extra data
-    ExtraItems = 128,
+    PxMetaDataFlag_ExtraItems = 128,
     /// specifies a name of extra data
-    ExtraName = 256,
+    PxMetaDataFlag_ExtraName = 256,
     /// declares a union
-    Union = 512,
+    PxMetaDataFlag_Union = 512,
     /// declares explicit padding data
-    Padding = 1024,
+    PxMetaDataFlag_Padding = 1024,
     /// declares aligned data
-    Alignment = 2048,
+    PxMetaDataFlag_Alignment = 2048,
     /// specifies that the count value's most significant bit needs to be masked out
-    CountMaskMsb = 4096,
+    PxMetaDataFlag_CountMaskMsb = 4096,
     /// specifies that the count value is treated as zero for a variable value of one - special case for single triangle meshes
-    CountSkipIfOne = 8192,
+    PxMetaDataFlag_CountSkipIfOne = 8192,
     /// specifies that the control value is the negate of the variable value
-    ControlFlip = 16384,
+    PxMetaDataFlag_ControlFlip = 16384,
     /// specifies that the control value is masked - mask bits are assumed to be within eCONTROL_MASK_RANGE
-    ControlMask = 32768,
+    PxMetaDataFlag_ControlMask = 32768,
     /// mask range allowed for eCONTROL_MASK
-    ControlMaskRange = 255,
-    ForceDword = 2147483647,
+    PxMetaDataFlag_ControlMaskRange = 255,
+    PxMetaDataFlag_ForceDword = 2147483647,
 };
 
 /// Identifies the type of each heavyweight PxTask object
-enum PxTaskType : int32_t {
+enum physx_PxTaskType : int32_t {
     /// PxTask will be run on the CPU
-    Cpu = 0,
+    PxTaskType_Cpu = 0,
     /// Return code when attempting to find a task that does not exist
-    NotPresent = 1,
+    PxTaskType_NotPresent = 1,
     /// PxTask execution has been completed
-    Completed = 2,
+    PxTaskType_Completed = 2,
 };
 
 /// A geometry type.
 ///
 /// Used to distinguish the type of a ::PxGeometry object.
-enum PxGeometryType : int32_t {
-    Sphere = 0,
-    Plane = 1,
-    Capsule = 2,
-    Box = 3,
-    Convexmesh = 4,
-    Particlesystem = 5,
-    Tetrahedronmesh = 6,
-    Trianglemesh = 7,
-    Heightfield = 8,
-    Hairsystem = 9,
-    Custom = 10,
+enum physx_PxGeometryType : int32_t {
+    PxGeometryType_Sphere = 0,
+    PxGeometryType_Plane = 1,
+    PxGeometryType_Capsule = 2,
+    PxGeometryType_Box = 3,
+    PxGeometryType_Convexmesh = 4,
+    PxGeometryType_Particlesystem = 5,
+    PxGeometryType_Tetrahedronmesh = 6,
+    PxGeometryType_Trianglemesh = 7,
+    PxGeometryType_Heightfield = 8,
+    PxGeometryType_Hairsystem = 9,
+    PxGeometryType_Custom = 10,
     /// internal use only!
-    GeometryCount = 11,
+    PxGeometryType_GeometryCount = 11,
     /// internal use only!
-    Invalid = -1,
+    PxGeometryType_Invalid = -1,
 };
 
 /// Geometry-level query flags.
-enum PxGeometryQueryFlag : int32_t {
+enum physx_PxGeometryQueryFlag : int32_t {
     /// Saves/restores SIMD control word for each query (safer but slower). Omit this if you took care of it yourself in your app.
-    SimdGuard = 1,
+    PxGeometryQueryFlag_SimdGuard = 1,
 };
 
-enum PxGeometryQueryFlags : uint32_t {
-    SimdGuard_Bit = 1 << 0,
+enum physx_PxGeometryQueryFlags : uint32_t {
+    PxGeometryQueryFlags_SimdGuard = 1 << 0,
 };
 
 /// Desired build strategy for bounding-volume hierarchies
-enum PxBVHBuildStrategy : int32_t {
+enum physx_PxBVHBuildStrategy : int32_t {
     /// Fast build strategy. Fast build speed, good runtime performance in most cases. Recommended for runtime cooking.
-    Fast = 0,
+    PxBVHBuildStrategy_Fast = 0,
     /// Default build strategy. Medium build speed, good runtime performance in all cases.
-    Default = 1,
+    PxBVHBuildStrategy_Default = 1,
     /// SAH build strategy. Slower builds, slightly improved runtime performance in some cases.
-    Sah = 2,
-    Last = 3,
+    PxBVHBuildStrategy_Sah = 2,
+    PxBVHBuildStrategy_Last = 3,
 };
 
 /// Flags controlling the simulated behavior of the convex mesh geometry.
 ///
 /// Used in ::PxConvexMeshGeometryFlags.
-enum PxConvexMeshGeometryFlag : int32_t {
+enum physx_PxConvexMeshGeometryFlag : int32_t {
     /// Use tighter (but more expensive to compute) bounds around the convex geometry.
-    TightBounds = 1,
+    PxConvexMeshGeometryFlag_TightBounds = 1,
 };
 
-enum PxConvexMeshGeometryFlags : uint8_t {
-    TightBounds_Bit = 1 << 0,
+enum physx_PxConvexMeshGeometryFlags : uint8_t {
+    PxConvexMeshGeometryFlags_TightBounds = 1 << 0,
 };
 
 /// Flags controlling the simulated behavior of the triangle mesh geometry.
 ///
 /// Used in ::PxMeshGeometryFlags.
-enum PxMeshGeometryFlag : int32_t {
+enum physx_PxMeshGeometryFlag : int32_t {
     /// Use tighter (but more expensive to compute) bounds around the triangle mesh geometry.
-    TightBounds = 1,
+    PxMeshGeometryFlag_TightBounds = 1,
     /// Meshes with this flag set are treated as double-sided.
     /// This flag is currently only used for raycasts and sweeps (it is ignored for overlap queries).
     /// For detailed specifications of this flag for meshes and heightfields please refer to the Geometry Query section of the user guide.
-    DoubleSided = 2,
+    PxMeshGeometryFlag_DoubleSided = 2,
 };
 
-enum PxMeshGeometryFlags : uint8_t {
-    TightBounds_Bit = 1 << 0,
-    DoubleSided_Bit = 1 << 1,
+enum physx_PxMeshGeometryFlags : uint8_t {
+    PxMeshGeometryFlags_TightBounds = 1 << 0,
+    PxMeshGeometryFlags_DoubleSided = 1 << 1,
 };
 
 /// Identifies the solver to use for a particle system.
-enum PxParticleSolverType : int32_t {
+enum physx_PxParticleSolverType : int32_t {
     /// The position based dynamics solver that can handle fluid, granular material, cloth, inflatables etc. See [`PxPBDParticleSystem`].
-    Pbd = 1,
+    PxParticleSolverType_Pbd = 1,
     /// The FLIP fluid solver. See [`PxFLIPParticleSystem`].
-    Flip = 2,
+    PxParticleSolverType_Flip = 2,
     /// The MPM (material point method) solver that can handle a variety of materials. See [`PxMPMParticleSystem`].
-    Mpm = 4,
+    PxParticleSolverType_Mpm = 4,
     /// Custom solver. The user needs to specify the interaction of the particle by providing appropriate functions. Can be used e.g. for molecular dynamics simulations. See [`PxCustomParticleSystem`].
-    Custom = 8,
+    PxParticleSolverType_Custom = 8,
 };
 
 /// Scene query and geometry query behavior flags.
@@ -273,54 +273,54 @@ enum PxParticleSolverType : int32_t {
 /// 3) To specify additional options for the narrow phase and mid-phase intersection routines.
 ///
 /// All these flags apply to both scene queries and geometry queries (PxGeometryQuery).
-enum PxHitFlag : int32_t {
+enum physx_PxHitFlag : int32_t {
     /// "position" member of [`PxQueryHit`] is valid
-    Position = 1,
+    PxHitFlag_Position = 1,
     /// "normal" member of [`PxQueryHit`] is valid
-    Normal = 2,
+    PxHitFlag_Normal = 2,
     /// "u" and "v" barycentric coordinates of [`PxQueryHit`] are valid. Not applicable to sweep queries.
-    Uv = 8,
+    PxHitFlag_Uv = 8,
     /// Performance hint flag for sweeps when it is known upfront there's no initial overlap.
     /// NOTE: using this flag may cause undefined results if shapes are initially overlapping.
-    AssumeNoInitialOverlap = 16,
+    PxHitFlag_AssumeNoInitialOverlap = 16,
     /// Report any first hit. Used for geometries that contain more than one primitive. For meshes,
     /// if neither eMESH_MULTIPLE nor eANY_HIT is specified, a single closest hit will be reported.
-    AnyHit = 32,
+    PxHitFlag_AnyHit = 32,
     /// Report all hits for meshes rather than just the first. Not applicable to sweep queries.
-    MeshMultiple = 64,
+    PxHitFlag_MeshMultiple = 64,
     /// Report hits with back faces of mesh triangles. Also report hits for raycast
     /// originating on mesh surface and facing away from the surface normal. Not applicable to sweep queries.
     /// Please refer to the user guide for heightfield-specific differences.
-    MeshBothSides = 128,
+    PxHitFlag_MeshBothSides = 128,
     /// Use more accurate but slower narrow phase sweep tests.
     /// May provide better compatibility with PhysX 3.2 sweep behavior.
-    PreciseSweep = 256,
+    PxHitFlag_PreciseSweep = 256,
     /// Report the minimum translation depth, normal and contact point.
-    Mtd = 512,
+    PxHitFlag_Mtd = 512,
     /// "face index" member of [`PxQueryHit`] is valid
-    FaceIndex = 1024,
-    Default = 1027,
+    PxHitFlag_FaceIndex = 1024,
+    PxHitFlag_Default = 1027,
     /// Only this subset of flags can be modified by pre-filter. Other modifications will be discarded.
-    ModifiableFlags = 464,
+    PxHitFlag_ModifiableFlags = 464,
 };
 
-enum PxHitFlags : uint16_t {
-    Position_Bit = 1 << 0,
-    Normal_Bit = 1 << 1,
-    Uv_Bit = 1 << 3,
-    AssumeNoInitialOverlap_Bit = 1 << 4,
-    AnyHit_Bit = 1 << 5,
-    MeshMultiple_Bit = 1 << 6,
-    MeshBothSides_Bit = 1 << 7,
-    PreciseSweep_Bit = 1 << 8,
-    Mtd_Bit = 1 << 9,
-    FaceIndex_Bit = 1 << 10,
-    Default_Bit = Position | Normal | FaceIndex,
-    ModifiableFlags_Bit = AssumeNoInitialOverlap | MeshMultiple | MeshBothSides | PreciseSweep,
+enum physx_PxHitFlags : uint16_t {
+    PxHitFlags_Position = 1 << 0,
+    PxHitFlags_Normal = 1 << 1,
+    PxHitFlags_Uv = 1 << 3,
+    PxHitFlags_AssumeNoInitialOverlap = 1 << 4,
+    PxHitFlags_AnyHit = 1 << 5,
+    PxHitFlags_MeshMultiple = 1 << 6,
+    PxHitFlags_MeshBothSides = 1 << 7,
+    PxHitFlags_PreciseSweep = 1 << 8,
+    PxHitFlags_Mtd = 1 << 9,
+    PxHitFlags_FaceIndex = 1 << 10,
+    PxHitFlags_Default = PxHitFlags_Position | PxHitFlags_Normal | PxHitFlags_FaceIndex,
+    PxHitFlags_ModifiableFlags = PxHitFlags_AssumeNoInitialOverlap | PxHitFlags_MeshMultiple | PxHitFlags_MeshBothSides | PxHitFlags_PreciseSweep,
 };
 
 /// Describes the format of height field samples.
-enum PxHeightFieldFormat : int32_t {
+enum physx_PxHeightFieldFormat : int32_t {
     /// Height field height data is 16 bit signed integers, followed by triangle materials.
     ///
     /// Each sample is 32 bits wide arranged as follows:
@@ -335,11 +335,11 @@ enum PxHeightFieldFormat : int32_t {
     /// where the application may eventually keep its own data.
     ///
     /// This is the only format supported at the moment.
-    S16Tm = 1,
+    PxHeightFieldFormat_S16Tm = 1,
 };
 
 /// Determines the tessellation of height field cells.
-enum PxHeightFieldTessFlag : int32_t {
+enum physx_PxHeightFieldTessFlag : int32_t {
     /// This flag determines which way each quad cell is subdivided.
     ///
     /// The flag lowered indicates subdivision like this: (the 0th vertex is referenced by only one triangle)
@@ -391,43 +391,43 @@ enum PxHeightFieldTessFlag : int32_t {
     /// |
     /// |
     /// V row
-    E0ThVertexShared = 1,
+    PxHeightFieldTessFlag_E0ThVertexShared = 1,
 };
 
 /// Enum with flag values to be used in PxHeightFieldDesc.flags.
-enum PxHeightFieldFlag : int32_t {
+enum physx_PxHeightFieldFlag : int32_t {
     /// Disable collisions with height field with boundary edges.
     ///
     /// Raise this flag if several terrain patches are going to be placed adjacent to each other,
     /// to avoid a bump when sliding across.
     ///
     /// This flag is ignored in contact generation with sphere and capsule shapes.
-    NoBoundaryEdges = 1,
+    PxHeightFieldFlag_NoBoundaryEdges = 1,
 };
 
-enum PxHeightFieldFlags : uint16_t {
-    NoBoundaryEdges_Bit = 1 << 0,
+enum physx_PxHeightFieldFlags : uint16_t {
+    PxHeightFieldFlags_NoBoundaryEdges = 1 << 0,
 };
 
 /// Special material index values for height field samples.
-enum PxHeightFieldMaterial : int32_t {
+enum physx_PxHeightFieldMaterial : int32_t {
     /// A material indicating that the triangle should be treated as a hole in the mesh.
-    Hole = 127,
+    PxHeightFieldMaterial_Hole = 127,
 };
 
-enum PxMeshMeshQueryFlag : int32_t {
+enum physx_PxMeshMeshQueryFlag : int32_t {
     /// Report all overlaps
-    Default = 0,
+    PxMeshMeshQueryFlag_Default = 0,
     /// Ignore coplanar triangle-triangle overlaps
-    DiscardCoplanar = 1,
+    PxMeshMeshQueryFlag_DiscardCoplanar = 1,
 };
 
-enum PxMeshMeshQueryFlags : uint32_t {
-    DiscardCoplanar_Bit = 1 << 0,
+enum physx_PxMeshMeshQueryFlags : uint32_t {
+    PxMeshMeshQueryFlags_DiscardCoplanar = 1 << 0,
 };
 
 /// Enum with flag values to be used in PxSimpleTriangleMesh::flags.
-enum PxMeshFlag : int32_t {
+enum physx_PxMeshFlag : int32_t {
     /// Specifies if the SDK should flip normals.
     ///
     /// The PhysX libraries assume that the face normal of a triangle with vertices [a,b,c] can be computed as:
@@ -439,14 +439,14 @@ enum PxMeshFlag : int32_t {
     /// alternatively a clockwise winding order in a left handed coordinate system.
     ///
     /// If this does not match the winding order for your triangles, raise the below flag.
-    Flipnormals = 1,
+    PxMeshFlag_Flipnormals = 1,
     /// Denotes the use of 16-bit vertex indices
-    E16BitIndices = 2,
+    PxMeshFlag_E16BitIndices = 2,
 };
 
-enum PxMeshFlags : uint16_t {
-    Flipnormals_Bit = 1 << 0,
-    E16BitIndices_Bit = 1 << 1,
+enum physx_PxMeshFlags : uint16_t {
+    PxMeshFlags_Flipnormals = 1 << 0,
+    PxMeshFlags_E16BitIndices = 1 << 1,
 };
 
 /// Mesh midphase structure. This enum is used to select the desired acceleration structure for midphase queries
@@ -457,49 +457,49 @@ enum PxMeshFlags : uint16_t {
 ///
 /// The PxMeshMidPhase::eBVH34 structure is a revisited implementation introduced in PhysX 3.4. It can be significantly faster both
 /// in terms of cooking performance and runtime performance.
-enum PxMeshMidPhase : int32_t {
+enum physx_PxMeshMidPhase : int32_t {
     /// Default midphase mesh structure, as used up to PhysX 3.3 (deprecated)
-    Bvh33 = 0,
+    PxMeshMidPhase_Bvh33 = 0,
     /// New midphase mesh structure, introduced in PhysX 3.4
-    Bvh34 = 1,
-    Last = 2,
+    PxMeshMidPhase_Bvh34 = 1,
+    PxMeshMidPhase_Last = 2,
 };
 
 /// Flags for the mesh geometry properties.
 ///
 /// Used in ::PxTriangleMeshFlags.
-enum PxTriangleMeshFlag : int32_t {
+enum physx_PxTriangleMeshFlag : int32_t {
     /// The triangle mesh has 16bits vertex indices.
-    E16BitIndices = 2,
+    PxTriangleMeshFlag_E16BitIndices = 2,
     /// The triangle mesh has adjacency information build.
-    AdjacencyInfo = 4,
+    PxTriangleMeshFlag_AdjacencyInfo = 4,
     /// Indicates that this mesh would preferably not be the mesh projected for mesh-mesh collision. This can indicate that the mesh is not well tessellated.
-    PreferNoSdfProj = 8,
+    PxTriangleMeshFlag_PreferNoSdfProj = 8,
 };
 
-enum PxTriangleMeshFlags : uint8_t {
-    E16BitIndices_Bit = 1 << 1,
-    AdjacencyInfo_Bit = 1 << 2,
-    PreferNoSdfProj_Bit = 1 << 3,
+enum physx_PxTriangleMeshFlags : uint8_t {
+    PxTriangleMeshFlags_E16BitIndices = 1 << 1,
+    PxTriangleMeshFlags_AdjacencyInfo = 1 << 2,
+    PxTriangleMeshFlags_PreferNoSdfProj = 1 << 3,
 };
 
-enum PxTetrahedronMeshFlag : int32_t {
+enum physx_PxTetrahedronMeshFlag : int32_t {
     /// The tetrahedron mesh has 16bits vertex indices
-    E16BitIndices = 2,
+    PxTetrahedronMeshFlag_E16BitIndices = 2,
 };
 
-enum PxTetrahedronMeshFlags : uint8_t {
-    E16BitIndices_Bit = 1 << 1,
+enum physx_PxTetrahedronMeshFlags : uint8_t {
+    PxTetrahedronMeshFlags_E16BitIndices = 1 << 1,
 };
 
 /// Flags which control the behavior of an actor.
-enum PxActorFlag : int32_t {
+enum physx_PxActorFlag : int32_t {
     /// Enable debug renderer for this actor
-    Visualization = 1,
+    PxActorFlag_Visualization = 1,
     /// Disables scene gravity for this actor
-    DisableGravity = 2,
+    PxActorFlag_DisableGravity = 2,
     /// Enables the sending of PxSimulationEventCallback::onWake() and PxSimulationEventCallback::onSleep() notify events
-    SendSleepNotifies = 4,
+    PxActorFlag_SendSleepNotifies = 4,
     /// Disables simulation for the actor.
     ///
     /// This is only supported by PxRigidStatic and PxRigidDynamic actors and can be used to reduce the memory footprint when rigid actors are
@@ -516,315 +516,315 @@ enum PxActorFlag : int32_t {
     /// Sleeping:
     /// Raising this flag will set all velocities and the wake counter to 0, clear all forces, clear the kinematic target, put the actor
     /// to sleep and wake up all touching actors from the previous frame.
-    DisableSimulation = 8,
+    PxActorFlag_DisableSimulation = 8,
 };
 
-enum PxActorFlags : uint8_t {
-    Visualization_Bit = 1 << 0,
-    DisableGravity_Bit = 1 << 1,
-    SendSleepNotifies_Bit = 1 << 2,
-    DisableSimulation_Bit = 1 << 3,
+enum physx_PxActorFlags : uint8_t {
+    PxActorFlags_Visualization = 1 << 0,
+    PxActorFlags_DisableGravity = 1 << 1,
+    PxActorFlags_SendSleepNotifies = 1 << 2,
+    PxActorFlags_DisableSimulation = 1 << 3,
 };
 
 /// Identifies each type of actor.
-enum PxActorType : int32_t {
+enum physx_PxActorType : int32_t {
     /// A static rigid body
-    RigidStatic = 0,
+    PxActorType_RigidStatic = 0,
     /// A dynamic rigid body
-    RigidDynamic = 1,
+    PxActorType_RigidDynamic = 1,
     /// An articulation link
-    ArticulationLink = 2,
+    PxActorType_ArticulationLink = 2,
 };
 
-enum PxAggregateType : int32_t {
+enum physx_PxAggregateType : int32_t {
     /// Aggregate will contain various actors of unspecified types
-    Generic = 0,
+    PxAggregateType_Generic = 0,
     /// Aggregate will only contain static actors
-    Static = 1,
+    PxAggregateType_Static = 1,
     /// Aggregate will only contain kinematic actors
-    Kinematic = 2,
+    PxAggregateType_Kinematic = 2,
 };
 
 /// Constraint row flags
 ///
 /// These flags configure the post-processing of constraint rows and the behavior of the solver while solving constraints
-enum Px1DConstraintFlag : int32_t {
+enum physx_Px1DConstraintFlag : int32_t {
     /// whether the constraint is a spring. Mutually exclusive with eRESTITUTION. If set, eKEEPBIAS is ignored.
-    Spring = 1,
+    Px1DConstraintFlag_Spring = 1,
     /// whether the constraint is a force or acceleration spring. Only valid if eSPRING is set.
-    AccelerationSpring = 2,
+    Px1DConstraintFlag_AccelerationSpring = 2,
     /// whether the restitution model should be applied to generate the target velocity. Mutually exclusive with eSPRING. If restitution causes a bounces, eKEEPBIAS is ignored
-    Restitution = 4,
+    Px1DConstraintFlag_Restitution = 4,
     /// whether to keep the error term when solving for velocity. Ignored if restitution generates bounce, or eSPRING is set.
-    Keepbias = 8,
+    Px1DConstraintFlag_Keepbias = 8,
     /// whether to accumulate the force value from this constraint in the force total that is reported for the constraint and tested for breakage
-    OutputForce = 16,
+    Px1DConstraintFlag_OutputForce = 16,
     /// whether the constraint has a drive force limit (which will be scaled by dt unless PxConstraintFlag::eLIMITS_ARE_FORCES is set)
-    HasDriveLimit = 32,
+    Px1DConstraintFlag_HasDriveLimit = 32,
     /// whether this is an angular or linear constraint
-    AngularConstraint = 64,
+    Px1DConstraintFlag_AngularConstraint = 64,
     /// whether the constraint's geometric error should drive the target velocity
-    DriveRow = 128,
+    Px1DConstraintFlag_DriveRow = 128,
 };
 
-enum Px1DConstraintFlags : uint16_t {
-    Spring_Bit = 1 << 0,
-    AccelerationSpring_Bit = 1 << 1,
-    Restitution_Bit = 1 << 2,
-    Keepbias_Bit = 1 << 3,
-    OutputForce_Bit = 1 << 4,
-    HasDriveLimit_Bit = 1 << 5,
-    AngularConstraint_Bit = 1 << 6,
-    DriveRow_Bit = 1 << 7,
+enum physx_Px1DConstraintFlags : uint16_t {
+    Px1DConstraintFlags_Spring = 1 << 0,
+    Px1DConstraintFlags_AccelerationSpring = 1 << 1,
+    Px1DConstraintFlags_Restitution = 1 << 2,
+    Px1DConstraintFlags_Keepbias = 1 << 3,
+    Px1DConstraintFlags_OutputForce = 1 << 4,
+    Px1DConstraintFlags_HasDriveLimit = 1 << 5,
+    Px1DConstraintFlags_AngularConstraint = 1 << 6,
+    Px1DConstraintFlags_DriveRow = 1 << 7,
 };
 
 /// Constraint type hints which the solver uses to optimize constraint handling
-enum PxConstraintSolveHint : int32_t {
+enum physx_PxConstraintSolveHint : int32_t {
     /// no special properties
-    None = 0,
+    PxConstraintSolveHint_None = 0,
     /// a group of acceleration drive constraints with the same stiffness and drive parameters
-    Acceleration1 = 256,
+    PxConstraintSolveHint_Acceleration1 = 256,
     /// temporary special value to identify SLERP drive rows
-    SlerpSpring = 258,
+    PxConstraintSolveHint_SlerpSpring = 258,
     /// a group of acceleration drive constraints with the same stiffness and drive parameters
-    Acceleration2 = 512,
+    PxConstraintSolveHint_Acceleration2 = 512,
     /// a group of acceleration drive constraints with the same stiffness and drive parameters
-    Acceleration3 = 768,
+    PxConstraintSolveHint_Acceleration3 = 768,
     /// rotational equality constraints with no force limit and no velocity target
-    RotationalEquality = 1024,
+    PxConstraintSolveHint_RotationalEquality = 1024,
     /// rotational inequality constraints with (0, PX_MAX_FLT) force limits
-    RotationalInequality = 1025,
+    PxConstraintSolveHint_RotationalInequality = 1025,
     /// equality constraints with no force limit and no velocity target
-    Equality = 2048,
+    PxConstraintSolveHint_Equality = 2048,
     /// inequality constraints with (0, PX_MAX_FLT) force limits
-    Inequality = 2049,
+    PxConstraintSolveHint_Inequality = 2049,
 };
 
 /// Flags for determining which components of the constraint should be visualized.
-enum PxConstraintVisualizationFlag : int32_t {
+enum physx_PxConstraintVisualizationFlag : int32_t {
     /// visualize constraint frames
-    LocalFrames = 1,
+    PxConstraintVisualizationFlag_LocalFrames = 1,
     /// visualize constraint limits
-    Limits = 2,
+    PxConstraintVisualizationFlag_Limits = 2,
 };
 
 /// Flags for determining how PVD should serialize a constraint update
-enum PxPvdUpdateType : int32_t {
+enum physx_PxPvdUpdateType : int32_t {
     /// triggers createPvdInstance call, creates an instance of a constraint
-    CreateInstance = 0,
+    PxPvdUpdateType_CreateInstance = 0,
     /// triggers releasePvdInstance call, releases an instance of a constraint
-    ReleaseInstance = 1,
+    PxPvdUpdateType_ReleaseInstance = 1,
     /// triggers updatePvdProperties call, updates all properties of a constraint
-    UpdateAllProperties = 2,
+    PxPvdUpdateType_UpdateAllProperties = 2,
     /// triggers simUpdate call, updates all simulation properties of a constraint
-    UpdateSimProperties = 3,
+    PxPvdUpdateType_UpdateSimProperties = 3,
 };
 
 /// Constraint descriptor used inside the solver
-enum ConstraintType : int32_t {
+enum physx_ConstraintType : int32_t {
     /// Defines this pair is a contact constraint
-    ContactConstraint = 0,
+    ConstraintType_ContactConstraint = 0,
     /// Defines this pair is a joint constraint
-    JointConstraint = 1,
+    ConstraintType_JointConstraint = 1,
 };
 
 /// Data structure used for preparing constraints before solving them
-enum BodyState : int32_t {
-    DynamicBody = 1,
-    StaticBody = 2,
-    KinematicBody = 4,
-    Articulation = 8,
+enum physx_BodyState : int32_t {
+    BodyState_DynamicBody = 1,
+    BodyState_StaticBody = 2,
+    BodyState_KinematicBody = 4,
+    BodyState_Articulation = 8,
 };
 
 /// @
 /// {
-enum PxArticulationAxis : int32_t {
+enum physx_PxArticulationAxis : int32_t {
     /// Rotational about eX
-    Twist = 0,
+    PxArticulationAxis_Twist = 0,
     /// Rotational about eY
-    Swing1 = 1,
+    PxArticulationAxis_Swing1 = 1,
     /// Rotational about eZ
-    Swing2 = 2,
+    PxArticulationAxis_Swing2 = 2,
     /// Linear in eX
-    X = 3,
+    PxArticulationAxis_X = 3,
     /// Linear in eY
-    Y = 4,
+    PxArticulationAxis_Y = 4,
     /// Linear in eZ
-    Z = 5,
-    Count = 6,
+    PxArticulationAxis_Z = 5,
+    PxArticulationAxis_Count = 6,
 };
 
-enum PxArticulationMotion : int32_t {
+enum physx_PxArticulationMotion : int32_t {
     /// Locked axis, i.e. degree of freedom (DOF)
-    Locked = 0,
+    PxArticulationMotion_Locked = 0,
     /// Limited DOF - set limits of joint DOF together with this flag, see PxArticulationJointReducedCoordinate::setLimitParams
-    Limited = 1,
+    PxArticulationMotion_Limited = 1,
     /// Free DOF
-    Free = 2,
+    PxArticulationMotion_Free = 2,
 };
 
-enum PxArticulationMotions : uint8_t {
-    Limited_Bit = 1 << 0,
-    Free_Bit = 1 << 1,
+enum physx_PxArticulationMotions : uint8_t {
+    PxArticulationMotions_Limited = 1 << 0,
+    PxArticulationMotions_Free = 1 << 1,
 };
 
-enum PxArticulationJointType : int32_t {
+enum physx_PxArticulationJointType : int32_t {
     /// All joint axes, i.e. degrees of freedom (DOFs) locked
-    Fix = 0,
+    PxArticulationJointType_Fix = 0,
     /// Single linear DOF, e.g. cart on a rail
-    Prismatic = 1,
+    PxArticulationJointType_Prismatic = 1,
     /// Single rotational DOF, e.g. an elbow joint or a rotational motor, position wrapped at 2pi radians
-    Revolute = 2,
+    PxArticulationJointType_Revolute = 2,
     /// Single rotational DOF, e.g. an elbow joint or a rotational motor, position not wrapped
-    RevoluteUnwrapped = 3,
+    PxArticulationJointType_RevoluteUnwrapped = 3,
     /// Ball and socket joint with two or three DOFs
-    Spherical = 4,
-    Undefined = 5,
+    PxArticulationJointType_Spherical = 4,
+    PxArticulationJointType_Undefined = 5,
 };
 
-enum PxArticulationFlag : int32_t {
+enum physx_PxArticulationFlag : int32_t {
     /// Set articulation base to be fixed.
-    FixBase = 1,
+    PxArticulationFlag_FixBase = 1,
     /// Limits for drive effort are forces and torques rather than impulses, see PxArticulationDrive::maxForce.
-    DriveLimitsAreForces = 2,
+    PxArticulationFlag_DriveLimitsAreForces = 2,
     /// Disable collisions between the articulation's links (note that parent/child collisions are disabled internally in either case).
-    DisableSelfCollision = 4,
+    PxArticulationFlag_DisableSelfCollision = 4,
     /// Enable in order to be able to query joint solver (i.e. constraint) forces using PxArticulationCache::jointSolverForces.
-    ComputeJointForces = 8,
+    PxArticulationFlag_ComputeJointForces = 8,
 };
 
-enum PxArticulationFlags : uint8_t {
-    FixBase_Bit = 1 << 0,
-    DriveLimitsAreForces_Bit = 1 << 1,
-    DisableSelfCollision_Bit = 1 << 2,
-    ComputeJointForces_Bit = 1 << 3,
+enum physx_PxArticulationFlags : uint8_t {
+    PxArticulationFlags_FixBase = 1 << 0,
+    PxArticulationFlags_DriveLimitsAreForces = 1 << 1,
+    PxArticulationFlags_DisableSelfCollision = 1 << 2,
+    PxArticulationFlags_ComputeJointForces = 1 << 3,
 };
 
-enum PxArticulationDriveType : int32_t {
+enum physx_PxArticulationDriveType : int32_t {
     /// The output of the implicit spring drive controller is a force/torque.
-    Force = 0,
+    PxArticulationDriveType_Force = 0,
     /// The output of the implicit spring drive controller is a joint acceleration (use this to get (spatial)-inertia-invariant behavior of the drive).
-    Acceleration = 1,
+    PxArticulationDriveType_Acceleration = 1,
     /// Sets the drive gains internally to track a target position almost kinematically (i.e. with very high drive gains).
-    Target = 2,
+    PxArticulationDriveType_Target = 2,
     /// Sets the drive gains internally to track a target velocity almost kinematically (i.e. with very high drive gains).
-    Velocity = 3,
-    None = 4,
+    PxArticulationDriveType_Velocity = 3,
+    PxArticulationDriveType_None = 4,
 };
 
 /// A description of the types of articulation data that may be directly written to and read from the GPU using the functions
 /// PxScene::copyArticulationData() and PxScene::applyArticulationData(). Types that are read-only may only be used in conjunction with
 /// PxScene::copyArticulationData(). Types that are write-only may only be used in conjunction with PxScene::applyArticulationData().
 /// A subset of data types may be used in conjunction with both PxScene::applyArticulationData() and PxScene::applyArticulationData().
-enum PxArticulationGpuDataType : int32_t {
+enum physx_PxArticulationGpuDataType : int32_t {
     /// The joint positions, read and write, see PxScene::copyArticulationData(), PxScene::applyArticulationData()
-    JointPosition = 0,
+    PxArticulationGpuDataType_JointPosition = 0,
     /// The joint velocities, read and write,  see PxScene::copyArticulationData(), PxScene::applyArticulationData()
-    JointVelocity = 1,
+    PxArticulationGpuDataType_JointVelocity = 1,
     /// The joint accelerations, read only, see PxScene::copyArticulationData()
-    JointAcceleration = 2,
+    PxArticulationGpuDataType_JointAcceleration = 2,
     /// The applied joint forces, write only, see PxScene::applyArticulationData()
-    JointForce = 3,
+    PxArticulationGpuDataType_JointForce = 3,
     /// The computed joint constraint solver forces, read only, see PxScene::copyArticulationData()()
-    JointSolverForce = 4,
+    PxArticulationGpuDataType_JointSolverForce = 4,
     /// The velocity targets for the joint drives, write only, see PxScene::applyArticulationData()
-    JointTargetVelocity = 5,
+    PxArticulationGpuDataType_JointTargetVelocity = 5,
     /// The position targets for the joint drives, write only, see PxScene::applyArticulationData()
-    JointTargetPosition = 6,
+    PxArticulationGpuDataType_JointTargetPosition = 6,
     /// The spatial sensor forces, read only, see PxScene::copyArticulationData()
-    SensorForce = 7,
+    PxArticulationGpuDataType_SensorForce = 7,
     /// The root link transform, read and write, see PxScene::copyArticulationData(), PxScene::applyArticulationData()
-    RootTransform = 8,
+    PxArticulationGpuDataType_RootTransform = 8,
     /// The root link velocity, read and write, see PxScene::copyArticulationData(), PxScene::applyArticulationData()
-    RootVelocity = 9,
+    PxArticulationGpuDataType_RootVelocity = 9,
     /// The link transforms including root link, read only, see PxScene::copyArticulationData()
-    LinkTransform = 10,
+    PxArticulationGpuDataType_LinkTransform = 10,
     /// The link velocities including root link, read only, see PxScene::copyArticulationData()
-    LinkVelocity = 11,
+    PxArticulationGpuDataType_LinkVelocity = 11,
     /// The forces to apply to links, write only, see PxScene::applyArticulationData()
-    LinkForce = 12,
+    PxArticulationGpuDataType_LinkForce = 12,
     /// The torques to apply to links, write only, see PxScene::applyArticulationData()
-    LinkTorque = 13,
+    PxArticulationGpuDataType_LinkTorque = 13,
     /// Fixed tendon data, write only, see PxScene::applyArticulationData()
-    FixedTendon = 14,
+    PxArticulationGpuDataType_FixedTendon = 14,
     /// Fixed tendon joint data, write only, see PxScene::applyArticulationData()
-    FixedTendonJoint = 15,
+    PxArticulationGpuDataType_FixedTendonJoint = 15,
     /// Spatial tendon data, write only, see PxScene::applyArticulationData()
-    SpatialTendon = 16,
+    PxArticulationGpuDataType_SpatialTendon = 16,
     /// Spatial tendon attachment data, write only, see PxScene::applyArticulationData()
-    SpatialTendonAttachment = 17,
+    PxArticulationGpuDataType_SpatialTendonAttachment = 17,
 };
 
 /// These flags determine what data is read or written to the internal articulation data via cache.
-enum PxArticulationCacheFlag : int32_t {
+enum physx_PxArticulationCacheFlag : int32_t {
     /// The joint velocities, see PxArticulationCache::jointVelocity.
-    Velocity = 1,
+    PxArticulationCacheFlag_Velocity = 1,
     /// The joint accelerations, see PxArticulationCache::jointAcceleration.
-    Acceleration = 2,
+    PxArticulationCacheFlag_Acceleration = 2,
     /// The joint positions, see PxArticulationCache::jointPosition.
-    Position = 4,
+    PxArticulationCacheFlag_Position = 4,
     /// The joint forces, see PxArticulationCache::jointForce.
-    Force = 8,
+    PxArticulationCacheFlag_Force = 8,
     /// The link velocities, see PxArticulationCache::linkVelocity.
-    LinkVelocity = 16,
+    PxArticulationCacheFlag_LinkVelocity = 16,
     /// The link accelerations, see PxArticulationCache::linkAcceleration.
-    LinkAcceleration = 32,
+    PxArticulationCacheFlag_LinkAcceleration = 32,
     /// Root link transform, see PxArticulationCache::rootLinkData.
-    RootTransform = 64,
+    PxArticulationCacheFlag_RootTransform = 64,
     /// Root link velocities (read/write) and accelerations (read), see PxArticulationCache::rootLinkData.
-    RootVelocities = 128,
+    PxArticulationCacheFlag_RootVelocities = 128,
     /// The spatial sensor forces, see PxArticulationCache::sensorForces.
-    SensorForces = 256,
+    PxArticulationCacheFlag_SensorForces = 256,
     /// Solver constraint joint forces, see PxArticulationCache::jointSolverForces.
-    JointSolverForces = 512,
-    All = 247,
+    PxArticulationCacheFlag_JointSolverForces = 512,
+    PxArticulationCacheFlag_All = 247,
 };
 
-enum PxArticulationCacheFlags : uint32_t {
-    Velocity_Bit = 1 << 0,
-    Acceleration_Bit = 1 << 1,
-    Position_Bit = 1 << 2,
-    Force_Bit = 1 << 3,
-    LinkVelocity_Bit = 1 << 4,
-    LinkAcceleration_Bit = 1 << 5,
-    RootTransform_Bit = 1 << 6,
-    RootVelocities_Bit = 1 << 7,
-    SensorForces_Bit = 1 << 8,
-    JointSolverForces_Bit = 1 << 9,
-    All_Bit = Velocity | Acceleration | Position | LinkVelocity | LinkAcceleration | RootTransform | RootVelocities,
+enum physx_PxArticulationCacheFlags : uint32_t {
+    PxArticulationCacheFlags_Velocity = 1 << 0,
+    PxArticulationCacheFlags_Acceleration = 1 << 1,
+    PxArticulationCacheFlags_Position = 1 << 2,
+    PxArticulationCacheFlags_Force = 1 << 3,
+    PxArticulationCacheFlags_LinkVelocity = 1 << 4,
+    PxArticulationCacheFlags_LinkAcceleration = 1 << 5,
+    PxArticulationCacheFlags_RootTransform = 1 << 6,
+    PxArticulationCacheFlags_RootVelocities = 1 << 7,
+    PxArticulationCacheFlags_SensorForces = 1 << 8,
+    PxArticulationCacheFlags_JointSolverForces = 1 << 9,
+    PxArticulationCacheFlags_All = PxArticulationCacheFlags_Velocity | PxArticulationCacheFlags_Acceleration | PxArticulationCacheFlags_Position | PxArticulationCacheFlags_LinkVelocity | PxArticulationCacheFlags_LinkAcceleration | PxArticulationCacheFlags_RootTransform | PxArticulationCacheFlags_RootVelocities,
 };
 
 /// Flags to configure the forces reported by articulation link sensors.
-enum PxArticulationSensorFlag : int32_t {
+enum physx_PxArticulationSensorFlag : int32_t {
     /// Raise to receive forces from forward dynamics.
-    ForwardDynamicsForces = 1,
+    PxArticulationSensorFlag_ForwardDynamicsForces = 1,
     /// Raise to receive forces from constraint solver.
-    ConstraintSolverForces = 2,
+    PxArticulationSensorFlag_ConstraintSolverForces = 2,
     /// Raise to receive forces in the world rotation frame, otherwise they will be reported in the sensor's local frame.
-    WorldFrame = 4,
+    PxArticulationSensorFlag_WorldFrame = 4,
 };
 
-enum PxArticulationSensorFlags : uint8_t {
-    ForwardDynamicsForces_Bit = 1 << 0,
-    ConstraintSolverForces_Bit = 1 << 1,
-    WorldFrame_Bit = 1 << 2,
+enum physx_PxArticulationSensorFlags : uint8_t {
+    PxArticulationSensorFlags_ForwardDynamicsForces = 1 << 0,
+    PxArticulationSensorFlags_ConstraintSolverForces = 1 << 1,
+    PxArticulationSensorFlags_WorldFrame = 1 << 2,
 };
 
 /// Flag that configures articulation-state updates by PxArticulationReducedCoordinate::updateKinematic.
-enum PxArticulationKinematicFlag : int32_t {
+enum physx_PxArticulationKinematicFlag : int32_t {
     /// Raise after any changes to the articulation root or joint positions using non-cache API calls. Updates links' positions and velocities.
-    Position = 1,
+    PxArticulationKinematicFlag_Position = 1,
     /// Raise after velocity-only changes to the articulation root or joints using non-cache API calls. Updates links' velocities.
-    Velocity = 2,
+    PxArticulationKinematicFlag_Velocity = 2,
 };
 
-enum PxArticulationKinematicFlags : uint8_t {
-    Position_Bit = 1 << 0,
-    Velocity_Bit = 1 << 1,
+enum physx_PxArticulationKinematicFlags : uint8_t {
+    PxArticulationKinematicFlags_Position = 1 << 0,
+    PxArticulationKinematicFlags_Velocity = 1 << 1,
 };
 
 /// Flags which affect the behavior of PxShapes.
-enum PxShapeFlag : int32_t {
+enum physx_PxShapeFlag : int32_t {
     /// The shape will partake in collision in the physical simulation.
     ///
     /// It is illegal to raise the eSIMULATION_SHAPE and eTRIGGER_SHAPE flags.
@@ -833,9 +833,9 @@ enum PxShapeFlag : int32_t {
     /// eTRIGGER_SHAPE is already lowered.
     ///
     /// This flag has no effect if simulation is disabled for the corresponding actor (see [`PxActorFlag::eDISABLE_SIMULATION`]).
-    SimulationShape = 1,
+    PxShapeFlag_SimulationShape = 1,
     /// The shape will partake in scene queries (ray casts, overlap tests, sweeps, ...).
-    SceneQueryShape = 2,
+    PxShapeFlag_SceneQueryShape = 2,
     /// The shape is a trigger which can send reports whenever other shapes enter/leave its volume.
     ///
     /// Triangle meshes and heightfields can not be triggers. Shape creation will fail in these cases.
@@ -852,42 +852,42 @@ enum PxShapeFlag : int32_t {
     /// Shapes marked as triggers are allowed to participate in scene queries, provided the eSCENE_QUERY_SHAPE flag is set.
     ///
     /// This flag has no effect if simulation is disabled for the corresponding actor (see [`PxActorFlag::eDISABLE_SIMULATION`]).
-    TriggerShape = 4,
+    PxShapeFlag_TriggerShape = 4,
     /// Enable debug renderer for this shape
-    Visualization = 8,
+    PxShapeFlag_Visualization = 8,
 };
 
-enum PxShapeFlags : uint8_t {
-    SimulationShape_Bit = 1 << 0,
-    SceneQueryShape_Bit = 1 << 1,
-    TriggerShape_Bit = 1 << 2,
-    Visualization_Bit = 1 << 3,
+enum physx_PxShapeFlags : uint8_t {
+    PxShapeFlags_SimulationShape = 1 << 0,
+    PxShapeFlags_SceneQueryShape = 1 << 1,
+    PxShapeFlags_TriggerShape = 1 << 2,
+    PxShapeFlags_Visualization = 1 << 3,
 };
 
 /// Parameter to addForce() and addTorque() calls, determines the exact operation that is carried out.
-enum PxForceMode : int32_t {
+enum physx_PxForceMode : int32_t {
     /// parameter has unit of mass * length / time^2, i.e., a force
-    Force = 0,
+    PxForceMode_Force = 0,
     /// parameter has unit of mass * length / time, i.e., force * time
-    Impulse = 1,
+    PxForceMode_Impulse = 1,
     /// parameter has unit of length / time, i.e., the effect is mass independent: a velocity change.
-    VelocityChange = 2,
+    PxForceMode_VelocityChange = 2,
     /// parameter has unit of length/ time^2, i.e., an acceleration. It gets treated just like a force except the mass is not divided out before integration.
-    Acceleration = 3,
+    PxForceMode_Acceleration = 3,
 };
 
 /// Collection of flags describing the behavior of a rigid body.
-enum PxRigidBodyFlag : int32_t {
+enum physx_PxRigidBodyFlag : int32_t {
     /// Enable kinematic mode for the body.
-    Kinematic = 1,
+    PxRigidBodyFlag_Kinematic = 1,
     /// Use the kinematic target transform for scene queries.
     ///
     /// If this flag is raised, then scene queries will treat the kinematic target transform as the current pose
     /// of the body (instead of using the actual pose). Without this flag, the kinematic target will only take
     /// effect with respect to scene queries after a simulation step.
-    UseKinematicTargetForSceneQueries = 2,
+    PxRigidBodyFlag_UseKinematicTargetForSceneQueries = 2,
     /// Enable CCD for the body.
-    EnableCcd = 4,
+    PxRigidBodyFlag_EnableCcd = 4,
     /// Enabled CCD in swept integration for the actor.
     ///
     /// If this flag is raised and CCD is enabled, CCD interactions will simulate friction. By default, friction is disabled in CCD interactions because
@@ -895,23 +895,23 @@ enum PxRigidBodyFlag : int32_t {
     /// that is a closer match for previous versions of the SDK.
     ///
     /// This flag requires PxRigidBodyFlag::eENABLE_CCD to be raised to have any effect.
-    EnableCcdFriction = 8,
+    PxRigidBodyFlag_EnableCcdFriction = 8,
     /// Register a rigid body to dynamically adjust contact offset based on velocity. This can be used to achieve a CCD effect.
     ///
     /// If both eENABLE_CCD and eENABLE_SPECULATIVE_CCD are set on the same body, then angular motions are handled by speculative
     /// contacts (eENABLE_SPECULATIVE_CCD) while linear motions are handled by sweeps (eENABLE_CCD).
-    EnableSpeculativeCcd = 16,
+    PxRigidBodyFlag_EnableSpeculativeCcd = 16,
     /// Register a rigid body for reporting pose changes by the simulation at an early stage.
     ///
     /// Sometimes it might be advantageous to get access to the new pose of a rigid body as early as possible and
     /// not wait until the call to fetchResults() returns. Setting this flag will schedule the rigid body to get reported
     /// in [`PxSimulationEventCallback::onAdvance`](). Please refer to the documentation of that callback to understand
     /// the behavior and limitations of this functionality.
-    EnablePoseIntegrationPreview = 32,
+    PxRigidBodyFlag_EnablePoseIntegrationPreview = 32,
     /// Permit CCD to limit maxContactImpulse. This is useful for use-cases like a destruction system but can cause visual artefacts so is not enabled by default.
-    EnableCcdMaxContactImpulse = 64,
+    PxRigidBodyFlag_EnableCcdMaxContactImpulse = 64,
     /// Carries over forces/accelerations between frames, rather than clearing them
-    RetainAccelerations = 128,
+    PxRigidBodyFlag_RetainAccelerations = 128,
     /// Forces kinematic-kinematic pairs notifications for this actor.
     ///
     /// This flag overrides the global scene-level PxPairFilteringMode setting for kinematic actors.
@@ -926,7 +926,7 @@ enum PxRigidBodyFlag : int32_t {
     /// This has no effect if PxRigidBodyFlag::eKINEMATIC is not set.
     ///
     /// Changing this flag at runtime will not have an effect until you remove and re-add the actor to the scene.
-    ForceKineKineNotifications = 256,
+    PxRigidBodyFlag_ForceKineKineNotifications = 256,
     /// Forces static-kinematic pairs notifications for this actor.
     ///
     /// Similar to eFORCE_KINE_KINE_NOTIFICATIONS, but for static-kinematic interactions.
@@ -934,124 +934,124 @@ enum PxRigidBodyFlag : int32_t {
     /// This has no effect if PxRigidBodyFlag::eKINEMATIC is not set.
     ///
     /// Changing this flag at runtime will not have an effect until you remove and re-add the actor to the scene.
-    ForceStaticKineNotifications = 512,
+    PxRigidBodyFlag_ForceStaticKineNotifications = 512,
     /// Enables computation of gyroscopic forces on the rigid body.
-    EnableGyroscopicForces = 1024,
+    PxRigidBodyFlag_EnableGyroscopicForces = 1024,
 };
 
-enum PxRigidBodyFlags : uint16_t {
-    Kinematic_Bit = 1 << 0,
-    UseKinematicTargetForSceneQueries_Bit = 1 << 1,
-    EnableCcd_Bit = 1 << 2,
-    EnableCcdFriction_Bit = 1 << 3,
-    EnableSpeculativeCcd_Bit = 1 << 4,
-    EnablePoseIntegrationPreview_Bit = 1 << 5,
-    EnableCcdMaxContactImpulse_Bit = 1 << 6,
-    RetainAccelerations_Bit = 1 << 7,
-    ForceKineKineNotifications_Bit = 1 << 8,
-    ForceStaticKineNotifications_Bit = 1 << 9,
-    EnableGyroscopicForces_Bit = 1 << 10,
+enum physx_PxRigidBodyFlags : uint16_t {
+    PxRigidBodyFlags_Kinematic = 1 << 0,
+    PxRigidBodyFlags_UseKinematicTargetForSceneQueries = 1 << 1,
+    PxRigidBodyFlags_EnableCcd = 1 << 2,
+    PxRigidBodyFlags_EnableCcdFriction = 1 << 3,
+    PxRigidBodyFlags_EnableSpeculativeCcd = 1 << 4,
+    PxRigidBodyFlags_EnablePoseIntegrationPreview = 1 << 5,
+    PxRigidBodyFlags_EnableCcdMaxContactImpulse = 1 << 6,
+    PxRigidBodyFlags_RetainAccelerations = 1 << 7,
+    PxRigidBodyFlags_ForceKineKineNotifications = 1 << 8,
+    PxRigidBodyFlags_ForceStaticKineNotifications = 1 << 9,
+    PxRigidBodyFlags_EnableGyroscopicForces = 1 << 10,
 };
 
 /// constraint flags
 ///
 /// eBROKEN is a read only flag
-enum PxConstraintFlag : int32_t {
+enum physx_PxConstraintFlag : int32_t {
     /// whether the constraint is broken
-    Broken = 1,
+    PxConstraintFlag_Broken = 1,
     /// whether actor1 should get projected to actor0 for this constraint (note: projection of a static/kinematic actor to a dynamic actor will be ignored)
-    ProjectToActor0 = 2,
+    PxConstraintFlag_ProjectToActor0 = 2,
     /// whether actor0 should get projected to actor1 for this constraint (note: projection of a static/kinematic actor to a dynamic actor will be ignored)
-    ProjectToActor1 = 4,
+    PxConstraintFlag_ProjectToActor1 = 4,
     /// whether the actors should get projected for this constraint (the direction will be chosen by PhysX)
-    Projection = 6,
+    PxConstraintFlag_Projection = 6,
     /// whether contacts should be generated between the objects this constraint constrains
-    CollisionEnabled = 8,
+    PxConstraintFlag_CollisionEnabled = 8,
     /// whether this constraint should be visualized, if constraint visualization is turned on
-    Visualization = 16,
+    PxConstraintFlag_Visualization = 16,
     /// limits for drive strength are forces rather than impulses
-    DriveLimitsAreForces = 32,
+    PxConstraintFlag_DriveLimitsAreForces = 32,
     /// perform preprocessing for improved accuracy on D6 Slerp Drive (this flag will be removed in a future release when preprocessing is no longer required)
-    ImprovedSlerp = 128,
+    PxConstraintFlag_ImprovedSlerp = 128,
     /// suppress constraint preprocessing, intended for use with rowResponseThreshold. May result in worse solver accuracy for ill-conditioned constraints.
-    DisablePreprocessing = 256,
+    PxConstraintFlag_DisablePreprocessing = 256,
     /// enables extended limit ranges for angular limits (e.g., limit values > PxPi or
     /// <
     /// -PxPi)
-    EnableExtendedLimits = 512,
+    PxConstraintFlag_EnableExtendedLimits = 512,
     /// the constraint type is supported by gpu dynamics
-    GpuCompatible = 1024,
+    PxConstraintFlag_GpuCompatible = 1024,
     /// updates the constraint each frame
-    AlwaysUpdate = 2048,
+    PxConstraintFlag_AlwaysUpdate = 2048,
     /// disables the constraint. SolverPrep functions won't be called for this constraint.
-    DisableConstraint = 4096,
+    PxConstraintFlag_DisableConstraint = 4096,
 };
 
-enum PxConstraintFlags : uint16_t {
-    Broken_Bit = 1 << 0,
-    ProjectToActor0_Bit = 1 << 1,
-    ProjectToActor1_Bit = 1 << 2,
-    Projection_Bit = ProjectToActor0 | ProjectToActor1,
-    CollisionEnabled_Bit = 1 << 3,
-    Visualization_Bit = 1 << 4,
-    DriveLimitsAreForces_Bit = 1 << 5,
-    ImprovedSlerp_Bit = 1 << 7,
-    DisablePreprocessing_Bit = 1 << 8,
-    EnableExtendedLimits_Bit = 1 << 9,
-    GpuCompatible_Bit = 1 << 10,
-    AlwaysUpdate_Bit = 1 << 11,
-    DisableConstraint_Bit = 1 << 12,
+enum physx_PxConstraintFlags : uint16_t {
+    PxConstraintFlags_Broken = 1 << 0,
+    PxConstraintFlags_ProjectToActor0 = 1 << 1,
+    PxConstraintFlags_ProjectToActor1 = 1 << 2,
+    PxConstraintFlags_CollisionEnabled = 1 << 3,
+    PxConstraintFlags_Visualization = 1 << 4,
+    PxConstraintFlags_DriveLimitsAreForces = 1 << 5,
+    PxConstraintFlags_ImprovedSlerp = 1 << 7,
+    PxConstraintFlags_DisablePreprocessing = 1 << 8,
+    PxConstraintFlags_EnableExtendedLimits = 1 << 9,
+    PxConstraintFlags_GpuCompatible = 1 << 10,
+    PxConstraintFlags_AlwaysUpdate = 1 << 11,
+    PxConstraintFlags_DisableConstraint = 1 << 12,
+    PxConstraintFlags_Projection = PxConstraintFlags_ProjectToActor0 | PxConstraintFlags_ProjectToActor1,
 };
 
 /// Header for a contact patch where all points share same material and normal
-enum PxContactPatchFlags : int32_t {
+enum physx_PxContactPatchFlags : int32_t {
     /// Indicates this contact stream has face indices.
-    HasFaceIndices = 1,
+    PxContactPatchFlags_HasFaceIndices = 1,
     /// Indicates this contact stream is modifiable.
-    Modifiable = 2,
+    PxContactPatchFlags_Modifiable = 2,
     /// Indicates this contact stream is notify-only (no contact response).
-    ForceNoResponse = 4,
+    PxContactPatchFlags_ForceNoResponse = 4,
     /// Indicates this contact stream has modified mass ratios
-    HasModifiedMassRatios = 8,
+    PxContactPatchFlags_HasModifiedMassRatios = 8,
     /// Indicates this contact stream has target velocities set
-    HasTargetVelocity = 16,
+    PxContactPatchFlags_HasTargetVelocity = 16,
     /// Indicates this contact stream has max impulses set
-    HasMaxImpulse = 32,
+    PxContactPatchFlags_HasMaxImpulse = 32,
     /// Indicates this contact stream needs patches re-generated. This is required if the application modified either the contact normal or the material properties
-    RegeneratePatches = 64,
-    CompressedModifiedContact = 128,
+    PxContactPatchFlags_RegeneratePatches = 64,
+    PxContactPatchFlags_CompressedModifiedContact = 128,
 };
 
 /// A class to iterate over a compressed contact stream. This supports read-only access to the various contact formats.
-enum StreamFormat : int32_t {
-    SimpleStream = 0,
-    ModifiableStream = 1,
-    CompressedModifiableStream = 2,
+enum physx_StreamFormat : int32_t {
+    StreamFormat_SimpleStream = 0,
+    StreamFormat_ModifiableStream = 1,
+    StreamFormat_CompressedModifiableStream = 2,
 };
 
 /// Flags specifying deletion event types.
-enum PxDeletionEventFlag : int32_t {
+enum physx_PxDeletionEventFlag : int32_t {
     /// The user has called release on an object.
-    UserRelease = 1,
+    PxDeletionEventFlag_UserRelease = 1,
     /// The destructor of an object has been called and the memory has been released.
-    MemoryRelease = 2,
+    PxDeletionEventFlag_MemoryRelease = 2,
 };
 
-enum PxDeletionEventFlags : uint8_t {
-    UserRelease_Bit = 1 << 0,
-    MemoryRelease_Bit = 1 << 1,
+enum physx_PxDeletionEventFlags : uint8_t {
+    PxDeletionEventFlags_UserRelease = 1 << 0,
+    PxDeletionEventFlags_MemoryRelease = 1 << 1,
 };
 
 /// Collection of flags describing the actions to take for a collision pair.
-enum PxPairFlag : int32_t {
+enum physx_PxPairFlag : int32_t {
     /// Process the contacts of this collision pair in the dynamics solver.
     ///
     /// Only takes effect if the colliding actors are rigid bodies.
-    SolveContact = 1,
+    PxPairFlag_SolveContact = 1,
     /// Call contact modification callback for this collision pair
     ///
     /// Only takes effect if the colliding actors are rigid bodies.
-    ModifyContacts = 2,
+    PxPairFlag_ModifyContacts = 2,
     /// Call contact report callback or trigger callback when this collision pair starts to be in contact.
     ///
     /// If one of the two collision objects is a trigger shape (see [`PxShapeFlag::eTRIGGER_SHAPE`])
@@ -1062,7 +1062,7 @@ enum PxPairFlag : int32_t {
     /// Only takes effect if the colliding actors are rigid bodies.
     ///
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
-    NotifyTouchFound = 4,
+    PxPairFlag_NotifyTouchFound = 4,
     /// Call contact report callback while this collision pair is in contact
     ///
     /// If none of the two collision objects is a trigger shape then the contact report callback will get
@@ -1077,7 +1077,7 @@ enum PxPairFlag : int32_t {
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
     ///
     /// If this flag gets enabled while a pair is in touch already, there will be no eNOTIFY_TOUCH_PERSISTS events until the pair loses and regains touch.
-    NotifyTouchPersists = 8,
+    PxPairFlag_NotifyTouchPersists = 8,
     /// Call contact report callback or trigger callback when this collision pair stops to be in contact
     ///
     /// If one of the two collision objects is a trigger shape (see [`PxShapeFlag::eTRIGGER_SHAPE`])
@@ -1090,7 +1090,7 @@ enum PxPairFlag : int32_t {
     /// This event will also get triggered if one of the colliding objects gets deleted.
     ///
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
-    NotifyTouchLost = 16,
+    PxPairFlag_NotifyTouchLost = 16,
     /// Call contact report callback when this collision pair is in contact during CCD passes.
     ///
     /// If CCD with multiple passes is enabled, then a fast moving object might bounce on and off the same
@@ -1105,13 +1105,13 @@ enum PxPairFlag : int32_t {
     /// Trigger shapes are not supported.
     ///
     /// Only takes effect if eDETECT_CCD_CONTACT is raised
-    NotifyTouchCcd = 32,
+    PxPairFlag_NotifyTouchCcd = 32,
     /// Call contact report callback when the contact force between the actors of this collision pair exceeds one of the actor-defined force thresholds.
     ///
     /// Only takes effect if the colliding actors are rigid bodies.
     ///
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
-    NotifyThresholdForceFound = 64,
+    PxPairFlag_NotifyThresholdForceFound = 64,
     /// Call contact report callback when the contact force between the actors of this collision pair continues to exceed one of the actor-defined force thresholds.
     ///
     /// Only takes effect if the colliding actors are rigid bodies.
@@ -1120,7 +1120,7 @@ enum PxPairFlag : int32_t {
     /// previous one (unless [`eNOTIFY_THRESHOLD_FORCE_FOUND`] has been set in the previous frame).
     ///
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
-    NotifyThresholdForcePersists = 128,
+    PxPairFlag_NotifyThresholdForcePersists = 128,
     /// Call contact report callback when the contact force between the actors of this collision pair falls below one of the actor-defined force thresholds (includes the case where this collision pair stops being in contact).
     ///
     /// Only takes effect if the colliding actors are rigid bodies.
@@ -1129,17 +1129,17 @@ enum PxPairFlag : int32_t {
     /// previous one (unless [`eNOTIFY_THRESHOLD_FORCE_FOUND`] or #eNOTIFY_THRESHOLD_FORCE_PERSISTS has been set in the previous frame).
     ///
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
-    NotifyThresholdForceLost = 256,
+    PxPairFlag_NotifyThresholdForceLost = 256,
     /// Provide contact points in contact reports for this collision pair.
     ///
     /// Only takes effect if the colliding actors are rigid bodies and if used in combination with the flags eNOTIFY_TOUCH_... or eNOTIFY_THRESHOLD_FORCE_...
     ///
     /// Only takes effect if eDETECT_DISCRETE_CONTACT or eDETECT_CCD_CONTACT is raised
-    NotifyContactPoints = 512,
+    PxPairFlag_NotifyContactPoints = 512,
     /// This flag is used to indicate whether this pair generates discrete collision detection contacts.
     ///
     /// Contacts are only responded to if eSOLVE_CONTACT is enabled.
-    DetectDiscreteContact = 1024,
+    PxPairFlag_DetectDiscreteContact = 1024,
     /// This flag is used to indicate whether this pair generates CCD contacts.
     ///
     /// The contacts will only be responded to if eSOLVE_CONTACT is enabled on this pair.
@@ -1150,7 +1150,7 @@ enum PxPairFlag : int32_t {
     ///
     /// This flag is not supported with trigger shapes. However, CCD trigger events can be emulated using non-trigger shapes
     /// and requesting eNOTIFY_TOUCH_FOUND and eNOTIFY_TOUCH_LOST and not raising eSOLVE_CONTACT on the pair.
-    DetectCcdContact = 2048,
+    PxPairFlag_DetectCcdContact = 2048,
     /// Provide pre solver velocities in contact reports for this collision pair.
     ///
     /// If the collision pair has contact reports enabled, the velocities of the rigid bodies before contacts have been solved
@@ -1159,12 +1159,12 @@ enum PxPairFlag : int32_t {
     /// Usually it is not necessary to request these velocities as they will be available by querying the velocity from the provided
     /// PxRigidActor object directly. However, it might be the case that the velocity of a rigid body gets set while the simulation is running
     /// in which case the PxRigidActor would return this new velocity in the contact report callback and not the velocity the simulation used.
-    PreSolverVelocity = 4096,
+    PxPairFlag_PreSolverVelocity = 4096,
     /// Provide post solver velocities in contact reports for this collision pair.
     ///
     /// If the collision pair has contact reports enabled, the velocities of the rigid bodies after contacts have been solved
     /// will be provided in the contact report callback unless the pair lost touch in which case no data will be provided.
-    PostSolverVelocity = 8192,
+    PxPairFlag_PostSolverVelocity = 8192,
     /// Provide rigid body poses in contact reports for this collision pair.
     ///
     /// If the collision pair has contact reports enabled, the rigid body poses at the contact event will be provided
@@ -1175,38 +1175,38 @@ enum PxPairFlag : int32_t {
     /// in which case the PxRigidActor would return this new pose in the contact report callback and not the pose the simulation used.
     /// Another use case is related to CCD with multiple passes enabled, A fast moving object might bounce on and off the same
     /// object multiple times. This flag can be used to request the rigid body poses at the time of impact for each such collision event.
-    ContactEventPose = 16384,
+    PxPairFlag_ContactEventPose = 16384,
     /// For internal use only.
-    NextFree = 32768,
+    PxPairFlag_NextFree = 32768,
     /// Provided default flag to do simple contact processing for this collision pair.
-    ContactDefault = 1025,
+    PxPairFlag_ContactDefault = 1025,
     /// Provided default flag to get commonly used trigger behavior for this collision pair.
-    TriggerDefault = 1044,
+    PxPairFlag_TriggerDefault = 1044,
 };
 
-enum PxPairFlags : uint16_t {
-    SolveContact_Bit = 1 << 0,
-    ModifyContacts_Bit = 1 << 1,
-    NotifyTouchFound_Bit = 1 << 2,
-    NotifyTouchPersists_Bit = 1 << 3,
-    NotifyTouchLost_Bit = 1 << 4,
-    NotifyTouchCcd_Bit = 1 << 5,
-    NotifyThresholdForceFound_Bit = 1 << 6,
-    NotifyThresholdForcePersists_Bit = 1 << 7,
-    NotifyThresholdForceLost_Bit = 1 << 8,
-    NotifyContactPoints_Bit = 1 << 9,
-    DetectDiscreteContact_Bit = 1 << 10,
-    DetectCcdContact_Bit = 1 << 11,
-    PreSolverVelocity_Bit = 1 << 12,
-    PostSolverVelocity_Bit = 1 << 13,
-    ContactEventPose_Bit = 1 << 14,
-    NextFree_Bit = 1 << 15,
-    ContactDefault_Bit = SolveContact | DetectDiscreteContact,
-    TriggerDefault_Bit = NotifyTouchFound | NotifyTouchLost | DetectDiscreteContact,
+enum physx_PxPairFlags : uint16_t {
+    PxPairFlags_SolveContact = 1 << 0,
+    PxPairFlags_ModifyContacts = 1 << 1,
+    PxPairFlags_NotifyTouchFound = 1 << 2,
+    PxPairFlags_NotifyTouchPersists = 1 << 3,
+    PxPairFlags_NotifyTouchLost = 1 << 4,
+    PxPairFlags_NotifyTouchCcd = 1 << 5,
+    PxPairFlags_NotifyThresholdForceFound = 1 << 6,
+    PxPairFlags_NotifyThresholdForcePersists = 1 << 7,
+    PxPairFlags_NotifyThresholdForceLost = 1 << 8,
+    PxPairFlags_NotifyContactPoints = 1 << 9,
+    PxPairFlags_DetectDiscreteContact = 1 << 10,
+    PxPairFlags_DetectCcdContact = 1 << 11,
+    PxPairFlags_PreSolverVelocity = 1 << 12,
+    PxPairFlags_PostSolverVelocity = 1 << 13,
+    PxPairFlags_ContactEventPose = 1 << 14,
+    PxPairFlags_NextFree = 1 << 15,
+    PxPairFlags_ContactDefault = PxPairFlags_SolveContact | PxPairFlags_DetectDiscreteContact,
+    PxPairFlags_TriggerDefault = PxPairFlags_NotifyTouchFound | PxPairFlags_NotifyTouchLost | PxPairFlags_DetectDiscreteContact,
 };
 
 /// Collection of flags describing the filter actions to take for a collision pair.
-enum PxFilterFlag : int32_t {
+enum physx_PxFilterFlag : int32_t {
     /// Ignore the collision pair as long as the bounding volumes of the pair objects overlap.
     ///
     /// Killed pairs will be ignored by the simulation and won't run through the filter again until one
@@ -1215,7 +1215,7 @@ enum PxFilterFlag : int32_t {
     /// The bounding volumes of the two objects overlap again (after being separated)
     ///
     /// The user enforces a re-filtering (see [`PxScene::resetFiltering`]())
-    Kill = 1,
+    PxFilterFlag_Kill = 1,
     /// Ignore the collision pair as long as the bounding volumes of the pair objects overlap or until filtering relevant data changes for one of the collision objects.
     ///
     /// Suppressed pairs will be ignored by the simulation and won't make another filter request until one
@@ -1224,15 +1224,15 @@ enum PxFilterFlag : int32_t {
     /// Same conditions as for killed pairs (see [`eKILL`])
     ///
     /// The filter data or the filter object attributes change for one of the collision objects
-    Suppress = 2,
+    PxFilterFlag_Suppress = 2,
     /// Invoke the filter callback ([`PxSimulationFilterCallback::pairFound`]()) for this collision pair.
-    Callback = 4,
+    PxFilterFlag_Callback = 4,
     /// Track this collision pair with the filter callback mechanism.
     ///
     /// When the bounding volumes of the collision pair lose contact, the filter callback [`PxSimulationFilterCallback::pairLost`]()
     /// will be invoked. Furthermore, the filter status of the collision pair can be adjusted through [`PxSimulationFilterCallback::statusChange`]()
     /// once per frame (until a pairLost() notification occurs).
-    Notify = 12,
+    PxFilterFlag_Notify = 12,
     /// Provided default to get standard behavior:
     ///
     /// The application configure the pair's collision properties once when bounding volume overlap is found and
@@ -1241,48 +1241,48 @@ enum PxFilterFlag : int32_t {
     /// No notification is provided when bounding volume overlap is lost
     ///
     /// The pair will not be killed or suppressed, so collision detection will be processed
-    Default = 0,
+    PxFilterFlag_Default = 0,
 };
 
-enum PxFilterFlags : uint16_t {
-    Kill_Bit = 1 << 0,
-    Suppress_Bit = 1 << 1,
-    Callback_Bit = 1 << 2,
-    Notify_Bit = Callback,
+enum physx_PxFilterFlags : uint16_t {
+    PxFilterFlags_Kill = 1 << 0,
+    PxFilterFlags_Suppress = 1 << 1,
+    PxFilterFlags_Callback = 1 << 2,
+    PxFilterFlags_Notify = PxFilterFlags_Callback,
 };
 
 /// Identifies each type of filter object.
-enum PxFilterObjectType : int32_t {
+enum physx_PxFilterObjectType : int32_t {
     /// A static rigid body
-    RigidStatic = 0,
+    PxFilterObjectType_RigidStatic = 0,
     /// A dynamic rigid body
-    RigidDynamic = 1,
+    PxFilterObjectType_RigidDynamic = 1,
     /// An articulation
-    Articulation = 2,
+    PxFilterObjectType_Articulation = 2,
     /// A particle system
-    Particlesystem = 3,
+    PxFilterObjectType_Particlesystem = 3,
     /// A FEM-based soft body
-    Softbody = 4,
+    PxFilterObjectType_Softbody = 4,
     /// A FEM-based cloth
     ///
     /// In development
-    Femcloth = 5,
+    PxFilterObjectType_Femcloth = 5,
     /// A hair system
     ///
     /// In development
-    Hairsystem = 6,
+    PxFilterObjectType_Hairsystem = 6,
     /// internal use only!
-    MaxTypeCount = 16,
+    PxFilterObjectType_MaxTypeCount = 16,
     /// internal use only!
-    Undefined = 15,
+    PxFilterObjectType_Undefined = 15,
 };
 
-enum PxFilterObjectFlag : int32_t {
-    Kinematic = 16,
-    Trigger = 32,
+enum physx_PxFilterObjectFlag : int32_t {
+    PxFilterObjectFlag_Kinematic = 16,
+    PxFilterObjectFlag_Trigger = 32,
 };
 
-enum PxPairFilteringMode : int32_t {
+enum physx_PxPairFilteringMode : int32_t {
     /// Output pair from BP, potentially send to user callbacks, create regular interaction object.
     ///
     /// Enable contact pair filtering between kinematic/static or kinematic/kinematic rigid bodies.
@@ -1291,29 +1291,29 @@ enum PxPairFilteringMode : int32_t {
     /// Use this mode if these pairs should go through the filtering pipeline nonetheless.
     ///
     /// This mode is not mutable, and must be set in PxSceneDesc at scene creation.
-    Keep = 0,
+    PxPairFilteringMode_Keep = 0,
     /// Output pair from BP, create interaction marker. Can be later switched to regular interaction.
-    Suppress = 1,
+    PxPairFilteringMode_Suppress = 1,
     /// Don't output pair from BP. Cannot be later switched to regular interaction, needs "resetFiltering" call.
-    Kill = 2,
+    PxPairFilteringMode_Kill = 2,
 };
 
-enum PxDataAccessFlag : int32_t {
-    Readable = 1,
-    Writable = 2,
-    Device = 4,
+enum physx_PxDataAccessFlag : int32_t {
+    PxDataAccessFlag_Readable = 1,
+    PxDataAccessFlag_Writable = 2,
+    PxDataAccessFlag_Device = 4,
 };
 
-enum PxDataAccessFlags : uint8_t {
-    Readable_Bit = 1 << 0,
-    Writable_Bit = 1 << 1,
-    Device_Bit = 1 << 2,
+enum physx_PxDataAccessFlags : uint8_t {
+    PxDataAccessFlags_Readable = 1 << 0,
+    PxDataAccessFlags_Writable = 1 << 1,
+    PxDataAccessFlags_Device = 1 << 2,
 };
 
 /// Flags which control the behavior of a material.
-enum PxMaterialFlag : int32_t {
+enum physx_PxMaterialFlag : int32_t {
     /// If this flag is set, friction computations are always skipped between shapes with this material and any other shape.
-    DisableFriction = 1,
+    PxMaterialFlag_DisableFriction = 1,
     /// Whether to use strong friction.
     /// The difference between "normal" and "strong" friction is that the strong friction feature
     /// remembers the "friction error" between simulation steps. The friction is a force trying to
@@ -1331,7 +1331,7 @@ enum PxMaterialFlag : int32_t {
     /// are coming to a rest, to prevent them from slowly creeping down inclines.
     ///
     /// Note: This flag only has an effect if the PxMaterialFlag::eDISABLE_FRICTION bit is 0.
-    DisableStrongFriction = 2,
+    PxMaterialFlag_DisableStrongFriction = 2,
     /// Whether to use the patch friction model.
     /// This flag only has an effect if PxFrictionType::ePATCH friction model is used.
     ///
@@ -1342,16 +1342,16 @@ enum PxMaterialFlag : int32_t {
     ///
     /// This flag causes the normal force to be distributed between the friction anchors such that the total amount of friction applied does not
     /// exceed the analytical results.
-    ImprovedPatchFriction = 4,
+    PxMaterialFlag_ImprovedPatchFriction = 4,
     /// This flag has the effect of enabling an implicit spring model for the normal force computation.
-    CompliantContact = 8,
+    PxMaterialFlag_CompliantContact = 8,
 };
 
-enum PxMaterialFlags : uint16_t {
-    DisableFriction_Bit = 1 << 0,
-    DisableStrongFriction_Bit = 1 << 1,
-    ImprovedPatchFriction_Bit = 1 << 2,
-    CompliantContact_Bit = 1 << 3,
+enum physx_PxMaterialFlags : uint16_t {
+    PxMaterialFlags_DisableFriction = 1 << 0,
+    PxMaterialFlags_DisableStrongFriction = 1 << 1,
+    PxMaterialFlags_ImprovedPatchFriction = 1 << 2,
+    PxMaterialFlags_CompliantContact = 1 << 3,
 };
 
 /// Enumeration that determines the way in which two material properties will be combined to yield a friction or restitution coefficient for a collision.
@@ -1369,120 +1369,120 @@ enum PxMaterialFlags : uint16_t {
 /// eMAX
 ///
 /// The effective combine mode for the pair is maximum(material0.combineMode, material1.combineMode).
-enum PxCombineMode : int32_t {
+enum physx_PxCombineMode : int32_t {
     /// Average: (a + b)/2
-    Average = 0,
+    PxCombineMode_Average = 0,
     /// Minimum: minimum(a,b)
-    Min = 1,
+    PxCombineMode_Min = 1,
     /// Multiply: a*b
-    Multiply = 2,
+    PxCombineMode_Multiply = 2,
     /// Maximum: maximum(a,b)
-    Max = 3,
+    PxCombineMode_Max = 3,
     /// This is not a valid combine mode, it is a sentinel to denote the number of possible values. We assert that the variable's value is smaller than this.
-    NValues = 4,
+    PxCombineMode_NValues = 4,
     /// This is not a valid combine mode, it is to assure that the size of the enum type is big enough.
-    Pad32 = 2147483647,
+    PxCombineMode_Pad32 = 2147483647,
 };
 
 /// Identifies dirty particle buffers that need to be updated in the particle system.
 ///
 /// This flag can be used mark the device user buffers that are dirty and need to be written to the particle system.
-enum PxParticleBufferFlag : int32_t {
+enum physx_PxParticleBufferFlag : int32_t {
     /// No data specified
-    None = 0,
+    PxParticleBufferFlag_None = 0,
     /// Specifies the position (first 3 floats) and inverse mass (last float) data (array of PxVec4 * number of particles)
-    UpdatePosition = 1,
+    PxParticleBufferFlag_UpdatePosition = 1,
     /// Specifies the velocity (first 3 floats) data (array of PxVec4 * number of particles)
-    UpdateVelocity = 2,
+    PxParticleBufferFlag_UpdateVelocity = 2,
     /// Specifies the per-particle phase flag data (array of PxU32 * number of particles)
-    UpdatePhase = 4,
+    PxParticleBufferFlag_UpdatePhase = 4,
     /// Specifies the rest position (first 3 floats) data for cloth buffers
-    UpdateRestposition = 8,
+    PxParticleBufferFlag_UpdateRestposition = 8,
     /// Specifies the cloth buffer (see PxParticleClothBuffer)
-    UpdateCloth = 32,
+    PxParticleBufferFlag_UpdateCloth = 32,
     /// Specifies the rigid buffer (see PxParticleRigidBuffer)
-    UpdateRigid = 64,
+    PxParticleBufferFlag_UpdateRigid = 64,
     /// Specifies the diffuse particle parameter buffer (see PxDiffuseParticleParams)
-    UpdateDiffuseParam = 128,
+    PxParticleBufferFlag_UpdateDiffuseParam = 128,
     /// Specifies the attachments.
-    UpdateAttachments = 256,
-    All = 495,
+    PxParticleBufferFlag_UpdateAttachments = 256,
+    PxParticleBufferFlag_All = 495,
 };
 
-enum PxParticleBufferFlags : uint32_t {
-    UpdatePosition_Bit = 1 << 0,
-    UpdateVelocity_Bit = 1 << 1,
-    UpdatePhase_Bit = 1 << 2,
-    UpdateRestposition_Bit = 1 << 3,
-    UpdateCloth_Bit = 1 << 5,
-    UpdateRigid_Bit = 1 << 6,
-    UpdateDiffuseParam_Bit = 1 << 7,
-    UpdateAttachments_Bit = 1 << 8,
-    All_Bit = UpdatePosition | UpdateVelocity | UpdatePhase | UpdateRestposition | UpdateCloth | UpdateRigid | UpdateDiffuseParam | UpdateAttachments,
+enum physx_PxParticleBufferFlags : uint32_t {
+    PxParticleBufferFlags_UpdatePosition = 1 << 0,
+    PxParticleBufferFlags_UpdateVelocity = 1 << 1,
+    PxParticleBufferFlags_UpdatePhase = 1 << 2,
+    PxParticleBufferFlags_UpdateRestposition = 1 << 3,
+    PxParticleBufferFlags_UpdateCloth = 1 << 5,
+    PxParticleBufferFlags_UpdateRigid = 1 << 6,
+    PxParticleBufferFlags_UpdateDiffuseParam = 1 << 7,
+    PxParticleBufferFlags_UpdateAttachments = 1 << 8,
+    PxParticleBufferFlags_All = PxParticleBufferFlags_UpdatePosition | PxParticleBufferFlags_UpdateVelocity | PxParticleBufferFlags_UpdatePhase | PxParticleBufferFlags_UpdateRestposition | PxParticleBufferFlags_UpdateCloth | PxParticleBufferFlags_UpdateRigid | PxParticleBufferFlags_UpdateDiffuseParam | PxParticleBufferFlags_UpdateAttachments,
 };
 
 /// Identifies per-particle behavior for a PxParticleSystem.
 ///
 /// See [`PxParticleSystem::createPhase`]().
-enum PxParticlePhaseFlag : uint32_t {
+enum physx_PxParticlePhaseFlag : uint32_t {
     /// Bits [ 0, 19] represent the particle group for controlling collisions
-    ParticlePhaseGroupMask = 1048575,
+    PxParticlePhaseFlag_ParticlePhaseGroupMask = 1048575,
     /// Bits [20, 23] hold flags about how the particle behave
-    ParticlePhaseFlagsMask = 4293918720,
+    PxParticlePhaseFlag_ParticlePhaseFlagsMask = 4293918720,
     /// If set this particle will interact with particles of the same group
-    ParticlePhaseSelfCollide = 1048576,
+    PxParticlePhaseFlag_ParticlePhaseSelfCollide = 1048576,
     /// If set this particle will ignore collisions with particles closer than the radius in the rest pose, this flag should not be specified unless valid rest positions have been specified using setRestParticles()
-    ParticlePhaseSelfCollideFilter = 2097152,
+    PxParticlePhaseFlag_ParticlePhaseSelfCollideFilter = 2097152,
     /// If set this particle will generate fluid density constraints for its overlapping neighbors
-    ParticlePhaseFluid = 4194304,
+    PxParticlePhaseFlag_ParticlePhaseFluid = 4194304,
 };
 
-enum PxParticlePhaseFlags : uint32_t {
-    ParticlePhaseGroupMask_Bit = 0x000fffff,
-    ParticlePhaseFlagsMask_Bit = ParticlePhaseSelfCollide | ParticlePhaseSelfCollideFilter | ParticlePhaseFluid,
-    ParticlePhaseSelfCollide_Bit = 1 << 20,
-    ParticlePhaseSelfCollideFilter_Bit = 1 << 21,
-    ParticlePhaseFluid_Bit = 1 << 22,
+enum physx_PxParticlePhaseFlags : uint32_t {
+    PxParticlePhaseFlags_ParticlePhaseSelfCollide = 1 << 20,
+    PxParticlePhaseFlags_ParticlePhaseSelfCollideFilter = 1 << 21,
+    PxParticlePhaseFlags_ParticlePhaseFluid = 1 << 22,
+    PxParticlePhaseFlags_ParticlePhaseGroupMask = 0x000fffff,
+    PxParticlePhaseFlags_ParticlePhaseFlagsMask = PxParticlePhaseFlags_ParticlePhaseSelfCollide | PxParticlePhaseFlags_ParticlePhaseSelfCollideFilter | PxParticlePhaseFlags_ParticlePhaseFluid,
 };
 
 /// Specifies memory space for a PxBuffer instance.
-enum PxBufferType : int32_t {
-    Host = 0,
-    Device = 1,
+enum physx_PxBufferType : int32_t {
+    PxBufferType_Host = 0,
+    PxBufferType_Device = 1,
 };
 
 /// Filtering flags for scene queries.
-enum PxQueryFlag : int32_t {
+enum physx_PxQueryFlag : int32_t {
     /// Traverse static shapes
-    Static = 1,
+    PxQueryFlag_Static = 1,
     /// Traverse dynamic shapes
-    Dynamic = 2,
+    PxQueryFlag_Dynamic = 2,
     /// Run the pre-intersection-test filter (see [`PxQueryFilterCallback::preFilter`]())
-    Prefilter = 4,
+    PxQueryFlag_Prefilter = 4,
     /// Run the post-intersection-test filter (see [`PxQueryFilterCallback::postFilter`]())
-    Postfilter = 8,
+    PxQueryFlag_Postfilter = 8,
     /// Abort traversal as soon as any hit is found and return it via callback.block.
     /// Helps query performance. Both eTOUCH and eBLOCK hitTypes are considered hits with this flag.
-    AnyHit = 16,
+    PxQueryFlag_AnyHit = 16,
     /// All hits are reported as touching. Overrides eBLOCK returned from user filters with eTOUCH.
     /// This is also an optimization hint that may improve query performance.
-    NoBlock = 32,
+    PxQueryFlag_NoBlock = 32,
     /// Same as eBATCH_QUERY_LEGACY_BEHAVIOUR, more explicit name making it clearer that this can also be used
     /// with regular/non-batched queries if needed.
-    DisableHardcodedFilter = 64,
+    PxQueryFlag_DisableHardcodedFilter = 64,
     /// Reserved for internal use
-    Reserved = 32768,
+    PxQueryFlag_Reserved = 32768,
 };
 
-enum PxQueryFlags : uint16_t {
-    Static_Bit = 1 << 0,
-    Dynamic_Bit = 1 << 1,
-    Prefilter_Bit = 1 << 2,
-    Postfilter_Bit = 1 << 3,
-    AnyHit_Bit = 1 << 4,
-    NoBlock_Bit = 1 << 5,
-    DisableHardcodedFilter_Bit = 1 << 6,
-    Reserved_Bit = 1 << 15,
+enum physx_PxQueryFlags : uint16_t {
+    PxQueryFlags_Static = 1 << 0,
+    PxQueryFlags_Dynamic = 1 << 1,
+    PxQueryFlags_Prefilter = 1 << 2,
+    PxQueryFlags_Postfilter = 1 << 3,
+    PxQueryFlags_AnyHit = 1 << 4,
+    PxQueryFlags_NoBlock = 1 << 5,
+    PxQueryFlags_DisableHardcodedFilter = 1 << 6,
+    PxQueryFlags_Reserved = 1 << 15,
 };
 
 /// Classification of scene query hits (intersections).
@@ -1505,32 +1505,32 @@ enum PxQueryFlags : uint16_t {
 ///
 /// For raycast/sweep/overlap calls with zero touch buffer or PxHitCallback::nbTouches member,
 /// only the closest hit of type eBLOCK is returned. All eTOUCH hits are discarded.
-enum PxQueryHitType : int32_t {
+enum physx_PxQueryHitType : int32_t {
     /// the query should ignore this shape
-    None = 0,
+    PxQueryHitType_None = 0,
     /// a hit on the shape touches the intersection geometry of the query but does not block it
-    Touch = 1,
+    PxQueryHitType_Touch = 1,
     /// a hit on the shape blocks the query (does not block overlap queries)
-    Block = 2,
+    PxQueryHitType_Block = 2,
 };
 
 /// Collection of flags providing a mechanism to lock motion along/around a specific axis.
-enum PxRigidDynamicLockFlag : int32_t {
-    LockLinearX = 1,
-    LockLinearY = 2,
-    LockLinearZ = 4,
-    LockAngularX = 8,
-    LockAngularY = 16,
-    LockAngularZ = 32,
+enum physx_PxRigidDynamicLockFlag : int32_t {
+    PxRigidDynamicLockFlag_LockLinearX = 1,
+    PxRigidDynamicLockFlag_LockLinearY = 2,
+    PxRigidDynamicLockFlag_LockLinearZ = 4,
+    PxRigidDynamicLockFlag_LockAngularX = 8,
+    PxRigidDynamicLockFlag_LockAngularY = 16,
+    PxRigidDynamicLockFlag_LockAngularZ = 32,
 };
 
-enum PxRigidDynamicLockFlags : uint8_t {
-    LockLinearX_Bit = 1 << 0,
-    LockLinearY_Bit = 1 << 1,
-    LockLinearZ_Bit = 1 << 2,
-    LockAngularX_Bit = 1 << 3,
-    LockAngularY_Bit = 1 << 4,
-    LockAngularZ_Bit = 1 << 5,
+enum physx_PxRigidDynamicLockFlags : uint8_t {
+    PxRigidDynamicLockFlags_LockLinearX = 1 << 0,
+    PxRigidDynamicLockFlags_LockLinearY = 1 << 1,
+    PxRigidDynamicLockFlags_LockLinearZ = 1 << 2,
+    PxRigidDynamicLockFlags_LockAngularX = 1 << 3,
+    PxRigidDynamicLockFlags_LockAngularY = 1 << 4,
+    PxRigidDynamicLockFlags_LockAngularZ = 1 << 5,
 };
 
 /// Pruning structure used to accelerate scene queries.
@@ -1548,14 +1548,14 @@ enum PxRigidDynamicLockFlags : uint8_t {
 /// objects, if no static objects are added, moved or removed after the scene has been
 /// created. If there is no such guarantee (e.g. when streaming parts of the world in and out),
 /// then the dynamic version is a better choice even for static objects.
-enum PxPruningStructureType : int32_t {
+enum physx_PxPruningStructureType : int32_t {
     /// Using a simple data structure
-    None = 0,
+    PxPruningStructureType_None = 0,
     /// Using a dynamic AABB tree
-    DynamicAabbTree = 1,
+    PxPruningStructureType_DynamicAabbTree = 1,
     /// Using a static AABB tree
-    StaticAabbTree = 2,
-    Last = 3,
+    PxPruningStructureType_StaticAabbTree = 2,
+    PxPruningStructureType_Last = 3,
 };
 
 /// Secondary pruning structure used for newly added objects in dynamic trees.
@@ -1580,16 +1580,16 @@ enum PxPruningStructureType : int32_t {
 /// Query time is fast but insertion cost can be high.
 ///
 /// eBVH uses a PxBVH structure. This usually offers the best overall performance.
-enum PxDynamicTreeSecondaryPruner : int32_t {
+enum physx_PxDynamicTreeSecondaryPruner : int32_t {
     /// no secondary pruner, new objects aren't visible to SQ for a few frames
-    None = 0,
+    PxDynamicTreeSecondaryPruner_None = 0,
     /// bucket-based secondary pruner, faster updates, slower query time
-    Bucket = 1,
+    PxDynamicTreeSecondaryPruner_Bucket = 1,
     /// incremental-BVH secondary pruner, faster query time, slower updates
-    Incremental = 2,
+    PxDynamicTreeSecondaryPruner_Incremental = 2,
     /// PxBVH-based secondary pruner, good overall performance
-    Bvh = 3,
-    Last = 4,
+    PxDynamicTreeSecondaryPruner_Bvh = 3,
+    PxDynamicTreeSecondaryPruner_Last = 4,
 };
 
 /// Scene query update mode
@@ -1610,22 +1610,22 @@ enum PxDynamicTreeSecondaryPruner : int32_t {
 /// eBUILD_DISABLED_COMMIT_DISABLED no further scene query work is executed. The scene queries update needs to be called manually, see
 /// PxScene::sceneQueriesUpdate (see that function's doc for the equivalent PxSceneQuerySystem sequence). It is recommended to call
 /// PxScene::sceneQueriesUpdate right after fetchResults/finalizeUpdates as the pruning structures are not updated.
-enum PxSceneQueryUpdateMode : int32_t {
+enum physx_PxSceneQueryUpdateMode : int32_t {
     /// Both scene query build and commit are executed.
-    BuildEnabledCommitEnabled = 0,
+    PxSceneQueryUpdateMode_BuildEnabledCommitEnabled = 0,
     /// Scene query build only is executed.
-    BuildEnabledCommitDisabled = 1,
+    PxSceneQueryUpdateMode_BuildEnabledCommitDisabled = 1,
     /// No work is done, no update of scene queries
-    BuildDisabledCommitDisabled = 2,
+    PxSceneQueryUpdateMode_BuildDisabledCommitDisabled = 2,
 };
 
 /// Built-in enum for default PxScene pruners
 ///
 /// This is passed as a pruner index to various functions in the following APIs.
-enum PxScenePrunerIndex : uint32_t {
-    PxScenePrunerStatic = 0,
-    PxScenePrunerDynamic = 1,
-    PxSceneCompoundPruner = 4294967295,
+enum physx_PxScenePrunerIndex : uint32_t {
+    PxScenePrunerIndex_PxScenePrunerStatic = 0,
+    PxScenePrunerIndex_PxScenePrunerDynamic = 1,
+    PxScenePrunerIndex_PxSceneCompoundPruner = 4294967295,
 };
 
 /// Broad phase algorithm used in the simulation
@@ -1656,18 +1656,18 @@ enum PxScenePrunerIndex : uint32_t {
 /// performance bottleneck if there are a very large number of shapes roughly projecting to the same values
 /// on a given axis. If the scene has a very large number of shapes in an actor, e.g. a humanoid, it is recommended
 /// to use an aggregate to represent multi-shape or multi-body actors to minimize stress placed on the broad phase.
-enum PxBroadPhaseType : int32_t {
+enum physx_PxBroadPhaseType : int32_t {
     /// 3-axes sweep-and-prune
-    Sap = 0,
+    PxBroadPhaseType_Sap = 0,
     /// Multi box pruning
-    Mbp = 1,
+    PxBroadPhaseType_Mbp = 1,
     /// Automatic box pruning
-    Abp = 2,
+    PxBroadPhaseType_Abp = 2,
     /// Parallel automatic box pruning
-    Pabp = 3,
+    PxBroadPhaseType_Pabp = 3,
     /// GPU broad phase
-    Gpu = 4,
-    Last = 5,
+    PxBroadPhaseType_Gpu = 4,
+    PxBroadPhaseType_Last = 5,
 };
 
 /// Enum for selecting the friction algorithm used for simulation.
@@ -1683,15 +1683,15 @@ enum PxBroadPhaseType : int32_t {
 /// than patch friction for scenarios with many contact points.
 ///
 /// [`PxFrictionType::eFRICTION_COUNT`] is the total numer of friction models supported by the SDK.
-enum PxFrictionType : int32_t {
+enum physx_PxFrictionType : int32_t {
     /// Select default patch-friction model.
-    Patch = 0,
+    PxFrictionType_Patch = 0,
     /// Select one directional per-contact friction model.
-    OneDirectional = 1,
+    PxFrictionType_OneDirectional = 1,
     /// Select two directional per-contact friction model.
-    TwoDirectional = 2,
+    PxFrictionType_TwoDirectional = 2,
     /// The total number of friction models supported by the SDK.
-    FrictionCount = 3,
+    PxFrictionType_FrictionCount = 3,
 };
 
 /// Enum for selecting the type of solver used for the simulation.
@@ -1699,15 +1699,15 @@ enum PxFrictionType : int32_t {
 /// [`PxSolverType::ePGS`] selects the iterative sequential impulse solver. This is the same kind of solver used in PhysX 3.4 and earlier releases.
 ///
 /// [`PxSolverType::eTGS`] selects a non linear iterative solver. This kind of solver can lead to improved convergence and handle large mass ratios, long chains and jointed systems better. It is slightly more expensive than the default solver and can introduce more energy to correct joint and contact errors.
-enum PxSolverType : int32_t {
+enum physx_PxSolverType : int32_t {
     /// Projected Gauss-Seidel iterative solver
-    Pgs = 0,
+    PxSolverType_Pgs = 0,
     /// Default Temporal Gauss-Seidel solver
-    Tgs = 1,
+    PxSolverType_Tgs = 1,
 };
 
 /// flags for configuring properties of the scene
-enum PxSceneFlag : int32_t {
+enum physx_PxSceneFlag : int32_t {
     /// Enable Active Actors Notification.
     ///
     /// This flag enables the Active Actor Notification feature for a scene.  This
@@ -1719,7 +1719,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// False
-    EnableActiveActors = 1,
+    PxSceneFlag_EnableActiveActors = 1,
     /// Enables a second broad phase check after integration that makes it possible to prevent objects from tunneling through eachother.
     ///
     /// PxPairFlag::eDETECT_CCD_CONTACT requires this flag to be specified.
@@ -1730,7 +1730,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// False
-    EnableCcd = 2,
+    PxSceneFlag_EnableCcd = 2,
     /// Enables a simplified swept integration strategy, which sacrifices some accuracy for improved performance.
     ///
     /// This simplified swept integration approach makes certain assumptions about the motion of objects that are not made when using a full swept integration.
@@ -1749,14 +1749,14 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// False
-    DisableCcdResweep = 4,
+    PxSceneFlag_DisableCcdResweep = 4,
     /// Enable GJK-based distance collision detection system.
     ///
     /// This flag is not mutable, and must be set in PxSceneDesc at scene creation.
     ///
     /// Default:
     /// true
-    EnablePcm = 64,
+    PxSceneFlag_EnablePcm = 64,
     /// Disable contact report buffer resize. Once the contact buffer is full, the rest of the contact reports will
     /// not be buffered and sent.
     ///
@@ -1764,7 +1764,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// false
-    DisableContactReportBufferResize = 128,
+    PxSceneFlag_DisableContactReportBufferResize = 128,
     /// Disable contact cache.
     ///
     /// Contact caches are used internally to provide faster contact generation. You can disable all contact caches
@@ -1774,7 +1774,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// false
-    DisableContactCache = 256,
+    PxSceneFlag_DisableContactCache = 256,
     /// Require scene-level locking
     ///
     /// When set to true this requires that threads accessing the PxScene use the
@@ -1784,20 +1784,20 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// false
-    RequireRwLock = 512,
+    PxSceneFlag_RequireRwLock = 512,
     /// Enables additional stabilization pass in solver
     ///
     /// When set to true, this enables additional stabilization processing to improve that stability of complex interactions between large numbers of bodies.
     ///
     /// Note that this flag is not mutable and must be set in PxSceneDesc at scene creation. Also, this is an experimental feature which does result in some loss of momentum.
-    EnableStabilization = 1024,
+    PxSceneFlag_EnableStabilization = 1024,
     /// Enables average points in contact manifolds
     ///
     /// When set to true, this enables additional contacts to be generated per manifold to represent the average point in a manifold. This can stabilize stacking when only a small
     /// number of solver iterations is used.
     ///
     /// Note that this flag is not mutable and must be set in PxSceneDesc at scene creation.
-    EnableAveragePoint = 2048,
+    PxSceneFlag_EnableAveragePoint = 2048,
     /// Do not report kinematics in list of active actors.
     ///
     /// Since the target pose for kinematics is set by the user, an application can track the activity state directly and use
@@ -1807,7 +1807,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// false
-    ExcludeKinematicsFromActiveActors = 4096,
+    PxSceneFlag_ExcludeKinematicsFromActiveActors = 4096,
     /// Do not report kinematics in list of active actors.
     ///
     /// Since the target pose for kinematics is set by the user, an application can track the activity state directly and use
@@ -1817,7 +1817,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default:
     /// false
-    EnableGpuDynamics = 8192,
+    PxSceneFlag_EnableGpuDynamics = 8192,
     /// Provides improved determinism at the expense of performance.
     ///
     /// By default, PhysX provides limited determinism guarantees. Specifically, PhysX guarantees that the exact scene (same actors created in the same order) and simulated using the same
@@ -1838,7 +1838,7 @@ enum PxSceneFlag : int32_t {
     ///
     /// Default
     /// false
-    EnableEnhancedDeterminism = 16384,
+    PxSceneFlag_EnableEnhancedDeterminism = 16384,
     /// Controls processing friction in all solver iterations
     ///
     /// By default, PhysX processes friction only in the final 3 position iterations, and all velocity
@@ -1851,7 +1851,7 @@ enum PxSceneFlag : int32_t {
     /// a robotic manipulator, better results can be achieved by enabling friction in all solver iterations.
     ///
     /// This flag only has effect with the default solver. The TGS solver always performs friction per-iteration.
-    EnableFrictionEveryIteration = 32768,
+    PxSceneFlag_EnableFrictionEveryIteration = 32768,
     /// Controls processing friction in all solver iterations
     ///
     /// By default, PhysX processes friction only in the final 3 position iterations, and all velocity
@@ -1864,7 +1864,7 @@ enum PxSceneFlag : int32_t {
     /// a robotic manipulator, better results can be achieved by enabling friction in all solver iterations.
     ///
     /// This flag only has effect with the default solver. The TGS solver always performs friction per-iteration.
-    SuppressReadback = 65536,
+    PxSceneFlag_SuppressReadback = 65536,
     /// Controls processing friction in all solver iterations
     ///
     /// By default, PhysX processes friction only in the final 3 position iterations, and all velocity
@@ -1877,7 +1877,7 @@ enum PxSceneFlag : int32_t {
     /// a robotic manipulator, better results can be achieved by enabling friction in all solver iterations.
     ///
     /// This flag only has effect with the default solver. The TGS solver always performs friction per-iteration.
-    ForceReadback = 131072,
+    PxSceneFlag_ForceReadback = 131072,
     /// Controls processing friction in all solver iterations
     ///
     /// By default, PhysX processes friction only in the final 3 position iterations, and all velocity
@@ -1890,33 +1890,33 @@ enum PxSceneFlag : int32_t {
     /// a robotic manipulator, better results can be achieved by enabling friction in all solver iterations.
     ///
     /// This flag only has effect with the default solver. The TGS solver always performs friction per-iteration.
-    MutableFlags = 69633,
+    PxSceneFlag_MutableFlags = 69633,
 };
 
-enum PxSceneFlags : uint32_t {
-    EnableActiveActors_Bit = 1 << 0,
-    EnableCcd_Bit = 1 << 1,
-    DisableCcdResweep_Bit = 1 << 2,
-    EnablePcm_Bit = 1 << 6,
-    DisableContactReportBufferResize_Bit = 1 << 7,
-    DisableContactCache_Bit = 1 << 8,
-    RequireRwLock_Bit = 1 << 9,
-    EnableStabilization_Bit = 1 << 10,
-    EnableAveragePoint_Bit = 1 << 11,
-    ExcludeKinematicsFromActiveActors_Bit = 1 << 12,
-    EnableGpuDynamics_Bit = 1 << 13,
-    EnableEnhancedDeterminism_Bit = 1 << 14,
-    EnableFrictionEveryIteration_Bit = 1 << 15,
-    SuppressReadback_Bit = 1 << 16,
-    ForceReadback_Bit = 1 << 17,
-    MutableFlags_Bit = EnableActiveActors | ExcludeKinematicsFromActiveActors | SuppressReadback,
+enum physx_PxSceneFlags : uint32_t {
+    PxSceneFlags_EnableActiveActors = 1 << 0,
+    PxSceneFlags_EnableCcd = 1 << 1,
+    PxSceneFlags_DisableCcdResweep = 1 << 2,
+    PxSceneFlags_EnablePcm = 1 << 6,
+    PxSceneFlags_DisableContactReportBufferResize = 1 << 7,
+    PxSceneFlags_DisableContactCache = 1 << 8,
+    PxSceneFlags_RequireRwLock = 1 << 9,
+    PxSceneFlags_EnableStabilization = 1 << 10,
+    PxSceneFlags_EnableAveragePoint = 1 << 11,
+    PxSceneFlags_ExcludeKinematicsFromActiveActors = 1 << 12,
+    PxSceneFlags_EnableGpuDynamics = 1 << 13,
+    PxSceneFlags_EnableEnhancedDeterminism = 1 << 14,
+    PxSceneFlags_EnableFrictionEveryIteration = 1 << 15,
+    PxSceneFlags_SuppressReadback = 1 << 16,
+    PxSceneFlags_ForceReadback = 1 << 17,
+    PxSceneFlags_MutableFlags = PxSceneFlags_EnableActiveActors | PxSceneFlags_ExcludeKinematicsFromActiveActors | PxSceneFlags_SuppressReadback,
 };
 
 /// Debug visualization parameters.
 ///
 /// [`PxVisualizationParameter::eSCALE`] is the master switch for enabling visualization, please read the corresponding documentation
 /// for further details.
-enum PxVisualizationParameter : int32_t {
+enum physx_PxVisualizationParameter : int32_t {
     /// This overall visualization scale gets multiplied with the individual scales. Setting to zero ignores all visualizations. Default is 0.
     ///
     /// The below settings permit the debug visualization of various simulation properties.
@@ -1944,421 +1944,421 @@ enum PxVisualizationParameter : int32_t {
     /// [0, PX_MAX_F32)
     /// Default:
     /// 0
-    Scale = 0,
+    PxVisualizationParameter_Scale = 0,
     /// Visualize the world axes.
-    WorldAxes = 1,
+    PxVisualizationParameter_WorldAxes = 1,
     /// Visualize a bodies axes.
-    BodyAxes = 2,
+    PxVisualizationParameter_BodyAxes = 2,
     /// Visualize a body's mass axes.
     ///
     /// This visualization is also useful for visualizing the sleep state of bodies. Sleeping bodies are drawn in
     /// black, while awake bodies are drawn in white. If the body is sleeping and part of a sleeping group, it is
     /// drawn in red.
-    BodyMassAxes = 3,
+    PxVisualizationParameter_BodyMassAxes = 3,
     /// Visualize the bodies linear velocity.
-    BodyLinVelocity = 4,
+    PxVisualizationParameter_BodyLinVelocity = 4,
     /// Visualize the bodies angular velocity.
-    BodyAngVelocity = 5,
+    PxVisualizationParameter_BodyAngVelocity = 5,
     /// Visualize contact points. Will enable contact information.
-    ContactPoint = 6,
+    PxVisualizationParameter_ContactPoint = 6,
     /// Visualize contact normals. Will enable contact information.
-    ContactNormal = 7,
+    PxVisualizationParameter_ContactNormal = 7,
     /// Visualize contact errors. Will enable contact information.
-    ContactError = 8,
+    PxVisualizationParameter_ContactError = 8,
     /// Visualize Contact forces. Will enable contact information.
-    ContactForce = 9,
+    PxVisualizationParameter_ContactForce = 9,
     /// Visualize actor axes.
-    ActorAxes = 10,
+    PxVisualizationParameter_ActorAxes = 10,
     /// Visualize bounds (AABBs in world space)
-    CollisionAabbs = 11,
+    PxVisualizationParameter_CollisionAabbs = 11,
     /// Shape visualization
-    CollisionShapes = 12,
+    PxVisualizationParameter_CollisionShapes = 12,
     /// Shape axis visualization
-    CollisionAxes = 13,
+    PxVisualizationParameter_CollisionAxes = 13,
     /// Compound visualization (compound AABBs in world space)
-    CollisionCompounds = 14,
+    PxVisualizationParameter_CollisionCompounds = 14,
     /// Mesh
     /// &
     /// convex face normals
-    CollisionFnormals = 15,
+    PxVisualizationParameter_CollisionFnormals = 15,
     /// Active edges for meshes
-    CollisionEdges = 16,
+    PxVisualizationParameter_CollisionEdges = 16,
     /// Static pruning structures
-    CollisionStatic = 17,
+    PxVisualizationParameter_CollisionStatic = 17,
     /// Dynamic pruning structures
-    CollisionDynamic = 18,
+    PxVisualizationParameter_CollisionDynamic = 18,
     /// Joint local axes
-    JointLocalFrames = 19,
+    PxVisualizationParameter_JointLocalFrames = 19,
     /// Joint limits
-    JointLimits = 20,
+    PxVisualizationParameter_JointLimits = 20,
     /// Visualize culling box
-    CullBox = 21,
+    PxVisualizationParameter_CullBox = 21,
     /// MBP regions
-    MbpRegions = 22,
+    PxVisualizationParameter_MbpRegions = 22,
     /// Renders the simulation mesh instead of the collision mesh (only available for tetmeshes)
-    SimulationMesh = 23,
+    PxVisualizationParameter_SimulationMesh = 23,
     /// Renders the SDF of a mesh instead of the collision mesh (only available for triangle meshes with SDFs)
-    Sdf = 24,
+    PxVisualizationParameter_Sdf = 24,
     /// This is not a parameter, it just records the current number of parameters (as maximum(PxVisualizationParameter)+1) for use in loops.
-    NumValues = 25,
+    PxVisualizationParameter_NumValues = 25,
     /// This is not a parameter, it just records the current number of parameters (as maximum(PxVisualizationParameter)+1) for use in loops.
-    ForceDword = 2147483647,
+    PxVisualizationParameter_ForceDword = 2147483647,
 };
 
 /// Different types of rigid body collision pair statistics.
-enum RbPairStatsType : int32_t {
+enum physx_RbPairStatsType : int32_t {
     /// Shape pairs processed as discrete contact pairs for the current simulation step.
-    DiscreteContactPairs = 0,
+    RbPairStatsType_DiscreteContactPairs = 0,
     /// Shape pairs processed as swept integration pairs for the current simulation step.
     ///
     /// Counts the pairs for which special CCD (continuous collision detection) work was actually done and NOT the number of pairs which were configured for CCD.
     /// Furthermore, there can be multiple CCD passes and all processed pairs of all passes are summed up, hence the number can be larger than the amount of pairs which have been configured for CCD.
-    CcdPairs = 1,
+    RbPairStatsType_CcdPairs = 1,
     /// Shape pairs processed with user contact modification enabled for the current simulation step.
-    ModifiedContactPairs = 2,
+    RbPairStatsType_ModifiedContactPairs = 2,
     /// Trigger shape pairs processed for the current simulation step.
-    TriggerPairs = 3,
+    RbPairStatsType_TriggerPairs = 3,
 };
 
 /// These flags determine what data is read or written to the gpu softbody.
-enum PxSoftBodyDataFlag : int32_t {
+enum physx_PxSoftBodyDataFlag : int32_t {
     /// The collision mesh tetrahedron indices (quadruples of int32)
-    TetIndices = 0,
+    PxSoftBodyDataFlag_TetIndices = 0,
     /// The collision mesh cauchy stress tensors (float 3x3 matrices)
-    TetStress = 1,
+    PxSoftBodyDataFlag_TetStress = 1,
     /// The collision mesh tetrahedron von Mises stress (float scalar)
-    TetStresscoeff = 2,
+    PxSoftBodyDataFlag_TetStresscoeff = 2,
     /// The collision mesh tetrahedron rest poses (float 3x3 matrices)
-    TetRestPoses = 3,
+    PxSoftBodyDataFlag_TetRestPoses = 3,
     /// The collision mesh tetrahedron orientations (quaternions, quadruples of float)
-    TetRotations = 4,
+    PxSoftBodyDataFlag_TetRotations = 4,
     /// The collision mesh vertex positions and their inverted mass in the 4th component (quadruples of float)
-    TetPositionInvMass = 5,
+    PxSoftBodyDataFlag_TetPositionInvMass = 5,
     /// The simulation mesh tetrahedron indices (quadruples of int32)
-    SimTetIndices = 6,
+    PxSoftBodyDataFlag_SimTetIndices = 6,
     /// The simulation mesh vertex velocities and their inverted mass in the 4th component (quadruples of float)
-    SimVelocityInvMass = 7,
+    PxSoftBodyDataFlag_SimVelocityInvMass = 7,
     /// The simulation mesh vertex positions and their inverted mass in the 4th component (quadruples of float)
-    SimPositionInvMass = 8,
+    PxSoftBodyDataFlag_SimPositionInvMass = 8,
     /// The simulation mesh kinematic target positions
-    SimKinematicTarget = 9,
+    PxSoftBodyDataFlag_SimKinematicTarget = 9,
 };
 
 /// Identifies input and output buffers for PxHairSystem
-enum PxHairSystemData : int32_t {
+enum physx_PxHairSystemData : int32_t {
     /// No data specified
-    None = 0,
+    PxHairSystemData_None = 0,
     /// Specifies the position (first 3 floats) and inverse mass (last float) data (array of PxVec4 * max number of vertices)
-    PositionInvmass = 1,
+    PxHairSystemData_PositionInvmass = 1,
     /// Specifies the velocity (first 3 floats) data (array of PxVec4 * max number of vertices)
-    Velocity = 2,
+    PxHairSystemData_Velocity = 2,
     /// Specifies everything
-    All = 3,
+    PxHairSystemData_All = 3,
 };
 
-enum PxHairSystemDataFlags : uint32_t {
-    PositionInvmass_Bit = 1 << 0,
-    Velocity_Bit = 1 << 1,
-    All_Bit = PositionInvmass | Velocity,
+enum physx_PxHairSystemDataFlags : uint32_t {
+    PxHairSystemDataFlags_PositionInvmass = 1 << 0,
+    PxHairSystemDataFlags_Velocity = 1 << 1,
+    PxHairSystemDataFlags_All = PxHairSystemDataFlags_PositionInvmass | PxHairSystemDataFlags_Velocity,
 };
 
 /// Binary settings for hair system simulation
-enum PxHairSystemFlag : int32_t {
+enum physx_PxHairSystemFlag : int32_t {
     /// Determines if self-collision between hair vertices is ignored
-    DisableSelfCollision = 1,
+    PxHairSystemFlag_DisableSelfCollision = 1,
     /// Determines if collision between hair and external bodies is ignored
-    DisableExternalCollision = 2,
+    PxHairSystemFlag_DisableExternalCollision = 2,
     /// Determines if attachment constraint is also felt by body to which the hair is attached
-    DisableTwosidedAttachment = 4,
+    PxHairSystemFlag_DisableTwosidedAttachment = 4,
 };
 
-enum PxHairSystemFlags : uint32_t {
-    DisableSelfCollision_Bit = 1 << 0,
-    DisableExternalCollision_Bit = 1 << 1,
-    DisableTwosidedAttachment_Bit = 1 << 2,
+enum physx_PxHairSystemFlags : uint32_t {
+    PxHairSystemFlags_DisableSelfCollision = 1 << 0,
+    PxHairSystemFlags_DisableExternalCollision = 1 << 1,
+    PxHairSystemFlags_DisableTwosidedAttachment = 1 << 2,
 };
 
 /// Identifies each type of information for retrieving from actor.
-enum PxActorCacheFlag : int32_t {
-    ActorData = 1,
-    Force = 4,
-    Torque = 8,
+enum physx_PxActorCacheFlag : int32_t {
+    PxActorCacheFlag_ActorData = 1,
+    PxActorCacheFlag_Force = 4,
+    PxActorCacheFlag_Torque = 8,
 };
 
-enum PxActorCacheFlags : uint16_t {
-    ActorData_Bit = 1 << 0,
-    Force_Bit = 1 << 2,
-    Torque_Bit = 1 << 3,
+enum physx_PxActorCacheFlags : uint16_t {
+    PxActorCacheFlags_ActorData = 1 << 0,
+    PxActorCacheFlags_Force = 1 << 2,
+    PxActorCacheFlags_Torque = 1 << 3,
 };
 
 /// PVD scene Flags. They are disabled by default, and only works if PxPvdInstrumentationFlag::eDEBUG is set.
-enum PxPvdSceneFlag : int32_t {
-    TransmitContacts = 1,
+enum physx_PxPvdSceneFlag : int32_t {
+    PxPvdSceneFlag_TransmitContacts = 1,
     /// Transmits contact stream to PVD.
-    TransmitScenequeries = 2,
+    PxPvdSceneFlag_TransmitScenequeries = 2,
     /// Transmits scene query stream to PVD.
-    TransmitConstraints = 4,
+    PxPvdSceneFlag_TransmitConstraints = 4,
 };
 
-enum PxPvdSceneFlags : uint8_t {
-    TransmitContacts_Bit = 1 << 0,
-    TransmitScenequeries_Bit = 1 << 1,
-    TransmitConstraints_Bit = 1 << 2,
+enum physx_PxPvdSceneFlags : uint8_t {
+    PxPvdSceneFlags_TransmitContacts = 1 << 0,
+    PxPvdSceneFlags_TransmitScenequeries = 1 << 1,
+    PxPvdSceneFlags_TransmitConstraints = 1 << 2,
 };
 
 /// Identifies each type of actor for retrieving actors from a scene.
 ///
 /// [`PxArticulationLink`] objects are not supported. Use the #PxArticulationReducedCoordinate object to retrieve all its links.
-enum PxActorTypeFlag : int32_t {
+enum physx_PxActorTypeFlag : int32_t {
     /// A static rigid body
-    RigidStatic = 1,
+    PxActorTypeFlag_RigidStatic = 1,
     /// A dynamic rigid body
-    RigidDynamic = 2,
+    PxActorTypeFlag_RigidDynamic = 2,
 };
 
-enum PxActorTypeFlags : uint16_t {
-    RigidStatic_Bit = 1 << 0,
-    RigidDynamic_Bit = 1 << 1,
+enum physx_PxActorTypeFlags : uint16_t {
+    PxActorTypeFlags_RigidStatic = 1 << 0,
+    PxActorTypeFlags_RigidDynamic = 1 << 1,
 };
 
 /// Extra data item types for contact pairs.
-enum PxContactPairExtraDataType : int32_t {
+enum physx_PxContactPairExtraDataType : int32_t {
     /// see [`PxContactPairVelocity`]
-    PreSolverVelocity = 0,
+    PxContactPairExtraDataType_PreSolverVelocity = 0,
     /// see [`PxContactPairVelocity`]
-    PostSolverVelocity = 1,
+    PxContactPairExtraDataType_PostSolverVelocity = 1,
     /// see [`PxContactPairPose`]
-    ContactEventPose = 2,
+    PxContactPairExtraDataType_ContactEventPose = 2,
     /// see [`PxContactPairIndex`]
-    ContactPairIndex = 3,
+    PxContactPairExtraDataType_ContactPairIndex = 3,
 };
 
 /// Collection of flags providing information on contact report pairs.
-enum PxContactPairHeaderFlag : int32_t {
+enum physx_PxContactPairHeaderFlag : int32_t {
     /// The actor with index 0 has been removed from the scene.
-    RemovedActor0 = 1,
+    PxContactPairHeaderFlag_RemovedActor0 = 1,
     /// The actor with index 1 has been removed from the scene.
-    RemovedActor1 = 2,
+    PxContactPairHeaderFlag_RemovedActor1 = 2,
 };
 
-enum PxContactPairHeaderFlags : uint16_t {
-    RemovedActor0_Bit = 1 << 0,
-    RemovedActor1_Bit = 1 << 1,
+enum physx_PxContactPairHeaderFlags : uint16_t {
+    PxContactPairHeaderFlags_RemovedActor0 = 1 << 0,
+    PxContactPairHeaderFlags_RemovedActor1 = 1 << 1,
 };
 
 /// Collection of flags providing information on contact report pairs.
-enum PxContactPairFlag : int32_t {
+enum physx_PxContactPairFlag : int32_t {
     /// The shape with index 0 has been removed from the actor/scene.
-    RemovedShape0 = 1,
+    PxContactPairFlag_RemovedShape0 = 1,
     /// The shape with index 1 has been removed from the actor/scene.
-    RemovedShape1 = 2,
+    PxContactPairFlag_RemovedShape1 = 2,
     /// First actor pair contact.
     ///
     /// The provided shape pair marks the first contact between the two actors, no other shape pair has been touching prior to the current simulation frame.
     ///
     /// : This info is only available if [`PxPairFlag::eNOTIFY_TOUCH_FOUND`] has been declared for the pair.
-    ActorPairHasFirstTouch = 4,
+    PxContactPairFlag_ActorPairHasFirstTouch = 4,
     /// All contact between the actor pair was lost.
     ///
     /// All contact between the two actors has been lost, no shape pairs remain touching after the current simulation frame.
-    ActorPairLostTouch = 8,
+    PxContactPairFlag_ActorPairLostTouch = 8,
     /// Internal flag, used by [`PxContactPair`].extractContacts()
     ///
     /// The applied contact impulses are provided for every contact point.
     /// This is the case if [`PxPairFlag::eSOLVE_CONTACT`] has been set for the pair.
-    InternalHasImpulses = 16,
+    PxContactPairFlag_InternalHasImpulses = 16,
     /// Internal flag, used by [`PxContactPair`].extractContacts()
     ///
     /// The provided contact point information is flipped with regards to the shapes of the contact pair. This mainly concerns the order of the internal triangle indices.
-    InternalContactsAreFlipped = 32,
+    PxContactPairFlag_InternalContactsAreFlipped = 32,
 };
 
-enum PxContactPairFlags : uint16_t {
-    RemovedShape0_Bit = 1 << 0,
-    RemovedShape1_Bit = 1 << 1,
-    ActorPairHasFirstTouch_Bit = 1 << 2,
-    ActorPairLostTouch_Bit = 1 << 3,
-    InternalHasImpulses_Bit = 1 << 4,
-    InternalContactsAreFlipped_Bit = 1 << 5,
+enum physx_PxContactPairFlags : uint16_t {
+    PxContactPairFlags_RemovedShape0 = 1 << 0,
+    PxContactPairFlags_RemovedShape1 = 1 << 1,
+    PxContactPairFlags_ActorPairHasFirstTouch = 1 << 2,
+    PxContactPairFlags_ActorPairLostTouch = 1 << 3,
+    PxContactPairFlags_InternalHasImpulses = 1 << 4,
+    PxContactPairFlags_InternalContactsAreFlipped = 1 << 5,
 };
 
 /// Collection of flags providing information on trigger report pairs.
-enum PxTriggerPairFlag : int32_t {
+enum physx_PxTriggerPairFlag : int32_t {
     /// The trigger shape has been removed from the actor/scene.
-    RemovedShapeTrigger = 1,
+    PxTriggerPairFlag_RemovedShapeTrigger = 1,
     /// The shape causing the trigger event has been removed from the actor/scene.
-    RemovedShapeOther = 2,
+    PxTriggerPairFlag_RemovedShapeOther = 2,
     /// For internal use only.
-    NextFree = 4,
+    PxTriggerPairFlag_NextFree = 4,
 };
 
-enum PxTriggerPairFlags : uint8_t {
-    RemovedShapeTrigger_Bit = 1 << 0,
-    RemovedShapeOther_Bit = 1 << 1,
-    NextFree_Bit = 1 << 2,
+enum physx_PxTriggerPairFlags : uint8_t {
+    PxTriggerPairFlags_RemovedShapeTrigger = 1 << 0,
+    PxTriggerPairFlags_RemovedShapeOther = 1 << 1,
+    PxTriggerPairFlags_NextFree = 1 << 2,
 };
 
 /// Identifies input and output buffers for PxSoftBody.
-enum PxSoftBodyData : int32_t {
-    None = 0,
+enum physx_PxSoftBodyData : int32_t {
+    PxSoftBodyData_None = 0,
     /// Flag to request access to the collision mesh's positions; read only
-    PositionInvmass = 1,
+    PxSoftBodyData_PositionInvmass = 1,
     /// Flag to request access to the simulation mesh's positions and inverse masses
-    SimPositionInvmass = 4,
+    PxSoftBodyData_SimPositionInvmass = 4,
     /// Flag to request access to the simulation mesh's velocities and inverse masses
-    SimVelocity = 8,
+    PxSoftBodyData_SimVelocity = 8,
     /// Flag to request access to the simulation mesh's kinematic target position
-    SimKinematicTarget = 16,
-    All = 29,
+    PxSoftBodyData_SimKinematicTarget = 16,
+    PxSoftBodyData_All = 29,
 };
 
-enum PxSoftBodyDataFlags : uint32_t {
-    PositionInvmass_Bit = 1 << 0,
-    SimPositionInvmass_Bit = 1 << 2,
-    SimVelocity_Bit = 1 << 3,
-    SimKinematicTarget_Bit = 1 << 4,
-    All_Bit = PositionInvmass | SimPositionInvmass | SimVelocity | SimKinematicTarget,
+enum physx_PxSoftBodyDataFlags : uint32_t {
+    PxSoftBodyDataFlags_PositionInvmass = 1 << 0,
+    PxSoftBodyDataFlags_SimPositionInvmass = 1 << 2,
+    PxSoftBodyDataFlags_SimVelocity = 1 << 3,
+    PxSoftBodyDataFlags_SimKinematicTarget = 1 << 4,
+    PxSoftBodyDataFlags_All = PxSoftBodyDataFlags_PositionInvmass | PxSoftBodyDataFlags_SimPositionInvmass | PxSoftBodyDataFlags_SimVelocity | PxSoftBodyDataFlags_SimKinematicTarget,
 };
 
 /// Flags to enable or disable special modes of a SoftBody
-enum PxSoftBodyFlag : int32_t {
+enum physx_PxSoftBodyFlag : int32_t {
     /// Determines if self collision will be detected and resolved
-    DisableSelfCollision = 1,
+    PxSoftBodyFlag_DisableSelfCollision = 1,
     /// Enables computation of a Cauchy stress tensor for every tetrahedron in the simulation mesh. The tensors can be accessed through the softbody direct API
-    ComputeStressTensor = 2,
+    PxSoftBodyFlag_ComputeStressTensor = 2,
     /// Enables support for continuous collision detection
-    EnableCcd = 4,
+    PxSoftBodyFlag_EnableCcd = 4,
     /// Enable debug rendering to display the simulation mesh
-    DisplaySimMesh = 8,
+    PxSoftBodyFlag_DisplaySimMesh = 8,
     /// Enables support for kinematic motion of the collision and simulation mesh.
-    Kinematic = 16,
+    PxSoftBodyFlag_Kinematic = 16,
     /// Enables partially kinematic motion of the collisios and simulation mesh.
-    PartiallyKinematic = 32,
+    PxSoftBodyFlag_PartiallyKinematic = 32,
 };
 
-enum PxSoftBodyFlags : uint32_t {
-    DisableSelfCollision_Bit = 1 << 0,
-    ComputeStressTensor_Bit = 1 << 1,
-    EnableCcd_Bit = 1 << 2,
-    DisplaySimMesh_Bit = 1 << 3,
-    Kinematic_Bit = 1 << 4,
-    PartiallyKinematic_Bit = 1 << 5,
+enum physx_PxSoftBodyFlags : uint32_t {
+    PxSoftBodyFlags_DisableSelfCollision = 1 << 0,
+    PxSoftBodyFlags_ComputeStressTensor = 1 << 1,
+    PxSoftBodyFlags_EnableCcd = 1 << 2,
+    PxSoftBodyFlags_DisplaySimMesh = 1 << 3,
+    PxSoftBodyFlags_Kinematic = 1 << 4,
+    PxSoftBodyFlags_PartiallyKinematic = 1 << 5,
 };
 
 /// The type of controller, eg box, sphere or capsule.
-enum PxControllerShapeType : int32_t {
+enum physx_PxControllerShapeType : int32_t {
     /// A box controller.
-    Box = 0,
+    PxControllerShapeType_Box = 0,
     /// A capsule controller
-    Capsule = 1,
+    PxControllerShapeType_Capsule = 1,
     /// A capsule controller
-    ForceDword = 2147483647,
+    PxControllerShapeType_ForceDword = 2147483647,
 };
 
 /// specifies how a CCT interacts with non-walkable parts.
 ///
 /// This is only used when slopeLimit is non zero. It is currently enabled for static actors only, and not supported for spheres or capsules.
-enum PxControllerNonWalkableMode : int32_t {
+enum physx_PxControllerNonWalkableMode : int32_t {
     /// Stops character from climbing up non-walkable slopes, but doesn't move it otherwise
-    PreventClimbing = 0,
+    PxControllerNonWalkableMode_PreventClimbing = 0,
     /// Stops character from climbing up non-walkable slopes, and forces it to slide down those slopes
-    PreventClimbingAndForceSliding = 1,
+    PxControllerNonWalkableMode_PreventClimbingAndForceSliding = 1,
 };
 
 /// specifies which sides a character is colliding with.
-enum PxControllerCollisionFlag : int32_t {
+enum physx_PxControllerCollisionFlag : int32_t {
     /// Character is colliding to the sides.
-    CollisionSides = 1,
+    PxControllerCollisionFlag_CollisionSides = 1,
     /// Character has collision above.
-    CollisionUp = 2,
+    PxControllerCollisionFlag_CollisionUp = 2,
     /// Character has collision below.
-    CollisionDown = 4,
+    PxControllerCollisionFlag_CollisionDown = 4,
 };
 
-enum PxControllerCollisionFlags : uint8_t {
-    CollisionSides_Bit = 1 << 0,
-    CollisionUp_Bit = 1 << 1,
-    CollisionDown_Bit = 1 << 2,
+enum physx_PxControllerCollisionFlags : uint8_t {
+    PxControllerCollisionFlags_CollisionSides = 1 << 0,
+    PxControllerCollisionFlags_CollisionUp = 1 << 1,
+    PxControllerCollisionFlags_CollisionDown = 1 << 2,
 };
 
-enum PxCapsuleClimbingMode : int32_t {
+enum physx_PxCapsuleClimbingMode : int32_t {
     /// Standard mode, let the capsule climb over surfaces according to impact normal
-    Easy = 0,
+    PxCapsuleClimbingMode_Easy = 0,
     /// Constrained mode, try to limit climbing according to the step offset
-    Constrained = 1,
-    Last = 2,
+    PxCapsuleClimbingMode_Constrained = 1,
+    PxCapsuleClimbingMode_Last = 2,
 };
 
 /// specifies controller behavior
-enum PxControllerBehaviorFlag : int32_t {
+enum physx_PxControllerBehaviorFlag : int32_t {
     /// Controller can ride on touched object (i.e. when this touched object is moving horizontally).
     ///
     /// The CCT vs. CCT case is not supported.
-    CctCanRideOnObject = 1,
+    PxControllerBehaviorFlag_CctCanRideOnObject = 1,
     /// Controller should slide on touched object
-    CctSlide = 2,
+    PxControllerBehaviorFlag_CctSlide = 2,
     /// Disable all code dealing with controllers riding on objects, let users define it outside of the SDK.
-    CctUserDefinedRide = 4,
+    PxControllerBehaviorFlag_CctUserDefinedRide = 4,
 };
 
-enum PxControllerBehaviorFlags : uint8_t {
-    CctCanRideOnObject_Bit = 1 << 0,
-    CctSlide_Bit = 1 << 1,
-    CctUserDefinedRide_Bit = 1 << 2,
+enum physx_PxControllerBehaviorFlags : uint8_t {
+    PxControllerBehaviorFlags_CctCanRideOnObject = 1 << 0,
+    PxControllerBehaviorFlags_CctSlide = 1 << 1,
+    PxControllerBehaviorFlags_CctUserDefinedRide = 1 << 2,
 };
 
 /// specifies debug-rendering flags
-enum PxControllerDebugRenderFlag : uint32_t {
+enum physx_PxControllerDebugRenderFlag : uint32_t {
     /// Temporal bounding volume around controllers
-    TemporalBv = 1,
+    PxControllerDebugRenderFlag_TemporalBv = 1,
     /// Cached bounding volume around controllers
-    CachedBv = 2,
+    PxControllerDebugRenderFlag_CachedBv = 2,
     /// User-defined obstacles
-    Obstacles = 4,
-    None = 0,
-    All = 4294967295,
+    PxControllerDebugRenderFlag_Obstacles = 4,
+    PxControllerDebugRenderFlag_None = 0,
+    PxControllerDebugRenderFlag_All = 4294967295,
 };
 
-enum PxControllerDebugRenderFlags : uint32_t {
-    TemporalBv_Bit = 1 << 0,
-    CachedBv_Bit = 1 << 1,
-    Obstacles_Bit = 1 << 2,
-    All_Bit = TemporalBv | CachedBv | Obstacles,
+enum physx_PxControllerDebugRenderFlags : uint32_t {
+    PxControllerDebugRenderFlags_TemporalBv = 1 << 0,
+    PxControllerDebugRenderFlags_CachedBv = 1 << 1,
+    PxControllerDebugRenderFlags_Obstacles = 1 << 2,
+    PxControllerDebugRenderFlags_All = PxControllerDebugRenderFlags_TemporalBv | PxControllerDebugRenderFlags_CachedBv | PxControllerDebugRenderFlags_Obstacles,
 };
 
 /// Defines the number of bits per subgrid pixel
-enum PxSdfBitsPerSubgridPixel : int32_t {
+enum physx_PxSdfBitsPerSubgridPixel : int32_t {
     /// 8 bit per subgrid pixel (values will be stored as normalized integers)
-    E8BitPerPixel = 1,
+    PxSdfBitsPerSubgridPixel_E8BitPerPixel = 1,
     /// 16 bit per subgrid pixel (values will be stored as normalized integers)
-    E16BitPerPixel = 2,
+    PxSdfBitsPerSubgridPixel_E16BitPerPixel = 2,
     /// 32 bit per subgrid pixel (values will be stored as floats in world scale units)
-    E32BitPerPixel = 4,
+    PxSdfBitsPerSubgridPixel_E32BitPerPixel = 4,
 };
 
 /// Flags which describe the format and behavior of a convex mesh.
-enum PxConvexFlag : int32_t {
+enum physx_PxConvexFlag : int32_t {
     /// Denotes the use of 16-bit vertex indices in PxConvexMeshDesc::triangles or PxConvexMeshDesc::polygons.
     /// (otherwise, 32-bit indices are assumed)
-    E16BitIndices = 1,
+    PxConvexFlag_E16BitIndices = 1,
     /// Automatically recomputes the hull from the vertices. If this flag is not set, you must provide the entire geometry manually.
     ///
     /// There are two different algorithms for hull computation, please see PxConvexMeshCookingType.
-    ComputeConvex = 2,
+    PxConvexFlag_ComputeConvex = 2,
     /// Checks and removes almost zero-area triangles during convex hull computation.
     /// The rejected area size is specified in PxCookingParams::areaTestEpsilon
     ///
     /// This flag is only used in combination with eCOMPUTE_CONVEX.
-    CheckZeroAreaTriangles = 4,
+    PxConvexFlag_CheckZeroAreaTriangles = 4,
     /// Quantizes the input vertices using the k-means clustering
     ///
     /// The input vertices are quantized to PxConvexMeshDesc::quantizedCount
     /// see http://en.wikipedia.org/wiki/K-means_clustering
-    QuantizeInput = 8,
+    PxConvexFlag_QuantizeInput = 8,
     /// Disables the convex mesh validation to speed-up hull creation. Please use separate validation
     /// function in checked/debug builds. Creating a convex mesh with invalid input data without prior validation
     /// may result in undefined behavior.
-    DisableMeshValidation = 16,
+    PxConvexFlag_DisableMeshValidation = 16,
     /// Enables plane shifting vertex limit algorithm.
     ///
     /// Plane shifting is an alternative algorithm for the case when the computed hull has more vertices
@@ -2374,225 +2374,225 @@ enum PxConvexFlag : int32_t {
     /// generate the final hull with the given vertex limit.Plane shifting may produce sharp edges to vertices
     /// very far away from the input cloud, and does not guarantee that all input vertices are inside the resulting
     /// hull.However, it can be used with a vertex limit as low as 4.
-    PlaneShifting = 32,
+    PxConvexFlag_PlaneShifting = 32,
     /// Inertia tensor computation is faster using SIMD code, but the precision is lower, which may result
     /// in incorrect inertia for very thin hulls.
-    FastInertiaComputation = 64,
+    PxConvexFlag_FastInertiaComputation = 64,
     /// Convex hulls are created with respect to GPU simulation limitations. Vertex limit and polygon limit
     /// is set to 64 and vertex limit per face is internally set to 32.
     ///
     /// Can be used only with eCOMPUTE_CONVEX flag.
-    GpuCompatible = 128,
+    PxConvexFlag_GpuCompatible = 128,
     /// Convex hull input vertices are shifted to be around origin to provide better computation stability.
     /// It is recommended to provide input vertices around the origin, otherwise use this flag to improve
     /// numerical stability.
     ///
     /// Is used only with eCOMPUTE_CONVEX flag.
-    ShiftVertices = 256,
+    PxConvexFlag_ShiftVertices = 256,
 };
 
-enum PxConvexFlags : uint16_t {
-    E16BitIndices_Bit = 1 << 0,
-    ComputeConvex_Bit = 1 << 1,
-    CheckZeroAreaTriangles_Bit = 1 << 2,
-    QuantizeInput_Bit = 1 << 3,
-    DisableMeshValidation_Bit = 1 << 4,
-    PlaneShifting_Bit = 1 << 5,
-    FastInertiaComputation_Bit = 1 << 6,
-    GpuCompatible_Bit = 1 << 7,
-    ShiftVertices_Bit = 1 << 8,
+enum physx_PxConvexFlags : uint16_t {
+    PxConvexFlags_E16BitIndices = 1 << 0,
+    PxConvexFlags_ComputeConvex = 1 << 1,
+    PxConvexFlags_CheckZeroAreaTriangles = 1 << 2,
+    PxConvexFlags_QuantizeInput = 1 << 3,
+    PxConvexFlags_DisableMeshValidation = 1 << 4,
+    PxConvexFlags_PlaneShifting = 1 << 5,
+    PxConvexFlags_FastInertiaComputation = 1 << 6,
+    PxConvexFlags_GpuCompatible = 1 << 7,
+    PxConvexFlags_ShiftVertices = 1 << 8,
 };
 
 /// Defines the tetrahedron structure of a mesh.
-enum PxMeshFormat : int32_t {
+enum physx_PxMeshFormat : int32_t {
     /// Normal tetmesh with arbitrary tetrahedra
-    TetMesh = 0,
+    PxMeshFormat_TetMesh = 0,
     /// 6 tetrahedra in a row will form a hexahedron
-    HexMesh = 1,
+    PxMeshFormat_HexMesh = 1,
 };
 
 /// Desired build strategy for PxMeshMidPhase::eBVH34
-enum PxBVH34BuildStrategy : int32_t {
+enum physx_PxBVH34BuildStrategy : int32_t {
     /// Fast build strategy. Fast build speed, good runtime performance in most cases. Recommended for runtime mesh cooking.
-    Fast = 0,
+    PxBVH34BuildStrategy_Fast = 0,
     /// Default build strategy. Medium build speed, good runtime performance in all cases.
-    Default = 1,
+    PxBVH34BuildStrategy_Default = 1,
     /// SAH build strategy. Slower builds, slightly improved runtime performance in some cases.
-    Sah = 2,
-    Last = 3,
+    PxBVH34BuildStrategy_Sah = 2,
+    PxBVH34BuildStrategy_Last = 3,
 };
 
 /// Result from convex cooking.
-enum PxConvexMeshCookingResult : int32_t {
+enum physx_PxConvexMeshCookingResult : int32_t {
     /// Convex mesh cooking succeeded.
-    Success = 0,
+    PxConvexMeshCookingResult_Success = 0,
     /// Convex mesh cooking failed, algorithm couldn't find 4 initial vertices without a small triangle.
-    ZeroAreaTestFailed = 1,
+    PxConvexMeshCookingResult_ZeroAreaTestFailed = 1,
     /// Convex mesh cooking succeeded, but the algorithm has reached the 255 polygons limit.
     /// The produced hull does not contain all input vertices. Try to simplify the input vertices
     /// or try to use the eINFLATE_CONVEX or the eQUANTIZE_INPUT flags.
-    PolygonsLimitReached = 2,
+    PxConvexMeshCookingResult_PolygonsLimitReached = 2,
     /// Something unrecoverable happened. Check the error stream to find out what.
-    Failure = 3,
+    PxConvexMeshCookingResult_Failure = 3,
 };
 
 /// Enumeration for convex mesh cooking algorithms.
-enum PxConvexMeshCookingType : int32_t {
+enum physx_PxConvexMeshCookingType : int32_t {
     /// The Quickhull algorithm constructs the hull from the given input points. The resulting hull
     /// will only contain a subset of the input points.
-    Quickhull = 0,
+    PxConvexMeshCookingType_Quickhull = 0,
 };
 
 /// Result from triangle mesh cooking
-enum PxTriangleMeshCookingResult : int32_t {
+enum physx_PxTriangleMeshCookingResult : int32_t {
     /// Everything is A-OK.
-    Success = 0,
+    PxTriangleMeshCookingResult_Success = 0,
     /// a triangle is too large for well-conditioned results. Tessellate the mesh for better behavior, see the user guide section on cooking for more details.
-    LargeTriangle = 1,
+    PxTriangleMeshCookingResult_LargeTriangle = 1,
     /// Something unrecoverable happened. Check the error stream to find out what.
-    Failure = 2,
+    PxTriangleMeshCookingResult_Failure = 2,
 };
 
 /// Enum for the set of mesh pre-processing parameters.
-enum PxMeshPreprocessingFlag : int32_t {
+enum physx_PxMeshPreprocessingFlag : int32_t {
     /// When set, mesh welding is performed. See PxCookingParams::meshWeldTolerance. Clean mesh must be enabled.
-    WeldVertices = 1,
+    PxMeshPreprocessingFlag_WeldVertices = 1,
     /// When set, mesh cleaning is disabled. This makes cooking faster.
     ///
     /// When clean mesh is not performed, mesh welding is also not performed.
     ///
     /// It is recommended to use only meshes that passed during validateTriangleMesh.
-    DisableCleanMesh = 2,
+    PxMeshPreprocessingFlag_DisableCleanMesh = 2,
     /// When set, active edges are set for each triangle edge. This makes cooking faster but slow up contact generation.
-    DisableActiveEdgesPrecompute = 4,
+    PxMeshPreprocessingFlag_DisableActiveEdgesPrecompute = 4,
     /// When set, 32-bit indices will always be created regardless of triangle count.
     ///
     /// By default mesh will be created with 16-bit indices for triangle count
     /// <
     /// = 0xFFFF and 32-bit otherwise.
-    Force32bitIndices = 8,
+    PxMeshPreprocessingFlag_Force32bitIndices = 8,
     /// When set, a list of triangles will be created for each associated vertex in the mesh
-    EnableVertMapping = 16,
+    PxMeshPreprocessingFlag_EnableVertMapping = 16,
     /// When set, inertia tensor is calculated for the mesh
-    EnableInertia = 32,
+    PxMeshPreprocessingFlag_EnableInertia = 32,
 };
 
-enum PxMeshPreprocessingFlags : uint32_t {
-    WeldVertices_Bit = 1 << 0,
-    DisableCleanMesh_Bit = 1 << 1,
-    DisableActiveEdgesPrecompute_Bit = 1 << 2,
-    Force32bitIndices_Bit = 1 << 3,
-    EnableVertMapping_Bit = 1 << 4,
-    EnableInertia_Bit = 1 << 5,
+enum physx_PxMeshPreprocessingFlags : uint32_t {
+    PxMeshPreprocessingFlags_WeldVertices = 1 << 0,
+    PxMeshPreprocessingFlags_DisableCleanMesh = 1 << 1,
+    PxMeshPreprocessingFlags_DisableActiveEdgesPrecompute = 1 << 2,
+    PxMeshPreprocessingFlags_Force32bitIndices = 1 << 3,
+    PxMeshPreprocessingFlags_EnableVertMapping = 1 << 4,
+    PxMeshPreprocessingFlags_EnableInertia = 1 << 5,
 };
 
 /// Unique identifiers for extensions classes which implement a constraint based on PxConstraint.
 ///
 /// Users which want to create their own custom constraint types should choose an ID larger or equal to eNEXT_FREE_ID
 /// and not eINVALID_ID.
-enum PxConstraintExtIDs : int32_t {
-    Joint = 0,
-    VehicleSuspLimitDeprecated = 1,
-    VehicleStickyTyreDeprecated = 2,
-    VehicleJoint = 3,
-    NextFreeId = 4,
-    InvalidId = 2147483647,
+enum physx_PxConstraintExtIDs : int32_t {
+    PxConstraintExtIDs_Joint = 0,
+    PxConstraintExtIDs_VehicleSuspLimitDeprecated = 1,
+    PxConstraintExtIDs_VehicleStickyTyreDeprecated = 2,
+    PxConstraintExtIDs_VehicleJoint = 3,
+    PxConstraintExtIDs_NextFreeId = 4,
+    PxConstraintExtIDs_InvalidId = 2147483647,
 };
 
 /// an enumeration of PhysX' built-in joint types
-enum PxJointConcreteType : int32_t {
-    Spherical = 256,
-    Revolute = 257,
-    Prismatic = 258,
-    Fixed = 259,
-    Distance = 260,
-    D6 = 261,
-    Contact = 262,
-    Gear = 263,
-    RackAndPinion = 264,
-    Last = 265,
+enum physx_PxJointConcreteType : int32_t {
+    PxJointConcreteType_Spherical = 256,
+    PxJointConcreteType_Revolute = 257,
+    PxJointConcreteType_Prismatic = 258,
+    PxJointConcreteType_Fixed = 259,
+    PxJointConcreteType_Distance = 260,
+    PxJointConcreteType_D6 = 261,
+    PxJointConcreteType_Contact = 262,
+    PxJointConcreteType_Gear = 263,
+    PxJointConcreteType_RackAndPinion = 264,
+    PxJointConcreteType_Last = 265,
 };
 
 /// an enumeration for specifying one or other of the actors referenced by a joint
-enum PxJointActorIndex : int32_t {
-    Actor0 = 0,
-    Actor1 = 1,
-    Count = 2,
+enum physx_PxJointActorIndex : int32_t {
+    PxJointActorIndex_Actor0 = 0,
+    PxJointActorIndex_Actor1 = 1,
+    PxJointActorIndex_Count = 2,
 };
 
 /// flags for configuring the drive of a PxDistanceJoint
-enum PxDistanceJointFlag : int32_t {
-    MaxDistanceEnabled = 2,
-    MinDistanceEnabled = 4,
-    SpringEnabled = 8,
+enum physx_PxDistanceJointFlag : int32_t {
+    PxDistanceJointFlag_MaxDistanceEnabled = 2,
+    PxDistanceJointFlag_MinDistanceEnabled = 4,
+    PxDistanceJointFlag_SpringEnabled = 8,
 };
 
-enum PxDistanceJointFlags : uint16_t {
-    MaxDistanceEnabled_Bit = 1 << 1,
-    MinDistanceEnabled_Bit = 1 << 2,
-    SpringEnabled_Bit = 1 << 3,
+enum physx_PxDistanceJointFlags : uint16_t {
+    PxDistanceJointFlags_MaxDistanceEnabled = 1 << 1,
+    PxDistanceJointFlags_MinDistanceEnabled = 1 << 2,
+    PxDistanceJointFlags_SpringEnabled = 1 << 3,
 };
 
 /// Flags specific to the prismatic joint.
-enum PxPrismaticJointFlag : int32_t {
-    LimitEnabled = 2,
+enum physx_PxPrismaticJointFlag : int32_t {
+    PxPrismaticJointFlag_LimitEnabled = 2,
 };
 
-enum PxPrismaticJointFlags : uint16_t {
-    LimitEnabled_Bit = 1 << 1,
+enum physx_PxPrismaticJointFlags : uint16_t {
+    PxPrismaticJointFlags_LimitEnabled = 1 << 1,
 };
 
 /// Flags specific to the Revolute Joint.
-enum PxRevoluteJointFlag : int32_t {
+enum physx_PxRevoluteJointFlag : int32_t {
     /// enable the limit
-    LimitEnabled = 1,
+    PxRevoluteJointFlag_LimitEnabled = 1,
     /// enable the drive
-    DriveEnabled = 2,
+    PxRevoluteJointFlag_DriveEnabled = 2,
     /// if the existing velocity is beyond the drive velocity, do not add force
-    DriveFreespin = 4,
+    PxRevoluteJointFlag_DriveFreespin = 4,
 };
 
-enum PxRevoluteJointFlags : uint16_t {
-    LimitEnabled_Bit = 1 << 0,
-    DriveEnabled_Bit = 1 << 1,
-    DriveFreespin_Bit = 1 << 2,
+enum physx_PxRevoluteJointFlags : uint16_t {
+    PxRevoluteJointFlags_LimitEnabled = 1 << 0,
+    PxRevoluteJointFlags_DriveEnabled = 1 << 1,
+    PxRevoluteJointFlags_DriveFreespin = 1 << 2,
 };
 
 /// Flags specific to the spherical joint.
-enum PxSphericalJointFlag : int32_t {
+enum physx_PxSphericalJointFlag : int32_t {
     /// the cone limit for the spherical joint is enabled
-    LimitEnabled = 2,
+    PxSphericalJointFlag_LimitEnabled = 2,
 };
 
-enum PxSphericalJointFlags : uint16_t {
-    LimitEnabled_Bit = 1 << 1,
+enum physx_PxSphericalJointFlags : uint16_t {
+    PxSphericalJointFlags_LimitEnabled = 1 << 1,
 };
 
 /// Used to specify one of the degrees of freedom of  a D6 joint.
-enum PxD6Axis : int32_t {
+enum physx_PxD6Axis : int32_t {
     /// motion along the X axis
-    X = 0,
+    PxD6Axis_X = 0,
     /// motion along the Y axis
-    Y = 1,
+    PxD6Axis_Y = 1,
     /// motion along the Z axis
-    Z = 2,
+    PxD6Axis_Z = 2,
     /// motion around the X axis
-    Twist = 3,
+    PxD6Axis_Twist = 3,
     /// motion around the Y axis
-    Swing1 = 4,
+    PxD6Axis_Swing1 = 4,
     /// motion around the Z axis
-    Swing2 = 5,
-    Count = 6,
+    PxD6Axis_Swing2 = 5,
+    PxD6Axis_Count = 6,
 };
 
 /// Used to specify the range of motions allowed for a degree of freedom in a D6 joint.
-enum PxD6Motion : int32_t {
+enum physx_PxD6Motion : int32_t {
     /// The DOF is locked, it does not allow relative motion.
-    Locked = 0,
+    PxD6Motion_Locked = 0,
     /// The DOF is limited, it only allows motion within a specific range.
-    Limited = 1,
+    PxD6Motion_Limited = 1,
     /// The DOF is free and has its full range of motion.
-    Free = 2,
+    PxD6Motion_Free = 2,
 };
 
 /// Used to specify which axes of a D6 joint are driven.
@@ -2606,41 +2606,41 @@ enum PxD6Motion : int32_t {
 /// A linear axis is affected by drive only if the corresponding drive flag is set. There are two possible models
 /// for angular drive: swing/twist, which may be used to drive one or more angular degrees of freedom, or slerp,
 /// which may only be used to drive all three angular degrees simultaneously.
-enum PxD6Drive : int32_t {
+enum physx_PxD6Drive : int32_t {
     /// drive along the X-axis
-    X = 0,
+    PxD6Drive_X = 0,
     /// drive along the Y-axis
-    Y = 1,
+    PxD6Drive_Y = 1,
     /// drive along the Z-axis
-    Z = 2,
+    PxD6Drive_Z = 2,
     /// drive of displacement from the X-axis
-    Swing = 3,
+    PxD6Drive_Swing = 3,
     /// drive of the displacement around the X-axis
-    Twist = 4,
+    PxD6Drive_Twist = 4,
     /// drive of all three angular degrees along a SLERP-path
-    Slerp = 5,
-    Count = 6,
+    PxD6Drive_Slerp = 5,
+    PxD6Drive_Count = 6,
 };
 
 /// flags for configuring the drive model of a PxD6Joint
-enum PxD6JointDriveFlag : int32_t {
+enum physx_PxD6JointDriveFlag : int32_t {
     /// drive spring is for the acceleration at the joint (rather than the force)
-    Acceleration = 1,
+    PxD6JointDriveFlag_Acceleration = 1,
 };
 
-enum PxD6JointDriveFlags : uint32_t {
-    Acceleration_Bit = 1 << 0,
+enum physx_PxD6JointDriveFlags : uint32_t {
+    PxD6JointDriveFlags_Acceleration = 1 << 0,
 };
 
 /// Collision filtering operations.
-enum PxFilterOp : int32_t {
-    PxFilteropAnd = 0,
-    PxFilteropOr = 1,
-    PxFilteropXor = 2,
-    PxFilteropNand = 3,
-    PxFilteropNor = 4,
-    PxFilteropNxor = 5,
-    PxFilteropSwapAnd = 6,
+enum physx_PxFilterOp : int32_t {
+    PxFilterOp_PxFilteropAnd = 0,
+    PxFilterOp_PxFilteropOr = 1,
+    PxFilterOp_PxFilteropXor = 2,
+    PxFilterOp_PxFilteropNand = 3,
+    PxFilterOp_PxFilteropNor = 4,
+    PxFilterOp_PxFilteropNxor = 5,
+    PxFilterOp_PxFilteropSwapAnd = 6,
 };
 
 /// If a thread ends up waiting for work it will find itself in a spin-wait loop until work becomes available.
@@ -2649,30 +2649,30 @@ enum PxFilterOp : int32_t {
 /// a) wait until a work task signals the end of the spin-wait period.
 /// b) yield the thread by providing a hint to reschedule thread execution, thereby allowing other threads to run.
 /// c) yield the processor by informing it that it is waiting for work and requesting it to more efficiently use compute resources.
-enum PxDefaultCpuDispatcherWaitForWorkMode : int32_t {
-    WaitForWork = 0,
-    YieldThread = 1,
-    YieldProcessor = 2,
+enum physx_PxDefaultCpuDispatcherWaitForWorkMode : int32_t {
+    PxDefaultCpuDispatcherWaitForWorkMode_WaitForWork = 0,
+    PxDefaultCpuDispatcherWaitForWorkMode_YieldThread = 1,
+    PxDefaultCpuDispatcherWaitForWorkMode_YieldProcessor = 2,
 };
 
-enum PxBatchQueryStatus : int32_t {
+enum physx_PxBatchQueryStatus : int32_t {
     /// This is the initial state before a query starts.
-    Pending = 0,
+    PxBatchQueryStatus_Pending = 0,
     /// The query is finished; results have been written into the result and hit buffers.
-    Success = 1,
+    PxBatchQueryStatus_Success = 1,
     /// The query results were incomplete due to touch hit buffer overflow. Blocking hit is still correct.
-    Overflow = 2,
+    PxBatchQueryStatus_Overflow = 2,
 };
 
 /// types of instrumentation that PVD can do.
-enum PxPvdInstrumentationFlag : int32_t {
+enum physx_PxPvdInstrumentationFlag : int32_t {
     /// Send debugging information to PVD.
     ///
     /// This information is the actual object data of the rigid statics, shapes,
     /// articulations, etc.  Sending this information has a noticeable impact on
     /// performance and thus this flag should not be set if you want an accurate
     /// performance profile.
-    Debug = 1,
+    PxPvdInstrumentationFlag_Debug = 1,
     /// Send profile information to PVD.
     ///
     /// This information populates PVD's profile view.  It has (at this time) negligible
@@ -2681,7 +2681,7 @@ enum PxPvdInstrumentationFlag : int32_t {
     ///
     /// This flag works together with a PxCreatePhysics parameter.
     /// Using it allows the SDK to send profile events to PVD.
-    Profile = 2,
+    PxPvdInstrumentationFlag_Profile = 2,
     /// Send memory information to PVD.
     ///
     /// The PVD sdk side hooks into the Foundation memory controller and listens to
@@ -2700,7 +2700,7 @@ enum PxPvdInstrumentationFlag : int32_t {
     /// Sending memory information without tracking outstanding allocations means that
     /// PVD will accurate information about the state of the memory system before the
     /// actual connection happened.
-    Memory = 4,
+    PxPvdInstrumentationFlag_Memory = 4,
     /// Send memory information to PVD.
     ///
     /// The PVD sdk side hooks into the Foundation memory controller and listens to
@@ -2719,14 +2719,14 @@ enum PxPvdInstrumentationFlag : int32_t {
     /// Sending memory information without tracking outstanding allocations means that
     /// PVD will accurate information about the state of the memory system before the
     /// actual connection happened.
-    All = 7,
+    PxPvdInstrumentationFlag_All = 7,
 };
 
-enum PxPvdInstrumentationFlags : uint8_t {
-    Debug_Bit = 1 << 0,
-    Profile_Bit = 1 << 1,
-    Memory_Bit = 1 << 2,
-    All_Bit = Debug | Profile | Memory,
+enum physx_PxPvdInstrumentationFlags : uint8_t {
+    PxPvdInstrumentationFlags_Debug = 1 << 0,
+    PxPvdInstrumentationFlags_Profile = 1 << 1,
+    PxPvdInstrumentationFlags_Memory = 1 << 2,
+    PxPvdInstrumentationFlags_All = PxPvdInstrumentationFlags_Debug | PxPvdInstrumentationFlags_Profile | PxPvdInstrumentationFlags_Memory,
 };
 using namespace physx;
 #include "structgen_out.hpp"
@@ -3416,7 +3416,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxVec3 PxVec3_new_1(PxZERO anon_param0_pod) {
+    physx_PxVec3 PxVec3_new_1(physx_PxZERO anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxZERO>(anon_param0_pod);
         PxVec3 return_val(anon_param0);
         physx_PxVec3 return_val_pod;
@@ -3588,7 +3588,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxQuat PxQuat_new_1(PxIDENTITY anon_param0_pod) {
+    physx_PxQuat PxQuat_new_1(physx_PxIDENTITY anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxIDENTITY>(anon_param0_pod);
         PxQuat return_val(anon_param0);
         physx_PxQuat return_val_pod;
@@ -3776,7 +3776,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxTransform PxTransform_new_2(PxIDENTITY anon_param0_pod) {
+    physx_PxTransform PxTransform_new_2(physx_PxIDENTITY anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxIDENTITY>(anon_param0_pod);
         PxTransform return_val(anon_param0);
         physx_PxTransform return_val_pod;
@@ -3913,7 +3913,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxMat33 PxMat33_new_1(PxIDENTITY anon_param0_pod) {
+    physx_PxMat33 PxMat33_new_1(physx_PxIDENTITY anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxIDENTITY>(anon_param0_pod);
         PxMat33 return_val(anon_param0);
         physx_PxMat33 return_val_pod;
@@ -3921,7 +3921,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxMat33 PxMat33_new_2(PxZERO anon_param0_pod) {
+    physx_PxMat33 PxMat33_new_2(physx_PxZERO anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxZERO>(anon_param0_pod);
         PxMat33 return_val(anon_param0);
         physx_PxMat33 return_val_pod;
@@ -4258,7 +4258,7 @@ extern "C" {
         delete self_;
     }
 
-    void PxErrorCallback_reportError(physx_PxErrorCallback* self__pod, PxErrorCode code_pod, char const* message, char const* file, int32_t line) {
+    void PxErrorCallback_reportError(physx_PxErrorCallback* self__pod, physx_PxErrorCode code_pod, char const* message, char const* file, int32_t line) {
         physx::PxErrorCallback* self_ = reinterpret_cast<physx::PxErrorCallback*>(self__pod);
         auto code = static_cast<physx::PxErrorCode::Enum>(code_pod);
         self_->reportError(code, message, file, line);
@@ -4314,7 +4314,7 @@ extern "C" {
         delete self_;
     }
 
-    void PxBroadcastingErrorCallback_reportError(physx_PxBroadcastingErrorCallback* self__pod, PxErrorCode code_pod, char const* message, char const* file, int32_t line) {
+    void PxBroadcastingErrorCallback_reportError(physx_PxBroadcastingErrorCallback* self__pod, physx_PxErrorCode code_pod, char const* message, char const* file, int32_t line) {
         physx::PxBroadcastingErrorCallback* self_ = reinterpret_cast<physx::PxBroadcastingErrorCallback*>(self__pod);
         auto code = static_cast<physx::PxErrorCode::Enum>(code_pod);
         self_->reportError(code, message, file, line);
@@ -4379,7 +4379,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxVec4 PxVec4_new_1(PxZERO anon_param0_pod) {
+    physx_PxVec4 PxVec4_new_1(physx_PxZERO anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxZERO>(anon_param0_pod);
         PxVec4 return_val(anon_param0);
         physx_PxVec4 return_val_pod;
@@ -4509,7 +4509,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxMat44 PxMat44_new_1(PxIDENTITY anon_param0_pod) {
+    physx_PxMat44 PxMat44_new_1(physx_PxIDENTITY anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxIDENTITY>(anon_param0_pod);
         PxMat44 return_val(anon_param0);
         physx_PxMat44 return_val_pod;
@@ -4517,7 +4517,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxMat44 PxMat44_new_2(PxZERO anon_param0_pod) {
+    physx_PxMat44 PxMat44_new_2(physx_PxZERO anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxZERO>(anon_param0_pod);
         PxMat44 return_val(anon_param0);
         physx_PxMat44 return_val_pod;
@@ -5261,7 +5261,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxVec2 PxVec2_new_1(PxZERO anon_param0_pod) {
+    physx_PxVec2 PxVec2_new_1(physx_PxZERO anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxZERO>(anon_param0_pod);
         PxVec2 return_val(anon_param0);
         physx_PxVec2 return_val_pod;
@@ -5755,22 +5755,22 @@ extern "C" {
         return return_val;
     }
 
-    void PxBase_setBaseFlag(physx_PxBase* self__pod, PxBaseFlag flag_pod, bool value) {
+    void PxBase_setBaseFlag(physx_PxBase* self__pod, physx_PxBaseFlag flag_pod, bool value) {
         physx::PxBase* self_ = reinterpret_cast<physx::PxBase*>(self__pod);
         auto flag = static_cast<physx::PxBaseFlag::Enum>(flag_pod);
         self_->setBaseFlag(flag, value);
     }
 
-    void PxBase_setBaseFlags(physx_PxBase* self__pod, PxBaseFlags inFlags_pod) {
+    void PxBase_setBaseFlags(physx_PxBase* self__pod, physx_PxBaseFlags inFlags_pod) {
         physx::PxBase* self_ = reinterpret_cast<physx::PxBase*>(self__pod);
         auto inFlags = physx::PxBaseFlags(inFlags_pod);
         self_->setBaseFlags(inFlags);
     }
 
-    PxBaseFlags PxBase_getBaseFlags(physx_PxBase const* self__pod) {
+    physx_PxBaseFlags PxBase_getBaseFlags(physx_PxBase const* self__pod) {
         physx::PxBase const* self_ = reinterpret_cast<physx::PxBase const*>(self__pod);
         physx::PxBaseFlags return_val = self_->getBaseFlags();
-        PxBaseFlags return_val_pod;
+        physx_PxBaseFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -5883,7 +5883,7 @@ extern "C" {
         delete self_;
     }
 
-    physx_PxBase* PxInsertionCallback_buildObjectFromData(physx_PxInsertionCallback* self__pod, PxConcreteType type_pod, void* data) {
+    physx_PxBase* PxInsertionCallback_buildObjectFromData(physx_PxInsertionCallback* self__pod, physx_PxConcreteType type_pod, void* data) {
         physx::PxInsertionCallback* self_ = reinterpret_cast<physx::PxInsertionCallback*>(self__pod);
         auto type = static_cast<physx::PxConcreteType::Enum>(type_pod);
         physx::PxBase* return_val = self_->buildObjectFromData(type, data);
@@ -5931,7 +5931,7 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxTaskManager_submitNamedTask(physx_PxTaskManager* self__pod, physx_PxTask* task_pod, char const* name, PxTaskType type_pod) {
+    uint32_t PxTaskManager_submitNamedTask(physx_PxTaskManager* self__pod, physx_PxTask* task_pod, char const* name, physx_PxTaskType type_pod) {
         physx::PxTaskManager* self_ = reinterpret_cast<physx::PxTaskManager*>(self__pod);
         physx::PxTask* task = reinterpret_cast<physx::PxTask*>(task_pod);
         auto type = static_cast<physx::PxTaskType::Enum>(type_pod);
@@ -5939,7 +5939,7 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxTaskManager_submitUnnamedTask(physx_PxTaskManager* self__pod, physx_PxTask* task_pod, PxTaskType type_pod) {
+    uint32_t PxTaskManager_submitUnnamedTask(physx_PxTaskManager* self__pod, physx_PxTask* task_pod, physx_PxTaskType type_pod) {
         physx::PxTaskManager* self_ = reinterpret_cast<physx::PxTaskManager*>(self__pod);
         physx::PxTask& task = reinterpret_cast<physx::PxTask&>(*task_pod);
         auto type = static_cast<physx::PxTaskType::Enum>(type_pod);
@@ -6117,10 +6117,10 @@ extern "C" {
         self_->release();
     }
 
-    PxGeometryType PxGeometry_getType(physx_PxGeometry const* self__pod) {
+    physx_PxGeometryType PxGeometry_getType(physx_PxGeometry const* self__pod) {
         physx::PxGeometry const* self_ = reinterpret_cast<physx::PxGeometry const*>(self__pod);
         physx::PxGeometryType::Enum return_val = self_->getType();
-        PxGeometryType return_val_pod;
+        physx_PxGeometryType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -6188,7 +6188,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxBVH_raycast(physx_PxBVH const* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxBVHRaycastCallback* cb_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxBVH_raycast(physx_PxBVH const* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxBVHRaycastCallback* cb_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxBVH const* self_ = reinterpret_cast<physx::PxBVH const*>(self__pod);
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -6198,7 +6198,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxBVH_sweep(physx_PxBVH const* self__pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxBVHRaycastCallback* cb_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxBVH_sweep(physx_PxBVH const* self__pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxBVHRaycastCallback* cb_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxBVH const* self_ = reinterpret_cast<physx::PxBVH const*>(self__pod);
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -6209,7 +6209,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxBVH_overlap(physx_PxBVH const* self__pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, physx_PxBVHOverlapCallback* cb_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxBVH_overlap(physx_PxBVH const* self__pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, physx_PxBVHOverlapCallback* cb_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxBVH const* self_ = reinterpret_cast<physx::PxBVH const*>(self__pod);
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -6219,7 +6219,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxBVH_cull(physx_PxBVH const* self__pod, uint32_t nbPlanes, physx_PxPlane const* planes_pod, physx_PxBVHOverlapCallback* cb_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxBVH_cull(physx_PxBVH const* self__pod, uint32_t nbPlanes, physx_PxPlane const* planes_pod, physx_PxBVHOverlapCallback* cb_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxBVH const* self_ = reinterpret_cast<physx::PxBVH const*>(self__pod);
         physx::PxPlane const* planes = reinterpret_cast<physx::PxPlane const*>(planes_pod);
         physx::PxBVHOverlapCallback& cb = reinterpret_cast<physx::PxBVHOverlapCallback&>(*cb_pod);
@@ -6442,7 +6442,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxConvexMeshGeometry PxConvexMeshGeometry_new(physx_PxConvexMesh* mesh_pod, physx_PxMeshScale const* scaling_pod, PxConvexMeshGeometryFlags flags_pod) {
+    physx_PxConvexMeshGeometry PxConvexMeshGeometry_new(physx_PxConvexMesh* mesh_pod, physx_PxMeshScale const* scaling_pod, physx_PxConvexMeshGeometryFlags flags_pod) {
         physx::PxConvexMesh* mesh = reinterpret_cast<physx::PxConvexMesh*>(mesh_pod);
         physx::PxMeshScale const& scaling = reinterpret_cast<physx::PxMeshScale const&>(*scaling_pod);
         auto flags = physx::PxConvexMeshGeometryFlags(flags_pod);
@@ -6484,7 +6484,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxTriangleMeshGeometry PxTriangleMeshGeometry_new(physx_PxTriangleMesh* mesh_pod, physx_PxMeshScale const* scaling_pod, PxMeshGeometryFlags flags_pod) {
+    physx_PxTriangleMeshGeometry PxTriangleMeshGeometry_new(physx_PxTriangleMesh* mesh_pod, physx_PxMeshScale const* scaling_pod, physx_PxMeshGeometryFlags flags_pod) {
         physx::PxTriangleMesh* mesh = reinterpret_cast<physx::PxTriangleMesh*>(mesh_pod);
         physx::PxMeshScale const& scaling = reinterpret_cast<physx::PxMeshScale const&>(*scaling_pod);
         auto flags = physx::PxMeshGeometryFlags(flags_pod);
@@ -6500,7 +6500,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxHeightFieldGeometry PxHeightFieldGeometry_new(physx_PxHeightField* hf_pod, PxMeshGeometryFlags flags_pod, float heightScale_, float rowScale_, float columnScale_) {
+    physx_PxHeightFieldGeometry PxHeightFieldGeometry_new(physx_PxHeightField* hf_pod, physx_PxMeshGeometryFlags flags_pod, float heightScale_, float rowScale_, float columnScale_) {
         physx::PxHeightField* hf = reinterpret_cast<physx::PxHeightField*>(hf_pod);
         auto flags = physx::PxMeshGeometryFlags(flags_pod);
         PxHeightFieldGeometry return_val(hf, flags, heightScale_, rowScale_, columnScale_);
@@ -6646,7 +6646,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    uint32_t PxCustomGeometryCallbacks_raycast(physx_PxCustomGeometryCallbacks const* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, float maxDist, PxHitFlags hitFlags_pod, uint32_t maxHits, physx_PxGeomRaycastHit* rayHits_pod, uint32_t stride, physx_PxQueryThreadContext* threadContext_pod) {
+    uint32_t PxCustomGeometryCallbacks_raycast(physx_PxCustomGeometryCallbacks const* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, float maxDist, physx_PxHitFlags hitFlags_pod, uint32_t maxHits, physx_PxGeomRaycastHit* rayHits_pod, uint32_t stride, physx_PxQueryThreadContext* threadContext_pod) {
         physx::PxCustomGeometryCallbacks const* self_ = reinterpret_cast<physx::PxCustomGeometryCallbacks const*>(self__pod);
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -6670,7 +6670,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxCustomGeometryCallbacks_sweep(physx_PxCustomGeometryCallbacks const* self__pod, physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, physx_PxGeomSweepHit* sweepHit_pod, PxHitFlags hitFlags_pod, float inflation, physx_PxQueryThreadContext* threadContext_pod) {
+    bool PxCustomGeometryCallbacks_sweep(physx_PxCustomGeometryCallbacks const* self__pod, physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, physx_PxGeomSweepHit* sweepHit_pod, physx_PxHitFlags hitFlags_pod, float inflation, physx_PxQueryThreadContext* threadContext_pod) {
         physx::PxCustomGeometryCallbacks const* self_ = reinterpret_cast<physx::PxCustomGeometryCallbacks const*>(self__pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
         physx::PxGeometry const& geom0 = reinterpret_cast<physx::PxGeometry const&>(*geom0_pod);
@@ -6733,10 +6733,10 @@ extern "C" {
         return return_val_pod;
     }
 
-    PxGeometryType PxGeometryHolder_getType(physx_PxGeometryHolder const* self__pod) {
+    physx_PxGeometryType PxGeometryHolder_getType(physx_PxGeometryHolder const* self__pod) {
         physx::PxGeometryHolder const* self_ = reinterpret_cast<physx::PxGeometryHolder const*>(self__pod);
         physx::PxGeometryType::Enum return_val = self_->getType();
-        PxGeometryType return_val_pod;
+        physx_PxGeometryType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -6930,7 +6930,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    uint32_t PxGeometryQuery_raycast(physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, float maxDist, PxHitFlags hitFlags_pod, uint32_t maxHits, physx_PxGeomRaycastHit* rayHits_pod, uint32_t stride, PxGeometryQueryFlags queryFlags_pod, physx_PxQueryThreadContext* threadContext_pod) {
+    uint32_t PxGeometryQuery_raycast(physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, float maxDist, physx_PxHitFlags hitFlags_pod, uint32_t maxHits, physx_PxGeomRaycastHit* rayHits_pod, uint32_t stride, physx_PxGeometryQueryFlags queryFlags_pod, physx_PxQueryThreadContext* threadContext_pod) {
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
@@ -6943,7 +6943,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxGeometryQuery_overlap(physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, PxGeometryQueryFlags queryFlags_pod, physx_PxQueryThreadContext* threadContext_pod) {
+    bool PxGeometryQuery_overlap(physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, physx_PxGeometryQueryFlags queryFlags_pod, physx_PxQueryThreadContext* threadContext_pod) {
         physx::PxGeometry const& geom0 = reinterpret_cast<physx::PxGeometry const&>(*geom0_pod);
         physx::PxTransform const& pose0 = reinterpret_cast<physx::PxTransform const&>(*pose0_pod);
         physx::PxGeometry const& geom1 = reinterpret_cast<physx::PxGeometry const&>(*geom1_pod);
@@ -6954,7 +6954,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxGeometryQuery_sweep(physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, physx_PxGeomSweepHit* sweepHit_pod, PxHitFlags hitFlags_pod, float inflation, PxGeometryQueryFlags queryFlags_pod, physx_PxQueryThreadContext* threadContext_pod) {
+    bool PxGeometryQuery_sweep(physx_PxVec3 const* unitDir_pod, float maxDist, physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, physx_PxGeomSweepHit* sweepHit_pod, physx_PxHitFlags hitFlags_pod, float inflation, physx_PxGeometryQueryFlags queryFlags_pod, physx_PxQueryThreadContext* threadContext_pod) {
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
         physx::PxGeometry const& geom0 = reinterpret_cast<physx::PxGeometry const&>(*geom0_pod);
         physx::PxTransform const& pose0 = reinterpret_cast<physx::PxTransform const&>(*pose0_pod);
@@ -6968,7 +6968,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxGeometryQuery_computePenetration(physx_PxVec3* direction_pod, float* depth_pod, physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxGeometryQuery_computePenetration(physx_PxVec3* direction_pod, float* depth_pod, physx_PxGeometry const* geom0_pod, physx_PxTransform const* pose0_pod, physx_PxGeometry const* geom1_pod, physx_PxTransform const* pose1_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxVec3& direction = reinterpret_cast<physx::PxVec3&>(*direction_pod);
         float& depth = *depth_pod;
         physx::PxGeometry const& geom0 = reinterpret_cast<physx::PxGeometry const&>(*geom0_pod);
@@ -6980,7 +6980,7 @@ extern "C" {
         return return_val;
     }
 
-    float PxGeometryQuery_pointDistance(physx_PxVec3 const* point_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, physx_PxVec3* closestPoint_pod, uint32_t* closestIndex, PxGeometryQueryFlags queryFlags_pod) {
+    float PxGeometryQuery_pointDistance(physx_PxVec3 const* point_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, physx_PxVec3* closestPoint_pod, uint32_t* closestIndex, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxVec3 const& point = reinterpret_cast<physx::PxVec3 const&>(*point_pod);
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -6990,7 +6990,7 @@ extern "C" {
         return return_val;
     }
 
-    void PxGeometryQuery_computeGeomBounds(physx_PxBounds3* bounds_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, float offset, float inflation, PxGeometryQueryFlags queryFlags_pod) {
+    void PxGeometryQuery_computeGeomBounds(physx_PxBounds3* bounds_pod, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, float offset, float inflation, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxBounds3& bounds = reinterpret_cast<physx::PxBounds3&>(*bounds_pod);
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -7050,10 +7050,10 @@ extern "C" {
         return return_val;
     }
 
-    PxHeightFieldFormat PxHeightField_getFormat(physx_PxHeightField const* self__pod) {
+    physx_PxHeightFieldFormat PxHeightField_getFormat(physx_PxHeightField const* self__pod) {
         physx::PxHeightField const* self_ = reinterpret_cast<physx::PxHeightField const*>(self__pod);
         physx::PxHeightFieldFormat::Enum return_val = self_->getFormat();
-        PxHeightFieldFormat return_val_pod;
+        physx_PxHeightFieldFormat return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7070,10 +7070,10 @@ extern "C" {
         return return_val;
     }
 
-    PxHeightFieldFlags PxHeightField_getFlags(physx_PxHeightField const* self__pod) {
+    physx_PxHeightFieldFlags PxHeightField_getFlags(physx_PxHeightField const* self__pod) {
         physx::PxHeightField const* self_ = reinterpret_cast<physx::PxHeightField const*>(self__pod);
         physx::PxHeightFieldFlags return_val = self_->getFlags();
-        PxHeightFieldFlags return_val_pod;
+        physx_PxHeightFieldFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7149,7 +7149,7 @@ extern "C" {
         PxMeshQuery::getTriangle(hfGeom, transform, triangleIndex, triangle, vertexIndices, adjacencyIndices);
     }
 
-    uint32_t PxMeshQuery_findOverlapTriangleMesh(physx_PxGeometry const* geom_pod, physx_PxTransform const* geomPose_pod, physx_PxTriangleMeshGeometry const* meshGeom_pod, physx_PxTransform const* meshPose_pod, uint32_t* results, uint32_t maxResults, uint32_t startIndex, bool* overflow_pod, PxGeometryQueryFlags queryFlags_pod) {
+    uint32_t PxMeshQuery_findOverlapTriangleMesh(physx_PxGeometry const* geom_pod, physx_PxTransform const* geomPose_pod, physx_PxTriangleMeshGeometry const* meshGeom_pod, physx_PxTransform const* meshPose_pod, uint32_t* results, uint32_t maxResults, uint32_t startIndex, bool* overflow_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& geomPose = reinterpret_cast<physx::PxTransform const&>(*geomPose_pod);
         physx::PxTriangleMeshGeometry const& meshGeom = reinterpret_cast<physx::PxTriangleMeshGeometry const&>(*meshGeom_pod);
@@ -7160,7 +7160,7 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxMeshQuery_findOverlapHeightField(physx_PxGeometry const* geom_pod, physx_PxTransform const* geomPose_pod, physx_PxHeightFieldGeometry const* hfGeom_pod, physx_PxTransform const* hfPose_pod, uint32_t* results, uint32_t maxResults, uint32_t startIndex, bool* overflow_pod, PxGeometryQueryFlags queryFlags_pod) {
+    uint32_t PxMeshQuery_findOverlapHeightField(physx_PxGeometry const* geom_pod, physx_PxTransform const* geomPose_pod, physx_PxHeightFieldGeometry const* hfGeom_pod, physx_PxTransform const* hfPose_pod, uint32_t* results, uint32_t maxResults, uint32_t startIndex, bool* overflow_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& geomPose = reinterpret_cast<physx::PxTransform const&>(*geomPose_pod);
         physx::PxHeightFieldGeometry const& hfGeom = reinterpret_cast<physx::PxHeightFieldGeometry const&>(*hfGeom_pod);
@@ -7171,7 +7171,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxMeshQuery_sweep(physx_PxVec3 const* unitDir_pod, float distance, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, uint32_t triangleCount, physx_PxTriangle const* triangles_pod, physx_PxGeomSweepHit* sweepHit_pod, PxHitFlags hitFlags_pod, uint32_t const* cachedIndex, float inflation, bool doubleSided, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxMeshQuery_sweep(physx_PxVec3 const* unitDir_pod, float distance, physx_PxGeometry const* geom_pod, physx_PxTransform const* pose_pod, uint32_t triangleCount, physx_PxTriangle const* triangles_pod, physx_PxGeomSweepHit* sweepHit_pod, physx_PxHitFlags hitFlags_pod, uint32_t const* cachedIndex, float inflation, bool doubleSided, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
         physx::PxGeometry const& geom = reinterpret_cast<physx::PxGeometry const&>(*geom_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -7298,10 +7298,10 @@ extern "C" {
         return return_val;
     }
 
-    PxTriangleMeshFlags PxTriangleMesh_getTriangleMeshFlags(physx_PxTriangleMesh const* self__pod) {
+    physx_PxTriangleMeshFlags PxTriangleMesh_getTriangleMeshFlags(physx_PxTriangleMesh const* self__pod) {
         physx::PxTriangleMesh const* self_ = reinterpret_cast<physx::PxTriangleMesh const*>(self__pod);
         physx::PxTriangleMeshFlags return_val = self_->getTriangleMeshFlags();
-        PxTriangleMeshFlags return_val_pod;
+        physx_PxTriangleMeshFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7415,10 +7415,10 @@ extern "C" {
         return return_val;
     }
 
-    PxTetrahedronMeshFlags PxTetrahedronMesh_getTetrahedronMeshFlags(physx_PxTetrahedronMesh const* self__pod) {
+    physx_PxTetrahedronMeshFlags PxTetrahedronMesh_getTetrahedronMeshFlags(physx_PxTetrahedronMesh const* self__pod) {
         physx::PxTetrahedronMesh const* self_ = reinterpret_cast<physx::PxTetrahedronMesh const*>(self__pod);
         physx::PxTetrahedronMeshFlags return_val = self_->getTetrahedronMeshFlags();
-        PxTetrahedronMeshFlags return_val_pod;
+        physx_PxTetrahedronMeshFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7551,10 +7551,10 @@ extern "C" {
         self_->release();
     }
 
-    PxActorType PxActor_getType(physx_PxActor const* self__pod) {
+    physx_PxActorType PxActor_getType(physx_PxActor const* self__pod) {
         physx::PxActor const* self_ = reinterpret_cast<physx::PxActor const*>(self__pod);
         physx::PxActorType::Enum return_val = self_->getType();
-        PxActorType return_val_pod;
+        physx_PxActorType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7585,22 +7585,22 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxActor_setActorFlag(physx_PxActor* self__pod, PxActorFlag flag_pod, bool value) {
+    void PxActor_setActorFlag(physx_PxActor* self__pod, physx_PxActorFlag flag_pod, bool value) {
         physx::PxActor* self_ = reinterpret_cast<physx::PxActor*>(self__pod);
         auto flag = static_cast<physx::PxActorFlag::Enum>(flag_pod);
         self_->setActorFlag(flag, value);
     }
 
-    void PxActor_setActorFlags(physx_PxActor* self__pod, PxActorFlags inFlags_pod) {
+    void PxActor_setActorFlags(physx_PxActor* self__pod, physx_PxActorFlags inFlags_pod) {
         physx::PxActor* self_ = reinterpret_cast<physx::PxActor*>(self__pod);
         auto inFlags = physx::PxActorFlags(inFlags_pod);
         self_->setActorFlags(inFlags);
     }
 
-    PxActorFlags PxActor_getActorFlags(physx_PxActor const* self__pod) {
+    physx_PxActorFlags PxActor_getActorFlags(physx_PxActor const* self__pod) {
         physx::PxActor const* self_ = reinterpret_cast<physx::PxActor const*>(self__pod);
         physx::PxActorFlags return_val = self_->getActorFlags();
-        PxActorFlags return_val_pod;
+        physx_PxActorFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7634,7 +7634,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    uint32_t phys_PxGetAggregateFilterHint(PxAggregateType type_pod, bool enableSelfCollision) {
+    uint32_t phys_PxGetAggregateFilterHint(physx_PxAggregateType type_pod, bool enableSelfCollision) {
         auto type = static_cast<physx::PxAggregateType::Enum>(type_pod);
         uint32_t return_val = PxGetAggregateFilterHint(type, enableSelfCollision);
         return return_val;
@@ -7645,9 +7645,9 @@ extern "C" {
         return return_val;
     }
 
-    PxAggregateType phys_PxGetAggregateType(uint32_t hint) {
+    physx_PxAggregateType phys_PxGetAggregateType(uint32_t hint) {
         physx::PxAggregateType::Enum return_val = PxGetAggregateType(hint);
-        PxAggregateType return_val_pod;
+        physx_PxAggregateType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -7881,7 +7881,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxArticulationDrive PxArticulationDrive_new_1(float stiffness_, float damping_, float maxForce_, PxArticulationDriveType driveType__pod) {
+    physx_PxArticulationDrive PxArticulationDrive_new_1(float stiffness_, float damping_, float maxForce_, physx_PxArticulationDriveType driveType__pod) {
         auto driveType_ = static_cast<physx::PxArticulationDriveType::Enum>(driveType__pod);
         PxArticulationDrive return_val(stiffness_, damping_, maxForce_, driveType_);
         physx_PxArticulationDrive return_val_pod;
@@ -7998,13 +7998,13 @@ extern "C" {
         return return_val;
     }
 
-    void PxArticulationTendonJoint_setCoefficient(physx_PxArticulationTendonJoint* self__pod, PxArticulationAxis axis_pod, float coefficient, float recipCoefficient) {
+    void PxArticulationTendonJoint_setCoefficient(physx_PxArticulationTendonJoint* self__pod, physx_PxArticulationAxis axis_pod, float coefficient, float recipCoefficient) {
         physx::PxArticulationTendonJoint* self_ = reinterpret_cast<physx::PxArticulationTendonJoint*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         self_->setCoefficient(axis, coefficient, recipCoefficient);
     }
 
-    void PxArticulationTendonJoint_getCoefficient(physx_PxArticulationTendonJoint const* self__pod, PxArticulationAxis* axis_pod, float* coefficient_pod, float* recipCoefficient_pod) {
+    void PxArticulationTendonJoint_getCoefficient(physx_PxArticulationTendonJoint const* self__pod, physx_PxArticulationAxis* axis_pod, float* coefficient_pod, float* recipCoefficient_pod) {
         physx::PxArticulationTendonJoint const* self_ = reinterpret_cast<physx::PxArticulationTendonJoint const*>(self__pod);
         physx::PxArticulationAxis::Enum& axis = reinterpret_cast<physx::PxArticulationAxis::Enum&>(*axis_pod);
         float& coefficient = *coefficient_pod;
@@ -8130,7 +8130,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxArticulationTendonJoint* PxArticulationFixedTendon_createTendonJoint(physx_PxArticulationFixedTendon* self__pod, physx_PxArticulationTendonJoint* parent_pod, PxArticulationAxis axis_pod, float coefficient, float recipCoefficient, physx_PxArticulationLink* link_pod) {
+    physx_PxArticulationTendonJoint* PxArticulationFixedTendon_createTendonJoint(physx_PxArticulationFixedTendon* self__pod, physx_PxArticulationTendonJoint* parent_pod, physx_PxArticulationAxis axis_pod, float coefficient, float recipCoefficient, physx_PxArticulationLink* link_pod) {
         physx::PxArticulationFixedTendon* self_ = reinterpret_cast<physx::PxArticulationFixedTendon*>(self__pod);
         physx::PxArticulationTendonJoint* parent = reinterpret_cast<physx::PxArticulationTendonJoint*>(parent_pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
@@ -8243,15 +8243,15 @@ extern "C" {
         return return_val_pod;
     }
 
-    PxArticulationSensorFlags PxArticulationSensor_getFlags(physx_PxArticulationSensor const* self__pod) {
+    physx_PxArticulationSensorFlags PxArticulationSensor_getFlags(physx_PxArticulationSensor const* self__pod) {
         physx::PxArticulationSensor const* self_ = reinterpret_cast<physx::PxArticulationSensor const*>(self__pod);
         physx::PxArticulationSensorFlags return_val = self_->getFlags();
-        PxArticulationSensorFlags return_val_pod;
+        physx_PxArticulationSensorFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationSensor_setFlag(physx_PxArticulationSensor* self__pod, PxArticulationSensorFlag flag_pod, bool enabled) {
+    void PxArticulationSensor_setFlag(physx_PxArticulationSensor* self__pod, physx_PxArticulationSensorFlag flag_pod, bool enabled) {
         physx::PxArticulationSensor* self_ = reinterpret_cast<physx::PxArticulationSensor*>(self__pod);
         auto flag = static_cast<physx::PxArticulationSensorFlag::Enum>(flag_pod);
         self_->setFlag(flag, enabled);
@@ -8412,22 +8412,22 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxArticulationReducedCoordinate_setArticulationFlags(physx_PxArticulationReducedCoordinate* self__pod, PxArticulationFlags flags_pod) {
+    void PxArticulationReducedCoordinate_setArticulationFlags(physx_PxArticulationReducedCoordinate* self__pod, physx_PxArticulationFlags flags_pod) {
         physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
         auto flags = physx::PxArticulationFlags(flags_pod);
         self_->setArticulationFlags(flags);
     }
 
-    void PxArticulationReducedCoordinate_setArticulationFlag(physx_PxArticulationReducedCoordinate* self__pod, PxArticulationFlag flag_pod, bool value) {
+    void PxArticulationReducedCoordinate_setArticulationFlag(physx_PxArticulationReducedCoordinate* self__pod, physx_PxArticulationFlag flag_pod, bool value) {
         physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
         auto flag = static_cast<physx::PxArticulationFlag::Enum>(flag_pod);
         self_->setArticulationFlag(flag, value);
     }
 
-    PxArticulationFlags PxArticulationReducedCoordinate_getArticulationFlags(physx_PxArticulationReducedCoordinate const* self__pod) {
+    physx_PxArticulationFlags PxArticulationReducedCoordinate_getArticulationFlags(physx_PxArticulationReducedCoordinate const* self__pod) {
         physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
         physx::PxArticulationFlags return_val = self_->getArticulationFlags();
-        PxArticulationFlags return_val_pod;
+        physx_PxArticulationFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -8457,14 +8457,14 @@ extern "C" {
         self_->zeroCache(cache);
     }
 
-    void PxArticulationReducedCoordinate_applyCache(physx_PxArticulationReducedCoordinate* self__pod, physx_PxArticulationCache* cache_pod, PxArticulationCacheFlags flags_pod, bool autowake) {
+    void PxArticulationReducedCoordinate_applyCache(physx_PxArticulationReducedCoordinate* self__pod, physx_PxArticulationCache* cache_pod, physx_PxArticulationCacheFlags flags_pod, bool autowake) {
         physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
         physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
         auto flags = physx::PxArticulationCacheFlags(flags_pod);
         self_->applyCache(cache, flags, autowake);
     }
 
-    void PxArticulationReducedCoordinate_copyInternalStateToCache(physx_PxArticulationReducedCoordinate const* self__pod, physx_PxArticulationCache* cache_pod, PxArticulationCacheFlags flags_pod) {
+    void PxArticulationReducedCoordinate_copyInternalStateToCache(physx_PxArticulationReducedCoordinate const* self__pod, physx_PxArticulationCache* cache_pod, physx_PxArticulationCacheFlags flags_pod) {
         physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
         physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
         auto flags = physx::PxArticulationCacheFlags(flags_pod);
@@ -8693,7 +8693,7 @@ extern "C" {
         return return_val;
     }
 
-    void PxArticulationReducedCoordinate_updateKinematic(physx_PxArticulationReducedCoordinate* self__pod, PxArticulationKinematicFlags flags_pod) {
+    void PxArticulationReducedCoordinate_updateKinematic(physx_PxArticulationReducedCoordinate* self__pod, physx_PxArticulationKinematicFlags flags_pod) {
         physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
         auto flags = physx::PxArticulationKinematicFlags(flags_pod);
         self_->updateKinematic(flags);
@@ -8741,44 +8741,44 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setJointType(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationJointType jointType_pod) {
+    void PxArticulationJointReducedCoordinate_setJointType(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationJointType jointType_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto jointType = static_cast<physx::PxArticulationJointType::Enum>(jointType_pod);
         self_->setJointType(jointType);
     }
 
-    PxArticulationJointType PxArticulationJointReducedCoordinate_getJointType(physx_PxArticulationJointReducedCoordinate const* self__pod) {
+    physx_PxArticulationJointType PxArticulationJointReducedCoordinate_getJointType(physx_PxArticulationJointReducedCoordinate const* self__pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         physx::PxArticulationJointType::Enum return_val = self_->getJointType();
-        PxArticulationJointType return_val_pod;
+        physx_PxArticulationJointType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setMotion(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, PxArticulationMotion motion_pod) {
+    void PxArticulationJointReducedCoordinate_setMotion(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, physx_PxArticulationMotion motion_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         auto motion = static_cast<physx::PxArticulationMotion::Enum>(motion_pod);
         self_->setMotion(axis, motion);
     }
 
-    PxArticulationMotion PxArticulationJointReducedCoordinate_getMotion(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    physx_PxArticulationMotion PxArticulationJointReducedCoordinate_getMotion(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         physx::PxArticulationMotion::Enum return_val = self_->getMotion(axis);
-        PxArticulationMotion return_val_pod;
+        physx_PxArticulationMotion return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setLimitParams(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, physx_PxArticulationLimit const* limit_pod) {
+    void PxArticulationJointReducedCoordinate_setLimitParams(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, physx_PxArticulationLimit const* limit_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         physx::PxArticulationLimit const& limit = reinterpret_cast<physx::PxArticulationLimit const&>(*limit_pod);
         self_->setLimitParams(axis, limit);
     }
 
-    physx_PxArticulationLimit PxArticulationJointReducedCoordinate_getLimitParams(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    physx_PxArticulationLimit PxArticulationJointReducedCoordinate_getLimitParams(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         physx::PxArticulationLimit return_val = self_->getLimitParams(axis);
@@ -8787,14 +8787,14 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setDriveParams(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, physx_PxArticulationDrive const* drive_pod) {
+    void PxArticulationJointReducedCoordinate_setDriveParams(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, physx_PxArticulationDrive const* drive_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         physx::PxArticulationDrive const& drive = reinterpret_cast<physx::PxArticulationDrive const&>(*drive_pod);
         self_->setDriveParams(axis, drive);
     }
 
-    physx_PxArticulationDrive PxArticulationJointReducedCoordinate_getDriveParams(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    physx_PxArticulationDrive PxArticulationJointReducedCoordinate_getDriveParams(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         physx::PxArticulationDrive return_val = self_->getDriveParams(axis);
@@ -8803,39 +8803,39 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setDriveTarget(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, float target, bool autowake) {
+    void PxArticulationJointReducedCoordinate_setDriveTarget(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, float target, bool autowake) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         self_->setDriveTarget(axis, target, autowake);
     }
 
-    float PxArticulationJointReducedCoordinate_getDriveTarget(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    float PxArticulationJointReducedCoordinate_getDriveTarget(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         float return_val = self_->getDriveTarget(axis);
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setDriveVelocity(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, float targetVel, bool autowake) {
+    void PxArticulationJointReducedCoordinate_setDriveVelocity(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, float targetVel, bool autowake) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         self_->setDriveVelocity(axis, targetVel, autowake);
     }
 
-    float PxArticulationJointReducedCoordinate_getDriveVelocity(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    float PxArticulationJointReducedCoordinate_getDriveVelocity(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         float return_val = self_->getDriveVelocity(axis);
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setArmature(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, float armature) {
+    void PxArticulationJointReducedCoordinate_setArmature(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, float armature) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         self_->setArmature(axis, armature);
     }
 
-    float PxArticulationJointReducedCoordinate_getArmature(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    float PxArticulationJointReducedCoordinate_getArmature(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         float return_val = self_->getArmature(axis);
@@ -8864,26 +8864,26 @@ extern "C" {
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setJointPosition(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, float jointPos) {
+    void PxArticulationJointReducedCoordinate_setJointPosition(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, float jointPos) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         self_->setJointPosition(axis, jointPos);
     }
 
-    float PxArticulationJointReducedCoordinate_getJointPosition(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    float PxArticulationJointReducedCoordinate_getJointPosition(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         float return_val = self_->getJointPosition(axis);
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setJointVelocity(physx_PxArticulationJointReducedCoordinate* self__pod, PxArticulationAxis axis_pod, float jointVel) {
+    void PxArticulationJointReducedCoordinate_setJointVelocity(physx_PxArticulationJointReducedCoordinate* self__pod, physx_PxArticulationAxis axis_pod, float jointVel) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         self_->setJointVelocity(axis, jointVel);
     }
 
-    float PxArticulationJointReducedCoordinate_getJointVelocity(physx_PxArticulationJointReducedCoordinate const* self__pod, PxArticulationAxis axis_pod) {
+    float PxArticulationJointReducedCoordinate_getJointVelocity(physx_PxArticulationJointReducedCoordinate const* self__pod, physx_PxArticulationAxis axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
         float return_val = self_->getJointVelocity(axis);
@@ -9044,22 +9044,22 @@ extern "C" {
         return return_val;
     }
 
-    void PxShape_setFlag(physx_PxShape* self__pod, PxShapeFlag flag_pod, bool value) {
+    void PxShape_setFlag(physx_PxShape* self__pod, physx_PxShapeFlag flag_pod, bool value) {
         physx::PxShape* self_ = reinterpret_cast<physx::PxShape*>(self__pod);
         auto flag = static_cast<physx::PxShapeFlag::Enum>(flag_pod);
         self_->setFlag(flag, value);
     }
 
-    void PxShape_setFlags(physx_PxShape* self__pod, PxShapeFlags inFlags_pod) {
+    void PxShape_setFlags(physx_PxShape* self__pod, physx_PxShapeFlags inFlags_pod) {
         physx::PxShape* self_ = reinterpret_cast<physx::PxShape*>(self__pod);
         auto inFlags = physx::PxShapeFlags(inFlags_pod);
         self_->setFlags(inFlags);
     }
 
-    PxShapeFlags PxShape_getFlags(physx_PxShape const* self__pod) {
+    physx_PxShapeFlags PxShape_getFlags(physx_PxShape const* self__pod) {
         physx::PxShape const* self_ = reinterpret_cast<physx::PxShape const*>(self__pod);
         physx::PxShapeFlags return_val = self_->getFlags();
-        PxShapeFlags return_val_pod;
+        physx_PxShapeFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -9324,33 +9324,33 @@ extern "C" {
         return return_val;
     }
 
-    void PxRigidBody_addForce(physx_PxRigidBody* self__pod, physx_PxVec3 const* force_pod, PxForceMode mode_pod, bool autowake) {
+    void PxRigidBody_addForce(physx_PxRigidBody* self__pod, physx_PxVec3 const* force_pod, physx_PxForceMode mode_pod, bool autowake) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         physx::PxVec3 const& force = reinterpret_cast<physx::PxVec3 const&>(*force_pod);
         auto mode = static_cast<physx::PxForceMode::Enum>(mode_pod);
         self_->addForce(force, mode, autowake);
     }
 
-    void PxRigidBody_addTorque(physx_PxRigidBody* self__pod, physx_PxVec3 const* torque_pod, PxForceMode mode_pod, bool autowake) {
+    void PxRigidBody_addTorque(physx_PxRigidBody* self__pod, physx_PxVec3 const* torque_pod, physx_PxForceMode mode_pod, bool autowake) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         physx::PxVec3 const& torque = reinterpret_cast<physx::PxVec3 const&>(*torque_pod);
         auto mode = static_cast<physx::PxForceMode::Enum>(mode_pod);
         self_->addTorque(torque, mode, autowake);
     }
 
-    void PxRigidBody_clearForce(physx_PxRigidBody* self__pod, PxForceMode mode_pod) {
+    void PxRigidBody_clearForce(physx_PxRigidBody* self__pod, physx_PxForceMode mode_pod) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         auto mode = static_cast<physx::PxForceMode::Enum>(mode_pod);
         self_->clearForce(mode);
     }
 
-    void PxRigidBody_clearTorque(physx_PxRigidBody* self__pod, PxForceMode mode_pod) {
+    void PxRigidBody_clearTorque(physx_PxRigidBody* self__pod, physx_PxForceMode mode_pod) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         auto mode = static_cast<physx::PxForceMode::Enum>(mode_pod);
         self_->clearTorque(mode);
     }
 
-    void PxRigidBody_setForceAndTorque(physx_PxRigidBody* self__pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* torque_pod, PxForceMode mode_pod) {
+    void PxRigidBody_setForceAndTorque(physx_PxRigidBody* self__pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* torque_pod, physx_PxForceMode mode_pod) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         physx::PxVec3 const& force = reinterpret_cast<physx::PxVec3 const&>(*force_pod);
         physx::PxVec3 const& torque = reinterpret_cast<physx::PxVec3 const&>(*torque_pod);
@@ -9358,22 +9358,22 @@ extern "C" {
         self_->setForceAndTorque(force, torque, mode);
     }
 
-    void PxRigidBody_setRigidBodyFlag(physx_PxRigidBody* self__pod, PxRigidBodyFlag flag_pod, bool value) {
+    void PxRigidBody_setRigidBodyFlag(physx_PxRigidBody* self__pod, physx_PxRigidBodyFlag flag_pod, bool value) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         auto flag = static_cast<physx::PxRigidBodyFlag::Enum>(flag_pod);
         self_->setRigidBodyFlag(flag, value);
     }
 
-    void PxRigidBody_setRigidBodyFlags(physx_PxRigidBody* self__pod, PxRigidBodyFlags inFlags_pod) {
+    void PxRigidBody_setRigidBodyFlags(physx_PxRigidBody* self__pod, physx_PxRigidBodyFlags inFlags_pod) {
         physx::PxRigidBody* self_ = reinterpret_cast<physx::PxRigidBody*>(self__pod);
         auto inFlags = physx::PxRigidBodyFlags(inFlags_pod);
         self_->setRigidBodyFlags(inFlags);
     }
 
-    PxRigidBodyFlags PxRigidBody_getRigidBodyFlags(physx_PxRigidBody const* self__pod) {
+    physx_PxRigidBodyFlags PxRigidBody_getRigidBodyFlags(physx_PxRigidBody const* self__pod) {
         physx::PxRigidBody const* self_ = reinterpret_cast<physx::PxRigidBody const*>(self__pod);
         physx::PxRigidBodyFlags return_val = self_->getRigidBodyFlags();
-        PxRigidBodyFlags return_val_pod;
+        physx_PxRigidBodyFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -9545,21 +9545,21 @@ extern "C" {
         self_->markDirty();
     }
 
-    PxConstraintFlags PxConstraint_getFlags(physx_PxConstraint const* self__pod) {
+    physx_PxConstraintFlags PxConstraint_getFlags(physx_PxConstraint const* self__pod) {
         physx::PxConstraint const* self_ = reinterpret_cast<physx::PxConstraint const*>(self__pod);
         physx::PxConstraintFlags return_val = self_->getFlags();
-        PxConstraintFlags return_val_pod;
+        physx_PxConstraintFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxConstraint_setFlags(physx_PxConstraint* self__pod, PxConstraintFlags flags_pod) {
+    void PxConstraint_setFlags(physx_PxConstraint* self__pod, physx_PxConstraintFlags flags_pod) {
         physx::PxConstraint* self_ = reinterpret_cast<physx::PxConstraint*>(self__pod);
         auto flags = physx::PxConstraintFlags(flags_pod);
         self_->setFlags(flags);
     }
 
-    void PxConstraint_setFlag(physx_PxConstraint* self__pod, PxConstraintFlag flag_pod, bool value) {
+    void PxConstraint_setFlag(physx_PxConstraint* self__pod, physx_PxConstraintFlag flag_pod, bool value) {
         physx::PxConstraint* self_ = reinterpret_cast<physx::PxConstraint*>(self__pod);
         auto flag = static_cast<physx::PxConstraintFlag::Enum>(flag_pod);
         self_->setFlag(flag, value);
@@ -9952,7 +9952,7 @@ extern "C" {
         self_->onCCDContactModify(pairs, count);
     }
 
-    void PxDeletionListener_onRelease(physx_PxDeletionListener* self__pod, physx_PxBase const* observed_pod, void* userData, PxDeletionEventFlag deletionEvent_pod) {
+    void PxDeletionListener_onRelease(physx_PxDeletionListener* self__pod, physx_PxBase const* observed_pod, void* userData, physx_PxDeletionEventFlag deletionEvent_pod) {
         physx::PxDeletionListener* self_ = reinterpret_cast<physx::PxDeletionListener*>(self__pod);
         physx::PxBase const* observed = reinterpret_cast<physx::PxBase const*>(observed_pod);
         auto deletionEvent = static_cast<physx::PxDeletionEventFlag::Enum>(deletionEvent_pod);
@@ -9998,7 +9998,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxFilterData PxFilterData_new(PxEMPTY anon_param0_pod) {
+    physx_PxFilterData PxFilterData_new(physx_PxEMPTY anon_param0_pod) {
         auto anon_param0 = static_cast<physx::PxEMPTY>(anon_param0_pod);
         PxFilterData return_val(anon_param0);
         physx_PxFilterData return_val_pod;
@@ -10025,9 +10025,9 @@ extern "C" {
         self_->setToDefault();
     }
 
-    PxFilterObjectType phys_PxGetFilterObjectType(uint32_t attr) {
+    physx_PxFilterObjectType phys_PxGetFilterObjectType(uint32_t attr) {
         physx::PxFilterObjectType::Enum return_val = PxGetFilterObjectType(attr);
-        PxFilterObjectType return_val_pod;
+        physx_PxFilterObjectType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10042,7 +10042,7 @@ extern "C" {
         return return_val;
     }
 
-    PxFilterFlags PxSimulationFilterCallback_pairFound(physx_PxSimulationFilterCallback* self__pod, uint32_t pairID, uint32_t attributes0, physx_PxFilterData filterData0_pod, physx_PxActor const* a0_pod, physx_PxShape const* s0_pod, uint32_t attributes1, physx_PxFilterData filterData1_pod, physx_PxActor const* a1_pod, physx_PxShape const* s1_pod, PxPairFlags* pairFlags_pod) {
+    physx_PxFilterFlags PxSimulationFilterCallback_pairFound(physx_PxSimulationFilterCallback* self__pod, uint32_t pairID, uint32_t attributes0, physx_PxFilterData filterData0_pod, physx_PxActor const* a0_pod, physx_PxShape const* s0_pod, uint32_t attributes1, physx_PxFilterData filterData1_pod, physx_PxActor const* a1_pod, physx_PxShape const* s1_pod, physx_PxPairFlags* pairFlags_pod) {
         physx::PxSimulationFilterCallback* self_ = reinterpret_cast<physx::PxSimulationFilterCallback*>(self__pod);
         physx::PxFilterData filterData0;
         memcpy(&filterData0, &filterData0_pod, sizeof(filterData0));
@@ -10054,7 +10054,7 @@ extern "C" {
         physx::PxShape const* s1 = reinterpret_cast<physx::PxShape const*>(s1_pod);
         physx::PxPairFlags& pairFlags = reinterpret_cast<physx::PxPairFlags&>(*pairFlags_pod);
         physx::PxFilterFlags return_val = self_->pairFound(pairID, attributes0, filterData0, a0, s0, attributes1, filterData1, a1, s1, pairFlags);
-        PxFilterFlags return_val_pod;
+        physx_PxFilterFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10068,7 +10068,7 @@ extern "C" {
         self_->pairLost(pairID, attributes0, filterData0, attributes1, filterData1, objectRemoved);
     }
 
-    bool PxSimulationFilterCallback_statusChange(physx_PxSimulationFilterCallback* self__pod, uint32_t* pairID_pod, PxPairFlags* pairFlags_pod, PxFilterFlags* filterFlags_pod) {
+    bool PxSimulationFilterCallback_statusChange(physx_PxSimulationFilterCallback* self__pod, uint32_t* pairID_pod, physx_PxPairFlags* pairFlags_pod, physx_PxFilterFlags* filterFlags_pod) {
         physx::PxSimulationFilterCallback* self_ = reinterpret_cast<physx::PxSimulationFilterCallback*>(self__pod);
         uint32_t& pairID = *pairID_pod;
         physx::PxPairFlags& pairFlags = reinterpret_cast<physx::PxPairFlags&>(*pairFlags_pod);
@@ -10077,10 +10077,10 @@ extern "C" {
         return return_val;
     }
 
-    PxDataAccessFlags PxLockedData_getDataAccessFlags(physx_PxLockedData* self__pod) {
+    physx_PxDataAccessFlags PxLockedData_getDataAccessFlags(physx_PxLockedData* self__pod) {
         physx::PxLockedData* self_ = reinterpret_cast<physx::PxLockedData*>(self__pod);
         physx::PxDataAccessFlags return_val = self_->getDataAccessFlags();
-        PxDataAccessFlags return_val_pod;
+        physx_PxDataAccessFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10139,50 +10139,50 @@ extern "C" {
         return return_val;
     }
 
-    void PxMaterial_setFlag(physx_PxMaterial* self__pod, PxMaterialFlag flag_pod, bool b) {
+    void PxMaterial_setFlag(physx_PxMaterial* self__pod, physx_PxMaterialFlag flag_pod, bool b) {
         physx::PxMaterial* self_ = reinterpret_cast<physx::PxMaterial*>(self__pod);
         auto flag = static_cast<physx::PxMaterialFlag::Enum>(flag_pod);
         self_->setFlag(flag, b);
     }
 
-    void PxMaterial_setFlags(physx_PxMaterial* self__pod, PxMaterialFlags flags_pod) {
+    void PxMaterial_setFlags(physx_PxMaterial* self__pod, physx_PxMaterialFlags flags_pod) {
         physx::PxMaterial* self_ = reinterpret_cast<physx::PxMaterial*>(self__pod);
         auto flags = physx::PxMaterialFlags(flags_pod);
         self_->setFlags(flags);
     }
 
-    PxMaterialFlags PxMaterial_getFlags(physx_PxMaterial const* self__pod) {
+    physx_PxMaterialFlags PxMaterial_getFlags(physx_PxMaterial const* self__pod) {
         physx::PxMaterial const* self_ = reinterpret_cast<physx::PxMaterial const*>(self__pod);
         physx::PxMaterialFlags return_val = self_->getFlags();
-        PxMaterialFlags return_val_pod;
+        physx_PxMaterialFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxMaterial_setFrictionCombineMode(physx_PxMaterial* self__pod, PxCombineMode combMode_pod) {
+    void PxMaterial_setFrictionCombineMode(physx_PxMaterial* self__pod, physx_PxCombineMode combMode_pod) {
         physx::PxMaterial* self_ = reinterpret_cast<physx::PxMaterial*>(self__pod);
         auto combMode = static_cast<physx::PxCombineMode::Enum>(combMode_pod);
         self_->setFrictionCombineMode(combMode);
     }
 
-    PxCombineMode PxMaterial_getFrictionCombineMode(physx_PxMaterial const* self__pod) {
+    physx_PxCombineMode PxMaterial_getFrictionCombineMode(physx_PxMaterial const* self__pod) {
         physx::PxMaterial const* self_ = reinterpret_cast<physx::PxMaterial const*>(self__pod);
         physx::PxCombineMode::Enum return_val = self_->getFrictionCombineMode();
-        PxCombineMode return_val_pod;
+        physx_PxCombineMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxMaterial_setRestitutionCombineMode(physx_PxMaterial* self__pod, PxCombineMode combMode_pod) {
+    void PxMaterial_setRestitutionCombineMode(physx_PxMaterial* self__pod, physx_PxCombineMode combMode_pod) {
         physx::PxMaterial* self_ = reinterpret_cast<physx::PxMaterial*>(self__pod);
         auto combMode = static_cast<physx::PxCombineMode::Enum>(combMode_pod);
         self_->setRestitutionCombineMode(combMode);
     }
 
-    PxCombineMode PxMaterial_getRestitutionCombineMode(physx_PxMaterial const* self__pod) {
+    physx_PxCombineMode PxMaterial_getRestitutionCombineMode(physx_PxMaterial const* self__pod) {
         physx::PxMaterial const* self_ = reinterpret_cast<physx::PxMaterial const*>(self__pod);
         physx::PxCombineMode::Enum return_val = self_->getRestitutionCombineMode();
-        PxCombineMode return_val_pod;
+        physx_PxCombineMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10444,7 +10444,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxShape* PxPhysics_createShape(physx_PxPhysics* self__pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial const* material_pod, bool isExclusive, PxShapeFlags shapeFlags_pod) {
+    physx_PxShape* PxPhysics_createShape(physx_PxPhysics* self__pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial const* material_pod, bool isExclusive, physx_PxShapeFlags shapeFlags_pod) {
         physx::PxPhysics* self_ = reinterpret_cast<physx::PxPhysics*>(self__pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxMaterial const& material = reinterpret_cast<physx::PxMaterial const&>(*material_pod);
@@ -10454,7 +10454,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxShape* PxPhysics_createShape_1(physx_PxPhysics* self__pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial* const* materials_pod, uint16_t materialCount, bool isExclusive, PxShapeFlags shapeFlags_pod) {
+    physx_PxShape* PxPhysics_createShape_1(physx_PxPhysics* self__pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial* const* materials_pod, uint16_t materialCount, bool isExclusive, physx_PxShapeFlags shapeFlags_pod) {
         physx::PxPhysics* self_ = reinterpret_cast<physx::PxPhysics*>(self__pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxMaterial* const* materials = reinterpret_cast<physx::PxMaterial* const*>(materials_pod);
@@ -10515,7 +10515,7 @@ extern "C" {
         return return_val;
     }
 
-    void PxPhysics_registerDeletionListener(physx_PxPhysics* self__pod, physx_PxDeletionListener* observer_pod, PxDeletionEventFlags const* deletionEvents_pod, bool restrictedObjectSet) {
+    void PxPhysics_registerDeletionListener(physx_PxPhysics* self__pod, physx_PxDeletionListener* observer_pod, physx_PxDeletionEventFlags const* deletionEvents_pod, bool restrictedObjectSet) {
         physx::PxPhysics* self_ = reinterpret_cast<physx::PxPhysics*>(self__pod);
         physx::PxDeletionListener& observer = reinterpret_cast<physx::PxDeletionListener&>(*observer_pod);
         physx::PxDeletionEventFlags const& deletionEvents = reinterpret_cast<physx::PxDeletionEventFlags const&>(*deletionEvents_pod);
@@ -10603,7 +10603,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxQueryFilterData PxQueryFilterData_new_1(physx_PxFilterData const* fd_pod, PxQueryFlags f_pod) {
+    physx_PxQueryFilterData PxQueryFilterData_new_1(physx_PxFilterData const* fd_pod, physx_PxQueryFlags f_pod) {
         physx::PxFilterData const& fd = reinterpret_cast<physx::PxFilterData const&>(*fd_pod);
         auto f = physx::PxQueryFlags(f_pod);
         PxQueryFilterData return_val(fd, f);
@@ -10612,7 +10612,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxQueryFilterData PxQueryFilterData_new_2(PxQueryFlags f_pod) {
+    physx_PxQueryFilterData PxQueryFilterData_new_2(physx_PxQueryFlags f_pod) {
         auto f = physx::PxQueryFlags(f_pod);
         PxQueryFilterData return_val(f);
         physx_PxQueryFilterData return_val_pod;
@@ -10620,26 +10620,26 @@ extern "C" {
         return return_val_pod;
     }
 
-    PxQueryHitType PxQueryFilterCallback_preFilter(physx_PxQueryFilterCallback* self__pod, physx_PxFilterData const* filterData_pod, physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod, PxHitFlags* queryFlags_pod) {
+    physx_PxQueryHitType PxQueryFilterCallback_preFilter(physx_PxQueryFilterCallback* self__pod, physx_PxFilterData const* filterData_pod, physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod, physx_PxHitFlags* queryFlags_pod) {
         physx::PxQueryFilterCallback* self_ = reinterpret_cast<physx::PxQueryFilterCallback*>(self__pod);
         physx::PxFilterData const& filterData = reinterpret_cast<physx::PxFilterData const&>(*filterData_pod);
         physx::PxShape const* shape = reinterpret_cast<physx::PxShape const*>(shape_pod);
         physx::PxRigidActor const* actor = reinterpret_cast<physx::PxRigidActor const*>(actor_pod);
         physx::PxHitFlags& queryFlags = reinterpret_cast<physx::PxHitFlags&>(*queryFlags_pod);
         physx::PxQueryHitType::Enum return_val = self_->preFilter(filterData, shape, actor, queryFlags);
-        PxQueryHitType return_val_pod;
+        physx_PxQueryHitType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxQueryHitType PxQueryFilterCallback_postFilter(physx_PxQueryFilterCallback* self__pod, physx_PxFilterData const* filterData_pod, physx_PxQueryHit const* hit_pod, physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod) {
+    physx_PxQueryHitType PxQueryFilterCallback_postFilter(physx_PxQueryFilterCallback* self__pod, physx_PxFilterData const* filterData_pod, physx_PxQueryHit const* hit_pod, physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod) {
         physx::PxQueryFilterCallback* self_ = reinterpret_cast<physx::PxQueryFilterCallback*>(self__pod);
         physx::PxFilterData const& filterData = reinterpret_cast<physx::PxFilterData const&>(*filterData_pod);
         physx::PxQueryHit const& hit = reinterpret_cast<physx::PxQueryHit const&>(*hit_pod);
         physx::PxShape const* shape = reinterpret_cast<physx::PxShape const*>(shape_pod);
         physx::PxRigidActor const* actor = reinterpret_cast<physx::PxRigidActor const*>(actor_pod);
         physx::PxQueryHitType::Enum return_val = self_->postFilter(filterData, hit, shape, actor);
-        PxQueryHitType return_val_pod;
+        physx_PxQueryHitType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10690,21 +10690,21 @@ extern "C" {
         return return_val;
     }
 
-    PxRigidDynamicLockFlags PxRigidDynamic_getRigidDynamicLockFlags(physx_PxRigidDynamic const* self__pod) {
+    physx_PxRigidDynamicLockFlags PxRigidDynamic_getRigidDynamicLockFlags(physx_PxRigidDynamic const* self__pod) {
         physx::PxRigidDynamic const* self_ = reinterpret_cast<physx::PxRigidDynamic const*>(self__pod);
         physx::PxRigidDynamicLockFlags return_val = self_->getRigidDynamicLockFlags();
-        PxRigidDynamicLockFlags return_val_pod;
+        physx_PxRigidDynamicLockFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxRigidDynamic_setRigidDynamicLockFlag(physx_PxRigidDynamic* self__pod, PxRigidDynamicLockFlag flag_pod, bool value) {
+    void PxRigidDynamic_setRigidDynamicLockFlag(physx_PxRigidDynamic* self__pod, physx_PxRigidDynamicLockFlag flag_pod, bool value) {
         physx::PxRigidDynamic* self_ = reinterpret_cast<physx::PxRigidDynamic*>(self__pod);
         auto flag = static_cast<physx::PxRigidDynamicLockFlag::Enum>(flag_pod);
         self_->setRigidDynamicLockFlag(flag, value);
     }
 
-    void PxRigidDynamic_setRigidDynamicLockFlags(physx_PxRigidDynamic* self__pod, PxRigidDynamicLockFlags flags_pod) {
+    void PxRigidDynamic_setRigidDynamicLockFlags(physx_PxRigidDynamic* self__pod, physx_PxRigidDynamicLockFlags flags_pod) {
         physx::PxRigidDynamic* self_ = reinterpret_cast<physx::PxRigidDynamic*>(self__pod);
         auto flags = physx::PxRigidDynamicLockFlags(flags_pod);
         self_->setRigidDynamicLockFlags(flags);
@@ -10828,16 +10828,16 @@ extern "C" {
         self_->forceRebuildDynamicTree(prunerIndex);
     }
 
-    void PxSceneQuerySystemBase_setUpdateMode(physx_PxSceneQuerySystemBase* self__pod, PxSceneQueryUpdateMode updateMode_pod) {
+    void PxSceneQuerySystemBase_setUpdateMode(physx_PxSceneQuerySystemBase* self__pod, physx_PxSceneQueryUpdateMode updateMode_pod) {
         physx::PxSceneQuerySystemBase* self_ = reinterpret_cast<physx::PxSceneQuerySystemBase*>(self__pod);
         auto updateMode = static_cast<physx::PxSceneQueryUpdateMode::Enum>(updateMode_pod);
         self_->setUpdateMode(updateMode);
     }
 
-    PxSceneQueryUpdateMode PxSceneQuerySystemBase_getUpdateMode(physx_PxSceneQuerySystemBase const* self__pod) {
+    physx_PxSceneQueryUpdateMode PxSceneQuerySystemBase_getUpdateMode(physx_PxSceneQuerySystemBase const* self__pod) {
         physx::PxSceneQuerySystemBase const* self_ = reinterpret_cast<physx::PxSceneQuerySystemBase const*>(self__pod);
         physx::PxSceneQueryUpdateMode::Enum return_val = self_->getUpdateMode();
-        PxSceneQueryUpdateMode return_val_pod;
+        physx_PxSceneQueryUpdateMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10853,7 +10853,7 @@ extern "C" {
         self_->flushUpdates();
     }
 
-    bool PxSceneQuerySystemBase_raycast(physx_PxSceneQuerySystemBase const* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxRaycastCallback* hitCall_pod, PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxSceneQuerySystemBase_raycast(physx_PxSceneQuerySystemBase const* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxRaycastCallback* hitCall_pod, physx_PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxSceneQuerySystemBase const* self_ = reinterpret_cast<physx::PxSceneQuerySystemBase const*>(self__pod);
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -10867,7 +10867,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxSceneQuerySystemBase_sweep(physx_PxSceneQuerySystemBase const* self__pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxSweepCallback* hitCall_pod, PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxSceneQuerySystemBase_sweep(physx_PxSceneQuerySystemBase const* self__pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxSweepCallback* hitCall_pod, physx_PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxSceneQuerySystemBase const* self_ = reinterpret_cast<physx::PxSceneQuerySystemBase const*>(self__pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -10882,7 +10882,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxSceneQuerySystemBase_overlap(physx_PxSceneQuerySystemBase const* self__pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxOverlapCallback* hitCall_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, PxGeometryQueryFlags queryFlags_pod) {
+    bool PxSceneQuerySystemBase_overlap(physx_PxSceneQuerySystemBase const* self__pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxOverlapCallback* hitCall_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, physx_PxGeometryQueryFlags queryFlags_pod) {
         physx::PxSceneQuerySystemBase const* self_ = reinterpret_cast<physx::PxSceneQuerySystemBase const*>(self__pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -10895,16 +10895,16 @@ extern "C" {
         return return_val;
     }
 
-    void PxSceneSQSystem_setSceneQueryUpdateMode(physx_PxSceneSQSystem* self__pod, PxSceneQueryUpdateMode updateMode_pod) {
+    void PxSceneSQSystem_setSceneQueryUpdateMode(physx_PxSceneSQSystem* self__pod, physx_PxSceneQueryUpdateMode updateMode_pod) {
         physx::PxSceneSQSystem* self_ = reinterpret_cast<physx::PxSceneSQSystem*>(self__pod);
         auto updateMode = static_cast<physx::PxSceneQueryUpdateMode::Enum>(updateMode_pod);
         self_->setSceneQueryUpdateMode(updateMode);
     }
 
-    PxSceneQueryUpdateMode PxSceneSQSystem_getSceneQueryUpdateMode(physx_PxSceneSQSystem const* self__pod) {
+    physx_PxSceneQueryUpdateMode PxSceneSQSystem_getSceneQueryUpdateMode(physx_PxSceneSQSystem const* self__pod) {
         physx::PxSceneSQSystem const* self_ = reinterpret_cast<physx::PxSceneSQSystem const*>(self__pod);
         physx::PxSceneQueryUpdateMode::Enum return_val = self_->getSceneQueryUpdateMode();
-        PxSceneQueryUpdateMode return_val_pod;
+        physx_PxSceneQueryUpdateMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -10925,18 +10925,18 @@ extern "C" {
         self_->forceDynamicTreeRebuild(rebuildStaticStructure, rebuildDynamicStructure);
     }
 
-    PxPruningStructureType PxSceneSQSystem_getStaticStructure(physx_PxSceneSQSystem const* self__pod) {
+    physx_PxPruningStructureType PxSceneSQSystem_getStaticStructure(physx_PxSceneSQSystem const* self__pod) {
         physx::PxSceneSQSystem const* self_ = reinterpret_cast<physx::PxSceneSQSystem const*>(self__pod);
         physx::PxPruningStructureType::Enum return_val = self_->getStaticStructure();
-        PxPruningStructureType return_val_pod;
+        physx_PxPruningStructureType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxPruningStructureType PxSceneSQSystem_getDynamicStructure(physx_PxSceneSQSystem const* self__pod) {
+    physx_PxPruningStructureType PxSceneSQSystem_getDynamicStructure(physx_PxSceneSQSystem const* self__pod) {
         physx::PxSceneSQSystem const* self_ = reinterpret_cast<physx::PxSceneSQSystem const*>(self__pod);
         physx::PxPruningStructureType::Enum return_val = self_->getDynamicStructure();
-        PxPruningStructureType return_val_pod;
+        physx_PxPruningStructureType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -11069,7 +11069,7 @@ extern "C" {
         self_->sceneQueryBuildStep(handle);
     }
 
-    physx_PxBroadPhaseDesc PxBroadPhaseDesc_new(PxBroadPhaseType type_pod) {
+    physx_PxBroadPhaseDesc PxBroadPhaseDesc_new(physx_PxBroadPhaseType type_pod) {
         auto type = static_cast<physx::PxBroadPhaseType::Enum>(type_pod);
         PxBroadPhaseDesc return_val(type);
         physx_PxBroadPhaseDesc return_val_pod;
@@ -11157,10 +11157,10 @@ extern "C" {
         self_->release();
     }
 
-    PxBroadPhaseType PxBroadPhase_getType(physx_PxBroadPhase const* self__pod) {
+    physx_PxBroadPhaseType PxBroadPhase_getType(physx_PxBroadPhase const* self__pod) {
         physx::PxBroadPhase const* self_ = reinterpret_cast<physx::PxBroadPhase const*>(self__pod);
         physx::PxBroadPhaseType::Enum return_val = self_->getType();
-        PxBroadPhaseType return_val_pod;
+        physx_PxBroadPhaseType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -11372,7 +11372,7 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxSimulationStatistics_getRbPairStats(physx_PxSimulationStatistics const* self__pod, RbPairStatsType pairType_pod, PxGeometryType g0_pod, PxGeometryType g1_pod) {
+    uint32_t PxSimulationStatistics_getRbPairStats(physx_PxSimulationStatistics const* self__pod, physx_RbPairStatsType pairType_pod, physx_PxGeometryType g0_pod, physx_PxGeometryType g1_pod) {
         physx::PxSimulationStatistics const* self_ = reinterpret_cast<physx::PxSimulationStatistics const*>(self__pod);
         auto pairType = static_cast<physx::PxSimulationStatistics::RbPairStatsType>(pairType_pod);
         auto g0 = static_cast<physx::PxGeometryType::Enum>(g0_pod);
@@ -11388,22 +11388,22 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxPvdSceneClient_setScenePvdFlag(physx_PxPvdSceneClient* self__pod, PxPvdSceneFlag flag_pod, bool value) {
+    void PxPvdSceneClient_setScenePvdFlag(physx_PxPvdSceneClient* self__pod, physx_PxPvdSceneFlag flag_pod, bool value) {
         physx::PxPvdSceneClient* self_ = reinterpret_cast<physx::PxPvdSceneClient*>(self__pod);
         auto flag = static_cast<physx::PxPvdSceneFlag::Enum>(flag_pod);
         self_->setScenePvdFlag(flag, value);
     }
 
-    void PxPvdSceneClient_setScenePvdFlags(physx_PxPvdSceneClient* self__pod, PxPvdSceneFlags flags_pod) {
+    void PxPvdSceneClient_setScenePvdFlags(physx_PxPvdSceneClient* self__pod, physx_PxPvdSceneFlags flags_pod) {
         physx::PxPvdSceneClient* self_ = reinterpret_cast<physx::PxPvdSceneClient*>(self__pod);
         auto flags = physx::PxPvdSceneFlags(flags_pod);
         self_->setScenePvdFlags(flags);
     }
 
-    PxPvdSceneFlags PxPvdSceneClient_getScenePvdFlags(physx_PxPvdSceneClient const* self__pod) {
+    physx_PxPvdSceneFlags PxPvdSceneClient_getScenePvdFlags(physx_PxPvdSceneClient const* self__pod) {
         physx::PxPvdSceneClient const* self_ = reinterpret_cast<physx::PxPvdSceneClient const*>(self__pod);
         physx::PxPvdSceneFlags return_val = self_->getScenePvdFlags();
-        PxPvdSceneFlags return_val_pod;
+        physx_PxPvdSceneFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -11470,16 +11470,16 @@ extern "C" {
         self_->release();
     }
 
-    void PxScene_setFlag(physx_PxScene* self__pod, PxSceneFlag flag_pod, bool value) {
+    void PxScene_setFlag(physx_PxScene* self__pod, physx_PxSceneFlag flag_pod, bool value) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         auto flag = static_cast<physx::PxSceneFlag::Enum>(flag_pod);
         self_->setFlag(flag, value);
     }
 
-    PxSceneFlags PxScene_getFlags(physx_PxScene const* self__pod) {
+    physx_PxSceneFlags PxScene_getFlags(physx_PxScene const* self__pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         physx::PxSceneFlags return_val = self_->getFlags();
-        PxSceneFlags return_val_pod;
+        physx_PxSceneFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -11578,14 +11578,14 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxScene_getNbActors(physx_PxScene const* self__pod, PxActorTypeFlags types_pod) {
+    uint32_t PxScene_getNbActors(physx_PxScene const* self__pod, physx_PxActorTypeFlags types_pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         auto types = physx::PxActorTypeFlags(types_pod);
         uint32_t return_val = self_->getNbActors(types);
         return return_val;
     }
 
-    uint32_t PxScene_getActors(physx_PxScene const* self__pod, PxActorTypeFlags types_pod, physx_PxActor** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
+    uint32_t PxScene_getActors(physx_PxScene const* self__pod, physx_PxActorTypeFlags types_pod, physx_PxActor** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         auto types = physx::PxActorTypeFlags(types_pod);
         physx::PxActor** userBuffer = reinterpret_cast<physx::PxActor**>(userBuffer_pod);
@@ -11751,18 +11751,18 @@ extern "C" {
         return return_val;
     }
 
-    PxPairFilteringMode PxScene_getKinematicKinematicFilteringMode(physx_PxScene const* self__pod) {
+    physx_PxPairFilteringMode PxScene_getKinematicKinematicFilteringMode(physx_PxScene const* self__pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         physx::PxPairFilteringMode::Enum return_val = self_->getKinematicKinematicFilteringMode();
-        PxPairFilteringMode return_val_pod;
+        physx_PxPairFilteringMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxPairFilteringMode PxScene_getStaticKinematicFilteringMode(physx_PxScene const* self__pod) {
+    physx_PxPairFilteringMode PxScene_getStaticKinematicFilteringMode(physx_PxScene const* self__pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         physx::PxPairFilteringMode::Enum return_val = self_->getStaticKinematicFilteringMode();
-        PxPairFilteringMode return_val_pod;
+        physx_PxPairFilteringMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -11926,30 +11926,30 @@ extern "C" {
         return return_val;
     }
 
-    PxFrictionType PxScene_getFrictionType(physx_PxScene const* self__pod) {
+    physx_PxFrictionType PxScene_getFrictionType(physx_PxScene const* self__pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         physx::PxFrictionType::Enum return_val = self_->getFrictionType();
-        PxFrictionType return_val_pod;
+        physx_PxFrictionType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxSolverType PxScene_getSolverType(physx_PxScene const* self__pod) {
+    physx_PxSolverType PxScene_getSolverType(physx_PxScene const* self__pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         physx::PxSolverType::Enum return_val = self_->getSolverType();
-        PxSolverType return_val_pod;
+        physx_PxSolverType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    bool PxScene_setVisualizationParameter(physx_PxScene* self__pod, PxVisualizationParameter param_pod, float value) {
+    bool PxScene_setVisualizationParameter(physx_PxScene* self__pod, physx_PxVisualizationParameter param_pod, float value) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         auto param = static_cast<physx::PxVisualizationParameter::Enum>(param_pod);
         bool return_val = self_->setVisualizationParameter(param, value);
         return return_val;
     }
 
-    float PxScene_getVisualizationParameter(physx_PxScene const* self__pod, PxVisualizationParameter paramEnum_pod) {
+    float PxScene_getVisualizationParameter(physx_PxScene const* self__pod, physx_PxVisualizationParameter paramEnum_pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         auto paramEnum = static_cast<physx::PxVisualizationParameter::Enum>(paramEnum_pod);
         float return_val = self_->getVisualizationParameter(paramEnum);
@@ -11983,10 +11983,10 @@ extern "C" {
         self_->getSimulationStatistics(stats);
     }
 
-    PxBroadPhaseType PxScene_getBroadPhaseType(physx_PxScene const* self__pod) {
+    physx_PxBroadPhaseType PxScene_getBroadPhaseType(physx_PxScene const* self__pod) {
         physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
         physx::PxBroadPhaseType::Enum return_val = self_->getBroadPhaseType();
-        PxBroadPhaseType return_val_pod;
+        physx_PxBroadPhaseType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -12115,25 +12115,25 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxScene_copyArticulationData(physx_PxScene* self__pod, void* data, void* index, PxArticulationGpuDataType dataType_pod, uint32_t nbCopyArticulations, void* copyEvent) {
+    void PxScene_copyArticulationData(physx_PxScene* self__pod, void* data, void* index, physx_PxArticulationGpuDataType dataType_pod, uint32_t nbCopyArticulations, void* copyEvent) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         auto dataType = static_cast<physx::PxArticulationGpuDataType::Enum>(dataType_pod);
         self_->copyArticulationData(data, index, dataType, nbCopyArticulations, copyEvent);
     }
 
-    void PxScene_applyArticulationData(physx_PxScene* self__pod, void* data, void* index, PxArticulationGpuDataType dataType_pod, uint32_t nbUpdatedArticulations, void* waitEvent, void* signalEvent) {
+    void PxScene_applyArticulationData(physx_PxScene* self__pod, void* data, void* index, physx_PxArticulationGpuDataType dataType_pod, uint32_t nbUpdatedArticulations, void* waitEvent, void* signalEvent) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         auto dataType = static_cast<physx::PxArticulationGpuDataType::Enum>(dataType_pod);
         self_->applyArticulationData(data, index, dataType, nbUpdatedArticulations, waitEvent, signalEvent);
     }
 
-    void PxScene_copySoftBodyData(physx_PxScene* self__pod, void** data, void* dataSizes, void* softBodyIndices, PxSoftBodyDataFlag flag_pod, uint32_t nbCopySoftBodies, uint32_t maxSize, void* copyEvent) {
+    void PxScene_copySoftBodyData(physx_PxScene* self__pod, void** data, void* dataSizes, void* softBodyIndices, physx_PxSoftBodyDataFlag flag_pod, uint32_t nbCopySoftBodies, uint32_t maxSize, void* copyEvent) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         auto flag = static_cast<physx::PxSoftBodyDataFlag::Enum>(flag_pod);
         self_->copySoftBodyData(data, dataSizes, softBodyIndices, flag, nbCopySoftBodies, maxSize, copyEvent);
     }
 
-    void PxScene_applySoftBodyData(physx_PxScene* self__pod, void** data, void* dataSizes, void* softBodyIndices, PxSoftBodyDataFlag flag_pod, uint32_t nbUpdatedSoftBodies, uint32_t maxSize, void* applyEvent) {
+    void PxScene_applySoftBodyData(physx_PxScene* self__pod, void** data, void* dataSizes, void* softBodyIndices, physx_PxSoftBodyDataFlag flag_pod, uint32_t nbUpdatedSoftBodies, uint32_t maxSize, void* applyEvent) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         auto flag = static_cast<physx::PxSoftBodyDataFlag::Enum>(flag_pod);
         self_->applySoftBodyData(data, dataSizes, softBodyIndices, flag, nbUpdatedSoftBodies, maxSize, applyEvent);
@@ -12151,7 +12151,7 @@ extern "C" {
         self_->copyBodyData(data, index, nbCopyActors, copyEvent);
     }
 
-    void PxScene_applyActorData(physx_PxScene* self__pod, void* data, physx_PxGpuActorPair* index_pod, PxActorCacheFlag flag_pod, uint32_t nbUpdatedActors, void* waitEvent, void* signalEvent) {
+    void PxScene_applyActorData(physx_PxScene* self__pod, void* data, physx_PxGpuActorPair* index_pod, physx_PxActorCacheFlag flag_pod, uint32_t nbUpdatedActors, void* waitEvent, void* signalEvent) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         physx::PxGpuActorPair* index = reinterpret_cast<physx::PxGpuActorPair*>(index_pod);
         auto flag = static_cast<physx::PxActorCacheFlag::Enum>(flag_pod);
@@ -12190,7 +12190,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxScene_applyParticleBufferData(physx_PxScene* self__pod, uint32_t const* indices, physx_PxGpuParticleBufferIndexPair const* bufferIndexPair_pod, PxParticleBufferFlags const* flags_pod, uint32_t nbUpdatedBuffers, void* waitEvent, void* signalEvent) {
+    void PxScene_applyParticleBufferData(physx_PxScene* self__pod, uint32_t const* indices, physx_PxGpuParticleBufferIndexPair const* bufferIndexPair_pod, physx_PxParticleBufferFlags const* flags_pod, uint32_t nbUpdatedBuffers, void* waitEvent, void* signalEvent) {
         physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
         physx::PxGpuParticleBufferIndexPair const* bufferIndexPair = reinterpret_cast<physx::PxGpuParticleBufferIndexPair const*>(bufferIndexPair_pod);
         physx::PxParticleBufferFlags const* flags = reinterpret_cast<physx::PxParticleBufferFlags const*>(flags_pod);
@@ -12526,10 +12526,10 @@ extern "C" {
         return return_val_pod;
     }
 
-    PxGeometryType PxObstacle_getType(physx_PxObstacle const* self__pod) {
+    physx_PxGeometryType PxObstacle_getType(physx_PxObstacle const* self__pod) {
         physx::PxObstacle const* self_ = reinterpret_cast<physx::PxObstacle const*>(self__pod);
         physx::PxGeometryType::Enum return_val = self_->getType();
-        PxGeometryType return_val_pod;
+        physx_PxGeometryType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -12647,18 +12647,18 @@ extern "C" {
         return return_val;
     }
 
-    PxControllerShapeType PxControllerDesc_getType(physx_PxControllerDesc const* self__pod) {
+    physx_PxControllerShapeType PxControllerDesc_getType(physx_PxControllerDesc const* self__pod) {
         physx::PxControllerDesc const* self_ = reinterpret_cast<physx::PxControllerDesc const*>(self__pod);
         physx::PxControllerShapeType::Enum return_val = self_->getType();
-        PxControllerShapeType return_val_pod;
+        physx_PxControllerShapeType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxControllerShapeType PxController_getType(physx_PxController const* self__pod) {
+    physx_PxControllerShapeType PxController_getType(physx_PxController const* self__pod) {
         physx::PxController const* self_ = reinterpret_cast<physx::PxController const*>(self__pod);
         physx::PxControllerShapeType::Enum return_val = self_->getType();
-        PxControllerShapeType return_val_pod;
+        physx_PxControllerShapeType return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -12668,13 +12668,13 @@ extern "C" {
         self_->release();
     }
 
-    PxControllerCollisionFlags PxController_move(physx_PxController* self__pod, physx_PxVec3 const* disp_pod, float minDist, float elapsedTime, physx_PxControllerFilters const* filters_pod, physx_PxObstacleContext const* obstacles_pod) {
+    physx_PxControllerCollisionFlags PxController_move(physx_PxController* self__pod, physx_PxVec3 const* disp_pod, float minDist, float elapsedTime, physx_PxControllerFilters const* filters_pod, physx_PxObstacleContext const* obstacles_pod) {
         physx::PxController* self_ = reinterpret_cast<physx::PxController*>(self__pod);
         physx::PxVec3 const& disp = reinterpret_cast<physx::PxVec3 const&>(*disp_pod);
         physx::PxControllerFilters const& filters = reinterpret_cast<physx::PxControllerFilters const&>(*filters_pod);
         physx::PxObstacleContext const* obstacles = reinterpret_cast<physx::PxObstacleContext const*>(obstacles_pod);
         physx::PxControllerCollisionFlags return_val = self_->move(disp, minDist, elapsedTime, filters, obstacles);
-        PxControllerCollisionFlags return_val_pod;
+        physx_PxControllerCollisionFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -12726,16 +12726,16 @@ extern "C" {
         return return_val;
     }
 
-    void PxController_setNonWalkableMode(physx_PxController* self__pod, PxControllerNonWalkableMode flag_pod) {
+    void PxController_setNonWalkableMode(physx_PxController* self__pod, physx_PxControllerNonWalkableMode flag_pod) {
         physx::PxController* self_ = reinterpret_cast<physx::PxController*>(self__pod);
         auto flag = static_cast<physx::PxControllerNonWalkableMode::Enum>(flag_pod);
         self_->setNonWalkableMode(flag);
     }
 
-    PxControllerNonWalkableMode PxController_getNonWalkableMode(physx_PxController const* self__pod) {
+    physx_PxControllerNonWalkableMode PxController_getNonWalkableMode(physx_PxController const* self__pod) {
         physx::PxController const* self_ = reinterpret_cast<physx::PxController const*>(self__pod);
         physx::PxControllerNonWalkableMode::Enum return_val = self_->getNonWalkableMode();
-        PxControllerNonWalkableMode return_val_pod;
+        physx_PxControllerNonWalkableMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -12920,45 +12920,45 @@ extern "C" {
         return return_val;
     }
 
-    PxCapsuleClimbingMode PxCapsuleController_getClimbingMode(physx_PxCapsuleController const* self__pod) {
+    physx_PxCapsuleClimbingMode PxCapsuleController_getClimbingMode(physx_PxCapsuleController const* self__pod) {
         physx::PxCapsuleController const* self_ = reinterpret_cast<physx::PxCapsuleController const*>(self__pod);
         physx::PxCapsuleClimbingMode::Enum return_val = self_->getClimbingMode();
-        PxCapsuleClimbingMode return_val_pod;
+        physx_PxCapsuleClimbingMode return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    bool PxCapsuleController_setClimbingMode(physx_PxCapsuleController* self__pod, PxCapsuleClimbingMode mode_pod) {
+    bool PxCapsuleController_setClimbingMode(physx_PxCapsuleController* self__pod, physx_PxCapsuleClimbingMode mode_pod) {
         physx::PxCapsuleController* self_ = reinterpret_cast<physx::PxCapsuleController*>(self__pod);
         auto mode = static_cast<physx::PxCapsuleClimbingMode::Enum>(mode_pod);
         bool return_val = self_->setClimbingMode(mode);
         return return_val;
     }
 
-    PxControllerBehaviorFlags PxControllerBehaviorCallback_getBehaviorFlags(physx_PxControllerBehaviorCallback* self__pod, physx_PxShape const* shape_pod, physx_PxActor const* actor_pod) {
+    physx_PxControllerBehaviorFlags PxControllerBehaviorCallback_getBehaviorFlags(physx_PxControllerBehaviorCallback* self__pod, physx_PxShape const* shape_pod, physx_PxActor const* actor_pod) {
         physx::PxControllerBehaviorCallback* self_ = reinterpret_cast<physx::PxControllerBehaviorCallback*>(self__pod);
         physx::PxShape const& shape = reinterpret_cast<physx::PxShape const&>(*shape_pod);
         physx::PxActor const& actor = reinterpret_cast<physx::PxActor const&>(*actor_pod);
         physx::PxControllerBehaviorFlags return_val = self_->getBehaviorFlags(shape, actor);
-        PxControllerBehaviorFlags return_val_pod;
+        physx_PxControllerBehaviorFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxControllerBehaviorFlags PxControllerBehaviorCallback_getBehaviorFlags_1(physx_PxControllerBehaviorCallback* self__pod, physx_PxController const* controller_pod) {
+    physx_PxControllerBehaviorFlags PxControllerBehaviorCallback_getBehaviorFlags_1(physx_PxControllerBehaviorCallback* self__pod, physx_PxController const* controller_pod) {
         physx::PxControllerBehaviorCallback* self_ = reinterpret_cast<physx::PxControllerBehaviorCallback*>(self__pod);
         physx::PxController const& controller = reinterpret_cast<physx::PxController const&>(*controller_pod);
         physx::PxControllerBehaviorFlags return_val = self_->getBehaviorFlags(controller);
-        PxControllerBehaviorFlags return_val_pod;
+        physx_PxControllerBehaviorFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    PxControllerBehaviorFlags PxControllerBehaviorCallback_getBehaviorFlags_2(physx_PxControllerBehaviorCallback* self__pod, physx_PxObstacle const* obstacle_pod) {
+    physx_PxControllerBehaviorFlags PxControllerBehaviorCallback_getBehaviorFlags_2(physx_PxControllerBehaviorCallback* self__pod, physx_PxObstacle const* obstacle_pod) {
         physx::PxControllerBehaviorCallback* self_ = reinterpret_cast<physx::PxControllerBehaviorCallback*>(self__pod);
         physx::PxObstacle const& obstacle = reinterpret_cast<physx::PxObstacle const&>(*obstacle_pod);
         physx::PxControllerBehaviorFlags return_val = self_->getBehaviorFlags(obstacle);
-        PxControllerBehaviorFlags return_val_pod;
+        physx_PxControllerBehaviorFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -13008,7 +13008,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxControllerManager_setDebugRenderingFlags(physx_PxControllerManager* self__pod, PxControllerDebugRenderFlags flags_pod) {
+    void PxControllerManager_setDebugRenderingFlags(physx_PxControllerManager* self__pod, physx_PxControllerDebugRenderFlags flags_pod) {
         physx::PxControllerManager* self_ = reinterpret_cast<physx::PxControllerManager*>(self__pod);
         auto flags = physx::PxControllerDebugRenderFlags(flags_pod);
         self_->setDebugRenderingFlags(flags);
@@ -13173,15 +13173,15 @@ extern "C" {
         return return_val_pod;
     }
 
-    PxMeshMidPhase PxMidphaseDesc_getType(physx_PxMidphaseDesc const* self__pod) {
+    physx_PxMeshMidPhase PxMidphaseDesc_getType(physx_PxMidphaseDesc const* self__pod) {
         physx::PxMidphaseDesc const* self_ = reinterpret_cast<physx::PxMidphaseDesc const*>(self__pod);
         physx::PxMeshMidPhase::Enum return_val = self_->getType();
-        PxMeshMidPhase return_val_pod;
+        physx_PxMeshMidPhase return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxMidphaseDesc_setToDefault(physx_PxMidphaseDesc* self__pod, PxMeshMidPhase type_pod) {
+    void PxMidphaseDesc_setToDefault(physx_PxMidphaseDesc* self__pod, physx_PxMeshMidPhase type_pod) {
         physx::PxMidphaseDesc* self_ = reinterpret_cast<physx::PxMidphaseDesc*>(self__pod);
         auto type = static_cast<physx::PxMeshMidPhase::Enum>(type_pod);
         self_->setToDefault(type);
@@ -13255,7 +13255,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    bool phys_PxCookConvexMesh(physx_PxCookingParams const* params_pod, physx_PxConvexMeshDesc const* desc_pod, physx_PxOutputStream* stream_pod, PxConvexMeshCookingResult* condition_pod) {
+    bool phys_PxCookConvexMesh(physx_PxCookingParams const* params_pod, physx_PxConvexMeshDesc const* desc_pod, physx_PxOutputStream* stream_pod, physx_PxConvexMeshCookingResult* condition_pod) {
         physx::PxCookingParams const& params = reinterpret_cast<physx::PxCookingParams const&>(*params_pod);
         physx::PxConvexMeshDesc const& desc = reinterpret_cast<physx::PxConvexMeshDesc const&>(*desc_pod);
         physx::PxOutputStream& stream = reinterpret_cast<physx::PxOutputStream&>(*stream_pod);
@@ -13264,7 +13264,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxConvexMesh* phys_PxCreateConvexMesh(physx_PxCookingParams const* params_pod, physx_PxConvexMeshDesc const* desc_pod, physx_PxInsertionCallback* insertionCallback_pod, PxConvexMeshCookingResult* condition_pod) {
+    physx_PxConvexMesh* phys_PxCreateConvexMesh(physx_PxCookingParams const* params_pod, physx_PxConvexMeshDesc const* desc_pod, physx_PxInsertionCallback* insertionCallback_pod, physx_PxConvexMeshCookingResult* condition_pod) {
         physx::PxCookingParams const& params = reinterpret_cast<physx::PxCookingParams const&>(*params_pod);
         physx::PxConvexMeshDesc const& desc = reinterpret_cast<physx::PxConvexMeshDesc const&>(*desc_pod);
         physx::PxInsertionCallback& insertionCallback = reinterpret_cast<physx::PxInsertionCallback&>(*insertionCallback_pod);
@@ -13302,7 +13302,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxTriangleMesh* phys_PxCreateTriangleMesh(physx_PxCookingParams const* params_pod, physx_PxTriangleMeshDesc const* desc_pod, physx_PxInsertionCallback* insertionCallback_pod, PxTriangleMeshCookingResult* condition_pod) {
+    physx_PxTriangleMesh* phys_PxCreateTriangleMesh(physx_PxCookingParams const* params_pod, physx_PxTriangleMeshDesc const* desc_pod, physx_PxInsertionCallback* insertionCallback_pod, physx_PxTriangleMeshCookingResult* condition_pod) {
         physx::PxCookingParams const& params = reinterpret_cast<physx::PxCookingParams const&>(*params_pod);
         physx::PxTriangleMeshDesc const& desc = reinterpret_cast<physx::PxTriangleMeshDesc const&>(*desc_pod);
         physx::PxInsertionCallback& insertionCallback = reinterpret_cast<physx::PxInsertionCallback&>(*insertionCallback_pod);
@@ -13312,7 +13312,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    bool phys_PxCookTriangleMesh(physx_PxCookingParams const* params_pod, physx_PxTriangleMeshDesc const* desc_pod, physx_PxOutputStream* stream_pod, PxTriangleMeshCookingResult* condition_pod) {
+    bool phys_PxCookTriangleMesh(physx_PxCookingParams const* params_pod, physx_PxTriangleMeshDesc const* desc_pod, physx_PxOutputStream* stream_pod, physx_PxTriangleMeshCookingResult* condition_pod) {
         physx::PxCookingParams const& params = reinterpret_cast<physx::PxCookingParams const&>(*params_pod);
         physx::PxTriangleMeshDesc const& desc = reinterpret_cast<physx::PxTriangleMeshDesc const&>(*desc_pod);
         physx::PxOutputStream& stream = reinterpret_cast<physx::PxOutputStream&>(*stream_pod);
@@ -13486,14 +13486,14 @@ extern "C" {
         self_->getActors(actor0, actor1);
     }
 
-    void PxJoint_setLocalPose(physx_PxJoint* self__pod, PxJointActorIndex actor_pod, physx_PxTransform const* localPose_pod) {
+    void PxJoint_setLocalPose(physx_PxJoint* self__pod, physx_PxJointActorIndex actor_pod, physx_PxTransform const* localPose_pod) {
         physx::PxJoint* self_ = reinterpret_cast<physx::PxJoint*>(self__pod);
         auto actor = static_cast<physx::PxJointActorIndex::Enum>(actor_pod);
         physx::PxTransform const& localPose = reinterpret_cast<physx::PxTransform const&>(*localPose_pod);
         self_->setLocalPose(actor, localPose);
     }
 
-    physx_PxTransform PxJoint_getLocalPose(physx_PxJoint const* self__pod, PxJointActorIndex actor_pod) {
+    physx_PxTransform PxJoint_getLocalPose(physx_PxJoint const* self__pod, physx_PxJointActorIndex actor_pod) {
         physx::PxJoint const* self_ = reinterpret_cast<physx::PxJoint const*>(self__pod);
         auto actor = static_cast<physx::PxJointActorIndex::Enum>(actor_pod);
         physx::PxTransform return_val = self_->getLocalPose(actor);
@@ -13538,22 +13538,22 @@ extern "C" {
         self_->getBreakForce(force, torque);
     }
 
-    void PxJoint_setConstraintFlags(physx_PxJoint* self__pod, PxConstraintFlags flags_pod) {
+    void PxJoint_setConstraintFlags(physx_PxJoint* self__pod, physx_PxConstraintFlags flags_pod) {
         physx::PxJoint* self_ = reinterpret_cast<physx::PxJoint*>(self__pod);
         auto flags = physx::PxConstraintFlags(flags_pod);
         self_->setConstraintFlags(flags);
     }
 
-    void PxJoint_setConstraintFlag(physx_PxJoint* self__pod, PxConstraintFlag flag_pod, bool value) {
+    void PxJoint_setConstraintFlag(physx_PxJoint* self__pod, physx_PxConstraintFlag flag_pod, bool value) {
         physx::PxJoint* self_ = reinterpret_cast<physx::PxJoint*>(self__pod);
         auto flag = static_cast<physx::PxConstraintFlag::Enum>(flag_pod);
         self_->setConstraintFlag(flag, value);
     }
 
-    PxConstraintFlags PxJoint_getConstraintFlags(physx_PxJoint const* self__pod) {
+    physx_PxConstraintFlags PxJoint_getConstraintFlags(physx_PxJoint const* self__pod) {
         physx::PxJoint const* self_ = reinterpret_cast<physx::PxJoint const*>(self__pod);
         physx::PxConstraintFlags return_val = self_->getConstraintFlags();
-        PxConstraintFlags return_val_pod;
+        physx_PxConstraintFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -13734,22 +13734,22 @@ extern "C" {
         return return_val;
     }
 
-    void PxDistanceJoint_setDistanceJointFlags(physx_PxDistanceJoint* self__pod, PxDistanceJointFlags flags_pod) {
+    void PxDistanceJoint_setDistanceJointFlags(physx_PxDistanceJoint* self__pod, physx_PxDistanceJointFlags flags_pod) {
         physx::PxDistanceJoint* self_ = reinterpret_cast<physx::PxDistanceJoint*>(self__pod);
         auto flags = physx::PxDistanceJointFlags(flags_pod);
         self_->setDistanceJointFlags(flags);
     }
 
-    void PxDistanceJoint_setDistanceJointFlag(physx_PxDistanceJoint* self__pod, PxDistanceJointFlag flag_pod, bool value) {
+    void PxDistanceJoint_setDistanceJointFlag(physx_PxDistanceJoint* self__pod, physx_PxDistanceJointFlag flag_pod, bool value) {
         physx::PxDistanceJoint* self_ = reinterpret_cast<physx::PxDistanceJoint*>(self__pod);
         auto flag = static_cast<physx::PxDistanceJointFlag::Enum>(flag_pod);
         self_->setDistanceJointFlag(flag, value);
     }
 
-    PxDistanceJointFlags PxDistanceJoint_getDistanceJointFlags(physx_PxDistanceJoint const* self__pod) {
+    physx_PxDistanceJointFlags PxDistanceJoint_getDistanceJointFlags(physx_PxDistanceJoint const* self__pod) {
         physx::PxDistanceJoint const* self_ = reinterpret_cast<physx::PxDistanceJoint const*>(self__pod);
         physx::PxDistanceJointFlags return_val = self_->getDistanceJointFlags();
-        PxDistanceJointFlags return_val_pod;
+        physx_PxDistanceJointFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -14072,22 +14072,22 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxPrismaticJoint_setPrismaticJointFlags(physx_PxPrismaticJoint* self__pod, PxPrismaticJointFlags flags_pod) {
+    void PxPrismaticJoint_setPrismaticJointFlags(physx_PxPrismaticJoint* self__pod, physx_PxPrismaticJointFlags flags_pod) {
         physx::PxPrismaticJoint* self_ = reinterpret_cast<physx::PxPrismaticJoint*>(self__pod);
         auto flags = physx::PxPrismaticJointFlags(flags_pod);
         self_->setPrismaticJointFlags(flags);
     }
 
-    void PxPrismaticJoint_setPrismaticJointFlag(physx_PxPrismaticJoint* self__pod, PxPrismaticJointFlag flag_pod, bool value) {
+    void PxPrismaticJoint_setPrismaticJointFlag(physx_PxPrismaticJoint* self__pod, physx_PxPrismaticJointFlag flag_pod, bool value) {
         physx::PxPrismaticJoint* self_ = reinterpret_cast<physx::PxPrismaticJoint*>(self__pod);
         auto flag = static_cast<physx::PxPrismaticJointFlag::Enum>(flag_pod);
         self_->setPrismaticJointFlag(flag, value);
     }
 
-    PxPrismaticJointFlags PxPrismaticJoint_getPrismaticJointFlags(physx_PxPrismaticJoint const* self__pod) {
+    physx_PxPrismaticJointFlags PxPrismaticJoint_getPrismaticJointFlags(physx_PxPrismaticJoint const* self__pod) {
         physx::PxPrismaticJoint const* self_ = reinterpret_cast<physx::PxPrismaticJoint const*>(self__pod);
         physx::PxPrismaticJointFlags return_val = self_->getPrismaticJointFlags();
-        PxPrismaticJointFlags return_val_pod;
+        physx_PxPrismaticJointFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -14168,22 +14168,22 @@ extern "C" {
         return return_val;
     }
 
-    void PxRevoluteJoint_setRevoluteJointFlags(physx_PxRevoluteJoint* self__pod, PxRevoluteJointFlags flags_pod) {
+    void PxRevoluteJoint_setRevoluteJointFlags(physx_PxRevoluteJoint* self__pod, physx_PxRevoluteJointFlags flags_pod) {
         physx::PxRevoluteJoint* self_ = reinterpret_cast<physx::PxRevoluteJoint*>(self__pod);
         auto flags = physx::PxRevoluteJointFlags(flags_pod);
         self_->setRevoluteJointFlags(flags);
     }
 
-    void PxRevoluteJoint_setRevoluteJointFlag(physx_PxRevoluteJoint* self__pod, PxRevoluteJointFlag flag_pod, bool value) {
+    void PxRevoluteJoint_setRevoluteJointFlag(physx_PxRevoluteJoint* self__pod, physx_PxRevoluteJointFlag flag_pod, bool value) {
         physx::PxRevoluteJoint* self_ = reinterpret_cast<physx::PxRevoluteJoint*>(self__pod);
         auto flag = static_cast<physx::PxRevoluteJointFlag::Enum>(flag_pod);
         self_->setRevoluteJointFlag(flag, value);
     }
 
-    PxRevoluteJointFlags PxRevoluteJoint_getRevoluteJointFlags(physx_PxRevoluteJoint const* self__pod) {
+    physx_PxRevoluteJointFlags PxRevoluteJoint_getRevoluteJointFlags(physx_PxRevoluteJoint const* self__pod) {
         physx::PxRevoluteJoint const* self_ = reinterpret_cast<physx::PxRevoluteJoint const*>(self__pod);
         physx::PxRevoluteJointFlags return_val = self_->getRevoluteJointFlags();
-        PxRevoluteJointFlags return_val_pod;
+        physx_PxRevoluteJointFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -14231,22 +14231,22 @@ extern "C" {
         return return_val;
     }
 
-    void PxSphericalJoint_setSphericalJointFlags(physx_PxSphericalJoint* self__pod, PxSphericalJointFlags flags_pod) {
+    void PxSphericalJoint_setSphericalJointFlags(physx_PxSphericalJoint* self__pod, physx_PxSphericalJointFlags flags_pod) {
         physx::PxSphericalJoint* self_ = reinterpret_cast<physx::PxSphericalJoint*>(self__pod);
         auto flags = physx::PxSphericalJointFlags(flags_pod);
         self_->setSphericalJointFlags(flags);
     }
 
-    void PxSphericalJoint_setSphericalJointFlag(physx_PxSphericalJoint* self__pod, PxSphericalJointFlag flag_pod, bool value) {
+    void PxSphericalJoint_setSphericalJointFlag(physx_PxSphericalJoint* self__pod, physx_PxSphericalJointFlag flag_pod, bool value) {
         physx::PxSphericalJoint* self_ = reinterpret_cast<physx::PxSphericalJoint*>(self__pod);
         auto flag = static_cast<physx::PxSphericalJointFlag::Enum>(flag_pod);
         self_->setSphericalJointFlag(flag, value);
     }
 
-    PxSphericalJointFlags PxSphericalJoint_getSphericalJointFlags(physx_PxSphericalJoint const* self__pod) {
+    physx_PxSphericalJointFlags PxSphericalJoint_getSphericalJointFlags(physx_PxSphericalJoint const* self__pod) {
         physx::PxSphericalJoint const* self_ = reinterpret_cast<physx::PxSphericalJoint const*>(self__pod);
         physx::PxSphericalJointFlags return_val = self_->getSphericalJointFlags();
-        PxSphericalJointFlags return_val_pod;
+        physx_PxSphericalJointFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -14288,18 +14288,18 @@ extern "C" {
         return return_val;
     }
 
-    void PxD6Joint_setMotion(physx_PxD6Joint* self__pod, PxD6Axis axis_pod, PxD6Motion type_pod) {
+    void PxD6Joint_setMotion(physx_PxD6Joint* self__pod, physx_PxD6Axis axis_pod, physx_PxD6Motion type_pod) {
         physx::PxD6Joint* self_ = reinterpret_cast<physx::PxD6Joint*>(self__pod);
         auto axis = static_cast<physx::PxD6Axis::Enum>(axis_pod);
         auto type = static_cast<physx::PxD6Motion::Enum>(type_pod);
         self_->setMotion(axis, type);
     }
 
-    PxD6Motion PxD6Joint_getMotion(physx_PxD6Joint const* self__pod, PxD6Axis axis_pod) {
+    physx_PxD6Motion PxD6Joint_getMotion(physx_PxD6Joint const* self__pod, physx_PxD6Axis axis_pod) {
         physx::PxD6Joint const* self_ = reinterpret_cast<physx::PxD6Joint const*>(self__pod);
         auto axis = static_cast<physx::PxD6Axis::Enum>(axis_pod);
         physx::PxD6Motion::Enum return_val = self_->getMotion(axis);
-        PxD6Motion return_val_pod;
+        physx_PxD6Motion return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -14336,14 +14336,14 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxD6Joint_setLinearLimit(physx_PxD6Joint* self__pod, PxD6Axis axis_pod, physx_PxJointLinearLimitPair const* limit_pod) {
+    void PxD6Joint_setLinearLimit(physx_PxD6Joint* self__pod, physx_PxD6Axis axis_pod, physx_PxJointLinearLimitPair const* limit_pod) {
         physx::PxD6Joint* self_ = reinterpret_cast<physx::PxD6Joint*>(self__pod);
         auto axis = static_cast<physx::PxD6Axis::Enum>(axis_pod);
         physx::PxJointLinearLimitPair const& limit = reinterpret_cast<physx::PxJointLinearLimitPair const&>(*limit_pod);
         self_->setLinearLimit(axis, limit);
     }
 
-    physx_PxJointLinearLimitPair PxD6Joint_getLinearLimit(physx_PxD6Joint const* self__pod, PxD6Axis axis_pod) {
+    physx_PxJointLinearLimitPair PxD6Joint_getLinearLimit(physx_PxD6Joint const* self__pod, physx_PxD6Axis axis_pod) {
         physx::PxD6Joint const* self_ = reinterpret_cast<physx::PxD6Joint const*>(self__pod);
         auto axis = static_cast<physx::PxD6Axis::Enum>(axis_pod);
         physx::PxJointLinearLimitPair return_val = self_->getLinearLimit(axis);
@@ -14394,14 +14394,14 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxD6Joint_setDrive(physx_PxD6Joint* self__pod, PxD6Drive index_pod, physx_PxD6JointDrive const* drive_pod) {
+    void PxD6Joint_setDrive(physx_PxD6Joint* self__pod, physx_PxD6Drive index_pod, physx_PxD6JointDrive const* drive_pod) {
         physx::PxD6Joint* self_ = reinterpret_cast<physx::PxD6Joint*>(self__pod);
         auto index = static_cast<physx::PxD6Drive::Enum>(index_pod);
         physx::PxD6JointDrive const& drive = reinterpret_cast<physx::PxD6JointDrive const&>(*drive_pod);
         self_->setDrive(index, drive);
     }
 
-    physx_PxD6JointDrive PxD6Joint_getDrive(physx_PxD6Joint const* self__pod, PxD6Drive index_pod) {
+    physx_PxD6JointDrive PxD6Joint_getDrive(physx_PxD6Joint const* self__pod, physx_PxD6Drive index_pod) {
         physx::PxD6Joint const* self_ = reinterpret_cast<physx::PxD6Joint const*>(self__pod);
         auto index = static_cast<physx::PxD6Drive::Enum>(index_pod);
         physx::PxD6JointDrive return_val = self_->getDrive(index);
@@ -14555,14 +14555,14 @@ extern "C" {
         delete self_;
     }
 
-    PxFilterFlags phys_PxDefaultSimulationFilterShader(uint32_t attributes0, physx_PxFilterData filterData0_pod, uint32_t attributes1, physx_PxFilterData filterData1_pod, PxPairFlags* pairFlags_pod, void const* constantBlock, uint32_t constantBlockSize) {
+    physx_PxFilterFlags phys_PxDefaultSimulationFilterShader(uint32_t attributes0, physx_PxFilterData filterData0_pod, uint32_t attributes1, physx_PxFilterData filterData1_pod, physx_PxPairFlags* pairFlags_pod, void const* constantBlock, uint32_t constantBlockSize) {
         physx::PxFilterData filterData0;
         memcpy(&filterData0, &filterData0_pod, sizeof(filterData0));
         physx::PxFilterData filterData1;
         memcpy(&filterData1, &filterData1_pod, sizeof(filterData1));
         physx::PxPairFlags& pairFlags = reinterpret_cast<physx::PxPairFlags&>(*pairFlags_pod);
         physx::PxFilterFlags return_val = PxDefaultSimulationFilterShader(attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
-        PxFilterFlags return_val_pod;
+        physx_PxFilterFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -14587,14 +14587,14 @@ extern "C" {
         PxSetGroup(actor, collisionGroup);
     }
 
-    void phys_PxGetFilterOps(PxFilterOp* op0_pod, PxFilterOp* op1_pod, PxFilterOp* op2_pod) {
+    void phys_PxGetFilterOps(physx_PxFilterOp* op0_pod, physx_PxFilterOp* op1_pod, physx_PxFilterOp* op2_pod) {
         physx::PxFilterOp::Enum& op0 = reinterpret_cast<physx::PxFilterOp::Enum&>(*op0_pod);
         physx::PxFilterOp::Enum& op1 = reinterpret_cast<physx::PxFilterOp::Enum&>(*op1_pod);
         physx::PxFilterOp::Enum& op2 = reinterpret_cast<physx::PxFilterOp::Enum&>(*op2_pod);
         PxGetFilterOps(op0, op1, op2);
     }
 
-    void phys_PxSetFilterOps(PxFilterOp const* op0_pod, PxFilterOp const* op1_pod, PxFilterOp const* op2_pod) {
+    void phys_PxSetFilterOps(physx_PxFilterOp const* op0_pod, physx_PxFilterOp const* op1_pod, physx_PxFilterOp const* op2_pod) {
         physx::PxFilterOp::Enum const& op0 = reinterpret_cast<physx::PxFilterOp::Enum const&>(*op0_pod);
         physx::PxFilterOp::Enum const& op1 = reinterpret_cast<physx::PxFilterOp::Enum const&>(*op1_pod);
         physx::PxFilterOp::Enum const& op2 = reinterpret_cast<physx::PxFilterOp::Enum const&>(*op2_pod);
@@ -14647,13 +14647,13 @@ extern "C" {
         delete self_;
     }
 
-    void PxDefaultErrorCallback_reportError(physx_PxDefaultErrorCallback* self__pod, PxErrorCode code_pod, char const* message, char const* file, int32_t line) {
+    void PxDefaultErrorCallback_reportError(physx_PxDefaultErrorCallback* self__pod, physx_PxErrorCode code_pod, char const* message, char const* file, int32_t line) {
         physx::PxDefaultErrorCallback* self_ = reinterpret_cast<physx::PxDefaultErrorCallback*>(self__pod);
         auto code = static_cast<physx::PxErrorCode::Enum>(code_pod);
         self_->reportError(code, message, file, line);
     }
 
-    physx_PxShape* PxRigidActorExt_createExclusiveShape(physx_PxRigidActor* actor_pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial* const* materials_pod, uint16_t materialCount, PxShapeFlags shapeFlags_pod) {
+    physx_PxShape* PxRigidActorExt_createExclusiveShape(physx_PxRigidActor* actor_pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial* const* materials_pod, uint16_t materialCount, physx_PxShapeFlags shapeFlags_pod) {
         physx::PxRigidActor& actor = reinterpret_cast<physx::PxRigidActor&>(*actor_pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxMaterial* const* materials = reinterpret_cast<physx::PxMaterial* const*>(materials_pod);
@@ -14663,7 +14663,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxShape* PxRigidActorExt_createExclusiveShape_1(physx_PxRigidActor* actor_pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial const* material_pod, PxShapeFlags shapeFlags_pod) {
+    physx_PxShape* PxRigidActorExt_createExclusiveShape_1(physx_PxRigidActor* actor_pod, physx_PxGeometry const* geometry_pod, physx_PxMaterial const* material_pod, physx_PxShapeFlags shapeFlags_pod) {
         physx::PxRigidActor& actor = reinterpret_cast<physx::PxRigidActor&>(*actor_pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxMaterial const& material = reinterpret_cast<physx::PxMaterial const&>(*material_pod);
@@ -14801,7 +14801,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxRigidBodyExt_addForceAtPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, PxForceMode mode_pod, bool wakeup) {
+    void PxRigidBodyExt_addForceAtPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, physx_PxForceMode mode_pod, bool wakeup) {
         physx::PxRigidBody& body = reinterpret_cast<physx::PxRigidBody&>(*body_pod);
         physx::PxVec3 const& force = reinterpret_cast<physx::PxVec3 const&>(*force_pod);
         physx::PxVec3 const& pos = reinterpret_cast<physx::PxVec3 const&>(*pos_pod);
@@ -14809,7 +14809,7 @@ extern "C" {
         PxRigidBodyExt::addForceAtPos(body, force, pos, mode, wakeup);
     }
 
-    void PxRigidBodyExt_addForceAtLocalPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, PxForceMode mode_pod, bool wakeup) {
+    void PxRigidBodyExt_addForceAtLocalPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, physx_PxForceMode mode_pod, bool wakeup) {
         physx::PxRigidBody& body = reinterpret_cast<physx::PxRigidBody&>(*body_pod);
         physx::PxVec3 const& force = reinterpret_cast<physx::PxVec3 const&>(*force_pod);
         physx::PxVec3 const& pos = reinterpret_cast<physx::PxVec3 const&>(*pos_pod);
@@ -14817,7 +14817,7 @@ extern "C" {
         PxRigidBodyExt::addForceAtLocalPos(body, force, pos, mode, wakeup);
     }
 
-    void PxRigidBodyExt_addLocalForceAtPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, PxForceMode mode_pod, bool wakeup) {
+    void PxRigidBodyExt_addLocalForceAtPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, physx_PxForceMode mode_pod, bool wakeup) {
         physx::PxRigidBody& body = reinterpret_cast<physx::PxRigidBody&>(*body_pod);
         physx::PxVec3 const& force = reinterpret_cast<physx::PxVec3 const&>(*force_pod);
         physx::PxVec3 const& pos = reinterpret_cast<physx::PxVec3 const&>(*pos_pod);
@@ -14825,7 +14825,7 @@ extern "C" {
         PxRigidBodyExt::addLocalForceAtPos(body, force, pos, mode, wakeup);
     }
 
-    void PxRigidBodyExt_addLocalForceAtLocalPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, PxForceMode mode_pod, bool wakeup) {
+    void PxRigidBodyExt_addLocalForceAtLocalPos(physx_PxRigidBody* body_pod, physx_PxVec3 const* force_pod, physx_PxVec3 const* pos_pod, physx_PxForceMode mode_pod, bool wakeup) {
         physx::PxRigidBody& body = reinterpret_cast<physx::PxRigidBody&>(*body_pod);
         physx::PxVec3 const& force = reinterpret_cast<physx::PxVec3 const&>(*force_pod);
         physx::PxVec3 const& pos = reinterpret_cast<physx::PxVec3 const&>(*pos_pod);
@@ -14889,7 +14889,7 @@ extern "C" {
         PxRigidBodyExt::computeLinearAngularImpulse(body, globalPose, point, impulse, invMassScale, invInertiaScale, linearImpulse, angularImpulse);
     }
 
-    bool PxRigidBodyExt_linearSweepSingle(physx_PxRigidBody* body_pod, physx_PxScene* scene_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags outputFlags_pod, physx_PxSweepHit* closestHit_pod, uint32_t* shapeIndex_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
+    bool PxRigidBodyExt_linearSweepSingle(physx_PxRigidBody* body_pod, physx_PxScene* scene_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags outputFlags_pod, physx_PxSweepHit* closestHit_pod, uint32_t* shapeIndex_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
         physx::PxRigidBody& body = reinterpret_cast<physx::PxRigidBody&>(*body_pod);
         physx::PxScene& scene = reinterpret_cast<physx::PxScene&>(*scene_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -14903,7 +14903,7 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxRigidBodyExt_linearSweepMultiple(physx_PxRigidBody* body_pod, physx_PxScene* scene_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags outputFlags_pod, physx_PxSweepHit* touchHitBuffer_pod, uint32_t* touchHitShapeIndices, uint32_t touchHitBufferSize, physx_PxSweepHit* block_pod, int32_t* blockingShapeIndex_pod, bool* overflow_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
+    uint32_t PxRigidBodyExt_linearSweepMultiple(physx_PxRigidBody* body_pod, physx_PxScene* scene_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags outputFlags_pod, physx_PxSweepHit* touchHitBuffer_pod, uint32_t* touchHitShapeIndices, uint32_t touchHitBufferSize, physx_PxSweepHit* block_pod, int32_t* blockingShapeIndex_pod, bool* overflow_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
         physx::PxRigidBody& body = reinterpret_cast<physx::PxRigidBody&>(*body_pod);
         physx::PxScene& scene = reinterpret_cast<physx::PxScene&>(*scene_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -14928,7 +14928,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    uint32_t PxShapeExt_raycast(physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod, physx_PxVec3 const* rayOrigin_pod, physx_PxVec3 const* rayDir_pod, float maxDist, PxHitFlags hitFlags_pod, uint32_t maxHits, physx_PxRaycastHit* rayHits_pod) {
+    uint32_t PxShapeExt_raycast(physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod, physx_PxVec3 const* rayOrigin_pod, physx_PxVec3 const* rayDir_pod, float maxDist, physx_PxHitFlags hitFlags_pod, uint32_t maxHits, physx_PxRaycastHit* rayHits_pod) {
         physx::PxShape const& shape = reinterpret_cast<physx::PxShape const&>(*shape_pod);
         physx::PxRigidActor const& actor = reinterpret_cast<physx::PxRigidActor const&>(*actor_pod);
         physx::PxVec3 const& rayOrigin = reinterpret_cast<physx::PxVec3 const&>(*rayOrigin_pod);
@@ -14948,7 +14948,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxShapeExt_sweep(physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxGeometry const* otherGeom_pod, physx_PxTransform const* otherGeomPose_pod, physx_PxSweepHit* sweepHit_pod, PxHitFlags hitFlags_pod) {
+    bool PxShapeExt_sweep(physx_PxShape const* shape_pod, physx_PxRigidActor const* actor_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxGeometry const* otherGeom_pod, physx_PxTransform const* otherGeomPose_pod, physx_PxSweepHit* sweepHit_pod, physx_PxHitFlags hitFlags_pod) {
         physx::PxShape const& shape = reinterpret_cast<physx::PxShape const&>(*shape_pod);
         physx::PxRigidActor const& actor = reinterpret_cast<physx::PxRigidActor const&>(*actor_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -15134,7 +15134,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxDefaultCpuDispatcher* phys_PxDefaultCpuDispatcherCreate(uint32_t numThreads, uint32_t* affinityMasks, PxDefaultCpuDispatcherWaitForWorkMode mode_pod, uint32_t yieldProcessorCount) {
+    physx_PxDefaultCpuDispatcher* phys_PxDefaultCpuDispatcherCreate(uint32_t numThreads, uint32_t* affinityMasks, physx_PxDefaultCpuDispatcherWaitForWorkMode mode_pod, uint32_t yieldProcessorCount) {
         auto mode = static_cast<physx::PxDefaultCpuDispatcherWaitForWorkMode::Enum>(mode_pod);
         physx::PxDefaultCpuDispatcher* return_val = PxDefaultCpuDispatcherCreate(numThreads, affinityMasks, mode, yieldProcessorCount);
         auto return_val_pod = reinterpret_cast<physx_PxDefaultCpuDispatcher*>(return_val);
@@ -15274,7 +15274,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxSceneQueryExt_raycastSingle(physx_PxScene const* scene_pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags outputFlags_pod, physx_PxRaycastHit* hit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod) {
+    bool PxSceneQueryExt_raycastSingle(physx_PxScene const* scene_pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags outputFlags_pod, physx_PxRaycastHit* hit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod) {
         physx::PxScene const& scene = reinterpret_cast<physx::PxScene const&>(*scene_pod);
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -15287,7 +15287,7 @@ extern "C" {
         return return_val;
     }
 
-    int32_t PxSceneQueryExt_raycastMultiple(physx_PxScene const* scene_pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags outputFlags_pod, physx_PxRaycastHit* hitBuffer_pod, uint32_t hitBufferSize, bool* blockingHit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod) {
+    int32_t PxSceneQueryExt_raycastMultiple(physx_PxScene const* scene_pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags outputFlags_pod, physx_PxRaycastHit* hitBuffer_pod, uint32_t hitBufferSize, bool* blockingHit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod) {
         physx::PxScene const& scene = reinterpret_cast<physx::PxScene const&>(*scene_pod);
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -15301,7 +15301,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxSceneQueryExt_sweepAny(physx_PxScene const* scene_pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags queryFlags_pod, physx_PxQueryHit* hit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
+    bool PxSceneQueryExt_sweepAny(physx_PxScene const* scene_pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags queryFlags_pod, physx_PxQueryHit* hit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
         physx::PxScene const& scene = reinterpret_cast<physx::PxScene const&>(*scene_pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -15315,7 +15315,7 @@ extern "C" {
         return return_val;
     }
 
-    bool PxSceneQueryExt_sweepSingle(physx_PxScene const* scene_pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags outputFlags_pod, physx_PxSweepHit* hit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
+    bool PxSceneQueryExt_sweepSingle(physx_PxScene const* scene_pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags outputFlags_pod, physx_PxSweepHit* hit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
         physx::PxScene const& scene = reinterpret_cast<physx::PxScene const&>(*scene_pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -15329,7 +15329,7 @@ extern "C" {
         return return_val;
     }
 
-    int32_t PxSceneQueryExt_sweepMultiple(physx_PxScene const* scene_pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, PxHitFlags outputFlags_pod, physx_PxSweepHit* hitBuffer_pod, uint32_t hitBufferSize, bool* blockingHit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
+    int32_t PxSceneQueryExt_sweepMultiple(physx_PxScene const* scene_pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, physx_PxHitFlags outputFlags_pod, physx_PxSweepHit* hitBuffer_pod, uint32_t hitBufferSize, bool* blockingHit_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryFilterCallback* filterCall_pod, physx_PxQueryCache const* cache_pod, float inflation) {
         physx::PxScene const& scene = reinterpret_cast<physx::PxScene const&>(*scene_pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -15371,7 +15371,7 @@ extern "C" {
         self_->release();
     }
 
-    physx_PxRaycastBuffer* PxBatchQueryExt_raycast(physx_PxBatchQueryExt* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, uint16_t maxNbTouches, PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryCache const* cache_pod) {
+    physx_PxRaycastBuffer* PxBatchQueryExt_raycast(physx_PxBatchQueryExt* self__pod, physx_PxVec3 const* origin_pod, physx_PxVec3 const* unitDir_pod, float distance, uint16_t maxNbTouches, physx_PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryCache const* cache_pod) {
         physx::PxBatchQueryExt* self_ = reinterpret_cast<physx::PxBatchQueryExt*>(self__pod);
         physx::PxVec3 const& origin = reinterpret_cast<physx::PxVec3 const&>(*origin_pod);
         physx::PxVec3 const& unitDir = reinterpret_cast<physx::PxVec3 const&>(*unitDir_pod);
@@ -15383,7 +15383,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    physx_PxSweepBuffer* PxBatchQueryExt_sweep(physx_PxBatchQueryExt* self__pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, uint16_t maxNbTouches, PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryCache const* cache_pod, float inflation) {
+    physx_PxSweepBuffer* PxBatchQueryExt_sweep(physx_PxBatchQueryExt* self__pod, physx_PxGeometry const* geometry_pod, physx_PxTransform const* pose_pod, physx_PxVec3 const* unitDir_pod, float distance, uint16_t maxNbTouches, physx_PxHitFlags hitFlags_pod, physx_PxQueryFilterData const* filterData_pod, physx_PxQueryCache const* cache_pod, float inflation) {
         physx::PxBatchQueryExt* self_ = reinterpret_cast<physx::PxBatchQueryExt*>(self__pod);
         physx::PxGeometry const& geometry = reinterpret_cast<physx::PxGeometry const&>(*geometry_pod);
         physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
@@ -15441,7 +15441,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    uint32_t PxCustomSceneQuerySystem_addPruner(physx_PxCustomSceneQuerySystem* self__pod, PxPruningStructureType primaryType_pod, PxDynamicTreeSecondaryPruner secondaryType_pod, uint32_t preallocated) {
+    uint32_t PxCustomSceneQuerySystem_addPruner(physx_PxCustomSceneQuerySystem* self__pod, physx_PxPruningStructureType primaryType_pod, physx_PxDynamicTreeSecondaryPruner secondaryType_pod, uint32_t preallocated) {
         physx::PxCustomSceneQuerySystem* self_ = reinterpret_cast<physx::PxCustomSceneQuerySystem*>(self__pod);
         auto primaryType = static_cast<physx::PxPruningStructureType::Enum>(primaryType_pod);
         auto secondaryType = static_cast<physx::PxDynamicTreeSecondaryPruner::Enum>(secondaryType_pod);
@@ -15487,7 +15487,7 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxCustomSceneQuerySystem* phys_PxCreateCustomSceneQuerySystem(PxSceneQueryUpdateMode sceneQueryUpdateMode_pod, uint64_t contextID, physx_PxCustomSceneQuerySystemAdapter const* adapter_pod, bool usesTreeOfPruners) {
+    physx_PxCustomSceneQuerySystem* phys_PxCreateCustomSceneQuerySystem(physx_PxSceneQueryUpdateMode sceneQueryUpdateMode_pod, uint64_t contextID, physx_PxCustomSceneQuerySystemAdapter const* adapter_pod, bool usesTreeOfPruners) {
         auto sceneQueryUpdateMode = static_cast<physx::PxSceneQueryUpdateMode::Enum>(sceneQueryUpdateMode_pod);
         physx::PxCustomSceneQuerySystemAdapter const& adapter = reinterpret_cast<physx::PxCustomSceneQuerySystemAdapter const&>(*adapter_pod);
         physx::PxCustomSceneQuerySystem* return_val = PxCreateCustomSceneQuerySystem(sceneQueryUpdateMode, contextID, adapter, usesTreeOfPruners);
@@ -15634,7 +15634,7 @@ extern "C" {
         return return_val_pod;
     }
 
-    bool PxPvd_connect(physx_PxPvd* self__pod, physx_PxPvdTransport* transport_pod, PxPvdInstrumentationFlags flags_pod) {
+    bool PxPvd_connect(physx_PxPvd* self__pod, physx_PxPvdTransport* transport_pod, physx_PxPvdInstrumentationFlags flags_pod) {
         physx::PxPvd* self_ = reinterpret_cast<physx::PxPvd*>(self__pod);
         physx::PxPvdTransport& transport = reinterpret_cast<physx::PxPvdTransport&>(*transport_pod);
         auto flags = physx::PxPvdInstrumentationFlags(flags_pod);
@@ -15660,10 +15660,10 @@ extern "C" {
         return return_val_pod;
     }
 
-    PxPvdInstrumentationFlags PxPvd_getInstrumentationFlags(physx_PxPvd* self__pod) {
+    physx_PxPvdInstrumentationFlags PxPvd_getInstrumentationFlags(physx_PxPvd* self__pod) {
         physx::PxPvd* self_ = reinterpret_cast<physx::PxPvd*>(self__pod);
         physx::PxPvdInstrumentationFlags return_val = self_->getInstrumentationFlags();
-        PxPvdInstrumentationFlags return_val_pod;
+        physx_PxPvdInstrumentationFlags return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
