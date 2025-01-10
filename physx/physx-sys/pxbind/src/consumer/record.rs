@@ -545,7 +545,7 @@ impl<'ast> super::AstConsumer<'ast> {
                         name: get_name(format!(
                             "{rname}_{}{}",
                             method.name,
-                            if method.is_const() { "" } else { "" }
+                            if method.is_const() { "" } else { "_mut" }
                         )),
                         ret: None,
                         comment,

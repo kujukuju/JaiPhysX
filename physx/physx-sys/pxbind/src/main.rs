@@ -24,9 +24,9 @@ fn main() -> anyhow::Result<()> {
 
     use std::fs::File;
 
-    let mut structgen = File::create(rr.join("physx-sys/src/structgen/structgen.cpp"))?;
-    let mut cpp = File::create(rr.join("physx-sys/src/physx_generated.hpp"))?;
-    let mut rust = File::create(rr.join("physx-sys/src/physx_generated.rs"))?;
+    let mut structgen = File::create(rr.join("physx/physx-sys/src/structgen/structgen.cpp"))?;
+    let mut cpp = File::create(rr.join("physx/physx-sys/src/physx_generated.hpp"))?;
+    let mut rust = File::create(rr.join("physx/physx-sys/src/physx_generated.rs"))?;
 
     let generator = pxbind::generator::Generator::default();
     generator.generate_all(&ast, &mut structgen, &mut cpp, &mut rust)?;

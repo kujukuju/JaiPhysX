@@ -1,707 +1,3405 @@
 //
 // This file was auto-generated using the following command:
 //
-// jai generate.jai
+// jai ./generate.jai
 //
-
-PxEMPTY :: enum s32 {
-    PxEmpty :: 0;
-}
-
-PxZERO :: enum s32 {
-    PxZero :: 0;
-}
-
-PxIDENTITY :: enum s32 {
-    PxIdentity :: 0;
-}
-
-PxErrorCode :: enum_flags s32 {
-    NoError :: 0;
-    DebugInfo :: 1;
-    DebugWarning :: 2;
-    InvalidParameter :: 4;
-    InvalidOperation :: 8;
-    OutOfMemory :: 16;
-    InternalError :: 32;
-    Abort :: 64;
-    PerfWarning :: 128;
-    MaskAll :: -1;
-}
-
-PxThreadPriority :: enum u32 {
-    High :: 0;
-    AboveNormal :: 1;
-    Normal :: 2;
-    BelowNormal :: 3;
-    Low :: 4;
-    ForceDword :: 4294967295;
-}
-
-PxDebugColor :: enum u32 {
-    ArgbBlack :: 4278190080;
-    ArgbRed :: 4294901760;
-    ArgbGreen :: 4278255360;
-    ArgbBlue :: 4278190335;
-    ArgbYellow :: 4294967040;
-    ArgbMagenta :: 4294902015;
-    ArgbCyan :: 4278255615;
-    ArgbWhite :: 4294967295;
-    ArgbGrey :: 4286611584;
-    ArgbDarkred :: 4287102976;
-    ArgbDarkgreen :: 4278224896;
-    ArgbDarkblue :: 4278190216;
-}
-
-PxConcreteType :: enum s32 {
-    Undefined :: 0;
-    Heightfield :: 1;
-    ConvexMesh :: 2;
-    TriangleMeshBvh33 :: 3;
-    TriangleMeshBvh34 :: 4;
-    TetrahedronMesh :: 5;
-    SoftbodyMesh :: 6;
-    RigidDynamic :: 7;
-    RigidStatic :: 8;
-    Shape :: 9;
-    Material :: 10;
-    SoftbodyMaterial :: 11;
-    ClothMaterial :: 12;
-    PbdMaterial :: 13;
-    FlipMaterial :: 14;
-    MpmMaterial :: 15;
-    CustomMaterial :: 16;
-    Constraint :: 17;
-    Aggregate :: 18;
-    ArticulationReducedCoordinate :: 19;
-    ArticulationLink :: 20;
-    ArticulationJointReducedCoordinate :: 21;
-    ArticulationSensor :: 22;
-    ArticulationSpatialTendon :: 23;
-    ArticulationFixedTendon :: 24;
-    ArticulationAttachment :: 25;
-    ArticulationTendonJoint :: 26;
-    PruningStructure :: 27;
-    Bvh :: 28;
-    SoftBody :: 29;
-    SoftBodyState :: 30;
-    PbdParticlesystem :: 31;
-    FlipParticlesystem :: 32;
-    MpmParticlesystem :: 33;
-    CustomParticlesystem :: 34;
-    FemCloth :: 35;
-    HairSystem :: 36;
-    ParticleBuffer :: 37;
-    ParticleDiffuseBuffer :: 38;
-    ParticleClothBuffer :: 39;
-    ParticleRigidBuffer :: 40;
-    PhysxCoreCount :: 41;
-    FirstPhysxExtension :: 256;
-    FirstVehicleExtension :: 512;
-    FirstUserExtension :: 1024;
-}
-
-PxBaseFlags :: enum_flags u16 {
-    OwnsMemory :: 1 << 0;
-    IsReleasable :: 1 << 1;
-}
-
-PxMetaDataFlag :: enum_flags s32 {
-    Class :: 1;
-    Virtual :: 2;
-    Typedef :: 4;
-    Ptr :: 8;
-    Handle :: 16;
-    ExtraData :: 32;
-    ExtraItem :: 64;
-    ExtraItems :: 128;
-    ExtraName :: 256;
-    Union :: 512;
-    Padding :: 1024;
-    Alignment :: 2048;
-    CountMaskMsb :: 4096;
-    CountSkipIfOne :: 8192;
-    ControlFlip :: 16384;
-    ControlMask :: 32768;
-    ControlMaskRange :: 255;
-    ForceDword :: 2147483647;
-}
-
-PxTaskType :: enum s32 {
-    Cpu :: 0;
-    NotPresent :: 1;
-    Completed :: 2;
-}
-
-PxGeometryType :: enum s32 {
-    Sphere :: 0;
-    Plane :: 1;
-    Capsule :: 2;
-    Box :: 3;
-    Convexmesh :: 4;
-    Particlesystem :: 5;
-    Tetrahedronmesh :: 6;
-    Trianglemesh :: 7;
-    Heightfield :: 8;
-    Hairsystem :: 9;
-    Custom :: 10;
-    GeometryCount :: 11;
-    Invalid :: -1;
-}
-
-PxGeometryQueryFlags :: enum_flags u32 {
-    SimdGuard :: 1 << 0;
-}
-
-PxBVHBuildStrategy :: enum s32 {
-    Fast :: 0;
-    Default :: 1;
-    Sah :: 2;
-    Last :: 3;
-}
-
-PxConvexMeshGeometryFlags :: enum_flags u8 {
-    TightBounds :: 1 << 0;
-}
-
-PxMeshGeometryFlags :: enum_flags u8 {
-    TightBounds :: 1 << 0;
-    DoubleSided :: 1 << 1;
-}
-
-PxParticleSolverType :: enum_flags s32 {
-    Pbd :: 1;
-    Flip :: 2;
-    Mpm :: 4;
-    Custom :: 8;
-}
-
-PxHitFlags :: enum_flags u16 {
-    Position :: 1 << 0;
-    Normal :: 1 << 1;
-    Uv :: 1 << 3;
-    AssumeNoInitialOverlap :: 1 << 4;
-    AnyHit :: 1 << 5;
-    MeshMultiple :: 1 << 6;
-    MeshBothSides :: 1 << 7;
-    PreciseSweep :: 1 << 8;
-    Mtd :: 1 << 9;
-    FaceIndex :: 1 << 10;
-    Default :: PxHitFlags.Position | PxHitFlags.Normal | PxHitFlags.FaceIndex;
-    ModifiableFlags :: PxHitFlags.AssumeNoInitialOverlap | PxHitFlags.MeshMultiple | PxHitFlags.MeshBothSides | PxHitFlags.PreciseSweep;
-}
-
-PxHeightFieldFormat :: enum s32 {
-    S16Tm :: 1;
-}
-
-PxHeightFieldTessFlag :: enum_flags s32 {
-    E0ThVertexShared :: 1;
-}
-
-PxHeightFieldFlags :: enum_flags u16 {
-    NoBoundaryEdges :: 1 << 0;
-}
-
-PxHeightFieldMaterial :: enum s32 {
-    Hole :: 127;
-}
-
-PxMeshMeshQueryFlags :: enum_flags u32 {
-    Default :: 0;
-    DiscardCoplanar :: 1 << 0;
-}
-
-PxMeshFlags :: enum_flags u16 {
-    Flipnormals :: 1 << 0;
-    E16BitIndices :: 1 << 1;
-}
-
-PxMeshMidPhase :: enum s32 {
-    Bvh33 :: 0;
-    Bvh34 :: 1;
-    Last :: 2;
-}
-
-PxTriangleMeshFlags :: enum_flags u8 {
-    E16BitIndices :: 1 << 1;
-    AdjacencyInfo :: 1 << 2;
-    PreferNoSdfProj :: 1 << 3;
-}
-
-PxTetrahedronMeshFlags :: enum_flags u8 {
-    E16BitIndices :: 1 << 1;
-}
-
-PxActorFlags :: enum_flags u8 {
-    Visualization :: 1 << 0;
-    DisableGravity :: 1 << 1;
-    SendSleepNotifies :: 1 << 2;
-    DisableSimulation :: 1 << 3;
-}
-
-PxActorType :: enum s32 {
-    RigidStatic :: 0;
-    RigidDynamic :: 1;
-    ArticulationLink :: 2;
-}
-
-PxAggregateType :: enum s32 {
-    Generic :: 0;
-    Static :: 1;
-    Kinematic :: 2;
-}
-
-Px1DConstraintFlags :: enum_flags u16 {
-    Spring :: 1 << 0;
-    AccelerationSpring :: 1 << 1;
-    Restitution :: 1 << 2;
-    Keepbias :: 1 << 3;
-    OutputForce :: 1 << 4;
-    HasDriveLimit :: 1 << 5;
-    AngularConstraint :: 1 << 6;
-    DriveRow :: 1 << 7;
-}
-
-PxConstraintSolveHint :: enum s32 {
-    None :: 0;
-    Acceleration1 :: 256;
-    SlerpSpring :: 258;
-    Acceleration2 :: 512;
-    Acceleration3 :: 768;
-    RotationalEquality :: 1024;
-    RotationalInequality :: 1025;
-    Equality :: 2048;
-    Inequality :: 2049;
-}
-
-PxConstraintVisualizationFlag :: enum_flags s32 {
-    LocalFrames :: 1;
-    Limits :: 2;
-}
-
-PxPvdUpdateType :: enum s32 {
-    CreateInstance :: 0;
-    ReleaseInstance :: 1;
-    UpdateAllProperties :: 2;
-    UpdateSimProperties :: 3;
-}
-
-ConstraintType :: enum s32 {
-    ContactConstraint :: 0;
-    JointConstraint :: 1;
-}
-
-BodyState :: enum_flags s32 {
-    DynamicBody :: 1;
-    StaticBody :: 2;
-    KinematicBody :: 4;
-    Articulation :: 8;
-}
-
-PxArticulationAxis :: enum s32 {
-    Twist :: 0;
-    Swing1 :: 1;
-    Swing2 :: 2;
-    X :: 3;
-    Y :: 4;
-    Z :: 5;
-    Count :: 6;
-}
-
-PxArticulationMotions :: enum_flags u8 {
-    Locked :: 0;
-    Limited :: 1 << 0;
-    Free :: 1 << 1;
-}
-
-PxArticulationJointType :: enum s32 {
-    Fix :: 0;
-    Prismatic :: 1;
-    Revolute :: 2;
-    RevoluteUnwrapped :: 3;
-    Spherical :: 4;
-    Undefined :: 5;
-}
-
-PxArticulationFlags :: enum_flags u8 {
-    FixBase :: 1 << 0;
-    DriveLimitsAreForces :: 1 << 1;
-    DisableSelfCollision :: 1 << 2;
-    ComputeJointForces :: 1 << 3;
-}
-
-PxArticulationDriveType :: enum s32 {
-    Force :: 0;
-    Acceleration :: 1;
-    Target :: 2;
-    Velocity :: 3;
-    None :: 4;
-}
-
-PxArticulationGpuDataType :: enum s32 {
-    JointPosition :: 0;
-    JointVelocity :: 1;
-    JointAcceleration :: 2;
-    JointForce :: 3;
-    JointSolverForce :: 4;
-    JointTargetVelocity :: 5;
-    JointTargetPosition :: 6;
-    SensorForce :: 7;
-    RootTransform :: 8;
-    RootVelocity :: 9;
-    LinkTransform :: 10;
-    LinkVelocity :: 11;
-    LinkForce :: 12;
-    LinkTorque :: 13;
-    FixedTendon :: 14;
-    FixedTendonJoint :: 15;
-    SpatialTendon :: 16;
-    SpatialTendonAttachment :: 17;
-}
-
-PxArticulationCacheFlags :: enum_flags u32 {
-    Velocity :: 1 << 0;
-    Acceleration :: 1 << 1;
-    Position :: 1 << 2;
-    Force :: 1 << 3;
-    LinkVelocity :: 1 << 4;
-    LinkAcceleration :: 1 << 5;
-    RootTransform :: 1 << 6;
-    RootVelocities :: 1 << 7;
-    SensorForces :: 1 << 8;
-    JointSolverForces :: 1 << 9;
-    All :: PxArticulationCacheFlags.Velocity | PxArticulationCacheFlags.Acceleration | PxArticulationCacheFlags.Position | PxArticulationCacheFlags.LinkVelocity | PxArticulationCacheFlags.LinkAcceleration | PxArticulationCacheFlags.RootTransform | PxArticulationCacheFlags.RootVelocities;
-}
-
-PxArticulationSensorFlags :: enum_flags u8 {
-    ForwardDynamicsForces :: 1 << 0;
-    ConstraintSolverForces :: 1 << 1;
-    WorldFrame :: 1 << 2;
-}
-
-PxArticulationKinematicFlags :: enum_flags u8 {
-    Position :: 1 << 0;
-    Velocity :: 1 << 1;
-}
-
-PxShapeFlags :: enum_flags u8 {
-    SimulationShape :: 1 << 0;
-    SceneQueryShape :: 1 << 1;
-    TriggerShape :: 1 << 2;
-    Visualization :: 1 << 3;
-}
-
-PxForceMode :: enum s32 {
-    Force :: 0;
-    Impulse :: 1;
-    VelocityChange :: 2;
-    Acceleration :: 3;
-}
-
-PxRigidBodyFlags :: enum_flags u16 {
-    Kinematic :: 1 << 0;
-    UseKinematicTargetForSceneQueries :: 1 << 1;
-    EnableCcd :: 1 << 2;
-    EnableCcdFriction :: 1 << 3;
-    EnableSpeculativeCcd :: 1 << 4;
-    EnablePoseIntegrationPreview :: 1 << 5;
-    EnableCcdMaxContactImpulse :: 1 << 6;
-    RetainAccelerations :: 1 << 7;
-    ForceKineKineNotifications :: 1 << 8;
-    ForceStaticKineNotifications :: 1 << 9;
-    EnableGyroscopicForces :: 1 << 10;
-}
-
-PxConstraintFlags :: enum_flags u16 {
-    Broken :: 1 << 0;
-    ProjectToActor0 :: 1 << 1;
-    ProjectToActor1 :: 1 << 2;
-    Projection :: PxConstraintFlags.ProjectToActor0 | PxConstraintFlags.ProjectToActor1;
-    CollisionEnabled :: 1 << 3;
-    Visualization :: 1 << 4;
-    DriveLimitsAreForces :: 1 << 5;
-    ImprovedSlerp :: 1 << 7;
-    DisablePreprocessing :: 1 << 8;
-    EnableExtendedLimits :: 1 << 9;
-    GpuCompatible :: 1 << 10;
-    AlwaysUpdate :: 1 << 11;
-    DisableConstraint :: 1 << 12;
-}
-
-PxContactPatchFlags :: enum_flags s32 {
-    HasFaceIndices :: 1;
-    Modifiable :: 2;
-    ForceNoResponse :: 4;
-    HasModifiedMassRatios :: 8;
-    HasTargetVelocity :: 16;
-    HasMaxImpulse :: 32;
-    RegeneratePatches :: 64;
-    CompressedModifiedContact :: 128;
-}
-
-StreamFormat :: enum s32 {
-    SimpleStream :: 0;
-    ModifiableStream :: 1;
-    CompressedModifiableStream :: 2;
-}
-
-PxDeletionEventFlags :: enum_flags u8 {
-    UserRelease :: 1 << 0;
-    MemoryRelease :: 1 << 1;
-}
-
-PxPairFlags :: enum_flags u16 {
-    SolveContact :: 1 << 0;
-    ModifyContacts :: 1 << 1;
-    NotifyTouchFound :: 1 << 2;
-    NotifyTouchPersists :: 1 << 3;
-    NotifyTouchLost :: 1 << 4;
-    NotifyTouchCcd :: 1 << 5;
-    NotifyThresholdForceFound :: 1 << 6;
-    NotifyThresholdForcePersists :: 1 << 7;
-    NotifyThresholdForceLost :: 1 << 8;
-    NotifyContactPoints :: 1 << 9;
-    DetectDiscreteContact :: 1 << 10;
-    DetectCcdContact :: 1 << 11;
-    PreSolverVelocity :: 1 << 12;
-    PostSolverVelocity :: 1 << 13;
-    ContactEventPose :: 1 << 14;
-    NextFree :: 1 << 15;
-    ContactDefault :: PxPairFlags.SolveContact | PxPairFlags.DetectDiscreteContact;
-    TriggerDefault :: PxPairFlags.NotifyTouchFound | PxPairFlags.NotifyTouchLost | PxPairFlags.DetectDiscreteContact;
-}
-
-PxFilterFlags :: enum_flags u16 {
-    Default :: 0;
-    Kill :: 1 << 0;
-    Suppress :: 1 << 1;
-    Callback :: 1 << 2;
-    Notify :: PxFilterFlags.Callback;
-}
-
-PxFilterObjectType :: enum s32 {
-    RigidStatic :: 0;
-    RigidDynamic :: 1;
-    Articulation :: 2;
-    Particlesystem :: 3;
-    Softbody :: 4;
-    Femcloth :: 5;
-    Hairsystem :: 6;
-    MaxTypeCount :: 16;
-    Undefined :: 15;
-}
-
-PxFilterObjectFlag :: enum_flags s32 {
-    Kinematic :: 16;
-    Trigger :: 32;
-}
-
-PxPairFilteringMode :: enum s32 {
-    Keep :: 0;
-    Suppress :: 1;
-    Kill :: 2;
-}
-
-PxDataAccessFlags :: enum_flags u8 {
-    Readable :: 1 << 0;
-    Writable :: 1 << 1;
-    Device :: 1 << 2;
-}
-
-PxMaterialFlags :: enum_flags u16 {
-    DisableFriction :: 1 << 0;
-    DisableStrongFriction :: 1 << 1;
-    ImprovedPatchFriction :: 1 << 2;
-    CompliantContact :: 1 << 3;
-}
-
-PxRigidDynamicLockFlags :: enum_flags u8 {
-    LockLinearX :: 1 << 0;
-    LockLinearY :: 1 << 1;
-    LockLinearZ :: 1 << 2;
-    LockAngularX :: 1 << 3;
-    LockAngularY :: 1 << 4;
-    LockAngularZ :: 1 << 5;
-}
-
-PxSceneFlags :: enum_flags u32 {
-    EnableActiveActors :: 1 << 0;
-    EnableCcd :: 1 << 1;
-    DisableCcdResweep :: 1 << 2;
-    EnablePcm :: 1 << 6;
-    DisableContactReportBufferResize :: 1 << 7;
-    DisableContactCache :: 1 << 8;
-    RequireRwLock :: 1 << 9;
-    EnableStabilization :: 1 << 10;
-    EnableAveragePoint :: 1 << 11;
-    ExcludeKinematicsFromActiveActors :: 1 << 12;
-    EnableGpuDynamics :: 1 << 13;
-    EnableEnhancedDeterminism :: 1 << 14;
-    EnableFrictionEveryIteration :: 1 << 15;
-    SuppressReadback :: 1 << 16;
-    ForceReadback :: 1 << 17;
-    MutableFlags :: EnableActiveActors | ExcludeKinematicsFromActiveActors | SuppressReadback;
-}
-
-PxConvexFlags :: enum_flags u16 {
-    E16BitIndices :: 1 << 0;
-    ComputeConvex :: 1 << 1;
-    CheckZeroAreaTriangles :: 1 << 2;
-    QuantizeInput :: 1 << 3;
-    DisableMeshValidation :: 1 << 4;
-    PlaneShifting :: 1 << 5;
-    FastInertiaComputation :: 1 << 6;
-    GpuCompatible :: 1 << 7;
-    ShiftVertices :: 1 << 8;
-}
-
-PxConvexMeshCookingResult :: enum s32 {
-    /// Convex mesh cooking succeeded.
-    Success :: 0;
-    /// Convex mesh cooking failed, algorithm couldn't find 4 initial vertices without a small triangle.
-    ZeroAreaTestFailed :: 1;
-    /// Convex mesh cooking succeeded, but the algorithm has reached the 255 polygons limit.
-    /// The produced hull does not contain all input vertices. Try to simplify the input vertices
-    /// or try to use the eINFLATE_CONVEX or the eQUANTIZE_INPUT flags.
-    PolygonsLimitReached :: 2;
-    /// Something unrecoverable happened. Check the error stream to find out what.
-    Failure :: 3;
-}
-
-PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
-    WaitForWork :: 0;
-    YieldThread :: 1;
-    YieldProcessor :: 2;
-}
-
-PxControllerShapeType :: enum s32 {
-    /// A box controller.
-    Box :: 0;
-    /// A capsule controller
-    Capsule :: 1;
-    /// A capsule controller
-    ForceDword :: 2147483647;
-}
-
-PxControllerNonWalkableMode :: enum s32 {
-    /// Stops character from climbing up non-walkable slopes, but doesn't move it otherwise
-    PreventClimbing :: 0;
-    /// Stops character from climbing up non-walkable slopes, and forces it to slide down those slopes
-    PreventClimbingAndForceSliding :: 1;
-}
-
-PxControllerCollisionFlags :: enum_flags u8 {
-    CollisionSides :: 1 << 0;
-    CollisionUp :: 1 << 1;
-    CollisionDown :: 1 << 2;
-}
-
-PxCapsuleClimbingMode :: enum s32 {
-    /// Standard mode, let the capsule climb over surfaces according to impact normal
-    Easy :: 0;
-    /// Constrained mode, try to limit climbing according to the step offset
-    Constrained :: 1;
-    Last :: 2;
-}
-
-PxControllerBehaviorFlags :: enum_flags u8 {
-    /// Controller can ride on touched object (i.e. when this touched object is moving horizontally).
-    ///
-    /// The CCT vs. CCT case is not supported.
-    CctCanRideOnObject :: 1;
-    /// Controller should slide on touched object
-    CctSlide :: 2;
-    /// Disable all code dealing with controllers riding on objects, let users define it outside of the SDK.
-    CctUserDefinedRide :: 4;
-}
-
-PxQueryHitType :: enum s32 {
-    /// the query should ignore this shape
-    None :: 0;
-    /// a hit on the shape touches the intersection geometry of the query but does not block it
-    Touch :: 1;
-    /// a hit on the shape blocks the query (does not block overlap queries)
-    Block :: 2;
-}
-
-PxQueryFlags :: enum_flags u16 {
-    Static :: 1 << 0;
-    Dynamic :: 1 << 1;
-    Prefilter :: 1 << 2;
-    Postfilter :: 1 << 3;
-    AnyHit :: 1 << 4;
-    NoBlock :: 1 << 5;
-    DisableHardcodedFilter :: 1 << 6;
-    Reserved :: 1 << 15;
-}
-
-PxBroadPhaseType :: enum s32 {
-    /// 3-axes sweep-and-prune
-    Sap :: 0;
-    /// Multi box pruning
-    Mbp :: 1;
-    /// Automatic box pruning
-    Abp :: 2;
-    /// Parallel automatic box pruning
-    Pabp :: 3;
-    /// GPU broad phase
-    Gpu :: 4;
-    Last :: 5;
-}
-
-PxCombineMode :: enum s32 {
-    /// Average: (a + b)/2
-    Average :: 0;
-    /// Minimum: minimum(a,b)
-    Min :: 1;
-    /// Multiply: a*b
-    Multiply :: 2;
-    /// Maximum: maximum(a,b)
-    Max :: 3;
-}
-
-PxD6Axis :: enum s32 {
-    /// motion along the X axis
-    X :: 0;
-    /// motion along the Y axis
-    Y :: 1;
-    /// motion along the Z axis
-    Z :: 2;
-    /// motion around the X axis
-    Twist :: 3;
-    /// motion around the Y axis
-    Swing1 :: 4;
-    /// motion around the Z axis
-    Swing2 :: 5;
-    Count :: 6;
-}
-
-PxD6Motion :: enum s32 {
-    /// The DOF is locked, it does not allow relative motion.
-    Locked :: 0;
-    /// The DOF is limited, it only allows motion within a specific range.
-    Limited :: 1;
-    /// The DOF is free and has its full range of motion.
-    Free :: 2;
-}
-
-PxRevoluteJointFlags :: enum_flags u16 {
-    LimitEnabled :: 1 << 0;
-    DriveEnabled :: 1 << 1;
-    DriveFreespin :: 1 << 2;
-}
-
-PxDistanceJointFlags :: enum_flags u16 {
-    MaxDistanceEnabled :: 1 << 1;
-    MinDistanceEnabled :: 1 << 2;
-    SpringEnabled :: 1 << 3;
-}
 
 
 
 _MSC_VER :: 1939;
 NDEBUG :: 1;
+/// enum for empty constructor tag
+PxEMPTY :: enum s32 {
+    PxEmpty :: 0;
+    PxEMPTY_PxEmpty :: PxEmpty;
+}
+
+/// enum for zero constructor tag for vectors and matrices
+PxZERO :: enum s32 {
+    PxZero :: 0;
+    PxZERO_PxZero :: PxZero;
+}
+
+/// enum for identity constructor flag for quaternions, transforms, and matrices
+PxIDENTITY :: enum s32 {
+    PxIdentity :: 0;
+    PxIDENTITY_PxIdentity :: PxIdentity;
+}
+
+/// Error codes
+///
+/// These error codes are passed to [`PxErrorCallback`]
+PxErrorCode :: enum s32 {
+    NoError          :: 0;
+
+    DebugInfo        :: 1;
+
+    DebugWarning     :: 2;
+
+    InvalidParameter :: 4;
+
+    InvalidOperation :: 8;
+
+    OutOfMemory      :: 16;
+
+    InternalError    :: 32;
+
+    Abort            :: 64;
+
+    PerfWarning      :: 128;
+
+    MaskAll          :: -1;
+
+    PxErrorCode_NoError          :: NoError;
+
+    PxErrorCode_DebugInfo        :: DebugInfo;
+
+    PxErrorCode_DebugWarning     :: DebugWarning;
+
+    PxErrorCode_InvalidParameter :: InvalidParameter;
+
+    PxErrorCode_InvalidOperation :: InvalidOperation;
+
+    PxErrorCode_OutOfMemory      :: OutOfMemory;
+
+    PxErrorCode_InternalError    :: InternalError;
+
+    PxErrorCode_Abort            :: Abort;
+
+    PxErrorCode_PerfWarning      :: PerfWarning;
+
+    PxErrorCode_MaskAll          :: MaskAll;
+}
+
+PxThreadPriority :: enum u32 {
+    High        :: 0;
+
+    AboveNormal :: 1;
+
+    Normal      :: 2;
+
+    BelowNormal :: 3;
+
+    Low         :: 4;
+    ForceDword  :: 4294967295;
+
+    PxThreadPriority_High        :: High;
+
+    PxThreadPriority_AboveNormal :: AboveNormal;
+
+    PxThreadPriority_Normal      :: Normal;
+
+    PxThreadPriority_BelowNormal :: BelowNormal;
+
+    PxThreadPriority_Low         :: Low;
+    PxThreadPriority_ForceDword  :: ForceDword;
+}
+
+/// Default color values used for debug rendering.
+PxDebugColor :: enum u32 {
+    ArgbBlack     :: 4278190080;
+    ArgbRed       :: 4294901760;
+    ArgbGreen     :: 4278255360;
+    ArgbBlue      :: 4278190335;
+    ArgbYellow    :: 4294967040;
+    ArgbMagenta   :: 4294902015;
+    ArgbCyan      :: 4278255615;
+    ArgbWhite     :: 4294967295;
+    ArgbGrey      :: 4286611584;
+    ArgbDarkred   :: 4287102976;
+    ArgbDarkgreen :: 4278224896;
+    ArgbDarkblue  :: 4278190216;
+
+    PxDebugColor_ArgbBlack     :: ArgbBlack;
+    PxDebugColor_ArgbRed       :: ArgbRed;
+    PxDebugColor_ArgbGreen     :: ArgbGreen;
+    PxDebugColor_ArgbBlue      :: ArgbBlue;
+    PxDebugColor_ArgbYellow    :: ArgbYellow;
+    PxDebugColor_ArgbMagenta   :: ArgbMagenta;
+    PxDebugColor_ArgbCyan      :: ArgbCyan;
+    PxDebugColor_ArgbWhite     :: ArgbWhite;
+    PxDebugColor_ArgbGrey      :: ArgbGrey;
+    PxDebugColor_ArgbDarkred   :: ArgbDarkred;
+    PxDebugColor_ArgbDarkgreen :: ArgbDarkgreen;
+    PxDebugColor_ArgbDarkblue  :: ArgbDarkblue;
+}
+
+/// an enumeration of concrete classes inheriting from PxBase
+///
+/// Enumeration space is reserved for future PhysX core types, PhysXExtensions,
+/// PhysXVehicle and Custom application types.
+PxConcreteType :: enum s32 {
+    Undefined                          :: 0;
+    Heightfield                        :: 1;
+    ConvexMesh                         :: 2;
+    TriangleMeshBvh33                  :: 3;
+    TriangleMeshBvh34                  :: 4;
+    TetrahedronMesh                    :: 5;
+    SoftbodyMesh                       :: 6;
+    RigidDynamic                       :: 7;
+    RigidStatic                        :: 8;
+    Shape                              :: 9;
+    Material                           :: 10;
+    SoftbodyMaterial                   :: 11;
+    ClothMaterial                      :: 12;
+    PbdMaterial                        :: 13;
+    FlipMaterial                       :: 14;
+    MpmMaterial                        :: 15;
+    CustomMaterial                     :: 16;
+    Constraint                         :: 17;
+    Aggregate                          :: 18;
+    ArticulationReducedCoordinate      :: 19;
+    ArticulationLink                   :: 20;
+    ArticulationJointReducedCoordinate :: 21;
+    ArticulationSensor                 :: 22;
+    ArticulationSpatialTendon          :: 23;
+    ArticulationFixedTendon            :: 24;
+    ArticulationAttachment             :: 25;
+    ArticulationTendonJoint            :: 26;
+    PruningStructure                   :: 27;
+    Bvh                                :: 28;
+    SoftBody                           :: 29;
+    SoftBodyState                      :: 30;
+    PbdParticlesystem                  :: 31;
+    FlipParticlesystem                 :: 32;
+    MpmParticlesystem                  :: 33;
+    CustomParticlesystem               :: 34;
+    FemCloth                           :: 35;
+    HairSystem                         :: 36;
+    ParticleBuffer                     :: 37;
+    ParticleDiffuseBuffer              :: 38;
+    ParticleClothBuffer                :: 39;
+    ParticleRigidBuffer                :: 40;
+    PhysxCoreCount                     :: 41;
+    FirstPhysxExtension                :: 256;
+    FirstVehicleExtension              :: 512;
+    FirstUserExtension                 :: 1024;
+
+    PxConcreteType_Undefined                          :: Undefined;
+    PxConcreteType_Heightfield                        :: Heightfield;
+    PxConcreteType_ConvexMesh                         :: ConvexMesh;
+    PxConcreteType_TriangleMeshBvh33                  :: TriangleMeshBvh33;
+    PxConcreteType_TriangleMeshBvh34                  :: TriangleMeshBvh34;
+    PxConcreteType_TetrahedronMesh                    :: TetrahedronMesh;
+    PxConcreteType_SoftbodyMesh                       :: SoftbodyMesh;
+    PxConcreteType_RigidDynamic                       :: RigidDynamic;
+    PxConcreteType_RigidStatic                        :: RigidStatic;
+    PxConcreteType_Shape                              :: Shape;
+    PxConcreteType_Material                           :: Material;
+    PxConcreteType_SoftbodyMaterial                   :: SoftbodyMaterial;
+    PxConcreteType_ClothMaterial                      :: ClothMaterial;
+    PxConcreteType_PbdMaterial                        :: PbdMaterial;
+    PxConcreteType_FlipMaterial                       :: FlipMaterial;
+    PxConcreteType_MpmMaterial                        :: MpmMaterial;
+    PxConcreteType_CustomMaterial                     :: CustomMaterial;
+    PxConcreteType_Constraint                         :: Constraint;
+    PxConcreteType_Aggregate                          :: Aggregate;
+    PxConcreteType_ArticulationReducedCoordinate      :: ArticulationReducedCoordinate;
+    PxConcreteType_ArticulationLink                   :: ArticulationLink;
+    PxConcreteType_ArticulationJointReducedCoordinate :: ArticulationJointReducedCoordinate;
+    PxConcreteType_ArticulationSensor                 :: ArticulationSensor;
+    PxConcreteType_ArticulationSpatialTendon          :: ArticulationSpatialTendon;
+    PxConcreteType_ArticulationFixedTendon            :: ArticulationFixedTendon;
+    PxConcreteType_ArticulationAttachment             :: ArticulationAttachment;
+    PxConcreteType_ArticulationTendonJoint            :: ArticulationTendonJoint;
+    PxConcreteType_PruningStructure                   :: PruningStructure;
+    PxConcreteType_Bvh                                :: Bvh;
+    PxConcreteType_SoftBody                           :: SoftBody;
+    PxConcreteType_SoftBodyState                      :: SoftBodyState;
+    PxConcreteType_PbdParticlesystem                  :: PbdParticlesystem;
+    PxConcreteType_FlipParticlesystem                 :: FlipParticlesystem;
+    PxConcreteType_MpmParticlesystem                  :: MpmParticlesystem;
+    PxConcreteType_CustomParticlesystem               :: CustomParticlesystem;
+    PxConcreteType_FemCloth                           :: FemCloth;
+    PxConcreteType_HairSystem                         :: HairSystem;
+    PxConcreteType_ParticleBuffer                     :: ParticleBuffer;
+    PxConcreteType_ParticleDiffuseBuffer              :: ParticleDiffuseBuffer;
+    PxConcreteType_ParticleClothBuffer                :: ParticleClothBuffer;
+    PxConcreteType_ParticleRigidBuffer                :: ParticleRigidBuffer;
+    PxConcreteType_PhysxCoreCount                     :: PhysxCoreCount;
+    PxConcreteType_FirstPhysxExtension                :: FirstPhysxExtension;
+    PxConcreteType_FirstVehicleExtension              :: FirstVehicleExtension;
+    PxConcreteType_FirstUserExtension                 :: FirstUserExtension;
+}
+
+/// Flags for PxBase.
+PxBaseFlag :: enum s32 {
+    OwnsMemory   :: 1;
+    IsReleasable :: 2;
+
+    PxBaseFlag_OwnsMemory   :: OwnsMemory;
+    PxBaseFlag_IsReleasable :: IsReleasable;
+}
+
+PxBaseFlags :: enum_flags u16 {
+    OwnsMemory   :: 0x1;
+    IsReleasable :: 0x2;
+
+    PxBaseFlags_OwnsMemory   :: OwnsMemory;
+    PxBaseFlags_IsReleasable :: IsReleasable;
+}
+
+/// Flags used to configure binary meta data entries, typically set through PX_DEF_BIN_METADATA defines.
+PxMetaDataFlag :: enum s32 {
+    Class            :: 1;
+
+    Virtual          :: 2;
+
+    Typedef          :: 4;
+
+    Ptr              :: 8;
+
+    Handle           :: 16;
+
+    ExtraData        :: 32;
+
+    ExtraItem        :: 64;
+
+    ExtraItems       :: 128;
+
+    ExtraName        :: 256;
+
+    Union            :: 512;
+
+    Padding          :: 1024;
+
+    Alignment        :: 2048;
+
+    CountMaskMsb     :: 4096;
+
+    CountSkipIfOne   :: 8192;
+
+    ControlFlip      :: 16384;
+
+    ControlMask      :: 32768;
+
+    ControlMaskRange :: 255;
+    ForceDword       :: 2147483647;
+
+    PxMetaDataFlag_Class            :: Class;
+
+    PxMetaDataFlag_Virtual          :: Virtual;
+
+    PxMetaDataFlag_Typedef          :: Typedef;
+
+    PxMetaDataFlag_Ptr              :: Ptr;
+
+    PxMetaDataFlag_Handle           :: Handle;
+
+    PxMetaDataFlag_ExtraData        :: ExtraData;
+
+    PxMetaDataFlag_ExtraItem        :: ExtraItem;
+
+    PxMetaDataFlag_ExtraItems       :: ExtraItems;
+
+    PxMetaDataFlag_ExtraName        :: ExtraName;
+
+    PxMetaDataFlag_Union            :: Union;
+
+    PxMetaDataFlag_Padding          :: Padding;
+
+    PxMetaDataFlag_Alignment        :: Alignment;
+
+    PxMetaDataFlag_CountMaskMsb     :: CountMaskMsb;
+
+    PxMetaDataFlag_CountSkipIfOne   :: CountSkipIfOne;
+
+    PxMetaDataFlag_ControlFlip      :: ControlFlip;
+
+    PxMetaDataFlag_ControlMask      :: ControlMask;
+
+    PxMetaDataFlag_ControlMaskRange :: ControlMaskRange;
+    PxMetaDataFlag_ForceDword       :: ForceDword;
+}
+
+/// Identifies the type of each heavyweight PxTask object
+PxTaskType :: enum s32 {
+    Cpu        :: 0;
+
+    NotPresent :: 1;
+
+    Completed  :: 2;
+
+    PxTaskType_Cpu        :: Cpu;
+
+    PxTaskType_NotPresent :: NotPresent;
+
+    PxTaskType_Completed  :: Completed;
+}
+
+/// A geometry type.
+///
+/// Used to distinguish the type of a ::PxGeometry object.
+PxGeometryType :: enum s32 {
+    Sphere          :: 0;
+    Plane           :: 1;
+    Capsule         :: 2;
+    Box             :: 3;
+    Convexmesh      :: 4;
+    Particlesystem  :: 5;
+    Tetrahedronmesh :: 6;
+    Trianglemesh    :: 7;
+    Heightfield     :: 8;
+    Hairsystem      :: 9;
+    Custom          :: 10;
+
+    GeometryCount   :: 11;
+
+    Invalid         :: -1;
+
+    PxGeometryType_Sphere          :: Sphere;
+    PxGeometryType_Plane           :: Plane;
+    PxGeometryType_Capsule         :: Capsule;
+    PxGeometryType_Box             :: Box;
+    PxGeometryType_Convexmesh      :: Convexmesh;
+    PxGeometryType_Particlesystem  :: Particlesystem;
+    PxGeometryType_Tetrahedronmesh :: Tetrahedronmesh;
+    PxGeometryType_Trianglemesh    :: Trianglemesh;
+    PxGeometryType_Heightfield     :: Heightfield;
+    PxGeometryType_Hairsystem      :: Hairsystem;
+    PxGeometryType_Custom          :: Custom;
+
+    PxGeometryType_GeometryCount   :: GeometryCount;
+
+    PxGeometryType_Invalid         :: Invalid;
+}
+
+/// Geometry-level query flags.
+PxGeometryQueryFlag :: enum s32 {
+    SimdGuard :: 1;
+    PxGeometryQueryFlag_SimdGuard :: SimdGuard;
+}
+
+PxGeometryQueryFlags :: enum_flags u32 {
+    SimdGuard :: 0x1;
+    PxGeometryQueryFlags_SimdGuard :: SimdGuard;
+}
+
+/// Desired build strategy for bounding-volume hierarchies
+PxBVHBuildStrategy :: enum s32 {
+    Fast    :: 0;
+
+    Default :: 1;
+
+    Sah     :: 2;
+    Last    :: 3;
+
+    PxBVHBuildStrategy_Fast    :: Fast;
+
+    PxBVHBuildStrategy_Default :: Default;
+
+    PxBVHBuildStrategy_Sah     :: Sah;
+    PxBVHBuildStrategy_Last    :: Last;
+}
+
+/// Flags controlling the simulated behavior of the convex mesh geometry.
+///
+/// Used in ::PxConvexMeshGeometryFlags.
+PxConvexMeshGeometryFlag :: enum s32 {
+    TightBounds :: 1;
+    PxConvexMeshGeometryFlag_TightBounds :: TightBounds;
+}
+
+PxConvexMeshGeometryFlags :: enum_flags u8 {
+    TightBounds :: 0x1;
+    PxConvexMeshGeometryFlags_TightBounds :: TightBounds;
+}
+
+/// Flags controlling the simulated behavior of the triangle mesh geometry.
+///
+/// Used in ::PxMeshGeometryFlags.
+PxMeshGeometryFlag :: enum s32 {
+    TightBounds :: 1;
+
+    DoubleSided :: 2;
+
+    PxMeshGeometryFlag_TightBounds :: TightBounds;
+
+    PxMeshGeometryFlag_DoubleSided :: DoubleSided;
+}
+
+PxMeshGeometryFlags :: enum_flags u8 {
+    TightBounds :: 0x1;
+    DoubleSided :: 0x2;
+
+    PxMeshGeometryFlags_TightBounds :: TightBounds;
+    PxMeshGeometryFlags_DoubleSided :: DoubleSided;
+}
+
+/// Identifies the solver to use for a particle system.
+PxParticleSolverType :: enum s32 {
+    Pbd    :: 1;
+
+    Flip   :: 2;
+
+    Mpm    :: 4;
+
+    Custom :: 8;
+
+    PxParticleSolverType_Pbd    :: Pbd;
+
+    PxParticleSolverType_Flip   :: Flip;
+
+    PxParticleSolverType_Mpm    :: Mpm;
+
+    PxParticleSolverType_Custom :: Custom;
+}
+
+/// Scene query and geometry query behavior flags.
+///
+/// PxHitFlags are used for 3 different purposes:
+///
+/// 1) To request hit fields to be filled in by scene queries (such as hit position, normal, face index or UVs).
+/// 2) Once query is completed, to indicate which fields are valid (note that a query may produce more valid fields than requested).
+/// 3) To specify additional options for the narrow phase and mid-phase intersection routines.
+///
+/// All these flags apply to both scene queries and geometry queries (PxGeometryQuery).
+PxHitFlag :: enum s32 {
+    Position               :: 1;
+
+    Normal                 :: 2;
+
+    Uv                     :: 8;
+
+    AssumeNoInitialOverlap :: 16;
+
+    AnyHit                 :: 32;
+
+    MeshMultiple           :: 64;
+
+    MeshBothSides          :: 128;
+
+    PreciseSweep           :: 256;
+
+    Mtd                    :: 512;
+
+    FaceIndex              :: 1024;
+    Default                :: 1027;
+
+    ModifiableFlags        :: 464;
+
+    PxHitFlag_Position               :: Position;
+
+    PxHitFlag_Normal                 :: Normal;
+
+    PxHitFlag_Uv                     :: Uv;
+
+    PxHitFlag_AssumeNoInitialOverlap :: AssumeNoInitialOverlap;
+
+    PxHitFlag_AnyHit                 :: AnyHit;
+
+    PxHitFlag_MeshMultiple           :: MeshMultiple;
+
+    PxHitFlag_MeshBothSides          :: MeshBothSides;
+
+    PxHitFlag_PreciseSweep           :: PreciseSweep;
+
+    PxHitFlag_Mtd                    :: Mtd;
+
+    PxHitFlag_FaceIndex              :: FaceIndex;
+    PxHitFlag_Default                :: Default;
+
+    PxHitFlag_ModifiableFlags        :: ModifiableFlags;
+}
+
+PxHitFlags :: enum_flags u16 {
+    Position               :: 0x1;
+    Normal                 :: 0x2;
+    Uv                     :: 0x8;
+    AssumeNoInitialOverlap :: 0x10;
+    AnyHit                 :: 0x20;
+    MeshMultiple           :: 0x40;
+    MeshBothSides          :: 0x80;
+    PreciseSweep           :: 0x100;
+    Mtd                    :: 0x200;
+    FaceIndex              :: 0x400;
+    Default                :: 0x403;
+    ModifiableFlags        :: 0x1d0;
+
+    PxHitFlags_Position               :: Position;
+    PxHitFlags_Normal                 :: Normal;
+    PxHitFlags_Uv                     :: Uv;
+    PxHitFlags_AssumeNoInitialOverlap :: AssumeNoInitialOverlap;
+    PxHitFlags_AnyHit                 :: AnyHit;
+    PxHitFlags_MeshMultiple           :: MeshMultiple;
+    PxHitFlags_MeshBothSides          :: MeshBothSides;
+    PxHitFlags_PreciseSweep           :: PreciseSweep;
+    PxHitFlags_Mtd                    :: Mtd;
+    PxHitFlags_FaceIndex              :: FaceIndex;
+    PxHitFlags_Default                :: Default;
+    PxHitFlags_ModifiableFlags        :: ModifiableFlags;
+}
+
+/// Describes the format of height field samples.
+PxHeightFieldFormat :: enum s32 {
+    S16Tm :: 1;
+    PxHeightFieldFormat_S16Tm :: S16Tm;
+}
+
+/// Determines the tessellation of height field cells.
+PxHeightFieldTessFlag :: enum s32 {
+    E0ThVertexShared :: 1;
+    PxHeightFieldTessFlag_E0ThVertexShared :: E0ThVertexShared;
+}
+
+/// Enum with flag values to be used in PxHeightFieldDesc.flags.
+PxHeightFieldFlag :: enum s32 {
+    NoBoundaryEdges :: 1;
+    PxHeightFieldFlag_NoBoundaryEdges :: NoBoundaryEdges;
+}
+
+PxHeightFieldFlags :: enum_flags u16 {
+    NoBoundaryEdges :: 0x1;
+    PxHeightFieldFlags_NoBoundaryEdges :: NoBoundaryEdges;
+}
+
+/// Special material index values for height field samples.
+PxHeightFieldMaterial :: enum s32 {
+    Hole :: 127;
+    PxHeightFieldMaterial_Hole :: Hole;
+}
+
+PxMeshMeshQueryFlag :: enum s32 {
+    Default         :: 0;
+
+    DiscardCoplanar :: 1;
+
+    PxMeshMeshQueryFlag_Default         :: Default;
+
+    PxMeshMeshQueryFlag_DiscardCoplanar :: DiscardCoplanar;
+}
+
+PxMeshMeshQueryFlags :: enum_flags u32 {
+    DiscardCoplanar :: 0x1;
+    PxMeshMeshQueryFlags_DiscardCoplanar :: DiscardCoplanar;
+}
+
+/// Enum with flag values to be used in PxSimpleTriangleMesh::flags.
+PxMeshFlag :: enum s32 {
+    Flipnormals   :: 1;
+
+    E16BitIndices :: 2;
+
+    PxMeshFlag_Flipnormals   :: Flipnormals;
+
+    PxMeshFlag_E16BitIndices :: E16BitIndices;
+}
+
+PxMeshFlags :: enum_flags u16 {
+    Flipnormals   :: 0x1;
+    E16BitIndices :: 0x2;
+
+    PxMeshFlags_Flipnormals   :: Flipnormals;
+    PxMeshFlags_E16BitIndices :: E16BitIndices;
+}
+
+/// Mesh midphase structure. This enum is used to select the desired acceleration structure for midphase queries
+/// (i.e. raycasts, overlaps, sweeps vs triangle meshes).
+///
+/// The PxMeshMidPhase::eBVH33 structure is the one used in recent PhysX versions (up to PhysX 3.3). It has great performance and is
+/// supported on all platforms. It is deprecated since PhysX 5.x.
+///
+/// The PxMeshMidPhase::eBVH34 structure is a revisited implementation introduced in PhysX 3.4. It can be significantly faster both
+/// in terms of cooking performance and runtime performance.
+PxMeshMidPhase :: enum s32 {
+    Bvh33 :: 0;
+
+    Bvh34 :: 1;
+    Last  :: 2;
+
+    PxMeshMidPhase_Bvh33 :: Bvh33;
+
+    PxMeshMidPhase_Bvh34 :: Bvh34;
+    PxMeshMidPhase_Last  :: Last;
+}
+
+/// Flags for the mesh geometry properties.
+///
+/// Used in ::PxTriangleMeshFlags.
+PxTriangleMeshFlag :: enum s32 {
+    E16BitIndices   :: 2;
+
+    AdjacencyInfo   :: 4;
+
+    PreferNoSdfProj :: 8;
+
+    PxTriangleMeshFlag_E16BitIndices   :: E16BitIndices;
+
+    PxTriangleMeshFlag_AdjacencyInfo   :: AdjacencyInfo;
+
+    PxTriangleMeshFlag_PreferNoSdfProj :: PreferNoSdfProj;
+}
+
+PxTriangleMeshFlags :: enum_flags u8 {
+    E16BitIndices   :: 0x2;
+    AdjacencyInfo   :: 0x4;
+    PreferNoSdfProj :: 0x8;
+
+    PxTriangleMeshFlags_E16BitIndices   :: E16BitIndices;
+    PxTriangleMeshFlags_AdjacencyInfo   :: AdjacencyInfo;
+    PxTriangleMeshFlags_PreferNoSdfProj :: PreferNoSdfProj;
+}
+
+PxTetrahedronMeshFlag :: enum s32 {
+    E16BitIndices :: 2;
+    PxTetrahedronMeshFlag_E16BitIndices :: E16BitIndices;
+}
+
+PxTetrahedronMeshFlags :: enum_flags u8 {
+    E16BitIndices :: 0x2;
+    PxTetrahedronMeshFlags_E16BitIndices :: E16BitIndices;
+}
+
+/// Flags which control the behavior of an actor.
+PxActorFlag :: enum s32 {
+    Visualization     :: 1;
+
+    DisableGravity    :: 2;
+
+    SendSleepNotifies :: 4;
+
+    DisableSimulation :: 8;
+
+    PxActorFlag_Visualization     :: Visualization;
+
+    PxActorFlag_DisableGravity    :: DisableGravity;
+
+    PxActorFlag_SendSleepNotifies :: SendSleepNotifies;
+
+    PxActorFlag_DisableSimulation :: DisableSimulation;
+}
+
+PxActorFlags :: enum_flags u8 {
+    Visualization     :: 0x1;
+    DisableGravity    :: 0x2;
+    SendSleepNotifies :: 0x4;
+    DisableSimulation :: 0x8;
+
+    PxActorFlags_Visualization     :: Visualization;
+    PxActorFlags_DisableGravity    :: DisableGravity;
+    PxActorFlags_SendSleepNotifies :: SendSleepNotifies;
+    PxActorFlags_DisableSimulation :: DisableSimulation;
+}
+
+/// Identifies each type of actor.
+PxActorType :: enum s32 {
+    RigidStatic      :: 0;
+
+    RigidDynamic     :: 1;
+
+    ArticulationLink :: 2;
+
+    PxActorType_RigidStatic      :: RigidStatic;
+
+    PxActorType_RigidDynamic     :: RigidDynamic;
+
+    PxActorType_ArticulationLink :: ArticulationLink;
+}
+
+PxAggregateType :: enum s32 {
+    Generic   :: 0;
+
+    Static    :: 1;
+
+    Kinematic :: 2;
+
+    PxAggregateType_Generic   :: Generic;
+
+    PxAggregateType_Static    :: Static;
+
+    PxAggregateType_Kinematic :: Kinematic;
+}
+
+/// Constraint row flags
+///
+/// These flags configure the post-processing of constraint rows and the behavior of the solver while solving constraints
+Px1DConstraintFlag :: enum s32 {
+    Spring             :: 1;
+
+    AccelerationSpring :: 2;
+
+    Restitution        :: 4;
+
+    Keepbias           :: 8;
+
+    OutputForce        :: 16;
+
+    HasDriveLimit      :: 32;
+
+    AngularConstraint  :: 64;
+
+    DriveRow           :: 128;
+
+    Px1DConstraintFlag_Spring             :: Spring;
+
+    Px1DConstraintFlag_AccelerationSpring :: AccelerationSpring;
+
+    Px1DConstraintFlag_Restitution        :: Restitution;
+
+    Px1DConstraintFlag_Keepbias           :: Keepbias;
+
+    Px1DConstraintFlag_OutputForce        :: OutputForce;
+
+    Px1DConstraintFlag_HasDriveLimit      :: HasDriveLimit;
+
+    Px1DConstraintFlag_AngularConstraint  :: AngularConstraint;
+
+    Px1DConstraintFlag_DriveRow           :: DriveRow;
+}
+
+Px1DConstraintFlags :: enum_flags u16 {
+    Spring             :: 0x1;
+    AccelerationSpring :: 0x2;
+    Restitution        :: 0x4;
+    Keepbias           :: 0x8;
+    OutputForce        :: 0x10;
+    HasDriveLimit      :: 0x20;
+    AngularConstraint  :: 0x40;
+    DriveRow           :: 0x80;
+
+    Px1DConstraintFlags_Spring             :: Spring;
+    Px1DConstraintFlags_AccelerationSpring :: AccelerationSpring;
+    Px1DConstraintFlags_Restitution        :: Restitution;
+    Px1DConstraintFlags_Keepbias           :: Keepbias;
+    Px1DConstraintFlags_OutputForce        :: OutputForce;
+    Px1DConstraintFlags_HasDriveLimit      :: HasDriveLimit;
+    Px1DConstraintFlags_AngularConstraint  :: AngularConstraint;
+    Px1DConstraintFlags_DriveRow           :: DriveRow;
+}
+
+/// Constraint type hints which the solver uses to optimize constraint handling
+PxConstraintSolveHint :: enum s32 {
+    None                 :: 0;
+
+    Acceleration1        :: 256;
+
+    SlerpSpring          :: 258;
+
+    Acceleration2        :: 512;
+
+    Acceleration3        :: 768;
+
+    RotationalEquality   :: 1024;
+
+    RotationalInequality :: 1025;
+
+    Equality             :: 2048;
+
+    Inequality           :: 2049;
+
+    PxConstraintSolveHint_None                 :: None;
+
+    PxConstraintSolveHint_Acceleration1        :: Acceleration1;
+
+    PxConstraintSolveHint_SlerpSpring          :: SlerpSpring;
+
+    PxConstraintSolveHint_Acceleration2        :: Acceleration2;
+
+    PxConstraintSolveHint_Acceleration3        :: Acceleration3;
+
+    PxConstraintSolveHint_RotationalEquality   :: RotationalEquality;
+
+    PxConstraintSolveHint_RotationalInequality :: RotationalInequality;
+
+    PxConstraintSolveHint_Equality             :: Equality;
+
+    PxConstraintSolveHint_Inequality           :: Inequality;
+}
+
+/// Flags for determining which components of the constraint should be visualized.
+PxConstraintVisualizationFlag :: enum s32 {
+    LocalFrames :: 1;
+
+    Limits      :: 2;
+
+    PxConstraintVisualizationFlag_LocalFrames :: LocalFrames;
+
+    PxConstraintVisualizationFlag_Limits      :: Limits;
+}
+
+/// Flags for determining how PVD should serialize a constraint update
+PxPvdUpdateType :: enum s32 {
+    CreateInstance      :: 0;
+
+    ReleaseInstance     :: 1;
+
+    UpdateAllProperties :: 2;
+
+    UpdateSimProperties :: 3;
+
+    PxPvdUpdateType_CreateInstance      :: CreateInstance;
+
+    PxPvdUpdateType_ReleaseInstance     :: ReleaseInstance;
+
+    PxPvdUpdateType_UpdateAllProperties :: UpdateAllProperties;
+
+    PxPvdUpdateType_UpdateSimProperties :: UpdateSimProperties;
+}
+
+/// Constraint descriptor used inside the solver
+ConstraintType :: enum s32 {
+    ContactConstraint :: 0;
+
+    JointConstraint   :: 1;
+
+    ConstraintType_ContactConstraint :: ContactConstraint;
+
+    ConstraintType_JointConstraint   :: JointConstraint;
+}
+
+/// Data structure used for preparing constraints before solving them
+BodyState :: enum s32 {
+    DynamicBody   :: 1;
+    StaticBody    :: 2;
+    KinematicBody :: 4;
+    Articulation  :: 8;
+
+    BodyState_DynamicBody   :: DynamicBody;
+    BodyState_StaticBody    :: StaticBody;
+    BodyState_KinematicBody :: KinematicBody;
+    BodyState_Articulation  :: Articulation;
+}
+
+/// @
+/// {
+PxArticulationAxis :: enum s32 {
+    Twist  :: 0;
+
+    Swing1 :: 1;
+
+    Swing2 :: 2;
+
+    X      :: 3;
+
+    Y      :: 4;
+
+    Z      :: 5;
+    Count  :: 6;
+
+    PxArticulationAxis_Twist  :: Twist;
+
+    PxArticulationAxis_Swing1 :: Swing1;
+
+    PxArticulationAxis_Swing2 :: Swing2;
+
+    PxArticulationAxis_X      :: X;
+
+    PxArticulationAxis_Y      :: Y;
+
+    PxArticulationAxis_Z      :: Z;
+    PxArticulationAxis_Count  :: Count;
+}
+
+PxArticulationMotion :: enum s32 {
+    Locked  :: 0;
+
+    Limited :: 1;
+
+    Free    :: 2;
+
+    PxArticulationMotion_Locked  :: Locked;
+
+    PxArticulationMotion_Limited :: Limited;
+
+    PxArticulationMotion_Free    :: Free;
+}
+
+PxArticulationMotions :: enum u8 {
+    Limited :: 1;
+    Free    :: 2;
+
+    PxArticulationMotions_Limited :: Limited;
+    PxArticulationMotions_Free    :: Free;
+}
+
+PxArticulationJointType :: enum s32 {
+    Fix               :: 0;
+
+    Prismatic         :: 1;
+
+    Revolute          :: 2;
+
+    RevoluteUnwrapped :: 3;
+
+    Spherical         :: 4;
+    Undefined         :: 5;
+
+    PxArticulationJointType_Fix               :: Fix;
+
+    PxArticulationJointType_Prismatic         :: Prismatic;
+
+    PxArticulationJointType_Revolute          :: Revolute;
+
+    PxArticulationJointType_RevoluteUnwrapped :: RevoluteUnwrapped;
+
+    PxArticulationJointType_Spherical         :: Spherical;
+    PxArticulationJointType_Undefined         :: Undefined;
+}
+
+PxArticulationFlag :: enum s32 {
+    FixBase              :: 1;
+
+    DriveLimitsAreForces :: 2;
+
+    DisableSelfCollision :: 4;
+
+    ComputeJointForces   :: 8;
+
+    PxArticulationFlag_FixBase              :: FixBase;
+
+    PxArticulationFlag_DriveLimitsAreForces :: DriveLimitsAreForces;
+
+    PxArticulationFlag_DisableSelfCollision :: DisableSelfCollision;
+
+    PxArticulationFlag_ComputeJointForces   :: ComputeJointForces;
+}
+
+PxArticulationFlags :: enum_flags u8 {
+    FixBase              :: 0x1;
+    DriveLimitsAreForces :: 0x2;
+    DisableSelfCollision :: 0x4;
+    ComputeJointForces   :: 0x8;
+
+    PxArticulationFlags_FixBase              :: FixBase;
+    PxArticulationFlags_DriveLimitsAreForces :: DriveLimitsAreForces;
+    PxArticulationFlags_DisableSelfCollision :: DisableSelfCollision;
+    PxArticulationFlags_ComputeJointForces   :: ComputeJointForces;
+}
+
+PxArticulationDriveType :: enum s32 {
+    Force        :: 0;
+
+    Acceleration :: 1;
+
+    Target       :: 2;
+
+    Velocity     :: 3;
+    None         :: 4;
+
+    PxArticulationDriveType_Force        :: Force;
+
+    PxArticulationDriveType_Acceleration :: Acceleration;
+
+    PxArticulationDriveType_Target       :: Target;
+
+    PxArticulationDriveType_Velocity     :: Velocity;
+    PxArticulationDriveType_None         :: None;
+}
+
+/// A description of the types of articulation data that may be directly written to and read from the GPU using the functions
+/// PxScene::copyArticulationData() and PxScene::applyArticulationData(). Types that are read-only may only be used in conjunction with
+/// PxScene::copyArticulationData(). Types that are write-only may only be used in conjunction with PxScene::applyArticulationData().
+/// A subset of data types may be used in conjunction with both PxScene::applyArticulationData() and PxScene::applyArticulationData().
+PxArticulationGpuDataType :: enum s32 {
+    JointPosition           :: 0;
+
+    JointVelocity           :: 1;
+
+    JointAcceleration       :: 2;
+
+    JointForce              :: 3;
+
+    JointSolverForce        :: 4;
+
+    JointTargetVelocity     :: 5;
+
+    JointTargetPosition     :: 6;
+
+    SensorForce             :: 7;
+
+    RootTransform           :: 8;
+
+    RootVelocity            :: 9;
+
+    LinkTransform           :: 10;
+
+    LinkVelocity            :: 11;
+
+    LinkForce               :: 12;
+
+    LinkTorque              :: 13;
+
+    FixedTendon             :: 14;
+
+    FixedTendonJoint        :: 15;
+
+    SpatialTendon           :: 16;
+
+    SpatialTendonAttachment :: 17;
+
+    PxArticulationGpuDataType_JointPosition           :: JointPosition;
+
+    PxArticulationGpuDataType_JointVelocity           :: JointVelocity;
+
+    PxArticulationGpuDataType_JointAcceleration       :: JointAcceleration;
+
+    PxArticulationGpuDataType_JointForce              :: JointForce;
+
+    PxArticulationGpuDataType_JointSolverForce        :: JointSolverForce;
+
+    PxArticulationGpuDataType_JointTargetVelocity     :: JointTargetVelocity;
+
+    PxArticulationGpuDataType_JointTargetPosition     :: JointTargetPosition;
+
+    PxArticulationGpuDataType_SensorForce             :: SensorForce;
+
+    PxArticulationGpuDataType_RootTransform           :: RootTransform;
+
+    PxArticulationGpuDataType_RootVelocity            :: RootVelocity;
+
+    PxArticulationGpuDataType_LinkTransform           :: LinkTransform;
+
+    PxArticulationGpuDataType_LinkVelocity            :: LinkVelocity;
+
+    PxArticulationGpuDataType_LinkForce               :: LinkForce;
+
+    PxArticulationGpuDataType_LinkTorque              :: LinkTorque;
+
+    PxArticulationGpuDataType_FixedTendon             :: FixedTendon;
+
+    PxArticulationGpuDataType_FixedTendonJoint        :: FixedTendonJoint;
+
+    PxArticulationGpuDataType_SpatialTendon           :: SpatialTendon;
+
+    PxArticulationGpuDataType_SpatialTendonAttachment :: SpatialTendonAttachment;
+}
+
+/// These flags determine what data is read or written to the internal articulation data via cache.
+PxArticulationCacheFlag :: enum s32 {
+    Velocity          :: 1;
+
+    Acceleration      :: 2;
+
+    Position          :: 4;
+
+    Force             :: 8;
+
+    LinkVelocity      :: 16;
+
+    LinkAcceleration  :: 32;
+
+    RootTransform     :: 64;
+
+    RootVelocities    :: 128;
+
+    SensorForces      :: 256;
+
+    JointSolverForces :: 512;
+    All               :: 247;
+
+    PxArticulationCacheFlag_Velocity          :: Velocity;
+
+    PxArticulationCacheFlag_Acceleration      :: Acceleration;
+
+    PxArticulationCacheFlag_Position          :: Position;
+
+    PxArticulationCacheFlag_Force             :: Force;
+
+    PxArticulationCacheFlag_LinkVelocity      :: LinkVelocity;
+
+    PxArticulationCacheFlag_LinkAcceleration  :: LinkAcceleration;
+
+    PxArticulationCacheFlag_RootTransform     :: RootTransform;
+
+    PxArticulationCacheFlag_RootVelocities    :: RootVelocities;
+
+    PxArticulationCacheFlag_SensorForces      :: SensorForces;
+
+    PxArticulationCacheFlag_JointSolverForces :: JointSolverForces;
+    PxArticulationCacheFlag_All               :: All;
+}
+
+PxArticulationCacheFlags :: enum_flags u32 {
+    Velocity          :: 0x1;
+    Acceleration      :: 0x2;
+    Position          :: 0x4;
+    Force             :: 0x8;
+    LinkVelocity      :: 0x10;
+    LinkAcceleration  :: 0x20;
+    RootTransform     :: 0x40;
+    RootVelocities    :: 0x80;
+    SensorForces      :: 0x100;
+    JointSolverForces :: 0x200;
+    All               :: 0xf7;
+
+    PxArticulationCacheFlags_Velocity          :: Velocity;
+    PxArticulationCacheFlags_Acceleration      :: Acceleration;
+    PxArticulationCacheFlags_Position          :: Position;
+    PxArticulationCacheFlags_Force             :: Force;
+    PxArticulationCacheFlags_LinkVelocity      :: LinkVelocity;
+    PxArticulationCacheFlags_LinkAcceleration  :: LinkAcceleration;
+    PxArticulationCacheFlags_RootTransform     :: RootTransform;
+    PxArticulationCacheFlags_RootVelocities    :: RootVelocities;
+    PxArticulationCacheFlags_SensorForces      :: SensorForces;
+    PxArticulationCacheFlags_JointSolverForces :: JointSolverForces;
+    PxArticulationCacheFlags_All               :: All;
+}
+
+/// Flags to configure the forces reported by articulation link sensors.
+PxArticulationSensorFlag :: enum s32 {
+    ForwardDynamicsForces  :: 1;
+
+    ConstraintSolverForces :: 2;
+
+    WorldFrame             :: 4;
+
+    PxArticulationSensorFlag_ForwardDynamicsForces  :: ForwardDynamicsForces;
+
+    PxArticulationSensorFlag_ConstraintSolverForces :: ConstraintSolverForces;
+
+    PxArticulationSensorFlag_WorldFrame             :: WorldFrame;
+}
+
+PxArticulationSensorFlags :: enum_flags u8 {
+    ForwardDynamicsForces  :: 0x1;
+    ConstraintSolverForces :: 0x2;
+    WorldFrame             :: 0x4;
+
+    PxArticulationSensorFlags_ForwardDynamicsForces  :: ForwardDynamicsForces;
+    PxArticulationSensorFlags_ConstraintSolverForces :: ConstraintSolverForces;
+    PxArticulationSensorFlags_WorldFrame             :: WorldFrame;
+}
+
+/// Flag that configures articulation-state updates by PxArticulationReducedCoordinate::updateKinematic.
+PxArticulationKinematicFlag :: enum s32 {
+    Position :: 1;
+
+    Velocity :: 2;
+
+    PxArticulationKinematicFlag_Position :: Position;
+
+    PxArticulationKinematicFlag_Velocity :: Velocity;
+}
+
+PxArticulationKinematicFlags :: enum_flags u8 {
+    Position :: 0x1;
+    Velocity :: 0x2;
+
+    PxArticulationKinematicFlags_Position :: Position;
+    PxArticulationKinematicFlags_Velocity :: Velocity;
+}
+
+/// Flags which affect the behavior of PxShapes.
+PxShapeFlag :: enum s32 {
+    SimulationShape :: 1;
+
+    SceneQueryShape :: 2;
+
+    TriggerShape    :: 4;
+
+    Visualization   :: 8;
+
+    PxShapeFlag_SimulationShape :: SimulationShape;
+
+    PxShapeFlag_SceneQueryShape :: SceneQueryShape;
+
+    PxShapeFlag_TriggerShape    :: TriggerShape;
+
+    PxShapeFlag_Visualization   :: Visualization;
+}
+
+PxShapeFlags :: enum_flags u8 {
+    SimulationShape :: 0x1;
+    SceneQueryShape :: 0x2;
+    TriggerShape    :: 0x4;
+    Visualization   :: 0x8;
+
+    PxShapeFlags_SimulationShape :: SimulationShape;
+    PxShapeFlags_SceneQueryShape :: SceneQueryShape;
+    PxShapeFlags_TriggerShape    :: TriggerShape;
+    PxShapeFlags_Visualization   :: Visualization;
+}
+
+/// Parameter to addForce() and addTorque() calls, determines the exact operation that is carried out.
+PxForceMode :: enum s32 {
+    Force          :: 0;
+
+    Impulse        :: 1;
+
+    VelocityChange :: 2;
+
+    Acceleration   :: 3;
+
+    PxForceMode_Force          :: Force;
+
+    PxForceMode_Impulse        :: Impulse;
+
+    PxForceMode_VelocityChange :: VelocityChange;
+
+    PxForceMode_Acceleration   :: Acceleration;
+}
+
+/// Collection of flags describing the behavior of a rigid body.
+PxRigidBodyFlag :: enum s32 {
+    Kinematic                         :: 1;
+
+    UseKinematicTargetForSceneQueries :: 2;
+
+    EnableCcd                         :: 4;
+
+    EnableCcdFriction                 :: 8;
+
+    EnableSpeculativeCcd              :: 16;
+
+    EnablePoseIntegrationPreview      :: 32;
+
+    EnableCcdMaxContactImpulse        :: 64;
+
+    RetainAccelerations               :: 128;
+
+    ForceKineKineNotifications        :: 256;
+
+    ForceStaticKineNotifications      :: 512;
+
+    EnableGyroscopicForces            :: 1024;
+
+    PxRigidBodyFlag_Kinematic                         :: Kinematic;
+
+    PxRigidBodyFlag_UseKinematicTargetForSceneQueries :: UseKinematicTargetForSceneQueries;
+
+    PxRigidBodyFlag_EnableCcd                         :: EnableCcd;
+
+    PxRigidBodyFlag_EnableCcdFriction                 :: EnableCcdFriction;
+
+    PxRigidBodyFlag_EnableSpeculativeCcd              :: EnableSpeculativeCcd;
+
+    PxRigidBodyFlag_EnablePoseIntegrationPreview      :: EnablePoseIntegrationPreview;
+
+    PxRigidBodyFlag_EnableCcdMaxContactImpulse        :: EnableCcdMaxContactImpulse;
+
+    PxRigidBodyFlag_RetainAccelerations               :: RetainAccelerations;
+
+    PxRigidBodyFlag_ForceKineKineNotifications        :: ForceKineKineNotifications;
+
+    PxRigidBodyFlag_ForceStaticKineNotifications      :: ForceStaticKineNotifications;
+
+    PxRigidBodyFlag_EnableGyroscopicForces            :: EnableGyroscopicForces;
+}
+
+PxRigidBodyFlags :: enum_flags u16 {
+    Kinematic                         :: 0x1;
+    UseKinematicTargetForSceneQueries :: 0x2;
+    EnableCcd                         :: 0x4;
+    EnableCcdFriction                 :: 0x8;
+    EnableSpeculativeCcd              :: 0x10;
+    EnablePoseIntegrationPreview      :: 0x20;
+    EnableCcdMaxContactImpulse        :: 0x40;
+    RetainAccelerations               :: 0x80;
+    ForceKineKineNotifications        :: 0x100;
+    ForceStaticKineNotifications      :: 0x200;
+    EnableGyroscopicForces            :: 0x400;
+
+    PxRigidBodyFlags_Kinematic                         :: Kinematic;
+    PxRigidBodyFlags_UseKinematicTargetForSceneQueries :: UseKinematicTargetForSceneQueries;
+    PxRigidBodyFlags_EnableCcd                         :: EnableCcd;
+    PxRigidBodyFlags_EnableCcdFriction                 :: EnableCcdFriction;
+    PxRigidBodyFlags_EnableSpeculativeCcd              :: EnableSpeculativeCcd;
+    PxRigidBodyFlags_EnablePoseIntegrationPreview      :: EnablePoseIntegrationPreview;
+    PxRigidBodyFlags_EnableCcdMaxContactImpulse        :: EnableCcdMaxContactImpulse;
+    PxRigidBodyFlags_RetainAccelerations               :: RetainAccelerations;
+    PxRigidBodyFlags_ForceKineKineNotifications        :: ForceKineKineNotifications;
+    PxRigidBodyFlags_ForceStaticKineNotifications      :: ForceStaticKineNotifications;
+    PxRigidBodyFlags_EnableGyroscopicForces            :: EnableGyroscopicForces;
+}
+
+/// constraint flags
+///
+/// eBROKEN is a read only flag
+PxConstraintFlag :: enum s32 {
+    Broken               :: 1;
+
+    ProjectToActor0      :: 2;
+
+    ProjectToActor1      :: 4;
+
+    Projection           :: 6;
+
+    CollisionEnabled     :: 8;
+
+    Visualization        :: 16;
+
+    DriveLimitsAreForces :: 32;
+
+    ImprovedSlerp        :: 128;
+
+    DisablePreprocessing :: 256;
+
+    EnableExtendedLimits :: 512;
+
+    GpuCompatible        :: 1024;
+
+    AlwaysUpdate         :: 2048;
+
+    DisableConstraint    :: 4096;
+
+    PxConstraintFlag_Broken               :: Broken;
+
+    PxConstraintFlag_ProjectToActor0      :: ProjectToActor0;
+
+    PxConstraintFlag_ProjectToActor1      :: ProjectToActor1;
+
+    PxConstraintFlag_Projection           :: Projection;
+
+    PxConstraintFlag_CollisionEnabled     :: CollisionEnabled;
+
+    PxConstraintFlag_Visualization        :: Visualization;
+
+    PxConstraintFlag_DriveLimitsAreForces :: DriveLimitsAreForces;
+
+    PxConstraintFlag_ImprovedSlerp        :: ImprovedSlerp;
+
+    PxConstraintFlag_DisablePreprocessing :: DisablePreprocessing;
+
+    PxConstraintFlag_EnableExtendedLimits :: EnableExtendedLimits;
+
+    PxConstraintFlag_GpuCompatible        :: GpuCompatible;
+
+    PxConstraintFlag_AlwaysUpdate         :: AlwaysUpdate;
+
+    PxConstraintFlag_DisableConstraint    :: DisableConstraint;
+}
+
+PxConstraintFlags :: enum_flags u16 {
+    Broken               :: 0x1;
+    ProjectToActor0      :: 0x2;
+    ProjectToActor1      :: 0x4;
+    CollisionEnabled     :: 0x8;
+    Visualization        :: 0x10;
+    DriveLimitsAreForces :: 0x20;
+    ImprovedSlerp        :: 0x80;
+    DisablePreprocessing :: 0x100;
+    EnableExtendedLimits :: 0x200;
+    GpuCompatible        :: 0x400;
+    AlwaysUpdate         :: 0x800;
+    DisableConstraint    :: 0x1000;
+    Projection           :: 0x6;
+
+    PxConstraintFlags_Broken               :: Broken;
+    PxConstraintFlags_ProjectToActor0      :: ProjectToActor0;
+    PxConstraintFlags_ProjectToActor1      :: ProjectToActor1;
+    PxConstraintFlags_CollisionEnabled     :: CollisionEnabled;
+    PxConstraintFlags_Visualization        :: Visualization;
+    PxConstraintFlags_DriveLimitsAreForces :: DriveLimitsAreForces;
+    PxConstraintFlags_ImprovedSlerp        :: ImprovedSlerp;
+    PxConstraintFlags_DisablePreprocessing :: DisablePreprocessing;
+    PxConstraintFlags_EnableExtendedLimits :: EnableExtendedLimits;
+    PxConstraintFlags_GpuCompatible        :: GpuCompatible;
+    PxConstraintFlags_AlwaysUpdate         :: AlwaysUpdate;
+    PxConstraintFlags_DisableConstraint    :: DisableConstraint;
+    PxConstraintFlags_Projection           :: Projection;
+}
+
+/// Header for a contact patch where all points share same material and normal
+PxContactPatchFlags :: enum_flags s32 {
+    HasFaceIndices            :: 0x1;
+
+    Modifiable                :: 0x2;
+
+    ForceNoResponse           :: 0x4;
+
+    HasModifiedMassRatios     :: 0x8;
+
+    HasTargetVelocity         :: 0x10;
+
+    HasMaxImpulse             :: 0x20;
+
+    RegeneratePatches         :: 0x40;
+    CompressedModifiedContact :: 0x80;
+
+    PxContactPatchFlags_HasFaceIndices            :: HasFaceIndices;
+
+    PxContactPatchFlags_Modifiable                :: Modifiable;
+
+    PxContactPatchFlags_ForceNoResponse           :: ForceNoResponse;
+
+    PxContactPatchFlags_HasModifiedMassRatios     :: HasModifiedMassRatios;
+
+    PxContactPatchFlags_HasTargetVelocity         :: HasTargetVelocity;
+
+    PxContactPatchFlags_HasMaxImpulse             :: HasMaxImpulse;
+
+    PxContactPatchFlags_RegeneratePatches         :: RegeneratePatches;
+    PxContactPatchFlags_CompressedModifiedContact :: CompressedModifiedContact;
+}
+
+/// A class to iterate over a compressed contact stream. This supports read-only access to the various contact formats.
+StreamFormat :: enum s32 {
+    SimpleStream               :: 0;
+    ModifiableStream           :: 1;
+    CompressedModifiableStream :: 2;
+
+    StreamFormat_SimpleStream               :: SimpleStream;
+    StreamFormat_ModifiableStream           :: ModifiableStream;
+    StreamFormat_CompressedModifiableStream :: CompressedModifiableStream;
+}
+
+/// Flags specifying deletion event types.
+PxDeletionEventFlag :: enum s32 {
+    UserRelease   :: 1;
+
+    MemoryRelease :: 2;
+
+    PxDeletionEventFlag_UserRelease   :: UserRelease;
+
+    PxDeletionEventFlag_MemoryRelease :: MemoryRelease;
+}
+
+PxDeletionEventFlags :: enum_flags u8 {
+    UserRelease   :: 0x1;
+    MemoryRelease :: 0x2;
+
+    PxDeletionEventFlags_UserRelease   :: UserRelease;
+    PxDeletionEventFlags_MemoryRelease :: MemoryRelease;
+}
+
+/// Collection of flags describing the actions to take for a collision pair.
+PxPairFlag :: enum s32 {
+    SolveContact                 :: 1;
+
+    ModifyContacts               :: 2;
+
+    NotifyTouchFound             :: 4;
+
+    NotifyTouchPersists          :: 8;
+
+    NotifyTouchLost              :: 16;
+
+    NotifyTouchCcd               :: 32;
+
+    NotifyThresholdForceFound    :: 64;
+
+    NotifyThresholdForcePersists :: 128;
+
+    NotifyThresholdForceLost     :: 256;
+
+    NotifyContactPoints          :: 512;
+
+    DetectDiscreteContact        :: 1024;
+
+    DetectCcdContact             :: 2048;
+
+    PreSolverVelocity            :: 4096;
+
+    PostSolverVelocity           :: 8192;
+
+    ContactEventPose             :: 16384;
+
+    NextFree                     :: 32768;
+
+    ContactDefault               :: 1025;
+
+    TriggerDefault               :: 1044;
+
+    PxPairFlag_SolveContact                 :: SolveContact;
+
+    PxPairFlag_ModifyContacts               :: ModifyContacts;
+
+    PxPairFlag_NotifyTouchFound             :: NotifyTouchFound;
+
+    PxPairFlag_NotifyTouchPersists          :: NotifyTouchPersists;
+
+    PxPairFlag_NotifyTouchLost              :: NotifyTouchLost;
+
+    PxPairFlag_NotifyTouchCcd               :: NotifyTouchCcd;
+
+    PxPairFlag_NotifyThresholdForceFound    :: NotifyThresholdForceFound;
+
+    PxPairFlag_NotifyThresholdForcePersists :: NotifyThresholdForcePersists;
+
+    PxPairFlag_NotifyThresholdForceLost     :: NotifyThresholdForceLost;
+
+    PxPairFlag_NotifyContactPoints          :: NotifyContactPoints;
+
+    PxPairFlag_DetectDiscreteContact        :: DetectDiscreteContact;
+
+    PxPairFlag_DetectCcdContact             :: DetectCcdContact;
+
+    PxPairFlag_PreSolverVelocity            :: PreSolverVelocity;
+
+    PxPairFlag_PostSolverVelocity           :: PostSolverVelocity;
+
+    PxPairFlag_ContactEventPose             :: ContactEventPose;
+
+    PxPairFlag_NextFree                     :: NextFree;
+
+    PxPairFlag_ContactDefault               :: ContactDefault;
+
+    PxPairFlag_TriggerDefault               :: TriggerDefault;
+}
+
+PxPairFlags :: enum_flags u16 {
+    SolveContact                 :: 0x1;
+    ModifyContacts               :: 0x2;
+    NotifyTouchFound             :: 0x4;
+    NotifyTouchPersists          :: 0x8;
+    NotifyTouchLost              :: 0x10;
+    NotifyTouchCcd               :: 0x20;
+    NotifyThresholdForceFound    :: 0x40;
+    NotifyThresholdForcePersists :: 0x80;
+    NotifyThresholdForceLost     :: 0x100;
+    NotifyContactPoints          :: 0x200;
+    DetectDiscreteContact        :: 0x400;
+    DetectCcdContact             :: 0x800;
+    PreSolverVelocity            :: 0x1000;
+    PostSolverVelocity           :: 0x2000;
+    ContactEventPose             :: 0x4000;
+    NextFree                     :: 0x8000;
+    ContactDefault               :: 0x401;
+    TriggerDefault               :: 0x414;
+
+    PxPairFlags_SolveContact                 :: SolveContact;
+    PxPairFlags_ModifyContacts               :: ModifyContacts;
+    PxPairFlags_NotifyTouchFound             :: NotifyTouchFound;
+    PxPairFlags_NotifyTouchPersists          :: NotifyTouchPersists;
+    PxPairFlags_NotifyTouchLost              :: NotifyTouchLost;
+    PxPairFlags_NotifyTouchCcd               :: NotifyTouchCcd;
+    PxPairFlags_NotifyThresholdForceFound    :: NotifyThresholdForceFound;
+    PxPairFlags_NotifyThresholdForcePersists :: NotifyThresholdForcePersists;
+    PxPairFlags_NotifyThresholdForceLost     :: NotifyThresholdForceLost;
+    PxPairFlags_NotifyContactPoints          :: NotifyContactPoints;
+    PxPairFlags_DetectDiscreteContact        :: DetectDiscreteContact;
+    PxPairFlags_DetectCcdContact             :: DetectCcdContact;
+    PxPairFlags_PreSolverVelocity            :: PreSolverVelocity;
+    PxPairFlags_PostSolverVelocity           :: PostSolverVelocity;
+    PxPairFlags_ContactEventPose             :: ContactEventPose;
+    PxPairFlags_NextFree                     :: NextFree;
+    PxPairFlags_ContactDefault               :: ContactDefault;
+    PxPairFlags_TriggerDefault               :: TriggerDefault;
+}
+
+/// Collection of flags describing the filter actions to take for a collision pair.
+PxFilterFlag :: enum s32 {
+    Kill     :: 1;
+
+    Suppress :: 2;
+
+    Callback :: 4;
+
+    Notify   :: 12;
+
+    Default  :: 0;
+
+    PxFilterFlag_Kill     :: Kill;
+
+    PxFilterFlag_Suppress :: Suppress;
+
+    PxFilterFlag_Callback :: Callback;
+
+    PxFilterFlag_Notify   :: Notify;
+
+    PxFilterFlag_Default  :: Default;
+}
+
+PxFilterFlags :: enum_flags u16 {
+    Kill     :: 0x1;
+    Suppress :: 0x2;
+    Callback :: 0x4;
+    Notify   :: 0x4;
+
+    PxFilterFlags_Kill     :: Kill;
+    PxFilterFlags_Suppress :: Suppress;
+    PxFilterFlags_Callback :: Callback;
+    PxFilterFlags_Notify   :: Notify;
+}
+
+/// Identifies each type of filter object.
+PxFilterObjectType :: enum s32 {
+    RigidStatic    :: 0;
+
+    RigidDynamic   :: 1;
+
+    Articulation   :: 2;
+
+    Particlesystem :: 3;
+
+    Softbody       :: 4;
+
+    Femcloth       :: 5;
+
+    Hairsystem     :: 6;
+
+    MaxTypeCount   :: 16;
+
+    Undefined      :: 15;
+
+    PxFilterObjectType_RigidStatic    :: RigidStatic;
+
+    PxFilterObjectType_RigidDynamic   :: RigidDynamic;
+
+    PxFilterObjectType_Articulation   :: Articulation;
+
+    PxFilterObjectType_Particlesystem :: Particlesystem;
+
+    PxFilterObjectType_Softbody       :: Softbody;
+
+    PxFilterObjectType_Femcloth       :: Femcloth;
+
+    PxFilterObjectType_Hairsystem     :: Hairsystem;
+
+    PxFilterObjectType_MaxTypeCount   :: MaxTypeCount;
+
+    PxFilterObjectType_Undefined      :: Undefined;
+}
+
+PxFilterObjectFlag :: enum s32 {
+    Kinematic :: 16;
+    Trigger   :: 32;
+
+    PxFilterObjectFlag_Kinematic :: Kinematic;
+    PxFilterObjectFlag_Trigger   :: Trigger;
+}
+
+PxPairFilteringMode :: enum s32 {
+    Keep     :: 0;
+
+    Suppress :: 1;
+
+    Kill     :: 2;
+
+    PxPairFilteringMode_Keep     :: Keep;
+
+    PxPairFilteringMode_Suppress :: Suppress;
+
+    PxPairFilteringMode_Kill     :: Kill;
+}
+
+PxDataAccessFlag :: enum s32 {
+    Readable :: 1;
+    Writable :: 2;
+    Device   :: 4;
+
+    PxDataAccessFlag_Readable :: Readable;
+    PxDataAccessFlag_Writable :: Writable;
+    PxDataAccessFlag_Device   :: Device;
+}
+
+PxDataAccessFlags :: enum_flags u8 {
+    Readable :: 0x1;
+    Writable :: 0x2;
+    Device   :: 0x4;
+
+    PxDataAccessFlags_Readable :: Readable;
+    PxDataAccessFlags_Writable :: Writable;
+    PxDataAccessFlags_Device   :: Device;
+}
+
+/// Flags which control the behavior of a material.
+PxMaterialFlag :: enum s32 {
+    DisableFriction       :: 1;
+
+    DisableStrongFriction :: 2;
+
+    ImprovedPatchFriction :: 4;
+
+    CompliantContact      :: 8;
+
+    PxMaterialFlag_DisableFriction       :: DisableFriction;
+
+    PxMaterialFlag_DisableStrongFriction :: DisableStrongFriction;
+
+    PxMaterialFlag_ImprovedPatchFriction :: ImprovedPatchFriction;
+
+    PxMaterialFlag_CompliantContact      :: CompliantContact;
+}
+
+PxMaterialFlags :: enum_flags u16 {
+    DisableFriction       :: 0x1;
+    DisableStrongFriction :: 0x2;
+    ImprovedPatchFriction :: 0x4;
+    CompliantContact      :: 0x8;
+
+    PxMaterialFlags_DisableFriction       :: DisableFriction;
+    PxMaterialFlags_DisableStrongFriction :: DisableStrongFriction;
+    PxMaterialFlags_ImprovedPatchFriction :: ImprovedPatchFriction;
+    PxMaterialFlags_CompliantContact      :: CompliantContact;
+}
+
+/// Enumeration that determines the way in which two material properties will be combined to yield a friction or restitution coefficient for a collision.
+///
+/// When two actors come in contact with each other, they each have materials with various coefficients, but we only need a single set of coefficients for the pair.
+///
+/// Physics doesn't have any inherent combinations because the coefficients are determined empirically on a case by case
+/// basis. However, simulating this with a pairwise lookup table is often impractical.
+///
+/// For this reason the following combine behaviors are available:
+///
+/// eAVERAGE
+/// eMIN
+/// eMULTIPLY
+/// eMAX
+///
+/// The effective combine mode for the pair is maximum(material0.combineMode, material1.combineMode).
+PxCombineMode :: enum s32 {
+    Average  :: 0;
+
+    Min      :: 1;
+
+    Multiply :: 2;
+
+    Max      :: 3;
+
+    NValues  :: 4;
+
+    Pad32    :: 2147483647;
+
+    PxCombineMode_Average  :: Average;
+
+    PxCombineMode_Min      :: Min;
+
+    PxCombineMode_Multiply :: Multiply;
+
+    PxCombineMode_Max      :: Max;
+
+    PxCombineMode_NValues  :: NValues;
+
+    PxCombineMode_Pad32    :: Pad32;
+}
+
+/// Identifies dirty particle buffers that need to be updated in the particle system.
+///
+/// This flag can be used mark the device user buffers that are dirty and need to be written to the particle system.
+PxParticleBufferFlag :: enum s32 {
+    None               :: 0;
+
+    UpdatePosition     :: 1;
+
+    UpdateVelocity     :: 2;
+
+    UpdatePhase        :: 4;
+
+    UpdateRestposition :: 8;
+
+    UpdateCloth        :: 32;
+
+    UpdateRigid        :: 64;
+
+    UpdateDiffuseParam :: 128;
+
+    UpdateAttachments  :: 256;
+    All                :: 495;
+
+    PxParticleBufferFlag_None               :: None;
+
+    PxParticleBufferFlag_UpdatePosition     :: UpdatePosition;
+
+    PxParticleBufferFlag_UpdateVelocity     :: UpdateVelocity;
+
+    PxParticleBufferFlag_UpdatePhase        :: UpdatePhase;
+
+    PxParticleBufferFlag_UpdateRestposition :: UpdateRestposition;
+
+    PxParticleBufferFlag_UpdateCloth        :: UpdateCloth;
+
+    PxParticleBufferFlag_UpdateRigid        :: UpdateRigid;
+
+    PxParticleBufferFlag_UpdateDiffuseParam :: UpdateDiffuseParam;
+
+    PxParticleBufferFlag_UpdateAttachments  :: UpdateAttachments;
+    PxParticleBufferFlag_All                :: All;
+}
+
+PxParticleBufferFlags :: enum_flags u32 {
+    UpdatePosition     :: 0x1;
+    UpdateVelocity     :: 0x2;
+    UpdatePhase        :: 0x4;
+    UpdateRestposition :: 0x8;
+    UpdateCloth        :: 0x20;
+    UpdateRigid        :: 0x40;
+    UpdateDiffuseParam :: 0x80;
+    UpdateAttachments  :: 0x100;
+    All                :: 0x1ef;
+
+    PxParticleBufferFlags_UpdatePosition     :: UpdatePosition;
+    PxParticleBufferFlags_UpdateVelocity     :: UpdateVelocity;
+    PxParticleBufferFlags_UpdatePhase        :: UpdatePhase;
+    PxParticleBufferFlags_UpdateRestposition :: UpdateRestposition;
+    PxParticleBufferFlags_UpdateCloth        :: UpdateCloth;
+    PxParticleBufferFlags_UpdateRigid        :: UpdateRigid;
+    PxParticleBufferFlags_UpdateDiffuseParam :: UpdateDiffuseParam;
+    PxParticleBufferFlags_UpdateAttachments  :: UpdateAttachments;
+    PxParticleBufferFlags_All                :: All;
+}
+
+/// Identifies per-particle behavior for a PxParticleSystem.
+///
+/// See [`PxParticleSystem::createPhase`]().
+PxParticlePhaseFlag :: enum u32 {
+    ParticlePhaseGroupMask         :: 1048575;
+
+    ParticlePhaseFlagsMask         :: 4293918720;
+
+    ParticlePhaseSelfCollide       :: 1048576;
+
+    ParticlePhaseSelfCollideFilter :: 2097152;
+
+    ParticlePhaseFluid             :: 4194304;
+
+    PxParticlePhaseFlag_ParticlePhaseGroupMask         :: ParticlePhaseGroupMask;
+
+    PxParticlePhaseFlag_ParticlePhaseFlagsMask         :: ParticlePhaseFlagsMask;
+
+    PxParticlePhaseFlag_ParticlePhaseSelfCollide       :: ParticlePhaseSelfCollide;
+
+    PxParticlePhaseFlag_ParticlePhaseSelfCollideFilter :: ParticlePhaseSelfCollideFilter;
+
+    PxParticlePhaseFlag_ParticlePhaseFluid             :: ParticlePhaseFluid;
+}
+
+PxParticlePhaseFlags :: enum_flags u32 {
+    ParticlePhaseSelfCollide       :: 0x100000;
+    ParticlePhaseSelfCollideFilter :: 0x200000;
+    ParticlePhaseFluid             :: 0x400000;
+    ParticlePhaseGroupMask         :: 0xfffff;
+    ParticlePhaseFlagsMask         :: 0x700000;
+
+    PxParticlePhaseFlags_ParticlePhaseSelfCollide       :: ParticlePhaseSelfCollide;
+    PxParticlePhaseFlags_ParticlePhaseSelfCollideFilter :: ParticlePhaseSelfCollideFilter;
+    PxParticlePhaseFlags_ParticlePhaseFluid             :: ParticlePhaseFluid;
+    PxParticlePhaseFlags_ParticlePhaseGroupMask         :: ParticlePhaseGroupMask;
+    PxParticlePhaseFlags_ParticlePhaseFlagsMask         :: ParticlePhaseFlagsMask;
+}
+
+/// Specifies memory space for a PxBuffer instance.
+PxBufferType :: enum s32 {
+    Host   :: 0;
+    Device :: 1;
+
+    PxBufferType_Host   :: Host;
+    PxBufferType_Device :: Device;
+}
+
+/// Filtering flags for scene queries.
+PxQueryFlag :: enum s32 {
+    Static                 :: 1;
+
+    Dynamic                :: 2;
+
+    Prefilter              :: 4;
+
+    Postfilter             :: 8;
+
+    AnyHit                 :: 16;
+
+    NoBlock                :: 32;
+
+    DisableHardcodedFilter :: 64;
+
+    Reserved               :: 32768;
+
+    PxQueryFlag_Static                 :: Static;
+
+    PxQueryFlag_Dynamic                :: Dynamic;
+
+    PxQueryFlag_Prefilter              :: Prefilter;
+
+    PxQueryFlag_Postfilter             :: Postfilter;
+
+    PxQueryFlag_AnyHit                 :: AnyHit;
+
+    PxQueryFlag_NoBlock                :: NoBlock;
+
+    PxQueryFlag_DisableHardcodedFilter :: DisableHardcodedFilter;
+
+    PxQueryFlag_Reserved               :: Reserved;
+}
+
+PxQueryFlags :: enum_flags u16 {
+    Static                 :: 0x1;
+    Dynamic                :: 0x2;
+    Prefilter              :: 0x4;
+    Postfilter             :: 0x8;
+    AnyHit                 :: 0x10;
+    NoBlock                :: 0x20;
+    DisableHardcodedFilter :: 0x40;
+    Reserved               :: 0x8000;
+
+    PxQueryFlags_Static                 :: Static;
+    PxQueryFlags_Dynamic                :: Dynamic;
+    PxQueryFlags_Prefilter              :: Prefilter;
+    PxQueryFlags_Postfilter             :: Postfilter;
+    PxQueryFlags_AnyHit                 :: AnyHit;
+    PxQueryFlags_NoBlock                :: NoBlock;
+    PxQueryFlags_DisableHardcodedFilter :: DisableHardcodedFilter;
+    PxQueryFlags_Reserved               :: Reserved;
+}
+
+/// Classification of scene query hits (intersections).
+///
+/// - eNONE: Returning this hit type means that the hit should not be reported.
+/// - eBLOCK: For all raycast, sweep and overlap queries the nearest eBLOCK type hit will always be returned in PxHitCallback::block member.
+/// - eTOUCH: Whenever a raycast, sweep or overlap query was called with non-zero PxHitCallback::nbTouches and PxHitCallback::touches
+/// parameters, eTOUCH type hits that are closer or same distance (touchDistance
+/// <
+/// = blockDistance condition)
+/// as the globally nearest eBLOCK type hit, will be reported.
+/// - For example, to record all hits from a raycast query, always return eTOUCH.
+///
+/// All hits in overlap() queries are treated as if the intersection distance were zero.
+/// This means the hits are unsorted and all eTOUCH hits are recorded by the callback even if an eBLOCK overlap hit was encountered.
+/// Even though all overlap() blocking hits have zero length, only one (arbitrary) eBLOCK overlap hit is recorded in PxHitCallback::block.
+/// All overlap() eTOUCH type hits are reported (zero touchDistance
+/// <
+/// = zero blockDistance condition).
+///
+/// For raycast/sweep/overlap calls with zero touch buffer or PxHitCallback::nbTouches member,
+/// only the closest hit of type eBLOCK is returned. All eTOUCH hits are discarded.
+PxQueryHitType :: enum s32 {
+    None  :: 0;
+
+    Touch :: 1;
+
+    Block :: 2;
+
+    PxQueryHitType_None  :: None;
+
+    PxQueryHitType_Touch :: Touch;
+
+    PxQueryHitType_Block :: Block;
+}
+
+/// Collection of flags providing a mechanism to lock motion along/around a specific axis.
+PxRigidDynamicLockFlag :: enum s32 {
+    LockLinearX  :: 1;
+    LockLinearY  :: 2;
+    LockLinearZ  :: 4;
+    LockAngularX :: 8;
+    LockAngularY :: 16;
+    LockAngularZ :: 32;
+
+    PxRigidDynamicLockFlag_LockLinearX  :: LockLinearX;
+    PxRigidDynamicLockFlag_LockLinearY  :: LockLinearY;
+    PxRigidDynamicLockFlag_LockLinearZ  :: LockLinearZ;
+    PxRigidDynamicLockFlag_LockAngularX :: LockAngularX;
+    PxRigidDynamicLockFlag_LockAngularY :: LockAngularY;
+    PxRigidDynamicLockFlag_LockAngularZ :: LockAngularZ;
+}
+
+PxRigidDynamicLockFlags :: enum_flags u8 {
+    LockLinearX  :: 0x1;
+    LockLinearY  :: 0x2;
+    LockLinearZ  :: 0x4;
+    LockAngularX :: 0x8;
+    LockAngularY :: 0x10;
+    LockAngularZ :: 0x20;
+
+    PxRigidDynamicLockFlags_LockLinearX  :: LockLinearX;
+    PxRigidDynamicLockFlags_LockLinearY  :: LockLinearY;
+    PxRigidDynamicLockFlags_LockLinearZ  :: LockLinearZ;
+    PxRigidDynamicLockFlags_LockAngularX :: LockAngularX;
+    PxRigidDynamicLockFlags_LockAngularY :: LockAngularY;
+    PxRigidDynamicLockFlags_LockAngularZ :: LockAngularZ;
+}
+
+/// Pruning structure used to accelerate scene queries.
+///
+/// eNONE uses a simple data structure that consumes less memory than the alternatives,
+/// but generally has slower query performance.
+///
+/// eDYNAMIC_AABB_TREE usually provides the fastest queries. However there is a
+/// constant per-frame management cost associated with this structure. How much work should
+/// be done per frame can be tuned via the [`PxSceneQueryDesc::dynamicTreeRebuildRateHint`]
+/// parameter.
+///
+/// eSTATIC_AABB_TREE is typically used for static objects. It is the same as the
+/// dynamic AABB tree, without the per-frame overhead. This can be a good choice for static
+/// objects, if no static objects are added, moved or removed after the scene has been
+/// created. If there is no such guarantee (e.g. when streaming parts of the world in and out),
+/// then the dynamic version is a better choice even for static objects.
+PxPruningStructureType :: enum s32 {
+    None            :: 0;
+
+    DynamicAabbTree :: 1;
+
+    StaticAabbTree  :: 2;
+    Last            :: 3;
+
+    PxPruningStructureType_None            :: None;
+
+    PxPruningStructureType_DynamicAabbTree :: DynamicAabbTree;
+
+    PxPruningStructureType_StaticAabbTree  :: StaticAabbTree;
+    PxPruningStructureType_Last            :: Last;
+}
+
+/// Secondary pruning structure used for newly added objects in dynamic trees.
+///
+/// Dynamic trees (PxPruningStructureType::eDYNAMIC_AABB_TREE) are slowly rebuilt
+/// over several frames. A secondary pruning structure holds and manages objects
+/// added to the scene while this rebuild is in progress.
+///
+/// eNONE ignores newly added objects. This means that for a number of frames (roughly
+/// defined by PxSceneQueryDesc::dynamicTreeRebuildRateHint) newly added objects will
+/// be ignored by scene queries. This can be acceptable when streaming large worlds, e.g.
+/// when the objects added at the boundaries of the game world don't immediately need to be
+/// visible from scene queries (it would be equivalent to streaming that data in a few frames
+/// later). The advantage of this approach is that there is no CPU cost associated with
+/// inserting the new objects in the scene query data structures, and no extra runtime cost
+/// when performing queries.
+///
+/// eBUCKET uses a structure similar to PxPruningStructureType::eNONE. Insertion is fast but
+/// query cost can be high.
+///
+/// eINCREMENTAL uses an incremental AABB-tree, with no direct PxPruningStructureType equivalent.
+/// Query time is fast but insertion cost can be high.
+///
+/// eBVH uses a PxBVH structure. This usually offers the best overall performance.
+PxDynamicTreeSecondaryPruner :: enum s32 {
+    None        :: 0;
+
+    Bucket      :: 1;
+
+    Incremental :: 2;
+
+    Bvh         :: 3;
+    Last        :: 4;
+
+    PxDynamicTreeSecondaryPruner_None        :: None;
+
+    PxDynamicTreeSecondaryPruner_Bucket      :: Bucket;
+
+    PxDynamicTreeSecondaryPruner_Incremental :: Incremental;
+
+    PxDynamicTreeSecondaryPruner_Bvh         :: Bvh;
+    PxDynamicTreeSecondaryPruner_Last        :: Last;
+}
+
+/// Scene query update mode
+///
+/// This enum controls what work is done when the scene query system is updated. The updates traditionally happen when PxScene::fetchResults
+/// is called. This function then calls PxSceneQuerySystem::finalizeUpdates, where the update mode is used.
+///
+/// fetchResults/finalizeUpdates will sync changed bounds during simulation and update the scene query bounds in pruners, this work is mandatory.
+///
+/// eBUILD_ENABLED_COMMIT_ENABLED does allow to execute the new AABB tree build step during fetchResults/finalizeUpdates, additionally
+/// the pruner commit is called where any changes are applied. During commit PhysX refits the dynamic scene query tree and if a new tree
+/// was built and the build finished the tree is swapped with current AABB tree.
+///
+/// eBUILD_ENABLED_COMMIT_DISABLED does allow to execute the new AABB tree build step during fetchResults/finalizeUpdates. Pruner commit
+/// is not called, this means that refit will then occur during the first scene query following fetchResults/finalizeUpdates, or may be forced
+/// by the method PxScene::flushQueryUpdates() / PxSceneQuerySystemBase::flushUpdates().
+///
+/// eBUILD_DISABLED_COMMIT_DISABLED no further scene query work is executed. The scene queries update needs to be called manually, see
+/// PxScene::sceneQueriesUpdate (see that function's doc for the equivalent PxSceneQuerySystem sequence). It is recommended to call
+/// PxScene::sceneQueriesUpdate right after fetchResults/finalizeUpdates as the pruning structures are not updated.
+PxSceneQueryUpdateMode :: enum s32 {
+    BuildEnabledCommitEnabled   :: 0;
+
+    BuildEnabledCommitDisabled  :: 1;
+
+    BuildDisabledCommitDisabled :: 2;
+
+    PxSceneQueryUpdateMode_BuildEnabledCommitEnabled   :: BuildEnabledCommitEnabled;
+
+    PxSceneQueryUpdateMode_BuildEnabledCommitDisabled  :: BuildEnabledCommitDisabled;
+
+    PxSceneQueryUpdateMode_BuildDisabledCommitDisabled :: BuildDisabledCommitDisabled;
+}
+
+/// Built-in enum for default PxScene pruners
+///
+/// This is passed as a pruner index to various functions in the following APIs.
+PxScenePrunerIndex :: enum u32 {
+    PxScenePrunerStatic   :: 0;
+    PxScenePrunerDynamic  :: 1;
+    PxSceneCompoundPruner :: 4294967295;
+
+    PxScenePrunerIndex_PxScenePrunerStatic   :: PxScenePrunerStatic;
+    PxScenePrunerIndex_PxScenePrunerDynamic  :: PxScenePrunerDynamic;
+    PxScenePrunerIndex_PxSceneCompoundPruner :: PxSceneCompoundPruner;
+}
+
+/// Broad phase algorithm used in the simulation
+///
+/// eSAP is a good generic choice with great performance when many objects are sleeping. Performance
+/// can degrade significantly though, when all objects are moving, or when large numbers of objects
+/// are added to or removed from the broad phase. This algorithm does not need world bounds to be
+/// defined in order to work.
+///
+/// eMBP is an alternative broad phase algorithm that does not suffer from the same performance
+/// issues as eSAP when all objects are moving or when inserting large numbers of objects. However
+/// its generic performance when many objects are sleeping might be inferior to eSAP, and it requires
+/// users to define world bounds in order to work.
+///
+/// eABP is a revisited implementation of MBP, which automatically manages broad-phase regions.
+/// It offers the convenience of eSAP (no need to define world bounds or regions) and the performance
+/// of eMBP when a lot of objects are moving. While eSAP can remain faster when most objects are
+/// sleeping and eMBP can remain faster when it uses a large number of properly-defined regions,
+/// eABP often gives the best performance on average and the best memory usage.
+///
+/// ePABP is a parallel implementation of ABP. It can often be the fastest (CPU) broadphase, but it
+/// can use more memory than ABP.
+///
+/// eGPU is a GPU implementation of the incremental sweep and prune approach. Additionally, it uses a ABP-style
+/// initial pair generation approach to avoid large spikes when inserting shapes. It not only has the advantage
+/// of traditional SAP approch which is good for when many objects are sleeping, but due to being fully parallel,
+/// it also is great when lots of shapes are moving or for runtime pair insertion and removal. It can become a
+/// performance bottleneck if there are a very large number of shapes roughly projecting to the same values
+/// on a given axis. If the scene has a very large number of shapes in an actor, e.g. a humanoid, it is recommended
+/// to use an aggregate to represent multi-shape or multi-body actors to minimize stress placed on the broad phase.
+PxBroadPhaseType :: enum s32 {
+    Sap  :: 0;
+
+    Mbp  :: 1;
+
+    Abp  :: 2;
+
+    Pabp :: 3;
+
+    Gpu  :: 4;
+    Last :: 5;
+
+    PxBroadPhaseType_Sap  :: Sap;
+
+    PxBroadPhaseType_Mbp  :: Mbp;
+
+    PxBroadPhaseType_Abp  :: Abp;
+
+    PxBroadPhaseType_Pabp :: Pabp;
+
+    PxBroadPhaseType_Gpu  :: Gpu;
+    PxBroadPhaseType_Last :: Last;
+}
+
+/// Enum for selecting the friction algorithm used for simulation.
+///
+/// [`PxFrictionType::ePATCH`] selects the patch friction model which typically leads to the most stable results at low solver iteration counts and is also quite inexpensive, as it uses only
+/// up to four scalar solver constraints per pair of touching objects.  The patch friction model is the same basic strong friction algorithm as PhysX 3.2 and before.
+///
+/// [`PxFrictionType::eONE_DIRECTIONAL`] is a simplification of the Coulomb friction model, in which the friction for a given point of contact is applied in the alternating tangent directions of
+/// the contact's normal.  This simplification allows us to reduce the number of iterations required for convergence but is not as accurate as the two directional model.
+///
+/// [`PxFrictionType::eTWO_DIRECTIONAL`] is identical to the one directional model, but it applies friction in both tangent directions simultaneously.  This hurts convergence a bit so it
+/// requires more solver iterations, but is more accurate.  Like the one directional model, it is applied at every contact point, which makes it potentially more expensive
+/// than patch friction for scenarios with many contact points.
+///
+/// [`PxFrictionType::eFRICTION_COUNT`] is the total numer of friction models supported by the SDK.
+PxFrictionType :: enum s32 {
+    Patch          :: 0;
+
+    OneDirectional :: 1;
+
+    TwoDirectional :: 2;
+
+    FrictionCount  :: 3;
+
+    PxFrictionType_Patch          :: Patch;
+
+    PxFrictionType_OneDirectional :: OneDirectional;
+
+    PxFrictionType_TwoDirectional :: TwoDirectional;
+
+    PxFrictionType_FrictionCount  :: FrictionCount;
+}
+
+/// Enum for selecting the type of solver used for the simulation.
+///
+/// [`PxSolverType::ePGS`] selects the iterative sequential impulse solver. This is the same kind of solver used in PhysX 3.4 and earlier releases.
+///
+/// [`PxSolverType::eTGS`] selects a non linear iterative solver. This kind of solver can lead to improved convergence and handle large mass ratios, long chains and jointed systems better. It is slightly more expensive than the default solver and can introduce more energy to correct joint and contact errors.
+PxSolverType :: enum s32 {
+    Pgs :: 0;
+
+    Tgs :: 1;
+
+    PxSolverType_Pgs :: Pgs;
+
+    PxSolverType_Tgs :: Tgs;
+}
+
+/// flags for configuring properties of the scene
+PxSceneFlag :: enum s32 {
+    EnableActiveActors                :: 1;
+
+    EnableCcd                         :: 2;
+
+    DisableCcdResweep                 :: 4;
+
+    EnablePcm                         :: 64;
+
+    DisableContactReportBufferResize  :: 128;
+
+    DisableContactCache               :: 256;
+
+    RequireRwLock                     :: 512;
+
+    EnableStabilization               :: 1024;
+
+    EnableAveragePoint                :: 2048;
+
+    ExcludeKinematicsFromActiveActors :: 4096;
+
+    EnableGpuDynamics                 :: 8192;
+
+    EnableEnhancedDeterminism         :: 16384;
+
+    EnableFrictionEveryIteration      :: 32768;
+
+    SuppressReadback                  :: 65536;
+
+    ForceReadback                     :: 131072;
+
+    MutableFlags                      :: 69633;
+
+    PxSceneFlag_EnableActiveActors                :: EnableActiveActors;
+
+    PxSceneFlag_EnableCcd                         :: EnableCcd;
+
+    PxSceneFlag_DisableCcdResweep                 :: DisableCcdResweep;
+
+    PxSceneFlag_EnablePcm                         :: EnablePcm;
+
+    PxSceneFlag_DisableContactReportBufferResize  :: DisableContactReportBufferResize;
+
+    PxSceneFlag_DisableContactCache               :: DisableContactCache;
+
+    PxSceneFlag_RequireRwLock                     :: RequireRwLock;
+
+    PxSceneFlag_EnableStabilization               :: EnableStabilization;
+
+    PxSceneFlag_EnableAveragePoint                :: EnableAveragePoint;
+
+    PxSceneFlag_ExcludeKinematicsFromActiveActors :: ExcludeKinematicsFromActiveActors;
+
+    PxSceneFlag_EnableGpuDynamics                 :: EnableGpuDynamics;
+
+    PxSceneFlag_EnableEnhancedDeterminism         :: EnableEnhancedDeterminism;
+
+    PxSceneFlag_EnableFrictionEveryIteration      :: EnableFrictionEveryIteration;
+
+    PxSceneFlag_SuppressReadback                  :: SuppressReadback;
+
+    PxSceneFlag_ForceReadback                     :: ForceReadback;
+
+    PxSceneFlag_MutableFlags                      :: MutableFlags;
+}
+
+PxSceneFlags :: enum_flags u32 {
+    EnableActiveActors                :: 0x1;
+    EnableCcd                         :: 0x2;
+    DisableCcdResweep                 :: 0x4;
+    EnablePcm                         :: 0x40;
+    DisableContactReportBufferResize  :: 0x80;
+    DisableContactCache               :: 0x100;
+    RequireRwLock                     :: 0x200;
+    EnableStabilization               :: 0x400;
+    EnableAveragePoint                :: 0x800;
+    ExcludeKinematicsFromActiveActors :: 0x1000;
+    EnableGpuDynamics                 :: 0x2000;
+    EnableEnhancedDeterminism         :: 0x4000;
+    EnableFrictionEveryIteration      :: 0x8000;
+    SuppressReadback                  :: 0x10000;
+    ForceReadback                     :: 0x20000;
+    MutableFlags                      :: 0x11001;
+
+    PxSceneFlags_EnableActiveActors                :: EnableActiveActors;
+    PxSceneFlags_EnableCcd                         :: EnableCcd;
+    PxSceneFlags_DisableCcdResweep                 :: DisableCcdResweep;
+    PxSceneFlags_EnablePcm                         :: EnablePcm;
+    PxSceneFlags_DisableContactReportBufferResize  :: DisableContactReportBufferResize;
+    PxSceneFlags_DisableContactCache               :: DisableContactCache;
+    PxSceneFlags_RequireRwLock                     :: RequireRwLock;
+    PxSceneFlags_EnableStabilization               :: EnableStabilization;
+    PxSceneFlags_EnableAveragePoint                :: EnableAveragePoint;
+    PxSceneFlags_ExcludeKinematicsFromActiveActors :: ExcludeKinematicsFromActiveActors;
+    PxSceneFlags_EnableGpuDynamics                 :: EnableGpuDynamics;
+    PxSceneFlags_EnableEnhancedDeterminism         :: EnableEnhancedDeterminism;
+    PxSceneFlags_EnableFrictionEveryIteration      :: EnableFrictionEveryIteration;
+    PxSceneFlags_SuppressReadback                  :: SuppressReadback;
+    PxSceneFlags_ForceReadback                     :: ForceReadback;
+    PxSceneFlags_MutableFlags                      :: MutableFlags;
+}
+
+/// Debug visualization parameters.
+///
+/// [`PxVisualizationParameter::eSCALE`] is the master switch for enabling visualization, please read the corresponding documentation
+/// for further details.
+PxVisualizationParameter :: enum s32 {
+    Scale              :: 0;
+
+    WorldAxes          :: 1;
+
+    BodyAxes           :: 2;
+
+    BodyMassAxes       :: 3;
+
+    BodyLinVelocity    :: 4;
+
+    BodyAngVelocity    :: 5;
+
+    ContactPoint       :: 6;
+
+    ContactNormal      :: 7;
+
+    ContactError       :: 8;
+
+    ContactForce       :: 9;
+
+    ActorAxes          :: 10;
+
+    CollisionAabbs     :: 11;
+
+    CollisionShapes    :: 12;
+
+    CollisionAxes      :: 13;
+
+    CollisionCompounds :: 14;
+
+    CollisionFnormals  :: 15;
+
+    CollisionEdges     :: 16;
+
+    CollisionStatic    :: 17;
+
+    CollisionDynamic   :: 18;
+
+    JointLocalFrames   :: 19;
+
+    JointLimits        :: 20;
+
+    CullBox            :: 21;
+
+    MbpRegions         :: 22;
+
+    SimulationMesh     :: 23;
+
+    Sdf                :: 24;
+
+    NumValues          :: 25;
+
+    ForceDword         :: 2147483647;
+
+    PxVisualizationParameter_Scale              :: Scale;
+
+    PxVisualizationParameter_WorldAxes          :: WorldAxes;
+
+    PxVisualizationParameter_BodyAxes           :: BodyAxes;
+
+    PxVisualizationParameter_BodyMassAxes       :: BodyMassAxes;
+
+    PxVisualizationParameter_BodyLinVelocity    :: BodyLinVelocity;
+
+    PxVisualizationParameter_BodyAngVelocity    :: BodyAngVelocity;
+
+    PxVisualizationParameter_ContactPoint       :: ContactPoint;
+
+    PxVisualizationParameter_ContactNormal      :: ContactNormal;
+
+    PxVisualizationParameter_ContactError       :: ContactError;
+
+    PxVisualizationParameter_ContactForce       :: ContactForce;
+
+    PxVisualizationParameter_ActorAxes          :: ActorAxes;
+
+    PxVisualizationParameter_CollisionAabbs     :: CollisionAabbs;
+
+    PxVisualizationParameter_CollisionShapes    :: CollisionShapes;
+
+    PxVisualizationParameter_CollisionAxes      :: CollisionAxes;
+
+    PxVisualizationParameter_CollisionCompounds :: CollisionCompounds;
+
+    PxVisualizationParameter_CollisionFnormals  :: CollisionFnormals;
+
+    PxVisualizationParameter_CollisionEdges     :: CollisionEdges;
+
+    PxVisualizationParameter_CollisionStatic    :: CollisionStatic;
+
+    PxVisualizationParameter_CollisionDynamic   :: CollisionDynamic;
+
+    PxVisualizationParameter_JointLocalFrames   :: JointLocalFrames;
+
+    PxVisualizationParameter_JointLimits        :: JointLimits;
+
+    PxVisualizationParameter_CullBox            :: CullBox;
+
+    PxVisualizationParameter_MbpRegions         :: MbpRegions;
+
+    PxVisualizationParameter_SimulationMesh     :: SimulationMesh;
+
+    PxVisualizationParameter_Sdf                :: Sdf;
+
+    PxVisualizationParameter_NumValues          :: NumValues;
+
+    PxVisualizationParameter_ForceDword         :: ForceDword;
+}
+
+/// Different types of rigid body collision pair statistics.
+RbPairStatsType :: enum s32 {
+    DiscreteContactPairs :: 0;
+
+    CcdPairs             :: 1;
+
+    ModifiedContactPairs :: 2;
+
+    TriggerPairs         :: 3;
+
+    RbPairStatsType_DiscreteContactPairs :: DiscreteContactPairs;
+
+    RbPairStatsType_CcdPairs             :: CcdPairs;
+
+    RbPairStatsType_ModifiedContactPairs :: ModifiedContactPairs;
+
+    RbPairStatsType_TriggerPairs         :: TriggerPairs;
+}
+
+/// These flags determine what data is read or written to the gpu softbody.
+PxSoftBodyDataFlag :: enum s32 {
+    TetIndices         :: 0;
+
+    TetStress          :: 1;
+
+    TetStresscoeff     :: 2;
+
+    TetRestPoses       :: 3;
+
+    TetRotations       :: 4;
+
+    TetPositionInvMass :: 5;
+
+    SimTetIndices      :: 6;
+
+    SimVelocityInvMass :: 7;
+
+    SimPositionInvMass :: 8;
+
+    SimKinematicTarget :: 9;
+
+    PxSoftBodyDataFlag_TetIndices         :: TetIndices;
+
+    PxSoftBodyDataFlag_TetStress          :: TetStress;
+
+    PxSoftBodyDataFlag_TetStresscoeff     :: TetStresscoeff;
+
+    PxSoftBodyDataFlag_TetRestPoses       :: TetRestPoses;
+
+    PxSoftBodyDataFlag_TetRotations       :: TetRotations;
+
+    PxSoftBodyDataFlag_TetPositionInvMass :: TetPositionInvMass;
+
+    PxSoftBodyDataFlag_SimTetIndices      :: SimTetIndices;
+
+    PxSoftBodyDataFlag_SimVelocityInvMass :: SimVelocityInvMass;
+
+    PxSoftBodyDataFlag_SimPositionInvMass :: SimPositionInvMass;
+
+    PxSoftBodyDataFlag_SimKinematicTarget :: SimKinematicTarget;
+}
+
+/// Identifies input and output buffers for PxHairSystem
+PxHairSystemData :: enum s32 {
+    None            :: 0;
+
+    PositionInvmass :: 1;
+
+    Velocity        :: 2;
+
+    All             :: 3;
+
+    PxHairSystemData_None            :: None;
+
+    PxHairSystemData_PositionInvmass :: PositionInvmass;
+
+    PxHairSystemData_Velocity        :: Velocity;
+
+    PxHairSystemData_All             :: All;
+}
+
+PxHairSystemDataFlags :: enum_flags u32 {
+    PositionInvmass :: 0x1;
+    Velocity        :: 0x2;
+    All             :: 0x3;
+
+    PxHairSystemDataFlags_PositionInvmass :: PositionInvmass;
+    PxHairSystemDataFlags_Velocity        :: Velocity;
+    PxHairSystemDataFlags_All             :: All;
+}
+
+/// Binary settings for hair system simulation
+PxHairSystemFlag :: enum s32 {
+    DisableSelfCollision      :: 1;
+
+    DisableExternalCollision  :: 2;
+
+    DisableTwosidedAttachment :: 4;
+
+    PxHairSystemFlag_DisableSelfCollision      :: DisableSelfCollision;
+
+    PxHairSystemFlag_DisableExternalCollision  :: DisableExternalCollision;
+
+    PxHairSystemFlag_DisableTwosidedAttachment :: DisableTwosidedAttachment;
+}
+
+PxHairSystemFlags :: enum_flags u32 {
+    DisableSelfCollision      :: 0x1;
+    DisableExternalCollision  :: 0x2;
+    DisableTwosidedAttachment :: 0x4;
+
+    PxHairSystemFlags_DisableSelfCollision      :: DisableSelfCollision;
+    PxHairSystemFlags_DisableExternalCollision  :: DisableExternalCollision;
+    PxHairSystemFlags_DisableTwosidedAttachment :: DisableTwosidedAttachment;
+}
+
+/// Identifies each type of information for retrieving from actor.
+PxActorCacheFlag :: enum s32 {
+    ActorData :: 1;
+    Force     :: 4;
+    Torque    :: 8;
+
+    PxActorCacheFlag_ActorData :: ActorData;
+    PxActorCacheFlag_Force     :: Force;
+    PxActorCacheFlag_Torque    :: Torque;
+}
+
+PxActorCacheFlags :: enum_flags u16 {
+    ActorData :: 0x1;
+    Force     :: 0x4;
+    Torque    :: 0x8;
+
+    PxActorCacheFlags_ActorData :: ActorData;
+    PxActorCacheFlags_Force     :: Force;
+    PxActorCacheFlags_Torque    :: Torque;
+}
+
+/// PVD scene Flags. They are disabled by default, and only works if PxPvdInstrumentationFlag::eDEBUG is set.
+PxPvdSceneFlag :: enum s32 {
+    TransmitContacts     :: 1;
+
+    TransmitScenequeries :: 2;
+
+    TransmitConstraints  :: 4;
+
+    PxPvdSceneFlag_TransmitContacts     :: TransmitContacts;
+
+    PxPvdSceneFlag_TransmitScenequeries :: TransmitScenequeries;
+
+    PxPvdSceneFlag_TransmitConstraints  :: TransmitConstraints;
+}
+
+PxPvdSceneFlags :: enum_flags u8 {
+    TransmitContacts     :: 0x1;
+    TransmitScenequeries :: 0x2;
+    TransmitConstraints  :: 0x4;
+
+    PxPvdSceneFlags_TransmitContacts     :: TransmitContacts;
+    PxPvdSceneFlags_TransmitScenequeries :: TransmitScenequeries;
+    PxPvdSceneFlags_TransmitConstraints  :: TransmitConstraints;
+}
+
+/// Identifies each type of actor for retrieving actors from a scene.
+///
+/// [`PxArticulationLink`] objects are not supported. Use the #PxArticulationReducedCoordinate object to retrieve all its links.
+PxActorTypeFlag :: enum s32 {
+    RigidStatic  :: 1;
+
+    RigidDynamic :: 2;
+
+    PxActorTypeFlag_RigidStatic  :: RigidStatic;
+
+    PxActorTypeFlag_RigidDynamic :: RigidDynamic;
+}
+
+PxActorTypeFlags :: enum_flags u16 {
+    RigidStatic  :: 0x1;
+    RigidDynamic :: 0x2;
+
+    PxActorTypeFlags_RigidStatic  :: RigidStatic;
+    PxActorTypeFlags_RigidDynamic :: RigidDynamic;
+}
+
+/// Extra data item types for contact pairs.
+PxContactPairExtraDataType :: enum s32 {
+    PreSolverVelocity  :: 0;
+
+    PostSolverVelocity :: 1;
+
+    ContactEventPose   :: 2;
+
+    ContactPairIndex   :: 3;
+
+    PxContactPairExtraDataType_PreSolverVelocity  :: PreSolverVelocity;
+
+    PxContactPairExtraDataType_PostSolverVelocity :: PostSolverVelocity;
+
+    PxContactPairExtraDataType_ContactEventPose   :: ContactEventPose;
+
+    PxContactPairExtraDataType_ContactPairIndex   :: ContactPairIndex;
+}
+
+/// Collection of flags providing information on contact report pairs.
+PxContactPairHeaderFlag :: enum s32 {
+    RemovedActor0 :: 1;
+
+    RemovedActor1 :: 2;
+
+    PxContactPairHeaderFlag_RemovedActor0 :: RemovedActor0;
+
+    PxContactPairHeaderFlag_RemovedActor1 :: RemovedActor1;
+}
+
+PxContactPairHeaderFlags :: enum_flags u16 {
+    RemovedActor0 :: 0x1;
+    RemovedActor1 :: 0x2;
+
+    PxContactPairHeaderFlags_RemovedActor0 :: RemovedActor0;
+    PxContactPairHeaderFlags_RemovedActor1 :: RemovedActor1;
+}
+
+/// Collection of flags providing information on contact report pairs.
+PxContactPairFlag :: enum s32 {
+    RemovedShape0              :: 1;
+
+    RemovedShape1              :: 2;
+
+    ActorPairHasFirstTouch     :: 4;
+
+    ActorPairLostTouch         :: 8;
+
+    InternalHasImpulses        :: 16;
+
+    InternalContactsAreFlipped :: 32;
+
+    PxContactPairFlag_RemovedShape0              :: RemovedShape0;
+
+    PxContactPairFlag_RemovedShape1              :: RemovedShape1;
+
+    PxContactPairFlag_ActorPairHasFirstTouch     :: ActorPairHasFirstTouch;
+
+    PxContactPairFlag_ActorPairLostTouch         :: ActorPairLostTouch;
+
+    PxContactPairFlag_InternalHasImpulses        :: InternalHasImpulses;
+
+    PxContactPairFlag_InternalContactsAreFlipped :: InternalContactsAreFlipped;
+}
+
+PxContactPairFlags :: enum_flags u16 {
+    RemovedShape0              :: 0x1;
+    RemovedShape1              :: 0x2;
+    ActorPairHasFirstTouch     :: 0x4;
+    ActorPairLostTouch         :: 0x8;
+    InternalHasImpulses        :: 0x10;
+    InternalContactsAreFlipped :: 0x20;
+
+    PxContactPairFlags_RemovedShape0              :: RemovedShape0;
+    PxContactPairFlags_RemovedShape1              :: RemovedShape1;
+    PxContactPairFlags_ActorPairHasFirstTouch     :: ActorPairHasFirstTouch;
+    PxContactPairFlags_ActorPairLostTouch         :: ActorPairLostTouch;
+    PxContactPairFlags_InternalHasImpulses        :: InternalHasImpulses;
+    PxContactPairFlags_InternalContactsAreFlipped :: InternalContactsAreFlipped;
+}
+
+/// Collection of flags providing information on trigger report pairs.
+PxTriggerPairFlag :: enum s32 {
+    RemovedShapeTrigger :: 1;
+
+    RemovedShapeOther   :: 2;
+
+    NextFree            :: 4;
+
+    PxTriggerPairFlag_RemovedShapeTrigger :: RemovedShapeTrigger;
+
+    PxTriggerPairFlag_RemovedShapeOther   :: RemovedShapeOther;
+
+    PxTriggerPairFlag_NextFree            :: NextFree;
+}
+
+PxTriggerPairFlags :: enum_flags u8 {
+    RemovedShapeTrigger :: 0x1;
+    RemovedShapeOther   :: 0x2;
+    NextFree            :: 0x4;
+
+    PxTriggerPairFlags_RemovedShapeTrigger :: RemovedShapeTrigger;
+    PxTriggerPairFlags_RemovedShapeOther   :: RemovedShapeOther;
+    PxTriggerPairFlags_NextFree            :: NextFree;
+}
+
+/// Identifies input and output buffers for PxSoftBody.
+PxSoftBodyData :: enum s32 {
+    None               :: 0;
+
+    PositionInvmass    :: 1;
+
+    SimPositionInvmass :: 4;
+
+    SimVelocity        :: 8;
+
+    SimKinematicTarget :: 16;
+    All                :: 29;
+
+    PxSoftBodyData_None               :: None;
+
+    PxSoftBodyData_PositionInvmass    :: PositionInvmass;
+
+    PxSoftBodyData_SimPositionInvmass :: SimPositionInvmass;
+
+    PxSoftBodyData_SimVelocity        :: SimVelocity;
+
+    PxSoftBodyData_SimKinematicTarget :: SimKinematicTarget;
+    PxSoftBodyData_All                :: All;
+}
+
+PxSoftBodyDataFlags :: enum_flags u32 {
+    PositionInvmass    :: 0x1;
+    SimPositionInvmass :: 0x4;
+    SimVelocity        :: 0x8;
+    SimKinematicTarget :: 0x10;
+    All                :: 0x1d;
+
+    PxSoftBodyDataFlags_PositionInvmass    :: PositionInvmass;
+    PxSoftBodyDataFlags_SimPositionInvmass :: SimPositionInvmass;
+    PxSoftBodyDataFlags_SimVelocity        :: SimVelocity;
+    PxSoftBodyDataFlags_SimKinematicTarget :: SimKinematicTarget;
+    PxSoftBodyDataFlags_All                :: All;
+}
+
+/// Flags to enable or disable special modes of a SoftBody
+PxSoftBodyFlag :: enum s32 {
+    DisableSelfCollision :: 1;
+
+    ComputeStressTensor  :: 2;
+
+    EnableCcd            :: 4;
+
+    DisplaySimMesh       :: 8;
+
+    Kinematic            :: 16;
+
+    PartiallyKinematic   :: 32;
+
+    PxSoftBodyFlag_DisableSelfCollision :: DisableSelfCollision;
+
+    PxSoftBodyFlag_ComputeStressTensor  :: ComputeStressTensor;
+
+    PxSoftBodyFlag_EnableCcd            :: EnableCcd;
+
+    PxSoftBodyFlag_DisplaySimMesh       :: DisplaySimMesh;
+
+    PxSoftBodyFlag_Kinematic            :: Kinematic;
+
+    PxSoftBodyFlag_PartiallyKinematic   :: PartiallyKinematic;
+}
+
+PxSoftBodyFlags :: enum_flags u32 {
+    DisableSelfCollision :: 0x1;
+    ComputeStressTensor  :: 0x2;
+    EnableCcd            :: 0x4;
+    DisplaySimMesh       :: 0x8;
+    Kinematic            :: 0x10;
+    PartiallyKinematic   :: 0x20;
+
+    PxSoftBodyFlags_DisableSelfCollision :: DisableSelfCollision;
+    PxSoftBodyFlags_ComputeStressTensor  :: ComputeStressTensor;
+    PxSoftBodyFlags_EnableCcd            :: EnableCcd;
+    PxSoftBodyFlags_DisplaySimMesh       :: DisplaySimMesh;
+    PxSoftBodyFlags_Kinematic            :: Kinematic;
+    PxSoftBodyFlags_PartiallyKinematic   :: PartiallyKinematic;
+}
+
+/// The type of controller, eg box, sphere or capsule.
+PxControllerShapeType :: enum s32 {
+    Box        :: 0;
+
+    Capsule    :: 1;
+
+    ForceDword :: 2147483647;
+
+    PxControllerShapeType_Box        :: Box;
+
+    PxControllerShapeType_Capsule    :: Capsule;
+
+    PxControllerShapeType_ForceDword :: ForceDword;
+}
+
+/// specifies how a CCT interacts with non-walkable parts.
+///
+/// This is only used when slopeLimit is non zero. It is currently enabled for static actors only, and not supported for spheres or capsules.
+PxControllerNonWalkableMode :: enum s32 {
+    PreventClimbing                :: 0;
+
+    PreventClimbingAndForceSliding :: 1;
+
+    PxControllerNonWalkableMode_PreventClimbing                :: PreventClimbing;
+
+    PxControllerNonWalkableMode_PreventClimbingAndForceSliding :: PreventClimbingAndForceSliding;
+}
+
+/// specifies which sides a character is colliding with.
+PxControllerCollisionFlag :: enum s32 {
+    CollisionSides :: 1;
+
+    CollisionUp    :: 2;
+
+    CollisionDown  :: 4;
+
+    PxControllerCollisionFlag_CollisionSides :: CollisionSides;
+
+    PxControllerCollisionFlag_CollisionUp    :: CollisionUp;
+
+    PxControllerCollisionFlag_CollisionDown  :: CollisionDown;
+}
+
+PxControllerCollisionFlags :: enum_flags u8 {
+    CollisionSides :: 0x1;
+    CollisionUp    :: 0x2;
+    CollisionDown  :: 0x4;
+
+    PxControllerCollisionFlags_CollisionSides :: CollisionSides;
+    PxControllerCollisionFlags_CollisionUp    :: CollisionUp;
+    PxControllerCollisionFlags_CollisionDown  :: CollisionDown;
+}
+
+PxCapsuleClimbingMode :: enum s32 {
+    Easy        :: 0;
+
+    Constrained :: 1;
+    Last        :: 2;
+
+    PxCapsuleClimbingMode_Easy        :: Easy;
+
+    PxCapsuleClimbingMode_Constrained :: Constrained;
+    PxCapsuleClimbingMode_Last        :: Last;
+}
+
+/// specifies controller behavior
+PxControllerBehaviorFlag :: enum s32 {
+    CctCanRideOnObject :: 1;
+
+    CctSlide           :: 2;
+
+    CctUserDefinedRide :: 4;
+
+    PxControllerBehaviorFlag_CctCanRideOnObject :: CctCanRideOnObject;
+
+    PxControllerBehaviorFlag_CctSlide           :: CctSlide;
+
+    PxControllerBehaviorFlag_CctUserDefinedRide :: CctUserDefinedRide;
+}
+
+PxControllerBehaviorFlags :: enum_flags u8 {
+    CctCanRideOnObject :: 0x1;
+    CctSlide           :: 0x2;
+    CctUserDefinedRide :: 0x4;
+
+    PxControllerBehaviorFlags_CctCanRideOnObject :: CctCanRideOnObject;
+    PxControllerBehaviorFlags_CctSlide           :: CctSlide;
+    PxControllerBehaviorFlags_CctUserDefinedRide :: CctUserDefinedRide;
+}
+
+/// specifies debug-rendering flags
+PxControllerDebugRenderFlag :: enum u32 {
+    TemporalBv :: 1;
+
+    CachedBv   :: 2;
+
+    Obstacles  :: 4;
+    None       :: 0;
+    All        :: 4294967295;
+
+    PxControllerDebugRenderFlag_TemporalBv :: TemporalBv;
+
+    PxControllerDebugRenderFlag_CachedBv   :: CachedBv;
+
+    PxControllerDebugRenderFlag_Obstacles  :: Obstacles;
+    PxControllerDebugRenderFlag_None       :: None;
+    PxControllerDebugRenderFlag_All        :: All;
+}
+
+PxControllerDebugRenderFlags :: enum_flags u32 {
+    TemporalBv :: 0x1;
+    CachedBv   :: 0x2;
+    Obstacles  :: 0x4;
+    All        :: 0x7;
+
+    PxControllerDebugRenderFlags_TemporalBv :: TemporalBv;
+    PxControllerDebugRenderFlags_CachedBv   :: CachedBv;
+    PxControllerDebugRenderFlags_Obstacles  :: Obstacles;
+    PxControllerDebugRenderFlags_All        :: All;
+}
+
+/// Defines the number of bits per subgrid pixel
+PxSdfBitsPerSubgridPixel :: enum s32 {
+    E8BitPerPixel  :: 1;
+
+    E16BitPerPixel :: 2;
+
+    E32BitPerPixel :: 4;
+
+    PxSdfBitsPerSubgridPixel_E8BitPerPixel  :: E8BitPerPixel;
+
+    PxSdfBitsPerSubgridPixel_E16BitPerPixel :: E16BitPerPixel;
+
+    PxSdfBitsPerSubgridPixel_E32BitPerPixel :: E32BitPerPixel;
+}
+
+/// Flags which describe the format and behavior of a convex mesh.
+PxConvexFlag :: enum s32 {
+    E16BitIndices          :: 1;
+
+    ComputeConvex          :: 2;
+
+    CheckZeroAreaTriangles :: 4;
+
+    QuantizeInput          :: 8;
+
+    DisableMeshValidation  :: 16;
+
+    PlaneShifting          :: 32;
+
+    FastInertiaComputation :: 64;
+
+    GpuCompatible          :: 128;
+
+    ShiftVertices          :: 256;
+
+    PxConvexFlag_E16BitIndices          :: E16BitIndices;
+
+    PxConvexFlag_ComputeConvex          :: ComputeConvex;
+
+    PxConvexFlag_CheckZeroAreaTriangles :: CheckZeroAreaTriangles;
+
+    PxConvexFlag_QuantizeInput          :: QuantizeInput;
+
+    PxConvexFlag_DisableMeshValidation  :: DisableMeshValidation;
+
+    PxConvexFlag_PlaneShifting          :: PlaneShifting;
+
+    PxConvexFlag_FastInertiaComputation :: FastInertiaComputation;
+
+    PxConvexFlag_GpuCompatible          :: GpuCompatible;
+
+    PxConvexFlag_ShiftVertices          :: ShiftVertices;
+}
+
+PxConvexFlags :: enum_flags u16 {
+    E16BitIndices          :: 0x1;
+    ComputeConvex          :: 0x2;
+    CheckZeroAreaTriangles :: 0x4;
+    QuantizeInput          :: 0x8;
+    DisableMeshValidation  :: 0x10;
+    PlaneShifting          :: 0x20;
+    FastInertiaComputation :: 0x40;
+    GpuCompatible          :: 0x80;
+    ShiftVertices          :: 0x100;
+
+    PxConvexFlags_E16BitIndices          :: E16BitIndices;
+    PxConvexFlags_ComputeConvex          :: ComputeConvex;
+    PxConvexFlags_CheckZeroAreaTriangles :: CheckZeroAreaTriangles;
+    PxConvexFlags_QuantizeInput          :: QuantizeInput;
+    PxConvexFlags_DisableMeshValidation  :: DisableMeshValidation;
+    PxConvexFlags_PlaneShifting          :: PlaneShifting;
+    PxConvexFlags_FastInertiaComputation :: FastInertiaComputation;
+    PxConvexFlags_GpuCompatible          :: GpuCompatible;
+    PxConvexFlags_ShiftVertices          :: ShiftVertices;
+}
+
+/// Defines the tetrahedron structure of a mesh.
+PxMeshFormat :: enum s32 {
+    TetMesh :: 0;
+
+    HexMesh :: 1;
+
+    PxMeshFormat_TetMesh :: TetMesh;
+
+    PxMeshFormat_HexMesh :: HexMesh;
+}
+
+/// Desired build strategy for PxMeshMidPhase::eBVH34
+PxBVH34BuildStrategy :: enum s32 {
+    Fast    :: 0;
+
+    Default :: 1;
+
+    Sah     :: 2;
+    Last    :: 3;
+
+    PxBVH34BuildStrategy_Fast    :: Fast;
+
+    PxBVH34BuildStrategy_Default :: Default;
+
+    PxBVH34BuildStrategy_Sah     :: Sah;
+    PxBVH34BuildStrategy_Last    :: Last;
+}
+
+/// Result from convex cooking.
+PxConvexMeshCookingResult :: enum s32 {
+    Success              :: 0;
+
+    ZeroAreaTestFailed   :: 1;
+
+    PolygonsLimitReached :: 2;
+
+    Failure              :: 3;
+
+    PxConvexMeshCookingResult_Success              :: Success;
+
+    PxConvexMeshCookingResult_ZeroAreaTestFailed   :: ZeroAreaTestFailed;
+
+    PxConvexMeshCookingResult_PolygonsLimitReached :: PolygonsLimitReached;
+
+    PxConvexMeshCookingResult_Failure              :: Failure;
+}
+
+/// Enumeration for convex mesh cooking algorithms.
+PxConvexMeshCookingType :: enum s32 {
+    Quickhull :: 0;
+    PxConvexMeshCookingType_Quickhull :: Quickhull;
+}
+
+/// Result from triangle mesh cooking
+PxTriangleMeshCookingResult :: enum s32 {
+    Success       :: 0;
+
+    LargeTriangle :: 1;
+
+    Failure       :: 2;
+
+    PxTriangleMeshCookingResult_Success       :: Success;
+
+    PxTriangleMeshCookingResult_LargeTriangle :: LargeTriangle;
+
+    PxTriangleMeshCookingResult_Failure       :: Failure;
+}
+
+/// Enum for the set of mesh pre-processing parameters.
+PxMeshPreprocessingFlag :: enum s32 {
+    WeldVertices                 :: 1;
+
+    DisableCleanMesh             :: 2;
+
+    DisableActiveEdgesPrecompute :: 4;
+
+    Force32bitIndices            :: 8;
+
+    EnableVertMapping            :: 16;
+
+    EnableInertia                :: 32;
+
+    PxMeshPreprocessingFlag_WeldVertices                 :: WeldVertices;
+
+    PxMeshPreprocessingFlag_DisableCleanMesh             :: DisableCleanMesh;
+
+    PxMeshPreprocessingFlag_DisableActiveEdgesPrecompute :: DisableActiveEdgesPrecompute;
+
+    PxMeshPreprocessingFlag_Force32bitIndices            :: Force32bitIndices;
+
+    PxMeshPreprocessingFlag_EnableVertMapping            :: EnableVertMapping;
+
+    PxMeshPreprocessingFlag_EnableInertia                :: EnableInertia;
+}
+
+PxMeshPreprocessingFlags :: enum_flags u32 {
+    WeldVertices                 :: 0x1;
+    DisableCleanMesh             :: 0x2;
+    DisableActiveEdgesPrecompute :: 0x4;
+    Force32bitIndices            :: 0x8;
+    EnableVertMapping            :: 0x10;
+    EnableInertia                :: 0x20;
+
+    PxMeshPreprocessingFlags_WeldVertices                 :: WeldVertices;
+    PxMeshPreprocessingFlags_DisableCleanMesh             :: DisableCleanMesh;
+    PxMeshPreprocessingFlags_DisableActiveEdgesPrecompute :: DisableActiveEdgesPrecompute;
+    PxMeshPreprocessingFlags_Force32bitIndices            :: Force32bitIndices;
+    PxMeshPreprocessingFlags_EnableVertMapping            :: EnableVertMapping;
+    PxMeshPreprocessingFlags_EnableInertia                :: EnableInertia;
+}
+
+/// Unique identifiers for extensions classes which implement a constraint based on PxConstraint.
+///
+/// Users which want to create their own custom constraint types should choose an ID larger or equal to eNEXT_FREE_ID
+/// and not eINVALID_ID.
+PxConstraintExtIDs :: enum s32 {
+    Joint                       :: 0;
+    VehicleSuspLimitDeprecated  :: 1;
+    VehicleStickyTyreDeprecated :: 2;
+    VehicleJoint                :: 3;
+    NextFreeId                  :: 4;
+    InvalidId                   :: 2147483647;
+
+    PxConstraintExtIDs_Joint                       :: Joint;
+    PxConstraintExtIDs_VehicleSuspLimitDeprecated  :: VehicleSuspLimitDeprecated;
+    PxConstraintExtIDs_VehicleStickyTyreDeprecated :: VehicleStickyTyreDeprecated;
+    PxConstraintExtIDs_VehicleJoint                :: VehicleJoint;
+    PxConstraintExtIDs_NextFreeId                  :: NextFreeId;
+    PxConstraintExtIDs_InvalidId                   :: InvalidId;
+}
+
+/// an enumeration of PhysX' built-in joint types
+PxJointConcreteType :: enum s32 {
+    Spherical     :: 256;
+    Revolute      :: 257;
+    Prismatic     :: 258;
+    Fixed         :: 259;
+    Distance      :: 260;
+    D6            :: 261;
+    Contact       :: 262;
+    Gear          :: 263;
+    RackAndPinion :: 264;
+    Last          :: 265;
+
+    PxJointConcreteType_Spherical     :: Spherical;
+    PxJointConcreteType_Revolute      :: Revolute;
+    PxJointConcreteType_Prismatic     :: Prismatic;
+    PxJointConcreteType_Fixed         :: Fixed;
+    PxJointConcreteType_Distance      :: Distance;
+    PxJointConcreteType_D6            :: D6;
+    PxJointConcreteType_Contact       :: Contact;
+    PxJointConcreteType_Gear          :: Gear;
+    PxJointConcreteType_RackAndPinion :: RackAndPinion;
+    PxJointConcreteType_Last          :: Last;
+}
+
+/// an enumeration for specifying one or other of the actors referenced by a joint
+PxJointActorIndex :: enum s32 {
+    Actor0 :: 0;
+    Actor1 :: 1;
+    Count  :: 2;
+
+    PxJointActorIndex_Actor0 :: Actor0;
+    PxJointActorIndex_Actor1 :: Actor1;
+    PxJointActorIndex_Count  :: Count;
+}
+
+/// flags for configuring the drive of a PxDistanceJoint
+PxDistanceJointFlag :: enum s32 {
+    MaxDistanceEnabled :: 2;
+    MinDistanceEnabled :: 4;
+    SpringEnabled      :: 8;
+
+    PxDistanceJointFlag_MaxDistanceEnabled :: MaxDistanceEnabled;
+    PxDistanceJointFlag_MinDistanceEnabled :: MinDistanceEnabled;
+    PxDistanceJointFlag_SpringEnabled      :: SpringEnabled;
+}
+
+PxDistanceJointFlags :: enum_flags u16 {
+    MaxDistanceEnabled :: 0x2;
+    MinDistanceEnabled :: 0x4;
+    SpringEnabled      :: 0x8;
+
+    PxDistanceJointFlags_MaxDistanceEnabled :: MaxDistanceEnabled;
+    PxDistanceJointFlags_MinDistanceEnabled :: MinDistanceEnabled;
+    PxDistanceJointFlags_SpringEnabled      :: SpringEnabled;
+}
+
+/// Flags specific to the prismatic joint.
+PxPrismaticJointFlag :: enum s32 {
+    LimitEnabled :: 2;
+    PxPrismaticJointFlag_LimitEnabled :: LimitEnabled;
+}
+
+PxPrismaticJointFlags :: enum_flags u16 {
+    LimitEnabled :: 0x2;
+    PxPrismaticJointFlags_LimitEnabled :: LimitEnabled;
+}
+
+/// Flags specific to the Revolute Joint.
+PxRevoluteJointFlag :: enum s32 {
+    LimitEnabled  :: 1;
+
+    DriveEnabled  :: 2;
+
+    DriveFreespin :: 4;
+
+    PxRevoluteJointFlag_LimitEnabled  :: LimitEnabled;
+
+    PxRevoluteJointFlag_DriveEnabled  :: DriveEnabled;
+
+    PxRevoluteJointFlag_DriveFreespin :: DriveFreespin;
+}
+
+PxRevoluteJointFlags :: enum_flags u16 {
+    LimitEnabled  :: 0x1;
+    DriveEnabled  :: 0x2;
+    DriveFreespin :: 0x4;
+
+    PxRevoluteJointFlags_LimitEnabled  :: LimitEnabled;
+    PxRevoluteJointFlags_DriveEnabled  :: DriveEnabled;
+    PxRevoluteJointFlags_DriveFreespin :: DriveFreespin;
+}
+
+/// Flags specific to the spherical joint.
+PxSphericalJointFlag :: enum s32 {
+    LimitEnabled :: 2;
+    PxSphericalJointFlag_LimitEnabled :: LimitEnabled;
+}
+
+PxSphericalJointFlags :: enum_flags u16 {
+    LimitEnabled :: 0x2;
+    PxSphericalJointFlags_LimitEnabled :: LimitEnabled;
+}
+
+/// Used to specify one of the degrees of freedom of  a D6 joint.
+PxD6Axis :: enum s32 {
+    X      :: 0;
+
+    Y      :: 1;
+
+    Z      :: 2;
+
+    Twist  :: 3;
+
+    Swing1 :: 4;
+
+    Swing2 :: 5;
+    Count  :: 6;
+
+    PxD6Axis_X      :: X;
+
+    PxD6Axis_Y      :: Y;
+
+    PxD6Axis_Z      :: Z;
+
+    PxD6Axis_Twist  :: Twist;
+
+    PxD6Axis_Swing1 :: Swing1;
+
+    PxD6Axis_Swing2 :: Swing2;
+    PxD6Axis_Count  :: Count;
+}
+
+/// Used to specify the range of motions allowed for a degree of freedom in a D6 joint.
+PxD6Motion :: enum s32 {
+    Locked  :: 0;
+
+    Limited :: 1;
+
+    Free    :: 2;
+
+    PxD6Motion_Locked  :: Locked;
+
+    PxD6Motion_Limited :: Limited;
+
+    PxD6Motion_Free    :: Free;
+}
+
+/// Used to specify which axes of a D6 joint are driven.
+///
+/// Each drive is an implicit force-limited damped spring:
+///
+/// force = spring * (target position - position) + damping * (targetVelocity - velocity)
+///
+/// Alternatively, the spring may be configured to generate a specified acceleration instead of a force.
+///
+/// A linear axis is affected by drive only if the corresponding drive flag is set. There are two possible models
+/// for angular drive: swing/twist, which may be used to drive one or more angular degrees of freedom, or slerp,
+/// which may only be used to drive all three angular degrees simultaneously.
+PxD6Drive :: enum s32 {
+    X     :: 0;
+
+    Y     :: 1;
+
+    Z     :: 2;
+
+    Swing :: 3;
+
+    Twist :: 4;
+
+    Slerp :: 5;
+    Count :: 6;
+
+    PxD6Drive_X     :: X;
+
+    PxD6Drive_Y     :: Y;
+
+    PxD6Drive_Z     :: Z;
+
+    PxD6Drive_Swing :: Swing;
+
+    PxD6Drive_Twist :: Twist;
+
+    PxD6Drive_Slerp :: Slerp;
+    PxD6Drive_Count :: Count;
+}
+
+/// flags for configuring the drive model of a PxD6Joint
+PxD6JointDriveFlag :: enum s32 {
+    Acceleration :: 1;
+    PxD6JointDriveFlag_Acceleration :: Acceleration;
+}
+
+PxD6JointDriveFlags :: enum_flags u32 {
+    Acceleration :: 0x1;
+    PxD6JointDriveFlags_Acceleration :: Acceleration;
+}
+
+/// Collision filtering operations.
+PxFilterOp :: enum s32 {
+    PxFilteropAnd     :: 0;
+    PxFilteropOr      :: 1;
+    PxFilteropXor     :: 2;
+    PxFilteropNand    :: 3;
+    PxFilteropNor     :: 4;
+    PxFilteropNxor    :: 5;
+    PxFilteropSwapAnd :: 6;
+
+    PxFilterOp_PxFilteropAnd     :: PxFilteropAnd;
+    PxFilterOp_PxFilteropOr      :: PxFilteropOr;
+    PxFilterOp_PxFilteropXor     :: PxFilteropXor;
+    PxFilterOp_PxFilteropNand    :: PxFilteropNand;
+    PxFilterOp_PxFilteropNor     :: PxFilteropNor;
+    PxFilterOp_PxFilteropNxor    :: PxFilteropNxor;
+    PxFilterOp_PxFilteropSwapAnd :: PxFilteropSwapAnd;
+}
+
+/// If a thread ends up waiting for work it will find itself in a spin-wait loop until work becomes available.
+/// Three strategies are available to limit wasted cycles.
+/// The strategies are as follows:
+/// a) wait until a work task signals the end of the spin-wait period.
+/// b) yield the thread by providing a hint to reschedule thread execution, thereby allowing other threads to run.
+/// c) yield the processor by informing it that it is waiting for work and requesting it to more efficiently use compute resources.
+PxDefaultCpuDispatcherWaitForWorkMode :: enum s32 {
+    WaitForWork    :: 0;
+    YieldThread    :: 1;
+    YieldProcessor :: 2;
+
+    PxDefaultCpuDispatcherWaitForWorkMode_WaitForWork    :: WaitForWork;
+    PxDefaultCpuDispatcherWaitForWorkMode_YieldThread    :: YieldThread;
+    PxDefaultCpuDispatcherWaitForWorkMode_YieldProcessor :: YieldProcessor;
+}
+
+PxBatchQueryStatus :: enum s32 {
+    Pending  :: 0;
+
+    Success  :: 1;
+
+    Overflow :: 2;
+
+    PxBatchQueryStatus_Pending  :: Pending;
+
+    PxBatchQueryStatus_Success  :: Success;
+
+    PxBatchQueryStatus_Overflow :: Overflow;
+}
+
+/// types of instrumentation that PVD can do.
+PxPvdInstrumentationFlag :: enum s32 {
+    Debug   :: 1;
+
+    Profile :: 2;
+
+    Memory  :: 4;
+
+    All     :: 7;
+
+    PxPvdInstrumentationFlag_Debug   :: Debug;
+
+    PxPvdInstrumentationFlag_Profile :: Profile;
+
+    PxPvdInstrumentationFlag_Memory  :: Memory;
+
+    PxPvdInstrumentationFlag_All     :: All;
+}
+
+PxPvdInstrumentationFlags :: enum_flags u8 {
+    Debug   :: 0x1;
+    Profile :: 0x2;
+    Memory  :: 0x4;
+    All     :: 0x7;
+
+    PxPvdInstrumentationFlags_Debug   :: Debug;
+    PxPvdInstrumentationFlags_Profile :: Profile;
+    PxPvdInstrumentationFlags_Memory  :: Memory;
+    PxPvdInstrumentationFlags_All     :: All;
+}
+
 PxMat34 :: struct {}
 
 PxAllocatorCallback :: struct {
@@ -1075,7 +3773,7 @@ PxConvexMeshGeometry :: struct {
     scale:          PxMeshScale;
     structgen_pad1: [4] u8;
     convexMesh:     *PxConvexMesh;
-    meshFlags:      u8;
+    meshFlags:      PxConvexMeshGeometryFlags;
     structgen_pad2: [7] u8;
 #place structgen_pad0; #as geometry: PxGeometry = ---;
 }
@@ -1097,7 +3795,7 @@ PxTriangleMeshGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     scale:          PxMeshScale;
-    meshFlags:      u8;
+    meshFlags:      PxMeshGeometryFlags;
     structgen_pad1: [3] u8;
     triangleMesh:   *PxTriangleMesh;
 #place structgen_pad0; #as geometry: PxGeometry = ---;
@@ -1110,7 +3808,7 @@ PxHeightFieldGeometry :: struct {
     heightScale:      float;
     rowScale:         float;
     columnScale:      float;
-    heightFieldFlags: u8;
+    heightFieldFlags: PxMeshGeometryFlags;
     structgen_pad1:   [3] u8;
 #place structgen_pad0; #as geometry: PxGeometry = ---;
 }
@@ -1118,7 +3816,7 @@ PxHeightFieldGeometry :: struct {
 PxParticleSystemGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
-    mSolverType:    s32;
+    mSolverType:    PxParticleSolverType;
 #place structgen_pad0; #as geometry: PxGeometry = ---;
 }
 
@@ -1141,7 +3839,7 @@ PxQueryHit :: struct {
 
 PxLocationHit :: struct {
     faceIndex:      u32;
-    flags:          u16;
+    flags:          PxHitFlags;
     structgen_pad0: [2] u8;
     position:       Vector3;
     normal:         Vector3;
@@ -1150,7 +3848,7 @@ PxLocationHit :: struct {
 
 PxGeomRaycastHit :: struct {
     faceIndex:      u32;
-    flags:          u16;
+    flags:          PxHitFlags;
     structgen_pad0: [2] u8;
     position:       Vector3;
     normal:         Vector3;
@@ -1165,7 +3863,7 @@ PxGeomOverlapHit :: struct {
 
 PxGeomSweepHit :: struct {
     faceIndex:      u32;
-    flags:          u16;
+    flags:          PxHitFlags;
     structgen_pad0: [2] u8;
     position:       Vector3;
     normal:         Vector3;
@@ -1221,11 +3919,11 @@ PxHeightField :: struct {
 PxHeightFieldDesc :: struct {
     nbRows:              u32;
     nbColumns:           u32;
-    format:              s32;
+    format:              PxHeightFieldFormat;
     structgen_pad0:      [4] u8;
     samples:             PxStridedData;
     convexEdgeThreshold: float;
-    flags:               u16;
+    flags:               PxHeightFieldFlags;
     structgen_pad1:      [2] u8;
 }
 
@@ -1236,7 +3934,7 @@ PxMeshQuery :: struct {
 PxSimpleTriangleMesh :: struct {
     points:         PxBoundedData;
     triangles:      PxBoundedData;
-    flags:          u16;
+    flags:          PxMeshFlags;
     structgen_pad0: [6] u8;
 }
 
@@ -1426,8 +4124,8 @@ PxSolverConstraintPrepDescBase :: struct {
     data1:          *PxSolverBodyData;
     bodyFrame0:     PxTransform;
     bodyFrame1:     PxTransform;
-    bodyState0:     s32;
-    bodyState1:     s32;
+    bodyState0:     BodyState;
+    bodyState1:     BodyState;
     structgen_pad0: [8] u8;
 }
 
@@ -1440,8 +4138,8 @@ PxSolverConstraintPrepDesc :: struct {
     data1:                *PxSolverBodyData;
     bodyFrame0:           PxTransform;
     bodyFrame1:           PxTransform;
-    bodyState0:           s32;
-    bodyState1:           s32;
+    bodyState0:           BodyState;
+    bodyState1:           BodyState;
     structgen_pad0:       [8] u8;
     rows:                 *Px1DConstraint;
     numRows:              u32;
@@ -1468,8 +4166,8 @@ PxSolverContactDesc :: struct {
     data1:                   *PxSolverBodyData;
     bodyFrame0:              PxTransform;
     bodyFrame1:              PxTransform;
-    bodyState0:              s32;
-    bodyState1:              s32;
+    bodyState0:              BodyState;
+    bodyState1:              BodyState;
     structgen_pad0:          [8] u8;
     shapeInteraction:        *void;
     contacts:                *PxContactPoint;
@@ -1506,7 +4204,7 @@ PxArticulationDrive :: struct {
     stiffness: float;
     damping:   float;
     maxForce:  float;
-    driveType: s32;
+    driveType: PxArticulationDriveType;
 }
 
 PxTGSSolverBodyVel :: struct {
@@ -1550,8 +4248,8 @@ PxTGSSolverConstraintPrepDescBase :: struct {
     bodyData1:      *PxTGSSolverBodyData;
     bodyFrame0:     PxTransform;
     bodyFrame1:     PxTransform;
-    bodyState0:     s32;
-    bodyState1:     s32;
+    bodyState0:     BodyState;
+    bodyState1:     BodyState;
     structgen_pad0: [8] u8;
 }
 
@@ -1566,8 +4264,8 @@ PxTGSSolverConstraintPrepDesc :: struct {
     bodyData1:            *PxTGSSolverBodyData;
     bodyFrame0:           PxTransform;
     bodyFrame1:           PxTransform;
-    bodyState0:           s32;
-    bodyState1:           s32;
+    bodyState0:           BodyState;
+    bodyState1:           BodyState;
     structgen_pad0:       [8] u8;
     rows:                 *Px1DConstraint;
     numRows:              u32;
@@ -1598,8 +4296,8 @@ PxTGSSolverContactDesc :: struct {
     bodyData1:               *PxTGSSolverBodyData;
     bodyFrame0:              PxTransform;
     bodyFrame1:              PxTransform;
-    bodyState0:              s32;
-    bodyState1:              s32;
+    bodyState0:              BodyState;
+    bodyState1:              BodyState;
     structgen_pad0:          [8] u8;
     shapeInteraction:        *void;
     contacts:                *PxContactPoint;
@@ -1758,7 +4456,7 @@ PxConstraintShaderTable :: struct {
     solverPrep:     *void;
     structgen_pad0: [8] u8;
     visualize:      *void;
-    flag:           s32;
+    flag:           PxConstraintFlag;
     structgen_pad1: [4] u8;
 }
 
@@ -1828,7 +4526,7 @@ PxContactStreamIterator :: struct {
     nextPatchIndex:         u32;
     contactPatchHeaderSize: u32;
     contactPointSize:       u32;
-    mStreamFormat:          s32;
+    mStreamFormat:          StreamFormat;
     forceNoResponse:        u32;
     pointStepped:           bool;
     structgen_pad1:         [3] u8;
@@ -1963,7 +4661,7 @@ PxActorShape :: struct {
 
 PxRaycastHit :: struct {
     faceIndex:      u32;
-    flags:          u16;
+    flags:          PxHitFlags;
     structgen_pad0: [2] u8;
     position:       Vector3;
     normal:         Vector3;
@@ -1984,7 +4682,7 @@ PxOverlapHit :: struct {
 
 PxSweepHit :: struct {
     faceIndex:      u32;
-    flags:          u16;
+    flags:          PxHitFlags;
     structgen_pad0: [2] u8;
     position:       Vector3;
     normal:         Vector3;
@@ -2063,7 +4761,7 @@ PxQueryCache :: struct {
 
 PxQueryFilterData :: struct {
     data:           PxFilterData;
-    flags:          u16;
+    flags:          PxQueryFlags;
     structgen_pad0: [2] u8;
 }
 
@@ -2084,15 +4782,15 @@ PxRigidStatic :: struct {
 }
 
 PxSceneQueryDesc :: struct {
-    staticStructure:            s32;
-    dynamicStructure:           s32;
+    staticStructure:            PxPruningStructureType;
+    dynamicStructure:           PxPruningStructureType;
     dynamicTreeRebuildRateHint: u32;
-    dynamicTreeSecondaryPruner: s32;
-    staticBVHBuildStrategy:     s32;
-    dynamicBVHBuildStrategy:    s32;
+    dynamicTreeSecondaryPruner: PxDynamicTreeSecondaryPruner;
+    staticBVHBuildStrategy:     PxBVHBuildStrategy;
+    dynamicBVHBuildStrategy:    PxBVHBuildStrategy;
     staticNbObjectsPerNode:     u32;
     dynamicNbObjectsPerNode:    u32;
-    sceneQueryUpdateMode:       s32;
+    sceneQueryUpdateMode:       PxSceneQueryUpdateMode;
 }
 
 PxSceneQuerySystemBase :: struct {
@@ -2126,7 +4824,7 @@ PxBroadPhaseCaps :: struct {
 }
 
 PxBroadPhaseDesc :: struct {
-    mType:                        s32;
+    mType:                        PxBroadPhaseType;
     structgen_pad0:               [4] u8;
     mContextID:                   u64;
     structgen_pad1:               [8] u8;
@@ -2206,15 +4904,15 @@ PxgDynamicsMemoryConfig :: struct {
 }
 
 PxSceneDesc :: struct {
-    staticStructure:               s32;
-    dynamicStructure:              s32;
+    staticStructure:               PxPruningStructureType;
+    dynamicStructure:              PxPruningStructureType;
     dynamicTreeRebuildRateHint:    u32;
-    dynamicTreeSecondaryPruner:    s32;
-    staticBVHBuildStrategy:        s32;
-    dynamicBVHBuildStrategy:       s32;
+    dynamicTreeSecondaryPruner:    PxDynamicTreeSecondaryPruner;
+    staticBVHBuildStrategy:        PxBVHBuildStrategy;
+    dynamicBVHBuildStrategy:       PxBVHBuildStrategy;
     staticNbObjectsPerNode:        u32;
     dynamicNbObjectsPerNode:       u32;
-    sceneQueryUpdateMode:          s32;
+    sceneQueryUpdateMode:          PxSceneQueryUpdateMode;
     gravity:                       Vector3;
     simulationEventCallback:       *PxSimulationEventCallback;
     contactModifyCallback:         *PxContactModifyCallback;
@@ -2224,18 +4922,18 @@ PxSceneDesc :: struct {
     structgen_pad0:                [4] u8;
     filterShader:                  *void;
     filterCallback:                *PxSimulationFilterCallback;
-    kineKineFilteringMode:         s32;
-    staticKineFilteringMode:       s32;
-    broadPhaseType:                s32;
+    kineKineFilteringMode:         PxPairFilteringMode;
+    staticKineFilteringMode:       PxPairFilteringMode;
+    broadPhaseType:                PxBroadPhaseType;
     structgen_pad1:                [4] u8;
     broadPhaseCallback:            *PxBroadPhaseCallback;
     limits:                        PxSceneLimits;
-    frictionType:                  s32;
-    solverType:                    s32;
+    frictionType:                  PxFrictionType;
+    solverType:                    PxSolverType;
     bounceThresholdVelocity:       float;
     frictionOffsetThreshold:       float;
     frictionCorrelationDistance:   float;
-    flags:                         u32;
+    flags:                         PxSceneFlags;
     cpuDispatcher:                 *PxCpuDispatcher;
     structgen_pad2:                [8] u8;
     userData:                      *void;
@@ -2392,7 +5090,7 @@ PxContactPairHeader :: struct {
     actors:              [2] *PxActor;
     extraDataStream:     *u8;
     extraDataStreamSize: u16;
-    flags:               u16;
+    flags:               PxContactPairHeaderFlags;
     structgen_pad0:      [4] u8;
     pairs:               *PxContactPair;
     nbPairs:             u32;
@@ -2417,8 +5115,8 @@ PxContactPair :: struct {
     contactCount:       u8;
     patchCount:         u8;
     contactStreamSize:  u16;
-    flags:              u16;
-    events:             u16;
+    flags:              PxContactPairFlags;
+    events:             PxPairFlags;
     internalData:       [2] u32;
     structgen_pad0:     [4] u8;
 }
@@ -2428,8 +5126,8 @@ PxTriggerPair :: struct {
     triggerActor:   *PxActor;
     otherShape:     *PxShape;
     otherActor:     *PxActor;
-    status:         s32;
-    flags:          u8;
+    status:         PxPairFlag;
+    flags:          PxTriggerPairFlags;
     structgen_pad0: [3] u8;
 }
 
@@ -2565,7 +5263,7 @@ PxControllerFilterCallback :: struct {
 PxControllerFilters :: struct {
     mFilterData:        *PxFilterData;
     mFilterCallback:    *PxQueryFilterCallback;
-    mFilterFlags:       u16;
+    mFilterFlags:       PxQueryFlags;
     structgen_pad0:     [6] u8;
     mCCTFilterCallback: *PxControllerFilterCallback;
 }
@@ -2585,7 +5283,7 @@ PxControllerDesc :: struct {
     structgen_pad1:           [4] u8;
     reportCallback:           *PxUserControllerHitReport;
     behaviorCallback:         *PxControllerBehaviorCallback;
-    nonWalkableMode:          s32;
+    nonWalkableMode:          PxControllerNonWalkableMode;
     structgen_pad2:           [4] u8;
     material:                 *PxMaterial;
     registerDeletionListener: bool;
@@ -2614,7 +5312,7 @@ PxBoxControllerDesc :: struct {
     structgen_pad1:           [4] u8;
     reportCallback:           *PxUserControllerHitReport;
     behaviorCallback:         *PxControllerBehaviorCallback;
-    nonWalkableMode:          s32;
+    nonWalkableMode:          PxControllerNonWalkableMode;
     structgen_pad2:           [4] u8;
     material:                 *PxMaterial;
     registerDeletionListener: bool;
@@ -2649,7 +5347,7 @@ PxCapsuleControllerDesc :: struct {
     structgen_pad1:           [4] u8;
     reportCallback:           *PxUserControllerHitReport;
     behaviorCallback:         *PxControllerBehaviorCallback;
-    nonWalkableMode:          s32;
+    nonWalkableMode:          PxControllerNonWalkableMode;
     structgen_pad2:           [4] u8;
     material:                 *PxMaterial;
     registerDeletionListener: bool;
@@ -2659,7 +5357,7 @@ PxCapsuleControllerDesc :: struct {
     structgen_pad4:           [8] u8;
     radius:                   float;
     height:                   float;
-    climbingMode:             s32;
+    climbingMode:             PxCapsuleClimbingMode;
     structgen_pad5:           [4] u8;
 #place structgen_pad0; #as controller_desc: PxControllerDesc = ---;
 }
@@ -2689,7 +5387,7 @@ PxSDFDesc :: struct {
     meshLower:                                      Vector3;
     spacing:                                        float;
     subgridSize:                                    u32;
-    bitsPerSubgridPixel:                            s32;
+    bitsPerSubgridPixel:                            PxSdfBitsPerSubgridPixel;
     sdfSubgrids3DTexBlockDim:                       PxDim3;
     sdfSubgrids:                                    PxBoundedData;
     sdfStartSlots:                                  PxBoundedData;
@@ -2704,7 +5402,7 @@ PxConvexMeshDesc :: struct {
     points:         PxBoundedData;
     polygons:       PxBoundedData;
     indices:        PxBoundedData;
-    flags:          u16;
+    flags:          PxConvexFlags;
     vertexLimit:    u16;
     polygonLimit:   u16;
     quantizedCount: u16;
@@ -2714,7 +5412,7 @@ PxConvexMeshDesc :: struct {
 PxTriangleMeshDesc :: struct {
     points:         PxBoundedData;
     triangles:      PxBoundedData;
-    flags:          u16;
+    flags:          PxMeshFlags;
     structgen_pad0: [22] u8;
     sdfDesc:        *PxSDFDesc;
 }
@@ -2723,7 +5421,7 @@ PxTetrahedronMeshDesc :: struct {
     structgen_pad0: [16] u8;
     points:         PxBoundedData;
     tetrahedrons:   PxBoundedData;
-    flags:          u16;
+    flags:          PxMeshFlags;
     tetsPerElement: u16;
     structgen_pad1: [4] u8;
 }
@@ -2734,7 +5432,7 @@ PxSoftBodySimulationDataDesc :: struct {
 
 PxBVH34MidphaseDesc :: struct {
     numPrimsPerLeaf: u32;
-    buildStrategy:   s32;
+    buildStrategy:   PxBVH34BuildStrategy;
     quantized:       bool;
     structgen_pad0:  [3] u8;
 }
@@ -2747,20 +5445,20 @@ PxBVHDesc :: struct {
     bounds:          PxBoundedData;
     enlargement:     float;
     numPrimsPerLeaf: u32;
-    buildStrategy:   s32;
+    buildStrategy:   PxBVHBuildStrategy;
     structgen_pad0:  [4] u8;
 }
 
 PxCookingParams :: struct {
     areaTestEpsilon:                float;
     planeTolerance:                 float;
-    convexMeshCookingType:          s32;
+    convexMeshCookingType:          PxConvexMeshCookingType;
     suppressTriangleMeshRemapTable: bool;
     buildTriangleAdjacencies:       bool;
     buildGPUData:                   bool;
     structgen_pad0:                 [1] u8;
     scale:                          PxTolerancesScale;
-    meshPreprocessParams:           u32;
+    meshPreprocessParams:           PxMeshPreprocessingFlags;
     meshWeldTolerance:              float;
     midphaseDesc:                   PxMidphaseDesc;
     gaussMapLimit:                  u32;
@@ -2906,7 +5604,7 @@ PxD6JointDrive :: struct {
     stiffness:  float;
     damping:    float;
     forceLimit: float;
-    flags:      u32;
+    flags:      PxD6JointDriveFlags;
 }
 
 PxD6Joint :: struct {
@@ -3174,7 +5872,7 @@ PxILog2 :: (num: u32) -> u32 #foreign physx "phys_PxILog2";
 
 PxVec3_new :: () -> Vector3 #foreign physx;
 
-PxVec3_new :: (anon_param0: s32) -> Vector3 #foreign physx "PxVec3_new_1";
+PxVec3_new :: (anon_param0: PxZERO) -> Vector3 #foreign physx "PxVec3_new_1";
 
 PxVec3_new :: (a: float) -> Vector3 #foreign physx "PxVec3_new_2";
 
@@ -3222,7 +5920,7 @@ PxVec3Padded_new_alloc :: (p: *Vector3) -> *PxVec3Padded #foreign physx "PxVec3P
 
 PxVec3Padded_new_alloc :: (f: float) -> *PxVec3Padded #foreign physx "PxVec3Padded_new_alloc_2";
 
-PxQuat_new :: (anon_param0: s32) -> Quaternion #foreign physx "PxQuat_new_1";
+PxQuat_new :: (anon_param0: PxIDENTITY) -> Quaternion #foreign physx "PxQuat_new_1";
 
 PxQuat_new :: (r: float) -> Quaternion #foreign physx "PxQuat_new_2";
 
@@ -3272,7 +5970,7 @@ PxQuat_rotateInv :: (self: *Quaternion, v: *Vector3) -> Vector3 #foreign physx;
 
 PxTransform_new :: (position: *Vector3) -> PxTransform #foreign physx "PxTransform_new_1";
 
-PxTransform_new :: (anon_param0: s32) -> PxTransform #foreign physx "PxTransform_new_2";
+PxTransform_new :: (anon_param0: PxIDENTITY) -> PxTransform #foreign physx "PxTransform_new_2";
 
 PxTransform_new :: (orientation: *Quaternion) -> PxTransform #foreign physx "PxTransform_new_3";
 
@@ -3396,7 +6094,7 @@ PxBounds3_closestPoint :: (self: *PxBounds3, p: *Vector3) -> Vector3 #foreign ph
 
 PxErrorCallback_delete :: (self: *PxErrorCallback) -> void #foreign physx;
 
-PxErrorCallback_reportError :: (self: *PxErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign physx "PxErrorCallback_reportError_mut";
+PxErrorCallback_reportError :: (self: *PxErrorCallback, code: PxErrorCode, message: *u8, file: *u8, line: s32) -> void #foreign physx "PxErrorCallback_reportError_mut";
 
 PxAllocationListener_onAllocation :: (self: *PxAllocationListener, size: u64, typeName: *u8, filename: *u8, line: s32, allocatedMemory: *void) -> void #foreign physx "PxAllocationListener_onAllocation_mut";
 
@@ -3414,7 +6112,7 @@ PxBroadcastingErrorCallback_new_alloc :: (errorCallback: *PxErrorCallback) -> *P
 
 PxBroadcastingErrorCallback_delete :: (self: *PxBroadcastingErrorCallback) -> void #foreign physx;
 
-PxBroadcastingErrorCallback_reportError :: (self: *PxBroadcastingErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign physx "PxBroadcastingErrorCallback_reportError_mut";
+PxBroadcastingErrorCallback_reportError :: (self: *PxBroadcastingErrorCallback, code: PxErrorCode, message: *u8, file: *u8, line: s32) -> void #foreign physx "PxBroadcastingErrorCallback_reportError_mut";
 
 PxEnableFPExceptions :: () -> void #foreign physx "phys_PxEnableFPExceptions";
 
@@ -3438,7 +6136,7 @@ PxOutputStream_delete :: (self: *PxOutputStream) -> void #foreign physx;
 
 PxVec4_new :: () -> Vector4 #foreign physx;
 
-PxVec4_new :: (anon_param0: s32) -> Vector4 #foreign physx "PxVec4_new_1";
+PxVec4_new :: (anon_param0: PxZERO) -> Vector4 #foreign physx "PxVec4_new_1";
 
 PxVec4_new :: (a: float) -> Vector4 #foreign physx "PxVec4_new_2";
 
@@ -3690,7 +6388,7 @@ PxTime_getLastTime :: (self: *PxTime) -> float64 #foreign physx;
 
 PxVec2_new :: () -> Vector2 #foreign physx;
 
-PxVec2_new :: (anon_param0: s32) -> Vector2 #foreign physx "PxVec2_new_1";
+PxVec2_new :: (anon_param0: PxZERO) -> Vector2 #foreign physx "PxVec2_new_1";
 
 PxVec2_new :: (a: float) -> Vector2 #foreign physx "PxVec2_new_2";
 
@@ -3840,11 +6538,11 @@ PxBase_getConcreteTypeName :: (self: *PxBase) -> *u8 #foreign physx;
 
 PxBase_getConcreteType :: (self: *PxBase) -> u16 #foreign physx;
 
-PxBase_setBaseFlag :: (self: *PxBase, flag: s32, value: bool) -> void #foreign physx "PxBase_setBaseFlag_mut";
+PxBase_setBaseFlag :: (self: *PxBase, flag: PxBaseFlag, value: bool) -> void #foreign physx "PxBase_setBaseFlag_mut";
 
-PxBase_setBaseFlags :: (self: *PxBase, inFlags: u16) -> void #foreign physx "PxBase_setBaseFlags_mut";
+PxBase_setBaseFlags :: (self: *PxBase, inFlags: PxBaseFlags) -> void #foreign physx "PxBase_setBaseFlags_mut";
 
-PxBase_getBaseFlags :: (self: *PxBase) -> u16 #foreign physx;
+PxBase_getBaseFlags :: (self: *PxBase) -> PxBaseFlags #foreign physx;
 
 PxBase_isReleasable :: (self: *PxBase) -> bool #foreign physx;
 
@@ -3880,7 +6578,7 @@ PxSerializer_createObject :: (self: *PxSerializer, address: **u8, context_pod: *
 
 PxSerializer_delete :: (self: *PxSerializer) -> void #foreign physx;
 
-PxInsertionCallback_buildObjectFromData :: (self: *PxInsertionCallback, type: s32, data: *void) -> *PxBase #foreign physx "PxInsertionCallback_buildObjectFromData_mut";
+PxInsertionCallback_buildObjectFromData :: (self: *PxInsertionCallback, type: PxConcreteType, data: *void) -> *PxBase #foreign physx "PxInsertionCallback_buildObjectFromData_mut";
 
 PxTaskManager_setCpuDispatcher :: (self: *PxTaskManager, ref: *PxCpuDispatcher) -> void #foreign physx "PxTaskManager_setCpuDispatcher_mut";
 
@@ -3896,9 +6594,9 @@ PxTaskManager_taskCompleted :: (self: *PxTaskManager, task: *PxTask) -> void #fo
 
 PxTaskManager_getNamedTask :: (self: *PxTaskManager, name: *u8) -> u32 #foreign physx "PxTaskManager_getNamedTask_mut";
 
-PxTaskManager_submitNamedTask :: (self: *PxTaskManager, task: *PxTask, name: *u8, type: s32) -> u32 #foreign physx "PxTaskManager_submitNamedTask_mut";
+PxTaskManager_submitNamedTask :: (self: *PxTaskManager, task: *PxTask, name: *u8, type: PxTaskType) -> u32 #foreign physx "PxTaskManager_submitNamedTask_mut";
 
-PxTaskManager_submitUnnamedTask :: (self: *PxTaskManager, task: *PxTask, type: s32) -> u32 #foreign physx "PxTaskManager_submitUnnamedTask_mut";
+PxTaskManager_submitUnnamedTask :: (self: *PxTaskManager, task: *PxTask, type: PxTaskType) -> u32 #foreign physx "PxTaskManager_submitUnnamedTask_mut";
 
 PxTaskManager_getTaskFromID :: (self: *PxTaskManager, id: u32) -> *PxTask #foreign physx "PxTaskManager_getTaskFromID_mut";
 
@@ -3960,7 +6658,7 @@ PxLightCpuTask_addReference :: (self: *PxLightCpuTask) -> void #foreign physx "P
 
 PxLightCpuTask_release :: (self: *PxLightCpuTask) -> void #foreign physx "PxLightCpuTask_release_mut";
 
-PxGeometry_getType :: (self: *PxGeometry) -> s32 #foreign physx;
+PxGeometry_getType :: (self: *PxGeometry) -> PxGeometryType #foreign physx;
 
 PxBoxGeometry_new :: (hx: float, hy: float, hz: float) -> PxBoxGeometry #foreign physx;
 
@@ -3982,13 +6680,13 @@ PxBVHTraversalCallback_visitNode :: (self: *PxBVHTraversalCallback, bounds: *PxB
 
 PxBVHTraversalCallback_reportLeaf :: (self: *PxBVHTraversalCallback, nbPrims: u32, prims: *u32) -> bool #foreign physx "PxBVHTraversalCallback_reportLeaf_mut";
 
-PxBVH_raycast :: (self: *PxBVH, origin: *Vector3, unitDir: *Vector3, maxDist: float, cb: *PxBVHRaycastCallback, queryFlags: u32) -> bool #foreign physx;
+PxBVH_raycast :: (self: *PxBVH, origin: *Vector3, unitDir: *Vector3, maxDist: float, cb: *PxBVHRaycastCallback, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxBVH_sweep :: (self: *PxBVH, geom: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, maxDist: float, cb: *PxBVHRaycastCallback, queryFlags: u32) -> bool #foreign physx;
+PxBVH_sweep :: (self: *PxBVH, geom: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, maxDist: float, cb: *PxBVHRaycastCallback, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxBVH_overlap :: (self: *PxBVH, geom: *PxGeometry, pose: *PxTransform, cb: *PxBVHOverlapCallback, queryFlags: u32) -> bool #foreign physx;
+PxBVH_overlap :: (self: *PxBVH, geom: *PxGeometry, pose: *PxTransform, cb: *PxBVHOverlapCallback, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxBVH_cull :: (self: *PxBVH, nbPlanes: u32, planes: *Plane3, cb: *PxBVHOverlapCallback, queryFlags: u32) -> bool #foreign physx;
+PxBVH_cull :: (self: *PxBVH, nbPlanes: u32, planes: *Plane3, cb: *PxBVHOverlapCallback, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
 PxBVH_getNbBounds :: (self: *PxBVH) -> u32 #foreign physx;
 
@@ -4054,7 +6752,7 @@ PxMeshScale_isValidForTriangleMesh :: (self: *PxMeshScale) -> bool #foreign phys
 
 PxMeshScale_isValidForConvexMesh :: (self: *PxMeshScale) -> bool #foreign physx;
 
-PxConvexMeshGeometry_new :: (mesh: *PxConvexMesh, scaling: *PxMeshScale, flags: u8) -> PxConvexMeshGeometry #foreign physx;
+PxConvexMeshGeometry_new :: (mesh: *PxConvexMesh, scaling: *PxMeshScale, flags: PxConvexMeshGeometryFlags) -> PxConvexMeshGeometry #foreign physx;
 
 PxConvexMeshGeometry_isValid :: (self: *PxConvexMeshGeometry) -> bool #foreign physx;
 
@@ -4066,11 +6764,11 @@ PxPlaneGeometry_new :: () -> PxPlaneGeometry #foreign physx;
 
 PxPlaneGeometry_isValid :: (self: *PxPlaneGeometry) -> bool #foreign physx;
 
-PxTriangleMeshGeometry_new :: (mesh: *PxTriangleMesh, scaling: *PxMeshScale, flags: u8) -> PxTriangleMeshGeometry #foreign physx;
+PxTriangleMeshGeometry_new :: (mesh: *PxTriangleMesh, scaling: *PxMeshScale, flags: PxMeshGeometryFlags) -> PxTriangleMeshGeometry #foreign physx;
 
 PxTriangleMeshGeometry_isValid :: (self: *PxTriangleMeshGeometry) -> bool #foreign physx;
 
-PxHeightFieldGeometry_new :: (hf: *PxHeightField, flags: u8, heightScale_: float, rowScale_: float, columnScale_: float) -> PxHeightFieldGeometry #foreign physx;
+PxHeightFieldGeometry_new :: (hf: *PxHeightField, flags: PxMeshGeometryFlags, heightScale_: float, rowScale_: float, columnScale_: float) -> PxHeightFieldGeometry #foreign physx;
 
 PxHeightFieldGeometry_isValid :: (self: *PxHeightFieldGeometry) -> bool #foreign physx;
 
@@ -4112,11 +6810,11 @@ PxCustomGeometryCallbacks_getCustomType :: (self: *PxCustomGeometryCallbacks) ->
 
 PxCustomGeometryCallbacks_getLocalBounds :: (self: *PxCustomGeometryCallbacks, geometry: *PxGeometry) -> PxBounds3 #foreign physx;
 
-PxCustomGeometryCallbacks_raycast :: (self: *PxCustomGeometryCallbacks, origin: *Vector3, unitDir: *Vector3, geom: *PxGeometry, pose: *PxTransform, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *PxGeomRaycastHit, stride: u32, threadContext: *PxQueryThreadContext) -> u32 #foreign physx;
+PxCustomGeometryCallbacks_raycast :: (self: *PxCustomGeometryCallbacks, origin: *Vector3, unitDir: *Vector3, geom: *PxGeometry, pose: *PxTransform, maxDist: float, hitFlags: PxHitFlags, maxHits: u32, rayHits: *PxGeomRaycastHit, stride: u32, threadContext: *PxQueryThreadContext) -> u32 #foreign physx;
 
 PxCustomGeometryCallbacks_overlap :: (self: *PxCustomGeometryCallbacks, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
 
-PxCustomGeometryCallbacks_sweep :: (self: *PxCustomGeometryCallbacks, unitDir: *Vector3, maxDist: float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, sweepHit: *PxGeomSweepHit, hitFlags: u16, inflation: float, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
+PxCustomGeometryCallbacks_sweep :: (self: *PxCustomGeometryCallbacks, unitDir: *Vector3, maxDist: float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, sweepHit: *PxGeomSweepHit, hitFlags: PxHitFlags, inflation: float, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
 
 PxCustomGeometryCallbacks_computeMassProperties :: (self: *PxCustomGeometryCallbacks, geometry: *PxGeometry, massProperties: *PxMassProperties) -> void #foreign physx;
 
@@ -4132,7 +6830,7 @@ PxCustomGeometry_isValid :: (self: *PxCustomGeometry) -> bool #foreign physx;
 
 PxCustomGeometry_getCustomType :: (self: *PxCustomGeometry) -> PxCustomGeometryType #foreign physx;
 
-PxGeometryHolder_getType :: (self: *PxGeometryHolder) -> s32 #foreign physx;
+PxGeometryHolder_getType :: (self: *PxGeometryHolder) -> PxGeometryType #foreign physx;
 
 PxGeometryHolder_any :: (self: *PxGeometryHolder) -> *PxGeometry #foreign physx "PxGeometryHolder_any_mut";
 
@@ -4164,17 +6862,17 @@ PxGeometryHolder_new :: () -> PxGeometryHolder #foreign physx;
 
 PxGeometryHolder_new :: (geometry: *PxGeometry) -> PxGeometryHolder #foreign physx "PxGeometryHolder_new_1";
 
-PxGeometryQuery_raycast :: (origin: *Vector3, unitDir: *Vector3, geom: *PxGeometry, pose: *PxTransform, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *PxGeomRaycastHit, stride: u32, queryFlags: u32, threadContext: *PxQueryThreadContext) -> u32 #foreign physx;
+PxGeometryQuery_raycast :: (origin: *Vector3, unitDir: *Vector3, geom: *PxGeometry, pose: *PxTransform, maxDist: float, hitFlags: PxHitFlags, maxHits: u32, rayHits: *PxGeomRaycastHit, stride: u32, queryFlags: PxGeometryQueryFlags, threadContext: *PxQueryThreadContext) -> u32 #foreign physx;
 
-PxGeometryQuery_overlap :: (geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, queryFlags: u32, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
+PxGeometryQuery_overlap :: (geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, queryFlags: PxGeometryQueryFlags, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
 
-PxGeometryQuery_sweep :: (unitDir: *Vector3, maxDist: float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, sweepHit: *PxGeomSweepHit, hitFlags: u16, inflation: float, queryFlags: u32, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
+PxGeometryQuery_sweep :: (unitDir: *Vector3, maxDist: float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, sweepHit: *PxGeomSweepHit, hitFlags: PxHitFlags, inflation: float, queryFlags: PxGeometryQueryFlags, threadContext: *PxQueryThreadContext) -> bool #foreign physx;
 
-PxGeometryQuery_computePenetration :: (direction: *Vector3, depth: *float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, queryFlags: u32) -> bool #foreign physx;
+PxGeometryQuery_computePenetration :: (direction: *Vector3, depth: *float, geom0: *PxGeometry, pose0: *PxTransform, geom1: *PxGeometry, pose1: *PxTransform, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxGeometryQuery_pointDistance :: (point: *Vector3, geom: *PxGeometry, pose: *PxTransform, closestPoint: *Vector3, closestIndex: *u32, queryFlags: u32) -> float #foreign physx;
+PxGeometryQuery_pointDistance :: (point: *Vector3, geom: *PxGeometry, pose: *PxTransform, closestPoint: *Vector3, closestIndex: *u32, queryFlags: PxGeometryQueryFlags) -> float #foreign physx;
 
-PxGeometryQuery_computeGeomBounds :: (bounds: *PxBounds3, geom: *PxGeometry, pose: *PxTransform, offset: float, inflation: float, queryFlags: u32) -> void #foreign physx;
+PxGeometryQuery_computeGeomBounds :: (bounds: *PxBounds3, geom: *PxGeometry, pose: *PxTransform, offset: float, inflation: float, queryFlags: PxGeometryQueryFlags) -> void #foreign physx;
 
 PxGeometryQuery_isValid :: (geom: *PxGeometry) -> bool #foreign physx;
 
@@ -4194,13 +6892,13 @@ PxHeightField_getNbRows :: (self: *PxHeightField) -> u32 #foreign physx;
 
 PxHeightField_getNbColumns :: (self: *PxHeightField) -> u32 #foreign physx;
 
-PxHeightField_getFormat :: (self: *PxHeightField) -> s32 #foreign physx;
+PxHeightField_getFormat :: (self: *PxHeightField) -> PxHeightFieldFormat #foreign physx;
 
 PxHeightField_getSampleStride :: (self: *PxHeightField) -> u32 #foreign physx;
 
 PxHeightField_getConvexEdgeThreshold :: (self: *PxHeightField) -> float #foreign physx;
 
-PxHeightField_getFlags :: (self: *PxHeightField) -> u16 #foreign physx;
+PxHeightField_getFlags :: (self: *PxHeightField) -> PxHeightFieldFlags #foreign physx;
 
 PxHeightField_getHeight :: (self: *PxHeightField, x: float, z: float) -> float #foreign physx;
 
@@ -4224,11 +6922,11 @@ PxMeshQuery_getTriangle :: (triGeom: *PxTriangleMeshGeometry, transform: *PxTran
 
 PxMeshQuery_getTriangle :: (hfGeom: *PxHeightFieldGeometry, transform: *PxTransform, triangleIndex: u32, triangle: *PxTriangle, vertexIndices: *u32, adjacencyIndices: *u32) -> void #foreign physx "PxMeshQuery_getTriangle_1";
 
-PxMeshQuery_findOverlapTriangleMesh :: (geom: *PxGeometry, geomPose: *PxTransform, meshGeom: *PxTriangleMeshGeometry, meshPose: *PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: u32) -> u32 #foreign physx;
+PxMeshQuery_findOverlapTriangleMesh :: (geom: *PxGeometry, geomPose: *PxTransform, meshGeom: *PxTriangleMeshGeometry, meshPose: *PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: PxGeometryQueryFlags) -> u32 #foreign physx;
 
-PxMeshQuery_findOverlapHeightField :: (geom: *PxGeometry, geomPose: *PxTransform, hfGeom: *PxHeightFieldGeometry, hfPose: *PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: u32) -> u32 #foreign physx;
+PxMeshQuery_findOverlapHeightField :: (geom: *PxGeometry, geomPose: *PxTransform, hfGeom: *PxHeightFieldGeometry, hfPose: *PxTransform, results: *u32, maxResults: u32, startIndex: u32, overflow: *bool, queryFlags: PxGeometryQueryFlags) -> u32 #foreign physx;
 
-PxMeshQuery_sweep :: (unitDir: *Vector3, distance: float, geom: *PxGeometry, pose: *PxTransform, triangleCount: u32, triangles: *PxTriangle, sweepHit: *PxGeomSweepHit, hitFlags: u16, cachedIndex: *u32, inflation: float, doubleSided: bool, queryFlags: u32) -> bool #foreign physx;
+PxMeshQuery_sweep :: (unitDir: *Vector3, distance: float, geom: *PxGeometry, pose: *PxTransform, triangleCount: u32, triangles: *PxTriangle, sweepHit: *PxGeomSweepHit, hitFlags: PxHitFlags, cachedIndex: *u32, inflation: float, doubleSided: bool, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
 PxSimpleTriangleMesh_new :: () -> PxSimpleTriangleMesh #foreign physx;
 
@@ -4266,7 +6964,7 @@ PxTriangleMesh_getNbTriangles :: (self: *PxTriangleMesh) -> u32 #foreign physx;
 
 PxTriangleMesh_getTriangles :: (self: *PxTriangleMesh) -> *void #foreign physx;
 
-PxTriangleMesh_getTriangleMeshFlags :: (self: *PxTriangleMesh) -> u8 #foreign physx;
+PxTriangleMesh_getTriangleMeshFlags :: (self: *PxTriangleMesh) -> PxTriangleMeshFlags #foreign physx;
 
 PxTriangleMesh_getTrianglesRemap :: (self: *PxTriangleMesh) -> *u32 #foreign physx;
 
@@ -4302,7 +7000,7 @@ PxTetrahedronMesh_getNbTetrahedrons :: (self: *PxTetrahedronMesh) -> u32 #foreig
 
 PxTetrahedronMesh_getTetrahedrons :: (self: *PxTetrahedronMesh) -> *void #foreign physx;
 
-PxTetrahedronMesh_getTetrahedronMeshFlags :: (self: *PxTetrahedronMesh) -> u8 #foreign physx;
+PxTetrahedronMesh_getTetrahedronMeshFlags :: (self: *PxTetrahedronMesh) -> PxTetrahedronMeshFlags #foreign physx;
 
 PxTetrahedronMesh_getTetrahedraRemap :: (self: *PxTetrahedronMesh) -> *u32 #foreign physx;
 
@@ -4334,7 +7032,7 @@ PxSimulationTetrahedronMeshData_release :: (self: *PxSimulationTetrahedronMeshDa
 
 PxActor_release :: (self: *PxActor) -> void #foreign physx "PxActor_release_mut";
 
-PxActor_getType :: (self: *PxActor) -> s32 #foreign physx;
+PxActor_getType :: (self: *PxActor) -> PxActorType #foreign physx;
 
 PxActor_getScene :: (self: *PxActor) -> *PxScene #foreign physx;
 
@@ -4344,11 +7042,11 @@ PxActor_getName :: (self: *PxActor) -> *u8 #foreign physx;
 
 PxActor_getWorldBounds :: (self: *PxActor, inflation: float) -> PxBounds3 #foreign physx;
 
-PxActor_setActorFlag :: (self: *PxActor, flag: s32, value: bool) -> void #foreign physx "PxActor_setActorFlag_mut";
+PxActor_setActorFlag :: (self: *PxActor, flag: PxActorFlag, value: bool) -> void #foreign physx "PxActor_setActorFlag_mut";
 
-PxActor_setActorFlags :: (self: *PxActor, inFlags: u8) -> void #foreign physx "PxActor_setActorFlags_mut";
+PxActor_setActorFlags :: (self: *PxActor, inFlags: PxActorFlags) -> void #foreign physx "PxActor_setActorFlags_mut";
 
-PxActor_getActorFlags :: (self: *PxActor) -> u8 #foreign physx;
+PxActor_getActorFlags :: (self: *PxActor) -> PxActorFlags #foreign physx;
 
 PxActor_setDominanceGroup :: (self: *PxActor, dominanceGroup: u8) -> void #foreign physx "PxActor_setDominanceGroup_mut";
 
@@ -4360,11 +7058,11 @@ PxActor_getOwnerClient :: (self: *PxActor) -> u8 #foreign physx;
 
 PxActor_getAggregate :: (self: *PxActor) -> *PxAggregate #foreign physx;
 
-PxGetAggregateFilterHint :: (type: s32, enableSelfCollision: bool) -> u32 #foreign physx "phys_PxGetAggregateFilterHint";
+PxGetAggregateFilterHint :: (type: PxAggregateType, enableSelfCollision: bool) -> u32 #foreign physx "phys_PxGetAggregateFilterHint";
 
 PxGetAggregateSelfCollisionBit :: (hint: u32) -> u32 #foreign physx "phys_PxGetAggregateSelfCollisionBit";
 
-PxGetAggregateType :: (hint: u32) -> s32 #foreign physx "phys_PxGetAggregateType";
+PxGetAggregateType :: (hint: u32) -> PxAggregateType #foreign physx "phys_PxGetAggregateType";
 
 PxAggregate_release :: (self: *PxAggregate) -> void #foreign physx "PxAggregate_release_mut";
 
@@ -4438,7 +7136,7 @@ PxArticulationLimit_new :: (low_: float, high_: float) -> PxArticulationLimit #f
 
 PxArticulationDrive_new :: () -> PxArticulationDrive #foreign physx;
 
-PxArticulationDrive_new :: (stiffness_: float, damping_: float, maxForce_: float, driveType: s32) -> PxArticulationDrive #foreign physx "PxArticulationDrive_new_1";
+PxArticulationDrive_new :: (stiffness_: float, damping_: float, maxForce_: float, driveType: PxArticulationDriveType) -> PxArticulationDrive #foreign physx "PxArticulationDrive_new_1";
 
 PxTGSSolverBodyVel_projectVelocity :: (self: *PxTGSSolverBodyVel, lin: *Vector3, ang: *Vector3) -> float #foreign physx;
 
@@ -4474,9 +7172,9 @@ PxArticulationAttachment_release :: (self: *PxArticulationAttachment) -> void #f
 
 PxArticulationAttachment_getConcreteTypeName :: (self: *PxArticulationAttachment) -> *u8 #foreign physx;
 
-PxArticulationTendonJoint_setCoefficient :: (self: *PxArticulationTendonJoint, axis: s32, coefficient: float, recipCoefficient: float) -> void #foreign physx "PxArticulationTendonJoint_setCoefficient_mut";
+PxArticulationTendonJoint_setCoefficient :: (self: *PxArticulationTendonJoint, axis: PxArticulationAxis, coefficient: float, recipCoefficient: float) -> void #foreign physx "PxArticulationTendonJoint_setCoefficient_mut";
 
-PxArticulationTendonJoint_getCoefficient :: (self: *PxArticulationTendonJoint, axis: *s32, coefficient: *float, recipCoefficient: *float) -> void #foreign physx;
+PxArticulationTendonJoint_getCoefficient :: (self: *PxArticulationTendonJoint, axis: *PxArticulationAxis, coefficient: *float, recipCoefficient: *float) -> void #foreign physx;
 
 PxArticulationTendonJoint_getLink :: (self: *PxArticulationTendonJoint) -> *PxArticulationLink #foreign physx;
 
@@ -4516,7 +7214,7 @@ PxArticulationSpatialTendon_getNbAttachments :: (self: *PxArticulationSpatialTen
 
 PxArticulationSpatialTendon_getConcreteTypeName :: (self: *PxArticulationSpatialTendon) -> *u8 #foreign physx;
 
-PxArticulationFixedTendon_createTendonJoint :: (self: *PxArticulationFixedTendon, parent: *PxArticulationTendonJoint, axis: s32, coefficient: float, recipCoefficient: float, link: *PxArticulationLink) -> *PxArticulationTendonJoint #foreign physx "PxArticulationFixedTendon_createTendonJoint_mut";
+PxArticulationFixedTendon_createTendonJoint :: (self: *PxArticulationFixedTendon, parent: *PxArticulationTendonJoint, axis: PxArticulationAxis, coefficient: float, recipCoefficient: float, link: *PxArticulationLink) -> *PxArticulationTendonJoint #foreign physx "PxArticulationFixedTendon_createTendonJoint_mut";
 
 PxArticulationFixedTendon_getTendonJoints :: (self: *PxArticulationFixedTendon, userBuffer: **PxArticulationTendonJoint, bufferSize: u32, startIndex: u32) -> u32 #foreign physx;
 
@@ -4550,9 +7248,9 @@ PxArticulationSensor_getIndex :: (self: *PxArticulationSensor) -> u32 #foreign p
 
 PxArticulationSensor_getArticulation :: (self: *PxArticulationSensor) -> *PxArticulationReducedCoordinate #foreign physx;
 
-PxArticulationSensor_getFlags :: (self: *PxArticulationSensor) -> u8 #foreign physx;
+PxArticulationSensor_getFlags :: (self: *PxArticulationSensor) -> PxArticulationSensorFlags #foreign physx;
 
-PxArticulationSensor_setFlag :: (self: *PxArticulationSensor, flag: s32, enabled: bool) -> void #foreign physx "PxArticulationSensor_setFlag_mut";
+PxArticulationSensor_setFlag :: (self: *PxArticulationSensor, flag: PxArticulationSensorFlag, enabled: bool) -> void #foreign physx "PxArticulationSensor_setFlag_mut";
 
 PxArticulationSensor_getConcreteTypeName :: (self: *PxArticulationSensor) -> *u8 #foreign physx;
 
@@ -4606,11 +7304,11 @@ PxArticulationReducedCoordinate_getWorldBounds :: (self: *PxArticulationReducedC
 
 PxArticulationReducedCoordinate_getAggregate :: (self: *PxArticulationReducedCoordinate) -> *PxAggregate #foreign physx;
 
-PxArticulationReducedCoordinate_setArticulationFlags :: (self: *PxArticulationReducedCoordinate, flags: u8) -> void #foreign physx "PxArticulationReducedCoordinate_setArticulationFlags_mut";
+PxArticulationReducedCoordinate_setArticulationFlags :: (self: *PxArticulationReducedCoordinate, flags: PxArticulationFlags) -> void #foreign physx "PxArticulationReducedCoordinate_setArticulationFlags_mut";
 
-PxArticulationReducedCoordinate_setArticulationFlag :: (self: *PxArticulationReducedCoordinate, flag: s32, value: bool) -> void #foreign physx "PxArticulationReducedCoordinate_setArticulationFlag_mut";
+PxArticulationReducedCoordinate_setArticulationFlag :: (self: *PxArticulationReducedCoordinate, flag: PxArticulationFlag, value: bool) -> void #foreign physx "PxArticulationReducedCoordinate_setArticulationFlag_mut";
 
-PxArticulationReducedCoordinate_getArticulationFlags :: (self: *PxArticulationReducedCoordinate) -> u8 #foreign physx;
+PxArticulationReducedCoordinate_getArticulationFlags :: (self: *PxArticulationReducedCoordinate) -> PxArticulationFlags #foreign physx;
 
 PxArticulationReducedCoordinate_getDofs :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign physx;
 
@@ -4620,9 +7318,9 @@ PxArticulationReducedCoordinate_getCacheDataSize :: (self: *PxArticulationReduce
 
 PxArticulationReducedCoordinate_zeroCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache) -> void #foreign physx;
 
-PxArticulationReducedCoordinate_applyCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, flags: u32, autowake: bool) -> void #foreign physx "PxArticulationReducedCoordinate_applyCache_mut";
+PxArticulationReducedCoordinate_applyCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, flags: PxArticulationCacheFlags, autowake: bool) -> void #foreign physx "PxArticulationReducedCoordinate_applyCache_mut";
 
-PxArticulationReducedCoordinate_copyInternalStateToCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, flags: u32) -> void #foreign physx;
+PxArticulationReducedCoordinate_copyInternalStateToCache :: (self: *PxArticulationReducedCoordinate, cache: *PxArticulationCache, flags: PxArticulationCacheFlags) -> void #foreign physx;
 
 PxArticulationReducedCoordinate_packJointData :: (self: *PxArticulationReducedCoordinate, maximum: *float, reduced: *float) -> void #foreign physx;
 
@@ -4692,7 +7390,7 @@ PxArticulationReducedCoordinate_getSensors :: (self: *PxArticulationReducedCoord
 
 PxArticulationReducedCoordinate_getNbSensors :: (self: *PxArticulationReducedCoordinate) -> u32 #foreign physx "PxArticulationReducedCoordinate_getNbSensors_mut";
 
-PxArticulationReducedCoordinate_updateKinematic :: (self: *PxArticulationReducedCoordinate, flags: u8) -> void #foreign physx "PxArticulationReducedCoordinate_updateKinematic_mut";
+PxArticulationReducedCoordinate_updateKinematic :: (self: *PxArticulationReducedCoordinate, flags: PxArticulationKinematicFlags) -> void #foreign physx "PxArticulationReducedCoordinate_updateKinematic_mut";
 
 PxArticulationJointReducedCoordinate_getParentArticulationLink :: (self: *PxArticulationJointReducedCoordinate) -> *PxArticulationLink #foreign physx;
 
@@ -4706,33 +7404,33 @@ PxArticulationJointReducedCoordinate_setChildPose :: (self: *PxArticulationJoint
 
 PxArticulationJointReducedCoordinate_getChildPose :: (self: *PxArticulationJointReducedCoordinate) -> PxTransform #foreign physx;
 
-PxArticulationJointReducedCoordinate_setJointType :: (self: *PxArticulationJointReducedCoordinate, jointType: s32) -> void #foreign physx "PxArticulationJointReducedCoordinate_setJointType_mut";
+PxArticulationJointReducedCoordinate_setJointType :: (self: *PxArticulationJointReducedCoordinate, jointType: PxArticulationJointType) -> void #foreign physx "PxArticulationJointReducedCoordinate_setJointType_mut";
 
-PxArticulationJointReducedCoordinate_getJointType :: (self: *PxArticulationJointReducedCoordinate) -> s32 #foreign physx;
+PxArticulationJointReducedCoordinate_getJointType :: (self: *PxArticulationJointReducedCoordinate) -> PxArticulationJointType #foreign physx;
 
-PxArticulationJointReducedCoordinate_setMotion :: (self: *PxArticulationJointReducedCoordinate, axis: s32, motion: s32) -> void #foreign physx "PxArticulationJointReducedCoordinate_setMotion_mut";
+PxArticulationJointReducedCoordinate_setMotion :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, motion: PxArticulationMotion) -> void #foreign physx "PxArticulationJointReducedCoordinate_setMotion_mut";
 
-PxArticulationJointReducedCoordinate_getMotion :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> s32 #foreign physx;
+PxArticulationJointReducedCoordinate_getMotion :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> PxArticulationMotion #foreign physx;
 
-PxArticulationJointReducedCoordinate_setLimitParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32, limit: *PxArticulationLimit) -> void #foreign physx "PxArticulationJointReducedCoordinate_setLimitParams_mut";
+PxArticulationJointReducedCoordinate_setLimitParams :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, limit: *PxArticulationLimit) -> void #foreign physx "PxArticulationJointReducedCoordinate_setLimitParams_mut";
 
-PxArticulationJointReducedCoordinate_getLimitParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> PxArticulationLimit #foreign physx;
+PxArticulationJointReducedCoordinate_getLimitParams :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> PxArticulationLimit #foreign physx;
 
-PxArticulationJointReducedCoordinate_setDriveParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32, drive: *PxArticulationDrive) -> void #foreign physx "PxArticulationJointReducedCoordinate_setDriveParams_mut";
+PxArticulationJointReducedCoordinate_setDriveParams :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, drive: *PxArticulationDrive) -> void #foreign physx "PxArticulationJointReducedCoordinate_setDriveParams_mut";
 
-PxArticulationJointReducedCoordinate_getDriveParams :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> PxArticulationDrive #foreign physx;
+PxArticulationJointReducedCoordinate_getDriveParams :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> PxArticulationDrive #foreign physx;
 
-PxArticulationJointReducedCoordinate_setDriveTarget :: (self: *PxArticulationJointReducedCoordinate, axis: s32, target: float, autowake: bool) -> void #foreign physx "PxArticulationJointReducedCoordinate_setDriveTarget_mut";
+PxArticulationJointReducedCoordinate_setDriveTarget :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, target: float, autowake: bool) -> void #foreign physx "PxArticulationJointReducedCoordinate_setDriveTarget_mut";
 
-PxArticulationJointReducedCoordinate_getDriveTarget :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx;
+PxArticulationJointReducedCoordinate_getDriveTarget :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> float #foreign physx;
 
-PxArticulationJointReducedCoordinate_setDriveVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32, targetVel: float, autowake: bool) -> void #foreign physx "PxArticulationJointReducedCoordinate_setDriveVelocity_mut";
+PxArticulationJointReducedCoordinate_setDriveVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, targetVel: float, autowake: bool) -> void #foreign physx "PxArticulationJointReducedCoordinate_setDriveVelocity_mut";
 
-PxArticulationJointReducedCoordinate_getDriveVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx;
+PxArticulationJointReducedCoordinate_getDriveVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> float #foreign physx;
 
-PxArticulationJointReducedCoordinate_setArmature :: (self: *PxArticulationJointReducedCoordinate, axis: s32, armature: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setArmature_mut";
+PxArticulationJointReducedCoordinate_setArmature :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, armature: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setArmature_mut";
 
-PxArticulationJointReducedCoordinate_getArmature :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx;
+PxArticulationJointReducedCoordinate_getArmature :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> float #foreign physx;
 
 PxArticulationJointReducedCoordinate_setFrictionCoefficient :: (self: *PxArticulationJointReducedCoordinate, coefficient: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setFrictionCoefficient_mut";
 
@@ -4742,13 +7440,13 @@ PxArticulationJointReducedCoordinate_setMaxJointVelocity :: (self: *PxArticulati
 
 PxArticulationJointReducedCoordinate_getMaxJointVelocity :: (self: *PxArticulationJointReducedCoordinate) -> float #foreign physx;
 
-PxArticulationJointReducedCoordinate_setJointPosition :: (self: *PxArticulationJointReducedCoordinate, axis: s32, jointPos: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setJointPosition_mut";
+PxArticulationJointReducedCoordinate_setJointPosition :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, jointPos: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setJointPosition_mut";
 
-PxArticulationJointReducedCoordinate_getJointPosition :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx;
+PxArticulationJointReducedCoordinate_getJointPosition :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> float #foreign physx;
 
-PxArticulationJointReducedCoordinate_setJointVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32, jointVel: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setJointVelocity_mut";
+PxArticulationJointReducedCoordinate_setJointVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, jointVel: float) -> void #foreign physx "PxArticulationJointReducedCoordinate_setJointVelocity_mut";
 
-PxArticulationJointReducedCoordinate_getJointVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: s32) -> float #foreign physx;
+PxArticulationJointReducedCoordinate_getJointVelocity :: (self: *PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> float #foreign physx;
 
 PxArticulationJointReducedCoordinate_getConcreteTypeName :: (self: *PxArticulationJointReducedCoordinate) -> *u8 #foreign physx;
 
@@ -4800,11 +7498,11 @@ PxShape_setMinTorsionalPatchRadius :: (self: *PxShape, radius: float) -> void #f
 
 PxShape_getMinTorsionalPatchRadius :: (self: *PxShape) -> float #foreign physx;
 
-PxShape_setFlag :: (self: *PxShape, flag: s32, value: bool) -> void #foreign physx "PxShape_setFlag_mut";
+PxShape_setFlag :: (self: *PxShape, flag: PxShapeFlag, value: bool) -> void #foreign physx "PxShape_setFlag_mut";
 
-PxShape_setFlags :: (self: *PxShape, inFlags: u8) -> void #foreign physx "PxShape_setFlags_mut";
+PxShape_setFlags :: (self: *PxShape, inFlags: PxShapeFlags) -> void #foreign physx "PxShape_setFlags_mut";
 
-PxShape_getFlags :: (self: *PxShape) -> u8 #foreign physx;
+PxShape_getFlags :: (self: *PxShape) -> PxShapeFlags #foreign physx;
 
 PxShape_isExclusive :: (self: *PxShape) -> bool #foreign physx;
 
@@ -4890,21 +7588,21 @@ PxRigidBody_setMaxAngularVelocity :: (self: *PxRigidBody, maxAngVel: float) -> v
 
 PxRigidBody_getMaxAngularVelocity :: (self: *PxRigidBody) -> float #foreign physx;
 
-PxRigidBody_addForce :: (self: *PxRigidBody, force: *Vector3, mode: s32, autowake: bool) -> void #foreign physx "PxRigidBody_addForce_mut";
+PxRigidBody_addForce :: (self: *PxRigidBody, force: *Vector3, mode: PxForceMode, autowake: bool) -> void #foreign physx "PxRigidBody_addForce_mut";
 
-PxRigidBody_addTorque :: (self: *PxRigidBody, torque: *Vector3, mode: s32, autowake: bool) -> void #foreign physx "PxRigidBody_addTorque_mut";
+PxRigidBody_addTorque :: (self: *PxRigidBody, torque: *Vector3, mode: PxForceMode, autowake: bool) -> void #foreign physx "PxRigidBody_addTorque_mut";
 
-PxRigidBody_clearForce :: (self: *PxRigidBody, mode: s32) -> void #foreign physx "PxRigidBody_clearForce_mut";
+PxRigidBody_clearForce :: (self: *PxRigidBody, mode: PxForceMode) -> void #foreign physx "PxRigidBody_clearForce_mut";
 
-PxRigidBody_clearTorque :: (self: *PxRigidBody, mode: s32) -> void #foreign physx "PxRigidBody_clearTorque_mut";
+PxRigidBody_clearTorque :: (self: *PxRigidBody, mode: PxForceMode) -> void #foreign physx "PxRigidBody_clearTorque_mut";
 
-PxRigidBody_setForceAndTorque :: (self: *PxRigidBody, force: *Vector3, torque: *Vector3, mode: s32) -> void #foreign physx "PxRigidBody_setForceAndTorque_mut";
+PxRigidBody_setForceAndTorque :: (self: *PxRigidBody, force: *Vector3, torque: *Vector3, mode: PxForceMode) -> void #foreign physx "PxRigidBody_setForceAndTorque_mut";
 
-PxRigidBody_setRigidBodyFlag :: (self: *PxRigidBody, flag: s32, value: bool) -> void #foreign physx "PxRigidBody_setRigidBodyFlag_mut";
+PxRigidBody_setRigidBodyFlag :: (self: *PxRigidBody, flag: PxRigidBodyFlag, value: bool) -> void #foreign physx "PxRigidBody_setRigidBodyFlag_mut";
 
-PxRigidBody_setRigidBodyFlags :: (self: *PxRigidBody, inFlags: u16) -> void #foreign physx "PxRigidBody_setRigidBodyFlags_mut";
+PxRigidBody_setRigidBodyFlags :: (self: *PxRigidBody, inFlags: PxRigidBodyFlags) -> void #foreign physx "PxRigidBody_setRigidBodyFlags_mut";
 
-PxRigidBody_getRigidBodyFlags :: (self: *PxRigidBody) -> u16 #foreign physx;
+PxRigidBody_getRigidBodyFlags :: (self: *PxRigidBody) -> PxRigidBodyFlags #foreign physx;
 
 PxRigidBody_setMinCCDAdvanceCoefficient :: (self: *PxRigidBody, advanceCoefficient: float) -> void #foreign physx "PxRigidBody_setMinCCDAdvanceCoefficient_mut";
 
@@ -4960,11 +7658,11 @@ PxConstraint_setActors :: (self: *PxConstraint, actor0: *PxRigidActor, actor1: *
 
 PxConstraint_markDirty :: (self: *PxConstraint) -> void #foreign physx "PxConstraint_markDirty_mut";
 
-PxConstraint_getFlags :: (self: *PxConstraint) -> u16 #foreign physx;
+PxConstraint_getFlags :: (self: *PxConstraint) -> PxConstraintFlags #foreign physx;
 
-PxConstraint_setFlags :: (self: *PxConstraint, flags: u16) -> void #foreign physx "PxConstraint_setFlags_mut";
+PxConstraint_setFlags :: (self: *PxConstraint, flags: PxConstraintFlags) -> void #foreign physx "PxConstraint_setFlags_mut";
 
-PxConstraint_setFlag :: (self: *PxConstraint, flag: s32, value: bool) -> void #foreign physx "PxConstraint_setFlag_mut";
+PxConstraint_setFlag :: (self: *PxConstraint, flag: PxConstraintFlag, value: bool) -> void #foreign physx "PxConstraint_setFlag_mut";
 
 PxConstraint_getForce :: (self: *PxConstraint, linear: *Vector3, angular: *Vector3) -> void #foreign physx;
 
@@ -5096,7 +7794,7 @@ PxContactModifyCallback_onContactModify :: (self: *PxContactModifyCallback, pair
 
 PxCCDContactModifyCallback_onCCDContactModify :: (self: *PxCCDContactModifyCallback, pairs: *PxContactModifyPair, count: u32) -> void #foreign physx "PxCCDContactModifyCallback_onCCDContactModify_mut";
 
-PxDeletionListener_onRelease :: (self: *PxDeletionListener, observed: *PxBase, userData: *void, deletionEvent: s32) -> void #foreign physx "PxDeletionListener_onRelease_mut";
+PxDeletionListener_onRelease :: (self: *PxDeletionListener, observed: *PxBase, userData: *void, deletionEvent: PxDeletionEventFlag) -> void #foreign physx "PxDeletionListener_onRelease_mut";
 
 PxBaseMaterial_isKindOf :: (self: *PxBaseMaterial, name: *u8) -> bool #foreign physx;
 
@@ -5112,7 +7810,7 @@ PxFEMMaterial_setDynamicFriction :: (self: *PxFEMMaterial, dynamicFriction: floa
 
 PxFEMMaterial_getDynamicFriction :: (self: *PxFEMMaterial) -> float #foreign physx;
 
-PxFilterData_new :: (anon_param0: s32) -> PxFilterData #foreign physx;
+PxFilterData_new :: (anon_param0: PxEMPTY) -> PxFilterData #foreign physx;
 
 PxFilterData_new :: () -> PxFilterData #foreign physx "PxFilterData_new_1";
 
@@ -5120,19 +7818,19 @@ PxFilterData_new :: (w0: u32, w1: u32, w2: u32, w3: u32) -> PxFilterData #foreig
 
 PxFilterData_setToDefault :: (self: *PxFilterData) -> void #foreign physx "PxFilterData_setToDefault_mut";
 
-PxGetFilterObjectType :: (attr: u32) -> s32 #foreign physx "phys_PxGetFilterObjectType";
+PxGetFilterObjectType :: (attr: u32) -> PxFilterObjectType #foreign physx "phys_PxGetFilterObjectType";
 
 PxFilterObjectIsKinematic :: (attr: u32) -> bool #foreign physx "phys_PxFilterObjectIsKinematic";
 
 PxFilterObjectIsTrigger :: (attr: u32) -> bool #foreign physx "phys_PxFilterObjectIsTrigger";
 
-PxSimulationFilterCallback_pairFound :: (self: *PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: PxFilterData, a0: *PxActor, s0: *PxShape, attributes1: u32, filterData1: PxFilterData, a1: *PxActor, s1: *PxShape, pairFlags: *u16) -> u16 #foreign physx "PxSimulationFilterCallback_pairFound_mut";
+PxSimulationFilterCallback_pairFound :: (self: *PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: PxFilterData, a0: *PxActor, s0: *PxShape, attributes1: u32, filterData1: PxFilterData, a1: *PxActor, s1: *PxShape, pairFlags: *PxPairFlags) -> PxFilterFlags #foreign physx "PxSimulationFilterCallback_pairFound_mut";
 
 PxSimulationFilterCallback_pairLost :: (self: *PxSimulationFilterCallback, pairID: u32, attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, objectRemoved: bool) -> void #foreign physx "PxSimulationFilterCallback_pairLost_mut";
 
-PxSimulationFilterCallback_statusChange :: (self: *PxSimulationFilterCallback, pairID: *u32, pairFlags: *u16, filterFlags: *u16) -> bool #foreign physx "PxSimulationFilterCallback_statusChange_mut";
+PxSimulationFilterCallback_statusChange :: (self: *PxSimulationFilterCallback, pairID: *u32, pairFlags: *PxPairFlags, filterFlags: *PxFilterFlags) -> bool #foreign physx "PxSimulationFilterCallback_statusChange_mut";
 
-PxLockedData_getDataAccessFlags :: (self: *PxLockedData) -> u8 #foreign physx "PxLockedData_getDataAccessFlags_mut";
+PxLockedData_getDataAccessFlags :: (self: *PxLockedData) -> PxDataAccessFlags #foreign physx "PxLockedData_getDataAccessFlags_mut";
 
 PxLockedData_unlock :: (self: *PxLockedData) -> void #foreign physx "PxLockedData_unlock_mut";
 
@@ -5154,19 +7852,19 @@ PxMaterial_setDamping :: (self: *PxMaterial, damping: float) -> void #foreign ph
 
 PxMaterial_getDamping :: (self: *PxMaterial) -> float #foreign physx;
 
-PxMaterial_setFlag :: (self: *PxMaterial, flag: s32, b: bool) -> void #foreign physx "PxMaterial_setFlag_mut";
+PxMaterial_setFlag :: (self: *PxMaterial, flag: PxMaterialFlag, b: bool) -> void #foreign physx "PxMaterial_setFlag_mut";
 
-PxMaterial_setFlags :: (self: *PxMaterial, flags: u16) -> void #foreign physx "PxMaterial_setFlags_mut";
+PxMaterial_setFlags :: (self: *PxMaterial, flags: PxMaterialFlags) -> void #foreign physx "PxMaterial_setFlags_mut";
 
-PxMaterial_getFlags :: (self: *PxMaterial) -> u16 #foreign physx;
+PxMaterial_getFlags :: (self: *PxMaterial) -> PxMaterialFlags #foreign physx;
 
-PxMaterial_setFrictionCombineMode :: (self: *PxMaterial, combMode: s32) -> void #foreign physx "PxMaterial_setFrictionCombineMode_mut";
+PxMaterial_setFrictionCombineMode :: (self: *PxMaterial, combMode: PxCombineMode) -> void #foreign physx "PxMaterial_setFrictionCombineMode_mut";
 
-PxMaterial_getFrictionCombineMode :: (self: *PxMaterial) -> s32 #foreign physx;
+PxMaterial_getFrictionCombineMode :: (self: *PxMaterial) -> PxCombineMode #foreign physx;
 
-PxMaterial_setRestitutionCombineMode :: (self: *PxMaterial, combMode: s32) -> void #foreign physx "PxMaterial_setRestitutionCombineMode_mut";
+PxMaterial_setRestitutionCombineMode :: (self: *PxMaterial, combMode: PxCombineMode) -> void #foreign physx "PxMaterial_setRestitutionCombineMode_mut";
 
-PxMaterial_getRestitutionCombineMode :: (self: *PxMaterial) -> s32 #foreign physx;
+PxMaterial_getRestitutionCombineMode :: (self: *PxMaterial) -> PxCombineMode #foreign physx;
 
 PxMaterial_getConcreteTypeName :: (self: *PxMaterial) -> *u8 #foreign physx;
 
@@ -5246,9 +7944,9 @@ PxPhysics_createRigidDynamic :: (self: *PxPhysics, pose: *PxTransform) -> *PxRig
 
 PxPhysics_createPruningStructure :: (self: *PxPhysics, actors: **PxRigidActor, nbActors: u32) -> *PxPruningStructure #foreign physx "PxPhysics_createPruningStructure_mut";
 
-PxPhysics_createShape :: (self: *PxPhysics, geometry: *PxGeometry, material: *PxMaterial, isExclusive: bool, shapeFlags: u8) -> *PxShape #foreign physx "PxPhysics_createShape_mut";
+PxPhysics_createShape :: (self: *PxPhysics, geometry: *PxGeometry, material: *PxMaterial, isExclusive: bool, shapeFlags: PxShapeFlags) -> *PxShape #foreign physx "PxPhysics_createShape_mut";
 
-PxPhysics_createShape_mut :: (self: *PxPhysics, geometry: *PxGeometry, materials: **PxMaterial, materialCount: u16, isExclusive: bool, shapeFlags: u8) -> *PxShape #foreign physx "PxPhysics_createShape_mut_1";
+PxPhysics_createShape_mut :: (self: *PxPhysics, geometry: *PxGeometry, materials: **PxMaterial, materialCount: u16, isExclusive: bool, shapeFlags: PxShapeFlags) -> *PxShape #foreign physx "PxPhysics_createShape_mut_1";
 
 PxPhysics_getNbShapes :: (self: *PxPhysics) -> u32 #foreign physx;
 
@@ -5264,7 +7962,7 @@ PxPhysics_getNbMaterials :: (self: *PxPhysics) -> u32 #foreign physx;
 
 PxPhysics_getMaterials :: (self: *PxPhysics, userBuffer: **PxMaterial, bufferSize: u32, startIndex: u32) -> u32 #foreign physx;
 
-PxPhysics_registerDeletionListener :: (self: *PxPhysics, observer: *PxDeletionListener, deletionEvents: *u8, restrictedObjectSet: bool) -> void #foreign physx "PxPhysics_registerDeletionListener_mut";
+PxPhysics_registerDeletionListener :: (self: *PxPhysics, observer: *PxDeletionListener, deletionEvents: *PxDeletionEventFlags, restrictedObjectSet: bool) -> void #foreign physx "PxPhysics_registerDeletionListener_mut";
 
 PxPhysics_unregisterDeletionListener :: (self: *PxPhysics, observer: *PxDeletionListener) -> void #foreign physx "PxPhysics_unregisterDeletionListener_mut";
 
@@ -5288,13 +7986,13 @@ PxQueryCache_new :: (s: *PxShape, findex: u32) -> PxQueryCache #foreign physx "P
 
 PxQueryFilterData_new :: () -> PxQueryFilterData #foreign physx;
 
-PxQueryFilterData_new :: (fd: *PxFilterData, f: u16) -> PxQueryFilterData #foreign physx "PxQueryFilterData_new_1";
+PxQueryFilterData_new :: (fd: *PxFilterData, f: PxQueryFlags) -> PxQueryFilterData #foreign physx "PxQueryFilterData_new_1";
 
-PxQueryFilterData_new :: (f: u16) -> PxQueryFilterData #foreign physx "PxQueryFilterData_new_2";
+PxQueryFilterData_new :: (f: PxQueryFlags) -> PxQueryFilterData #foreign physx "PxQueryFilterData_new_2";
 
-PxQueryFilterCallback_preFilter :: (self: *PxQueryFilterCallback, filterData: *PxFilterData, shape: *PxShape, actor: *PxRigidActor, queryFlags: *u16) -> s32 #foreign physx "PxQueryFilterCallback_preFilter_mut";
+PxQueryFilterCallback_preFilter :: (self: *PxQueryFilterCallback, filterData: *PxFilterData, shape: *PxShape, actor: *PxRigidActor, queryFlags: *PxHitFlags) -> PxQueryHitType #foreign physx "PxQueryFilterCallback_preFilter_mut";
 
-PxQueryFilterCallback_postFilter :: (self: *PxQueryFilterCallback, filterData: *PxFilterData, hit: *PxQueryHit, shape: *PxShape, actor: *PxRigidActor) -> s32 #foreign physx "PxQueryFilterCallback_postFilter_mut";
+PxQueryFilterCallback_postFilter :: (self: *PxQueryFilterCallback, filterData: *PxFilterData, hit: *PxQueryHit, shape: *PxShape, actor: *PxRigidActor) -> PxQueryHitType #foreign physx "PxQueryFilterCallback_postFilter_mut";
 
 PxQueryFilterCallback_delete :: (self: *PxQueryFilterCallback) -> void #foreign physx;
 
@@ -5312,11 +8010,11 @@ PxRigidDynamic_setStabilizationThreshold :: (self: *PxRigidDynamic, threshold: f
 
 PxRigidDynamic_getStabilizationThreshold :: (self: *PxRigidDynamic) -> float #foreign physx;
 
-PxRigidDynamic_getRigidDynamicLockFlags :: (self: *PxRigidDynamic) -> u8 #foreign physx;
+PxRigidDynamic_getRigidDynamicLockFlags :: (self: *PxRigidDynamic) -> PxRigidDynamicLockFlags #foreign physx;
 
-PxRigidDynamic_setRigidDynamicLockFlag :: (self: *PxRigidDynamic, flag: s32, value: bool) -> void #foreign physx "PxRigidDynamic_setRigidDynamicLockFlag_mut";
+PxRigidDynamic_setRigidDynamicLockFlag :: (self: *PxRigidDynamic, flag: PxRigidDynamicLockFlag, value: bool) -> void #foreign physx "PxRigidDynamic_setRigidDynamicLockFlag_mut";
 
-PxRigidDynamic_setRigidDynamicLockFlags :: (self: *PxRigidDynamic, flags: u8) -> void #foreign physx "PxRigidDynamic_setRigidDynamicLockFlags_mut";
+PxRigidDynamic_setRigidDynamicLockFlags :: (self: *PxRigidDynamic, flags: PxRigidDynamicLockFlags) -> void #foreign physx "PxRigidDynamic_setRigidDynamicLockFlags_mut";
 
 PxRigidDynamic_getLinearVelocity :: (self: *PxRigidDynamic) -> Vector3 #foreign physx;
 
@@ -5358,23 +8056,23 @@ PxSceneQuerySystemBase_getDynamicTreeRebuildRateHint :: (self: *PxSceneQuerySyst
 
 PxSceneQuerySystemBase_forceRebuildDynamicTree :: (self: *PxSceneQuerySystemBase, prunerIndex: u32) -> void #foreign physx "PxSceneQuerySystemBase_forceRebuildDynamicTree_mut";
 
-PxSceneQuerySystemBase_setUpdateMode :: (self: *PxSceneQuerySystemBase, updateMode: s32) -> void #foreign physx "PxSceneQuerySystemBase_setUpdateMode_mut";
+PxSceneQuerySystemBase_setUpdateMode :: (self: *PxSceneQuerySystemBase, updateMode: PxSceneQueryUpdateMode) -> void #foreign physx "PxSceneQuerySystemBase_setUpdateMode_mut";
 
-PxSceneQuerySystemBase_getUpdateMode :: (self: *PxSceneQuerySystemBase) -> s32 #foreign physx;
+PxSceneQuerySystemBase_getUpdateMode :: (self: *PxSceneQuerySystemBase) -> PxSceneQueryUpdateMode #foreign physx;
 
 PxSceneQuerySystemBase_getStaticTimestamp :: (self: *PxSceneQuerySystemBase) -> u32 #foreign physx;
 
 PxSceneQuerySystemBase_flushUpdates :: (self: *PxSceneQuerySystemBase) -> void #foreign physx "PxSceneQuerySystemBase_flushUpdates_mut";
 
-PxSceneQuerySystemBase_raycast :: (self: *PxSceneQuerySystemBase, origin: *Vector3, unitDir: *Vector3, distance: float, hitCall: *PxRaycastCallback, hitFlags: u16, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, queryFlags: u32) -> bool #foreign physx;
+PxSceneQuerySystemBase_raycast :: (self: *PxSceneQuerySystemBase, origin: *Vector3, unitDir: *Vector3, distance: float, hitCall: *PxRaycastCallback, hitFlags: PxHitFlags, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxSceneQuerySystemBase_sweep :: (self: *PxSceneQuerySystemBase, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, hitCall: *PxSweepCallback, hitFlags: u16, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float, queryFlags: u32) -> bool #foreign physx;
+PxSceneQuerySystemBase_sweep :: (self: *PxSceneQuerySystemBase, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, hitCall: *PxSweepCallback, hitFlags: PxHitFlags, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxSceneQuerySystemBase_overlap :: (self: *PxSceneQuerySystemBase, geometry: *PxGeometry, pose: *PxTransform, hitCall: *PxOverlapCallback, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, queryFlags: u32) -> bool #foreign physx;
+PxSceneQuerySystemBase_overlap :: (self: *PxSceneQuerySystemBase, geometry: *PxGeometry, pose: *PxTransform, hitCall: *PxOverlapCallback, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, queryFlags: PxGeometryQueryFlags) -> bool #foreign physx;
 
-PxSceneSQSystem_setSceneQueryUpdateMode :: (self: *PxSceneSQSystem, updateMode: s32) -> void #foreign physx "PxSceneSQSystem_setSceneQueryUpdateMode_mut";
+PxSceneSQSystem_setSceneQueryUpdateMode :: (self: *PxSceneSQSystem, updateMode: PxSceneQueryUpdateMode) -> void #foreign physx "PxSceneSQSystem_setSceneQueryUpdateMode_mut";
 
-PxSceneSQSystem_getSceneQueryUpdateMode :: (self: *PxSceneSQSystem) -> s32 #foreign physx;
+PxSceneSQSystem_getSceneQueryUpdateMode :: (self: *PxSceneSQSystem) -> PxSceneQueryUpdateMode #foreign physx;
 
 PxSceneSQSystem_getSceneQueryStaticTimestamp :: (self: *PxSceneSQSystem) -> u32 #foreign physx;
 
@@ -5382,9 +8080,9 @@ PxSceneSQSystem_flushQueryUpdates :: (self: *PxSceneSQSystem) -> void #foreign p
 
 PxSceneSQSystem_forceDynamicTreeRebuild :: (self: *PxSceneSQSystem, rebuildStaticStructure: bool, rebuildDynamicStructure: bool) -> void #foreign physx "PxSceneSQSystem_forceDynamicTreeRebuild_mut";
 
-PxSceneSQSystem_getStaticStructure :: (self: *PxSceneSQSystem) -> s32 #foreign physx;
+PxSceneSQSystem_getStaticStructure :: (self: *PxSceneSQSystem) -> PxPruningStructureType #foreign physx;
 
-PxSceneSQSystem_getDynamicStructure :: (self: *PxSceneSQSystem) -> s32 #foreign physx;
+PxSceneSQSystem_getDynamicStructure :: (self: *PxSceneSQSystem) -> PxPruningStructureType #foreign physx;
 
 PxSceneSQSystem_sceneQueriesUpdate :: (self: *PxSceneSQSystem, completionTask: *PxBaseTask, controlSimulation: bool) -> void #foreign physx "PxSceneSQSystem_sceneQueriesUpdate_mut";
 
@@ -5426,7 +8124,7 @@ PxSceneQuerySystem_prepareSceneQueryBuildStep :: (self: *PxSceneQuerySystem, pru
 
 PxSceneQuerySystem_sceneQueryBuildStep :: (self: *PxSceneQuerySystem, handle: *void) -> void #foreign physx "PxSceneQuerySystem_sceneQueryBuildStep_mut";
 
-PxBroadPhaseDesc_new :: (type: s32) -> PxBroadPhaseDesc #foreign physx;
+PxBroadPhaseDesc_new :: (type: PxBroadPhaseType) -> PxBroadPhaseDesc #foreign physx;
 
 PxBroadPhaseDesc_isValid :: (self: *PxBroadPhaseDesc) -> bool #foreign physx;
 
@@ -5454,7 +8152,7 @@ PxBroadPhaseRegions_getOutOfBoundsObjects :: (self: *PxBroadPhaseRegions) -> *u3
 
 PxBroadPhase_release :: (self: *PxBroadPhase) -> void #foreign physx "PxBroadPhase_release_mut";
 
-PxBroadPhase_getType :: (self: *PxBroadPhase) -> s32 #foreign physx;
+PxBroadPhase_getType :: (self: *PxBroadPhase) -> PxBroadPhaseType #foreign physx;
 
 PxBroadPhase_getCaps :: (self: *PxBroadPhase, caps: *PxBroadPhaseCaps) -> void #foreign physx;
 
@@ -5522,15 +8220,15 @@ PxSimulationStatistics_getNbBroadPhaseAdds :: (self: *PxSimulationStatistics) ->
 
 PxSimulationStatistics_getNbBroadPhaseRemoves :: (self: *PxSimulationStatistics) -> u32 #foreign physx;
 
-PxSimulationStatistics_getRbPairStats :: (self: *PxSimulationStatistics, pairType: s32, g0: s32, g1: s32) -> u32 #foreign physx;
+PxSimulationStatistics_getRbPairStats :: (self: *PxSimulationStatistics, pairType: RbPairStatsType, g0: PxGeometryType, g1: PxGeometryType) -> u32 #foreign physx;
 
 PxSimulationStatistics_new :: () -> PxSimulationStatistics #foreign physx;
 
-PxPvdSceneClient_setScenePvdFlag :: (self: *PxPvdSceneClient, flag: s32, value: bool) -> void #foreign physx "PxPvdSceneClient_setScenePvdFlag_mut";
+PxPvdSceneClient_setScenePvdFlag :: (self: *PxPvdSceneClient, flag: PxPvdSceneFlag, value: bool) -> void #foreign physx "PxPvdSceneClient_setScenePvdFlag_mut";
 
-PxPvdSceneClient_setScenePvdFlags :: (self: *PxPvdSceneClient, flags: u8) -> void #foreign physx "PxPvdSceneClient_setScenePvdFlags_mut";
+PxPvdSceneClient_setScenePvdFlags :: (self: *PxPvdSceneClient, flags: PxPvdSceneFlags) -> void #foreign physx "PxPvdSceneClient_setScenePvdFlags_mut";
 
-PxPvdSceneClient_getScenePvdFlags :: (self: *PxPvdSceneClient) -> u8 #foreign physx;
+PxPvdSceneClient_getScenePvdFlags :: (self: *PxPvdSceneClient) -> PxPvdSceneFlags #foreign physx;
 
 PxPvdSceneClient_updateCamera :: (self: *PxPvdSceneClient, name: *u8, origin: *Vector3, up: *Vector3, target: *Vector3) -> void #foreign physx "PxPvdSceneClient_updateCamera_mut";
 
@@ -5552,9 +8250,9 @@ PxBroadPhaseCallback_onObjectOutOfBounds_mut :: (self: *PxBroadPhaseCallback, ag
 
 PxScene_release :: (self: *PxScene) -> void #foreign physx "PxScene_release_mut";
 
-PxScene_setFlag :: (self: *PxScene, flag: s32, value: bool) -> void #foreign physx "PxScene_setFlag_mut";
+PxScene_setFlag :: (self: *PxScene, flag: PxSceneFlag, value: bool) -> void #foreign physx "PxScene_setFlag_mut";
 
-PxScene_getFlags :: (self: *PxScene) -> u32 #foreign physx;
+PxScene_getFlags :: (self: *PxScene) -> PxSceneFlags #foreign physx;
 
 PxScene_setLimits :: (self: *PxScene, limits: *PxSceneLimits) -> void #foreign physx "PxScene_setLimits_mut";
 
@@ -5584,9 +8282,9 @@ PxScene_removeAggregate :: (self: *PxScene, aggregate: *PxAggregate, wakeOnLostT
 
 PxScene_addCollection :: (self: *PxScene, collection: *PxCollection) -> bool #foreign physx "PxScene_addCollection_mut";
 
-PxScene_getNbActors :: (self: *PxScene, types: u16) -> u32 #foreign physx;
+PxScene_getNbActors :: (self: *PxScene, types: PxActorTypeFlags) -> u32 #foreign physx;
 
-PxScene_getActors :: (self: *PxScene, types: u16, userBuffer: **PxActor, bufferSize: u32, startIndex: u32) -> u32 #foreign physx;
+PxScene_getActors :: (self: *PxScene, types: PxActorTypeFlags, userBuffer: **PxActor, bufferSize: u32, startIndex: u32) -> u32 #foreign physx;
 
 PxScene_getActiveActors :: (self: *PxScene, nbActorsOut: *u32) -> **PxActor #foreign physx "PxScene_getActiveActors_mut";
 
@@ -5636,9 +8334,9 @@ PxScene_resetFiltering :: (self: *PxScene, actor: *PxActor) -> bool #foreign phy
 
 PxScene_resetFiltering_mut :: (self: *PxScene, actor: *PxRigidActor, shapes: **PxShape, shapeCount: u32) -> bool #foreign physx "PxScene_resetFiltering_mut_1";
 
-PxScene_getKinematicKinematicFilteringMode :: (self: *PxScene) -> s32 #foreign physx;
+PxScene_getKinematicKinematicFilteringMode :: (self: *PxScene) -> PxPairFilteringMode #foreign physx;
 
-PxScene_getStaticKinematicFilteringMode :: (self: *PxScene) -> s32 #foreign physx;
+PxScene_getStaticKinematicFilteringMode :: (self: *PxScene) -> PxPairFilteringMode #foreign physx;
 
 PxScene_simulate :: (self: *PxScene, elapsedTime: float, completionTask: *PxBaseTask, scratchMemBlock: *void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool #foreign physx "PxScene_simulate_mut";
 
@@ -5694,13 +8392,13 @@ PxScene_setFrictionCorrelationDistance :: (self: *PxScene, t: float) -> void #fo
 
 PxScene_getFrictionCorrelationDistance :: (self: *PxScene) -> float #foreign physx;
 
-PxScene_getFrictionType :: (self: *PxScene) -> s32 #foreign physx;
+PxScene_getFrictionType :: (self: *PxScene) -> PxFrictionType #foreign physx;
 
-PxScene_getSolverType :: (self: *PxScene) -> s32 #foreign physx;
+PxScene_getSolverType :: (self: *PxScene) -> PxSolverType #foreign physx;
 
-PxScene_setVisualizationParameter :: (self: *PxScene, param: s32, value: float) -> bool #foreign physx "PxScene_setVisualizationParameter_mut";
+PxScene_setVisualizationParameter :: (self: *PxScene, param: PxVisualizationParameter, value: float) -> bool #foreign physx "PxScene_setVisualizationParameter_mut";
 
-PxScene_getVisualizationParameter :: (self: *PxScene, paramEnum: s32) -> float #foreign physx;
+PxScene_getVisualizationParameter :: (self: *PxScene, paramEnum: PxVisualizationParameter) -> float #foreign physx;
 
 PxScene_setVisualizationCullingBox :: (self: *PxScene, box: *PxBounds3) -> void #foreign physx "PxScene_setVisualizationCullingBox_mut";
 
@@ -5710,7 +8408,7 @@ PxScene_getRenderBuffer :: (self: *PxScene) -> *PxRenderBuffer #foreign physx "P
 
 PxScene_getSimulationStatistics :: (self: *PxScene, stats: *PxSimulationStatistics) -> void #foreign physx;
 
-PxScene_getBroadPhaseType :: (self: *PxScene) -> s32 #foreign physx;
+PxScene_getBroadPhaseType :: (self: *PxScene) -> PxBroadPhaseType #foreign physx;
 
 PxScene_getBroadPhaseCaps :: (self: *PxScene, caps: *PxBroadPhaseCaps) -> bool #foreign physx;
 
@@ -5754,19 +8452,19 @@ PxScene_shiftOrigin :: (self: *PxScene, shift: *Vector3) -> void #foreign physx 
 
 PxScene_getScenePvdClient :: (self: *PxScene) -> *PxPvdSceneClient #foreign physx "PxScene_getScenePvdClient_mut";
 
-PxScene_copyArticulationData :: (self: *PxScene, data: *void, index: *void, dataType: s32, nbCopyArticulations: u32, copyEvent: *void) -> void #foreign physx "PxScene_copyArticulationData_mut";
+PxScene_copyArticulationData :: (self: *PxScene, data: *void, index: *void, dataType: PxArticulationGpuDataType, nbCopyArticulations: u32, copyEvent: *void) -> void #foreign physx "PxScene_copyArticulationData_mut";
 
-PxScene_applyArticulationData :: (self: *PxScene, data: *void, index: *void, dataType: s32, nbUpdatedArticulations: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx "PxScene_applyArticulationData_mut";
+PxScene_applyArticulationData :: (self: *PxScene, data: *void, index: *void, dataType: PxArticulationGpuDataType, nbUpdatedArticulations: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx "PxScene_applyArticulationData_mut";
 
-PxScene_copySoftBodyData :: (self: *PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: s32, nbCopySoftBodies: u32, maxSize: u32, copyEvent: *void) -> void #foreign physx "PxScene_copySoftBodyData_mut";
+PxScene_copySoftBodyData :: (self: *PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: PxSoftBodyDataFlag, nbCopySoftBodies: u32, maxSize: u32, copyEvent: *void) -> void #foreign physx "PxScene_copySoftBodyData_mut";
 
-PxScene_applySoftBodyData :: (self: *PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: s32, nbUpdatedSoftBodies: u32, maxSize: u32, applyEvent: *void) -> void #foreign physx "PxScene_applySoftBodyData_mut";
+PxScene_applySoftBodyData :: (self: *PxScene, data: **void, dataSizes: *void, softBodyIndices: *void, flag: PxSoftBodyDataFlag, nbUpdatedSoftBodies: u32, maxSize: u32, applyEvent: *void) -> void #foreign physx "PxScene_applySoftBodyData_mut";
 
 PxScene_copyContactData :: (self: *PxScene, data: *void, maxContactPairs: u32, numContactPairs: *void, copyEvent: *void) -> void #foreign physx "PxScene_copyContactData_mut";
 
 PxScene_copyBodyData :: (self: *PxScene, data: *PxGpuBodyData, index: *PxGpuActorPair, nbCopyActors: u32, copyEvent: *void) -> void #foreign physx "PxScene_copyBodyData_mut";
 
-PxScene_applyActorData :: (self: *PxScene, data: *void, index: *PxGpuActorPair, flag: s32, nbUpdatedActors: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx "PxScene_applyActorData_mut";
+PxScene_applyActorData :: (self: *PxScene, data: *void, index: *PxGpuActorPair, flag: PxActorCacheFlag, nbUpdatedActors: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx "PxScene_applyActorData_mut";
 
 PxScene_computeDenseJacobians :: (self: *PxScene, indices: *PxIndexDataPair, nbIndices: u32, computeEvent: *void) -> void #foreign physx "PxScene_computeDenseJacobians_mut";
 
@@ -5778,7 +8476,7 @@ PxScene_computeCoriolisAndCentrifugalForces :: (self: *PxScene, indices: *PxInde
 
 PxScene_getGpuDynamicsConfig :: (self: *PxScene) -> PxgDynamicsMemoryConfig #foreign physx;
 
-PxScene_applyParticleBufferData :: (self: *PxScene, indices: *u32, bufferIndexPair: *PxGpuParticleBufferIndexPair, flags: *u32, nbUpdatedBuffers: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx "PxScene_applyParticleBufferData_mut";
+PxScene_applyParticleBufferData :: (self: *PxScene, indices: *u32, bufferIndexPair: *PxGpuParticleBufferIndexPair, flags: *PxParticleBufferFlags, nbUpdatedBuffers: u32, waitEvent: *void, signalEvent: *void) -> void #foreign physx "PxScene_applyParticleBufferData_mut";
 
 PxSceneReadLock_new_alloc :: (scene: *PxScene, file: *u8, line: u32) -> *PxSceneReadLock #foreign physx;
 
@@ -5882,7 +8580,7 @@ PxExtendedVec3_cross_mut :: (self: *PxExtendedVec3, left: *Vector3, right: *PxEx
 
 toVec3 :: (v: *PxExtendedVec3) -> Vector3 #foreign physx "phys_toVec3";
 
-PxObstacle_getType :: (self: *PxObstacle) -> s32 #foreign physx;
+PxObstacle_getType :: (self: *PxObstacle) -> PxGeometryType #foreign physx;
 
 PxBoxObstacle_new :: () -> PxBoxObstacle #foreign physx;
 
@@ -5918,13 +8616,13 @@ PxControllerFilters_new :: (filterData: *PxFilterData, cb: *PxQueryFilterCallbac
 
 PxControllerDesc_isValid :: (self: *PxControllerDesc) -> bool #foreign physx;
 
-PxControllerDesc_getType :: (self: *PxControllerDesc) -> s32 #foreign physx;
+PxControllerDesc_getType :: (self: *PxControllerDesc) -> PxControllerShapeType #foreign physx;
 
-PxController_getType :: (self: *PxController) -> s32 #foreign physx;
+PxController_getType :: (self: *PxController) -> PxControllerShapeType #foreign physx;
 
 PxController_release :: (self: *PxController) -> void #foreign physx "PxController_release_mut";
 
-PxController_move :: (self: *PxController, disp: *Vector3, minDist: float, elapsedTime: float, filters: *PxControllerFilters, obstacles: *PxObstacleContext) -> u8 #foreign physx "PxController_move_mut";
+PxController_move :: (self: *PxController, disp: *Vector3, minDist: float, elapsedTime: float, filters: *PxControllerFilters, obstacles: *PxObstacleContext) -> PxControllerCollisionFlags #foreign physx "PxController_move_mut";
 
 PxController_setPosition :: (self: *PxController, position: *PxExtendedVec3) -> bool #foreign physx "PxController_setPosition_mut";
 
@@ -5940,9 +8638,9 @@ PxController_setStepOffset :: (self: *PxController, offset: float) -> void #fore
 
 PxController_getStepOffset :: (self: *PxController) -> float #foreign physx;
 
-PxController_setNonWalkableMode :: (self: *PxController, flag: s32) -> void #foreign physx "PxController_setNonWalkableMode_mut";
+PxController_setNonWalkableMode :: (self: *PxController, flag: PxControllerNonWalkableMode) -> void #foreign physx "PxController_setNonWalkableMode_mut";
 
-PxController_getNonWalkableMode :: (self: *PxController) -> s32 #foreign physx;
+PxController_getNonWalkableMode :: (self: *PxController) -> PxControllerNonWalkableMode #foreign physx;
 
 PxController_getContactOffset :: (self: *PxController) -> float #foreign physx;
 
@@ -6006,15 +8704,15 @@ PxCapsuleController_getHeight :: (self: *PxCapsuleController) -> float #foreign 
 
 PxCapsuleController_setHeight :: (self: *PxCapsuleController, height: float) -> bool #foreign physx "PxCapsuleController_setHeight_mut";
 
-PxCapsuleController_getClimbingMode :: (self: *PxCapsuleController) -> s32 #foreign physx;
+PxCapsuleController_getClimbingMode :: (self: *PxCapsuleController) -> PxCapsuleClimbingMode #foreign physx;
 
-PxCapsuleController_setClimbingMode :: (self: *PxCapsuleController, mode: s32) -> bool #foreign physx "PxCapsuleController_setClimbingMode_mut";
+PxCapsuleController_setClimbingMode :: (self: *PxCapsuleController, mode: PxCapsuleClimbingMode) -> bool #foreign physx "PxCapsuleController_setClimbingMode_mut";
 
-PxControllerBehaviorCallback_getBehaviorFlags :: (self: *PxControllerBehaviorCallback, shape: *PxShape, actor: *PxActor) -> u8 #foreign physx "PxControllerBehaviorCallback_getBehaviorFlags_mut";
+PxControllerBehaviorCallback_getBehaviorFlags :: (self: *PxControllerBehaviorCallback, shape: *PxShape, actor: *PxActor) -> PxControllerBehaviorFlags #foreign physx "PxControllerBehaviorCallback_getBehaviorFlags_mut";
 
-PxControllerBehaviorCallback_getBehaviorFlags_mut :: (self: *PxControllerBehaviorCallback, controller: *PxController) -> u8 #foreign physx "PxControllerBehaviorCallback_getBehaviorFlags_mut_1";
+PxControllerBehaviorCallback_getBehaviorFlags_mut :: (self: *PxControllerBehaviorCallback, controller: *PxController) -> PxControllerBehaviorFlags #foreign physx "PxControllerBehaviorCallback_getBehaviorFlags_mut_1";
 
-PxControllerBehaviorCallback_getBehaviorFlags_mut :: (self: *PxControllerBehaviorCallback, obstacle: *PxObstacle) -> u8 #foreign physx "PxControllerBehaviorCallback_getBehaviorFlags_mut_2";
+PxControllerBehaviorCallback_getBehaviorFlags_mut :: (self: *PxControllerBehaviorCallback, obstacle: *PxObstacle) -> PxControllerBehaviorFlags #foreign physx "PxControllerBehaviorCallback_getBehaviorFlags_mut_2";
 
 PxControllerManager_release :: (self: *PxControllerManager) -> void #foreign physx "PxControllerManager_release_mut";
 
@@ -6030,7 +8728,7 @@ PxControllerManager_purgeControllers :: (self: *PxControllerManager) -> void #fo
 
 PxControllerManager_getRenderBuffer :: (self: *PxControllerManager) -> *PxRenderBuffer #foreign physx "PxControllerManager_getRenderBuffer_mut";
 
-PxControllerManager_setDebugRenderingFlags :: (self: *PxControllerManager, flags: u32) -> void #foreign physx "PxControllerManager_setDebugRenderingFlags_mut";
+PxControllerManager_setDebugRenderingFlags :: (self: *PxControllerManager, flags: PxControllerDebugRenderFlags) -> void #foreign physx "PxControllerManager_setDebugRenderingFlags_mut";
 
 PxControllerManager_getNbObstacleContexts :: (self: *PxControllerManager) -> u32 #foreign physx;
 
@@ -6084,9 +8782,9 @@ PxBVH34MidphaseDesc_isValid :: (self: *PxBVH34MidphaseDesc) -> bool #foreign phy
 
 PxMidphaseDesc_new :: () -> PxMidphaseDesc #foreign physx;
 
-PxMidphaseDesc_getType :: (self: *PxMidphaseDesc) -> s32 #foreign physx;
+PxMidphaseDesc_getType :: (self: *PxMidphaseDesc) -> PxMeshMidPhase #foreign physx;
 
-PxMidphaseDesc_setToDefault :: (self: *PxMidphaseDesc, type: s32) -> void #foreign physx "PxMidphaseDesc_setToDefault_mut";
+PxMidphaseDesc_setToDefault :: (self: *PxMidphaseDesc, type: PxMeshMidPhase) -> void #foreign physx "PxMidphaseDesc_setToDefault_mut";
 
 PxMidphaseDesc_isValid :: (self: *PxMidphaseDesc) -> bool #foreign physx;
 
@@ -6108,9 +8806,9 @@ PxCookHeightField :: (desc: *PxHeightFieldDesc, stream: *PxOutputStream) -> bool
 
 PxCreateHeightField :: (desc: *PxHeightFieldDesc, insertionCallback: *PxInsertionCallback) -> *PxHeightField #foreign physx "phys_PxCreateHeightField";
 
-PxCookConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc, stream: *PxOutputStream, condition: *s32) -> bool #foreign physx "phys_PxCookConvexMesh";
+PxCookConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc, stream: *PxOutputStream, condition: *PxConvexMeshCookingResult) -> bool #foreign physx "phys_PxCookConvexMesh";
 
-PxCreateConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc, insertionCallback: *PxInsertionCallback, condition: *s32) -> *PxConvexMesh #foreign physx "phys_PxCreateConvexMesh";
+PxCreateConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc, insertionCallback: *PxInsertionCallback, condition: *PxConvexMeshCookingResult) -> *PxConvexMesh #foreign physx "phys_PxCreateConvexMesh";
 
 PxValidateConvexMesh :: (params: *PxCookingParams, desc: *PxConvexMeshDesc) -> bool #foreign physx "phys_PxValidateConvexMesh";
 
@@ -6118,9 +8816,9 @@ PxComputeHullPolygons :: (params: *PxCookingParams, mesh: *PxSimpleTriangleMesh,
 
 PxValidateTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc) -> bool #foreign physx "phys_PxValidateTriangleMesh";
 
-PxCreateTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc, insertionCallback: *PxInsertionCallback, condition: *s32) -> *PxTriangleMesh #foreign physx "phys_PxCreateTriangleMesh";
+PxCreateTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc, insertionCallback: *PxInsertionCallback, condition: *PxTriangleMeshCookingResult) -> *PxTriangleMesh #foreign physx "phys_PxCreateTriangleMesh";
 
-PxCookTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc, stream: *PxOutputStream, condition: *s32) -> bool #foreign physx "phys_PxCookTriangleMesh";
+PxCookTriangleMesh :: (params: *PxCookingParams, desc: *PxTriangleMeshDesc, stream: *PxOutputStream, condition: *PxTriangleMeshCookingResult) -> bool #foreign physx "phys_PxCookTriangleMesh";
 
 PxDefaultMemoryOutputStream_new_alloc :: (allocator: *PxAllocatorCallback) -> *PxDefaultMemoryOutputStream #foreign physx;
 
@@ -6178,9 +8876,9 @@ PxJoint_setActors :: (self: *PxJoint, actor0: *PxRigidActor, actor1: *PxRigidAct
 
 PxJoint_getActors :: (self: *PxJoint, actor0: **PxRigidActor, actor1: **PxRigidActor) -> void #foreign physx;
 
-PxJoint_setLocalPose :: (self: *PxJoint, actor: s32, localPose: *PxTransform) -> void #foreign physx "PxJoint_setLocalPose_mut";
+PxJoint_setLocalPose :: (self: *PxJoint, actor: PxJointActorIndex, localPose: *PxTransform) -> void #foreign physx "PxJoint_setLocalPose_mut";
 
-PxJoint_getLocalPose :: (self: *PxJoint, actor: s32) -> PxTransform #foreign physx;
+PxJoint_getLocalPose :: (self: *PxJoint, actor: PxJointActorIndex) -> PxTransform #foreign physx;
 
 PxJoint_getRelativeTransform :: (self: *PxJoint) -> PxTransform #foreign physx;
 
@@ -6192,11 +8890,11 @@ PxJoint_setBreakForce :: (self: *PxJoint, force: float, torque: float) -> void #
 
 PxJoint_getBreakForce :: (self: *PxJoint, force: *float, torque: *float) -> void #foreign physx;
 
-PxJoint_setConstraintFlags :: (self: *PxJoint, flags: u16) -> void #foreign physx "PxJoint_setConstraintFlags_mut";
+PxJoint_setConstraintFlags :: (self: *PxJoint, flags: PxConstraintFlags) -> void #foreign physx "PxJoint_setConstraintFlags_mut";
 
-PxJoint_setConstraintFlag :: (self: *PxJoint, flag: s32, value: bool) -> void #foreign physx "PxJoint_setConstraintFlag_mut";
+PxJoint_setConstraintFlag :: (self: *PxJoint, flag: PxConstraintFlag, value: bool) -> void #foreign physx "PxJoint_setConstraintFlag_mut";
 
-PxJoint_getConstraintFlags :: (self: *PxJoint) -> u16 #foreign physx;
+PxJoint_getConstraintFlags :: (self: *PxJoint) -> PxConstraintFlags #foreign physx;
 
 PxJoint_setInvMassScale0 :: (self: *PxJoint, invMassScale: float) -> void #foreign physx "PxJoint_setInvMassScale0_mut";
 
@@ -6258,11 +8956,11 @@ PxDistanceJoint_setContactDistance :: (self: *PxDistanceJoint, contactDistance: 
 
 PxDistanceJoint_getContactDistance :: (self: *PxDistanceJoint) -> float #foreign physx;
 
-PxDistanceJoint_setDistanceJointFlags :: (self: *PxDistanceJoint, flags: u16) -> void #foreign physx "PxDistanceJoint_setDistanceJointFlags_mut";
+PxDistanceJoint_setDistanceJointFlags :: (self: *PxDistanceJoint, flags: PxDistanceJointFlags) -> void #foreign physx "PxDistanceJoint_setDistanceJointFlags_mut";
 
-PxDistanceJoint_setDistanceJointFlag :: (self: *PxDistanceJoint, flag: s32, value: bool) -> void #foreign physx "PxDistanceJoint_setDistanceJointFlag_mut";
+PxDistanceJoint_setDistanceJointFlag :: (self: *PxDistanceJoint, flag: PxDistanceJointFlag, value: bool) -> void #foreign physx "PxDistanceJoint_setDistanceJointFlag_mut";
 
-PxDistanceJoint_getDistanceJointFlags :: (self: *PxDistanceJoint) -> u16 #foreign physx;
+PxDistanceJoint_getDistanceJointFlags :: (self: *PxDistanceJoint) -> PxDistanceJointFlags #foreign physx;
 
 PxDistanceJoint_getConcreteTypeName :: (self: *PxDistanceJoint) -> *u8 #foreign physx;
 
@@ -6358,11 +9056,11 @@ PxPrismaticJoint_setLimit :: (self: *PxPrismaticJoint, anon_param0: *PxJointLine
 
 PxPrismaticJoint_getLimit :: (self: *PxPrismaticJoint) -> PxJointLinearLimitPair #foreign physx;
 
-PxPrismaticJoint_setPrismaticJointFlags :: (self: *PxPrismaticJoint, flags: u16) -> void #foreign physx "PxPrismaticJoint_setPrismaticJointFlags_mut";
+PxPrismaticJoint_setPrismaticJointFlags :: (self: *PxPrismaticJoint, flags: PxPrismaticJointFlags) -> void #foreign physx "PxPrismaticJoint_setPrismaticJointFlags_mut";
 
-PxPrismaticJoint_setPrismaticJointFlag :: (self: *PxPrismaticJoint, flag: s32, value: bool) -> void #foreign physx "PxPrismaticJoint_setPrismaticJointFlag_mut";
+PxPrismaticJoint_setPrismaticJointFlag :: (self: *PxPrismaticJoint, flag: PxPrismaticJointFlag, value: bool) -> void #foreign physx "PxPrismaticJoint_setPrismaticJointFlag_mut";
 
-PxPrismaticJoint_getPrismaticJointFlags :: (self: *PxPrismaticJoint) -> u16 #foreign physx;
+PxPrismaticJoint_getPrismaticJointFlags :: (self: *PxPrismaticJoint) -> PxPrismaticJointFlags #foreign physx;
 
 PxPrismaticJoint_getConcreteTypeName :: (self: *PxPrismaticJoint) -> *u8 #foreign physx;
 
@@ -6388,11 +9086,11 @@ PxRevoluteJoint_setDriveGearRatio :: (self: *PxRevoluteJoint, ratio: float) -> v
 
 PxRevoluteJoint_getDriveGearRatio :: (self: *PxRevoluteJoint) -> float #foreign physx;
 
-PxRevoluteJoint_setRevoluteJointFlags :: (self: *PxRevoluteJoint, flags: u16) -> void #foreign physx "PxRevoluteJoint_setRevoluteJointFlags_mut";
+PxRevoluteJoint_setRevoluteJointFlags :: (self: *PxRevoluteJoint, flags: PxRevoluteJointFlags) -> void #foreign physx "PxRevoluteJoint_setRevoluteJointFlags_mut";
 
-PxRevoluteJoint_setRevoluteJointFlag :: (self: *PxRevoluteJoint, flag: s32, value: bool) -> void #foreign physx "PxRevoluteJoint_setRevoluteJointFlag_mut";
+PxRevoluteJoint_setRevoluteJointFlag :: (self: *PxRevoluteJoint, flag: PxRevoluteJointFlag, value: bool) -> void #foreign physx "PxRevoluteJoint_setRevoluteJointFlag_mut";
 
-PxRevoluteJoint_getRevoluteJointFlags :: (self: *PxRevoluteJoint) -> u16 #foreign physx;
+PxRevoluteJoint_getRevoluteJointFlags :: (self: *PxRevoluteJoint) -> PxRevoluteJointFlags #foreign physx;
 
 PxRevoluteJoint_getConcreteTypeName :: (self: *PxRevoluteJoint) -> *u8 #foreign physx;
 
@@ -6406,11 +9104,11 @@ PxSphericalJoint_getSwingYAngle :: (self: *PxSphericalJoint) -> float #foreign p
 
 PxSphericalJoint_getSwingZAngle :: (self: *PxSphericalJoint) -> float #foreign physx;
 
-PxSphericalJoint_setSphericalJointFlags :: (self: *PxSphericalJoint, flags: u16) -> void #foreign physx "PxSphericalJoint_setSphericalJointFlags_mut";
+PxSphericalJoint_setSphericalJointFlags :: (self: *PxSphericalJoint, flags: PxSphericalJointFlags) -> void #foreign physx "PxSphericalJoint_setSphericalJointFlags_mut";
 
-PxSphericalJoint_setSphericalJointFlag :: (self: *PxSphericalJoint, flag: s32, value: bool) -> void #foreign physx "PxSphericalJoint_setSphericalJointFlag_mut";
+PxSphericalJoint_setSphericalJointFlag :: (self: *PxSphericalJoint, flag: PxSphericalJointFlag, value: bool) -> void #foreign physx "PxSphericalJoint_setSphericalJointFlag_mut";
 
-PxSphericalJoint_getSphericalJointFlags :: (self: *PxSphericalJoint) -> u16 #foreign physx;
+PxSphericalJoint_getSphericalJointFlags :: (self: *PxSphericalJoint) -> PxSphericalJointFlags #foreign physx;
 
 PxSphericalJoint_getConcreteTypeName :: (self: *PxSphericalJoint) -> *u8 #foreign physx;
 
@@ -6422,9 +9120,9 @@ PxD6JointDrive_new :: (driveStiffness: float, driveDamping: float, driveForceLim
 
 PxD6JointDrive_isValid :: (self: *PxD6JointDrive) -> bool #foreign physx;
 
-PxD6Joint_setMotion :: (self: *PxD6Joint, axis: s32, type: s32) -> void #foreign physx "PxD6Joint_setMotion_mut";
+PxD6Joint_setMotion :: (self: *PxD6Joint, axis: PxD6Axis, type: PxD6Motion) -> void #foreign physx "PxD6Joint_setMotion_mut";
 
-PxD6Joint_getMotion :: (self: *PxD6Joint, axis: s32) -> s32 #foreign physx;
+PxD6Joint_getMotion :: (self: *PxD6Joint, axis: PxD6Axis) -> PxD6Motion #foreign physx;
 
 PxD6Joint_getTwistAngle :: (self: *PxD6Joint) -> float #foreign physx;
 
@@ -6436,9 +9134,9 @@ PxD6Joint_setDistanceLimit :: (self: *PxD6Joint, limit: *PxJointLinearLimit) -> 
 
 PxD6Joint_getDistanceLimit :: (self: *PxD6Joint) -> PxJointLinearLimit #foreign physx;
 
-PxD6Joint_setLinearLimit :: (self: *PxD6Joint, axis: s32, limit: *PxJointLinearLimitPair) -> void #foreign physx "PxD6Joint_setLinearLimit_mut";
+PxD6Joint_setLinearLimit :: (self: *PxD6Joint, axis: PxD6Axis, limit: *PxJointLinearLimitPair) -> void #foreign physx "PxD6Joint_setLinearLimit_mut";
 
-PxD6Joint_getLinearLimit :: (self: *PxD6Joint, axis: s32) -> PxJointLinearLimitPair #foreign physx;
+PxD6Joint_getLinearLimit :: (self: *PxD6Joint, axis: PxD6Axis) -> PxJointLinearLimitPair #foreign physx;
 
 PxD6Joint_setTwistLimit :: (self: *PxD6Joint, limit: *PxJointAngularLimitPair) -> void #foreign physx "PxD6Joint_setTwistLimit_mut";
 
@@ -6452,9 +9150,9 @@ PxD6Joint_setPyramidSwingLimit :: (self: *PxD6Joint, limit: *PxJointLimitPyramid
 
 PxD6Joint_getPyramidSwingLimit :: (self: *PxD6Joint) -> PxJointLimitPyramid #foreign physx;
 
-PxD6Joint_setDrive :: (self: *PxD6Joint, index: s32, drive: *PxD6JointDrive) -> void #foreign physx "PxD6Joint_setDrive_mut";
+PxD6Joint_setDrive :: (self: *PxD6Joint, index: PxD6Drive, drive: *PxD6JointDrive) -> void #foreign physx "PxD6Joint_setDrive_mut";
 
-PxD6Joint_getDrive :: (self: *PxD6Joint, index: s32) -> PxD6JointDrive #foreign physx;
+PxD6Joint_getDrive :: (self: *PxD6Joint, index: PxD6Drive) -> PxD6JointDrive #foreign physx;
 
 PxD6Joint_setDrivePosition :: (self: *PxD6Joint, pose: *PxTransform, autowake: bool) -> void #foreign physx "PxD6Joint_setDrivePosition_mut";
 
@@ -6500,7 +9198,7 @@ PxGroupsMask_new_alloc :: () -> *PxGroupsMask #foreign physx;
 
 PxGroupsMask_delete :: (self: *PxGroupsMask) -> void #foreign physx;
 
-PxDefaultSimulationFilterShader :: (attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, pairFlags: *u16, constantBlock: *void, constantBlockSize: u32) -> u16 #foreign physx "phys_PxDefaultSimulationFilterShader";
+PxDefaultSimulationFilterShader :: (attributes0: u32, filterData0: PxFilterData, attributes1: u32, filterData1: PxFilterData, pairFlags: *PxPairFlags, constantBlock: *void, constantBlockSize: u32) -> PxFilterFlags #foreign physx "phys_PxDefaultSimulationFilterShader";
 
 PxGetGroupCollisionFlag :: (group1: u16, group2: u16) -> bool #foreign physx "phys_PxGetGroupCollisionFlag";
 
@@ -6510,9 +9208,9 @@ PxGetGroup :: (actor: *PxActor) -> u16 #foreign physx "phys_PxGetGroup";
 
 PxSetGroup :: (actor: *PxActor, collisionGroup: u16) -> void #foreign physx "phys_PxSetGroup";
 
-PxGetFilterOps :: (op0: *s32, op1: *s32, op2: *s32) -> void #foreign physx "phys_PxGetFilterOps";
+PxGetFilterOps :: (op0: *PxFilterOp, op1: *PxFilterOp, op2: *PxFilterOp) -> void #foreign physx "phys_PxGetFilterOps";
 
-PxSetFilterOps :: (op0: *s32, op1: *s32, op2: *s32) -> void #foreign physx "phys_PxSetFilterOps";
+PxSetFilterOps :: (op0: *PxFilterOp, op1: *PxFilterOp, op2: *PxFilterOp) -> void #foreign physx "phys_PxSetFilterOps";
 
 PxGetFilterBool :: () -> bool #foreign physx "phys_PxGetFilterBool";
 
@@ -6530,11 +9228,11 @@ PxDefaultErrorCallback_new_alloc :: () -> *PxDefaultErrorCallback #foreign physx
 
 PxDefaultErrorCallback_delete :: (self: *PxDefaultErrorCallback) -> void #foreign physx;
 
-PxDefaultErrorCallback_reportError :: (self: *PxDefaultErrorCallback, code: s32, message: *u8, file: *u8, line: s32) -> void #foreign physx "PxDefaultErrorCallback_reportError_mut";
+PxDefaultErrorCallback_reportError :: (self: *PxDefaultErrorCallback, code: PxErrorCode, message: *u8, file: *u8, line: s32) -> void #foreign physx "PxDefaultErrorCallback_reportError_mut";
 
-PxRigidActorExt_createExclusiveShape :: (actor: *PxRigidActor, geometry: *PxGeometry, materials: **PxMaterial, materialCount: u16, shapeFlags: u8) -> *PxShape #foreign physx;
+PxRigidActorExt_createExclusiveShape :: (actor: *PxRigidActor, geometry: *PxGeometry, materials: **PxMaterial, materialCount: u16, shapeFlags: PxShapeFlags) -> *PxShape #foreign physx;
 
-PxRigidActorExt_createExclusiveShape :: (actor: *PxRigidActor, geometry: *PxGeometry, material: *PxMaterial, shapeFlags: u8) -> *PxShape #foreign physx "PxRigidActorExt_createExclusiveShape_1";
+PxRigidActorExt_createExclusiveShape :: (actor: *PxRigidActor, geometry: *PxGeometry, material: *PxMaterial, shapeFlags: PxShapeFlags) -> *PxShape #foreign physx "PxRigidActorExt_createExclusiveShape_1";
 
 PxRigidActorExt_getRigidActorShapeLocalBoundsList :: (actor: *PxRigidActor, numBounds: *u32) -> *PxBounds3 #foreign physx;
 
@@ -6568,13 +9266,13 @@ PxRigidBodyExt_setMassAndUpdateInertia :: (body: *PxRigidBody, mass: float, mass
 
 PxRigidBodyExt_computeMassPropertiesFromShapes :: (shapes: **PxShape, shapeCount: u32) -> PxMassProperties #foreign physx;
 
-PxRigidBodyExt_addForceAtPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx;
+PxRigidBodyExt_addForceAtPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: PxForceMode, wakeup: bool) -> void #foreign physx;
 
-PxRigidBodyExt_addForceAtLocalPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx;
+PxRigidBodyExt_addForceAtLocalPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: PxForceMode, wakeup: bool) -> void #foreign physx;
 
-PxRigidBodyExt_addLocalForceAtPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx;
+PxRigidBodyExt_addLocalForceAtPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: PxForceMode, wakeup: bool) -> void #foreign physx;
 
-PxRigidBodyExt_addLocalForceAtLocalPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: s32, wakeup: bool) -> void #foreign physx;
+PxRigidBodyExt_addLocalForceAtLocalPos :: (body: *PxRigidBody, force: *Vector3, pos: *Vector3, mode: PxForceMode, wakeup: bool) -> void #foreign physx;
 
 PxRigidBodyExt_getVelocityAtPos :: (body: *PxRigidBody, pos: *Vector3) -> Vector3 #foreign physx;
 
@@ -6588,17 +9286,17 @@ PxRigidBodyExt_computeVelocityDeltaFromImpulse :: (body: *PxRigidBody, globalPos
 
 PxRigidBodyExt_computeLinearAngularImpulse :: (body: *PxRigidBody, globalPose: *PxTransform, point: *Vector3, impulse: *Vector3, invMassScale: float, invInertiaScale: float, linearImpulse: *Vector3, angularImpulse: *Vector3) -> void #foreign physx;
 
-PxRigidBodyExt_linearSweepSingle :: (body: *PxRigidBody, scene: *PxScene, unitDir: *Vector3, distance: float, outputFlags: u16, closestHit: *PxSweepHit, shapeIndex: *u32, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign physx;
+PxRigidBodyExt_linearSweepSingle :: (body: *PxRigidBody, scene: *PxScene, unitDir: *Vector3, distance: float, outputFlags: PxHitFlags, closestHit: *PxSweepHit, shapeIndex: *u32, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign physx;
 
-PxRigidBodyExt_linearSweepMultiple :: (body: *PxRigidBody, scene: *PxScene, unitDir: *Vector3, distance: float, outputFlags: u16, touchHitBuffer: *PxSweepHit, touchHitShapeIndices: *u32, touchHitBufferSize: u32, block: *PxSweepHit, blockingShapeIndex: *s32, overflow: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> u32 #foreign physx;
+PxRigidBodyExt_linearSweepMultiple :: (body: *PxRigidBody, scene: *PxScene, unitDir: *Vector3, distance: float, outputFlags: PxHitFlags, touchHitBuffer: *PxSweepHit, touchHitShapeIndices: *u32, touchHitBufferSize: u32, block: *PxSweepHit, blockingShapeIndex: *s32, overflow: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> u32 #foreign physx;
 
 PxShapeExt_getGlobalPose :: (shape: *PxShape, actor: *PxRigidActor) -> PxTransform #foreign physx;
 
-PxShapeExt_raycast :: (shape: *PxShape, actor: *PxRigidActor, rayOrigin: *Vector3, rayDir: *Vector3, maxDist: float, hitFlags: u16, maxHits: u32, rayHits: *PxRaycastHit) -> u32 #foreign physx;
+PxShapeExt_raycast :: (shape: *PxShape, actor: *PxRigidActor, rayOrigin: *Vector3, rayDir: *Vector3, maxDist: float, hitFlags: PxHitFlags, maxHits: u32, rayHits: *PxRaycastHit) -> u32 #foreign physx;
 
 PxShapeExt_overlap :: (shape: *PxShape, actor: *PxRigidActor, otherGeom: *PxGeometry, otherGeomPose: *PxTransform) -> bool #foreign physx;
 
-PxShapeExt_sweep :: (shape: *PxShape, actor: *PxRigidActor, unitDir: *Vector3, distance: float, otherGeom: *PxGeometry, otherGeomPose: *PxTransform, sweepHit: *PxSweepHit, hitFlags: u16) -> bool #foreign physx;
+PxShapeExt_sweep :: (shape: *PxShape, actor: *PxRigidActor, unitDir: *Vector3, distance: float, otherGeom: *PxGeometry, otherGeomPose: *PxTransform, sweepHit: *PxSweepHit, hitFlags: PxHitFlags) -> bool #foreign physx;
 
 PxShapeExt_getWorldBounds :: (shape: *PxShape, actor: *PxRigidActor, inflation: float) -> PxBounds3 #foreign physx;
 
@@ -6644,7 +9342,7 @@ PxDefaultCpuDispatcher_setRunProfiled :: (self: *PxDefaultCpuDispatcher, runProf
 
 PxDefaultCpuDispatcher_getRunProfiled :: (self: *PxDefaultCpuDispatcher) -> bool #foreign physx;
 
-PxDefaultCpuDispatcherCreate :: (numThreads: u32, affinityMasks: *u32, mode: s32, yieldProcessorCount: u32) -> *PxDefaultCpuDispatcher #foreign physx "phys_PxDefaultCpuDispatcherCreate";
+PxDefaultCpuDispatcherCreate :: (numThreads: u32, affinityMasks: *u32, mode: PxDefaultCpuDispatcherWaitForWorkMode, yieldProcessorCount: u32) -> *PxDefaultCpuDispatcher #foreign physx "phys_PxDefaultCpuDispatcherCreate";
 
 PxBuildSmoothNormals :: (nbTris: u32, nbVerts: u32, verts: *Vector3, dFaces: *u32, wFaces: *u16, normals: *Vector3, flip: bool) -> bool #foreign physx "phys_PxBuildSmoothNormals";
 
@@ -6676,15 +9374,15 @@ PxBroadPhaseExt_createRegionsFromWorldBounds :: (regions: *PxBounds3, globalBoun
 
 PxSceneQueryExt_raycastAny :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, hit: *PxQueryHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> bool #foreign physx;
 
-PxSceneQueryExt_raycastSingle :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: u16, hit: *PxRaycastHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> bool #foreign physx;
+PxSceneQueryExt_raycastSingle :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: PxHitFlags, hit: *PxRaycastHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> bool #foreign physx;
 
-PxSceneQueryExt_raycastMultiple :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: u16, hitBuffer: *PxRaycastHit, hitBufferSize: u32, blockingHit: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> s32 #foreign physx;
+PxSceneQueryExt_raycastMultiple :: (scene: *PxScene, origin: *Vector3, unitDir: *Vector3, distance: float, outputFlags: PxHitFlags, hitBuffer: *PxRaycastHit, hitBufferSize: u32, blockingHit: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache) -> s32 #foreign physx;
 
-PxSceneQueryExt_sweepAny :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, queryFlags: u16, hit: *PxQueryHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign physx;
+PxSceneQueryExt_sweepAny :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, queryFlags: PxHitFlags, hit: *PxQueryHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign physx;
 
-PxSceneQueryExt_sweepSingle :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, outputFlags: u16, hit: *PxSweepHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign physx;
+PxSceneQueryExt_sweepSingle :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, outputFlags: PxHitFlags, hit: *PxSweepHit, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> bool #foreign physx;
 
-PxSceneQueryExt_sweepMultiple :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, outputFlags: u16, hitBuffer: *PxSweepHit, hitBufferSize: u32, blockingHit: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> s32 #foreign physx;
+PxSceneQueryExt_sweepMultiple :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, outputFlags: PxHitFlags, hitBuffer: *PxSweepHit, hitBufferSize: u32, blockingHit: *bool, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback, cache: *PxQueryCache, inflation: float) -> s32 #foreign physx;
 
 PxSceneQueryExt_overlapMultiple :: (scene: *PxScene, geometry: *PxGeometry, pose: *PxTransform, hitBuffer: *PxOverlapHit, hitBufferSize: u32, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback) -> s32 #foreign physx;
 
@@ -6692,9 +9390,9 @@ PxSceneQueryExt_overlapAny :: (scene: *PxScene, geometry: *PxGeometry, pose: *Px
 
 PxBatchQueryExt_release :: (self: *PxBatchQueryExt) -> void #foreign physx "PxBatchQueryExt_release_mut";
 
-PxBatchQueryExt_raycast :: (self: *PxBatchQueryExt, origin: *Vector3, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: u16, filterData: *PxQueryFilterData, cache: *PxQueryCache) -> *PxRaycastBuffer #foreign physx "PxBatchQueryExt_raycast_mut";
+PxBatchQueryExt_raycast :: (self: *PxBatchQueryExt, origin: *Vector3, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: PxHitFlags, filterData: *PxQueryFilterData, cache: *PxQueryCache) -> *PxRaycastBuffer #foreign physx "PxBatchQueryExt_raycast_mut";
 
-PxBatchQueryExt_sweep :: (self: *PxBatchQueryExt, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: u16, filterData: *PxQueryFilterData, cache: *PxQueryCache, inflation: float) -> *PxSweepBuffer #foreign physx "PxBatchQueryExt_sweep_mut";
+PxBatchQueryExt_sweep :: (self: *PxBatchQueryExt, geometry: *PxGeometry, pose: *PxTransform, unitDir: *Vector3, distance: float, maxNbTouches: u16, hitFlags: PxHitFlags, filterData: *PxQueryFilterData, cache: *PxQueryCache, inflation: float) -> *PxSweepBuffer #foreign physx "PxBatchQueryExt_sweep_mut";
 
 PxBatchQueryExt_overlap :: (self: *PxBatchQueryExt, geometry: *PxGeometry, pose: *PxTransform, maxNbTouches: u16, filterData: *PxQueryFilterData, cache: *PxQueryCache) -> *PxOverlapBuffer #foreign physx "PxBatchQueryExt_overlap_mut";
 
@@ -6706,7 +9404,7 @@ PxCreateBatchQueryExt_1 :: (scene: *PxScene, queryFilterCallback: *PxQueryFilter
 
 PxCreateExternalSceneQuerySystem :: (desc: *PxSceneQueryDesc, contextID: u64) -> *PxSceneQuerySystem #foreign physx "phys_PxCreateExternalSceneQuerySystem";
 
-PxCustomSceneQuerySystem_addPruner :: (self: *PxCustomSceneQuerySystem, primaryType: s32, secondaryType: s32, preallocated: u32) -> u32 #foreign physx "PxCustomSceneQuerySystem_addPruner_mut";
+PxCustomSceneQuerySystem_addPruner :: (self: *PxCustomSceneQuerySystem, primaryType: PxPruningStructureType, secondaryType: PxDynamicTreeSecondaryPruner, preallocated: u32) -> u32 #foreign physx "PxCustomSceneQuerySystem_addPruner_mut";
 
 PxCustomSceneQuerySystem_startCustomBuildstep :: (self: *PxCustomSceneQuerySystem) -> u32 #foreign physx "PxCustomSceneQuerySystem_startCustomBuildstep_mut";
 
@@ -6720,7 +9418,7 @@ PxCustomSceneQuerySystemAdapter_getPrunerIndex :: (self: *PxCustomSceneQuerySyst
 
 PxCustomSceneQuerySystemAdapter_processPruner :: (self: *PxCustomSceneQuerySystemAdapter, prunerIndex: u32, context_pod: *PxQueryThreadContext, filterData: *PxQueryFilterData, filterCall: *PxQueryFilterCallback) -> bool #foreign physx;
 
-PxCreateCustomSceneQuerySystem :: (sceneQueryUpdateMode: s32, contextID: u64, adapter: *PxCustomSceneQuerySystemAdapter, usesTreeOfPruners: bool) -> *PxCustomSceneQuerySystem #foreign physx "phys_PxCreateCustomSceneQuerySystem";
+PxCreateCustomSceneQuerySystem :: (sceneQueryUpdateMode: PxSceneQueryUpdateMode, contextID: u64, adapter: *PxCustomSceneQuerySystemAdapter, usesTreeOfPruners: bool) -> *PxCustomSceneQuerySystem #foreign physx "phys_PxCreateCustomSceneQuerySystem";
 
 PxFindFaceIndex :: (convexGeom: *PxConvexMeshGeometry, geomPose: *PxTransform, impactPos: *Vector3, unitDir: *Vector3) -> u32 #foreign physx "phys_PxFindFaceIndex";
 
@@ -6760,7 +9458,7 @@ PxRepXSerializer_objectToFile :: (self: *PxRepXSerializer, inLiveObject: *PxRepX
 
 PxRepXSerializer_fileToObject :: (self: *PxRepXSerializer, inReader: *XmlReader, inAllocator: *XmlMemoryAllocator, inArgs: *PxRepXInstantiationArgs, inCollection: *PxCollection) -> PxRepXObject #foreign physx "PxRepXSerializer_fileToObject_mut";
 
-PxPvd_connect :: (self: *PxPvd, transport: *PxPvdTransport, flags: u8) -> bool #foreign physx "PxPvd_connect_mut";
+PxPvd_connect :: (self: *PxPvd, transport: *PxPvdTransport, flags: PxPvdInstrumentationFlags) -> bool #foreign physx "PxPvd_connect_mut";
 
 PxPvd_disconnect :: (self: *PxPvd) -> void #foreign physx "PxPvd_disconnect_mut";
 
@@ -6768,7 +9466,7 @@ PxPvd_isConnected :: (self: *PxPvd, useCachedStatus: bool) -> bool #foreign phys
 
 PxPvd_getTransport :: (self: *PxPvd) -> *PxPvdTransport #foreign physx "PxPvd_getTransport_mut";
 
-PxPvd_getInstrumentationFlags :: (self: *PxPvd) -> u8 #foreign physx "PxPvd_getInstrumentationFlags_mut";
+PxPvd_getInstrumentationFlags :: (self: *PxPvd) -> PxPvdInstrumentationFlags #foreign physx "PxPvd_getInstrumentationFlags_mut";
 
 PxPvd_release :: (self: *PxPvd) -> void #foreign physx "PxPvd_release_mut";
 
@@ -6989,6 +9687,6 @@ PxAssertHandler_opCall :: (self: *PxErrorCallback, expr: *u8, file: *u8, line: s
 
 #scope_file
 
-physx :: #library "windows/physx";
+physx :: #library,no_dll "windows/physx";
 #import "Math";
 #import "Socket";

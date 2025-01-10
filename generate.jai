@@ -60,12 +60,15 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
 
 #import "Bindings_Generator";
 #import "Basic";
+#import "Compiler";
 #import "File";
 #import "String";
 #import "BuildCpp";
 #import "File_Utilities";
 
 #run {
+    set_build_options_dc(.{do_output=false});
+
     using opts: Generate_Bindings_Options;
     // array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
 
@@ -200,7 +203,7 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
     opts.visitor = (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Visit_Result {
         filename_clang := clang_getFileName(decl.location.file);
         defer clang_disposeString(filename_clang);
-        filename := to_lower_copy_new(to_string(clang_getCString(filename_clang)),, temp);
+        filename := to_lower_copy(to_string(clang_getCString(filename_clang)),, temp);
 
         // things to allow through no matter what, but it won't recurse to these necessarily since I stop in some cases
         okay_things :: string.[
@@ -303,10 +306,36 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
             decl.output_name = output_name;
         }
 
+        // Marks flag types as enum_flags
+        if decl.kind == .ENUM && ends_with(decl.name, "Flags") {
+            en := cast(*Enum, decl);
+
+            en.flags |= .IS_ENUM_FLAGS;
+            en.flags |= .VALUES_IN_HEX;
+        }
+
+        // Trim the enum name off the enumerate where there's only one.
+        // Maybe a Bindings_Generator @Bug?
+        if decl.kind == .ENUM {
+            en := cast(*Enum, decl);
+
+            if en.enumerates.count == 1 {
+                enumerate := *en.enumerates[0];
+
+                decl_stripped := decl.name;
+                decl_stripped.data += 6;
+                decl_stripped.count -= 6;
+                if starts_with(decl.name, "physx_") && starts_with(enumerate.name, decl_stripped) {
+                    enumerate.output_name.data += decl_stripped.count + 1;
+                    enumerate.output_name.count -= decl_stripped.count + 1;
+
+                    print("%: % -> %\n", decl.name, enumerate.name, enumerate.output_name);
+                }
+            }
+        }
+
         return .RECURSE;
     };
-
-    header = read_entire_file("generate_enums.jai");
 
     footer = #string ___jai
 #import "Math";

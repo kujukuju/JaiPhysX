@@ -42,6 +42,32 @@ impl<'ast> EnumBinding<'ast> {
         writesln!(w, "{indent}}}");
     }
 
+    pub fn emit_cpp(&self, w: &mut String, level: u32) {
+        if let Some(com) = &self.comment {
+            com.emit_rust(w, level);
+        }
+
+        let indent = Indent(level);
+        let indent1 = Indent(level + 1);
+        writesln!(w, "{indent}enum physx_{} : {} {{", self.name, self.repr.c_type());
+
+        for var in &self.variants {
+            if let Some(com) = &var.comment {
+                com.emit_rust(w, level + 1); // Same as cpp, so this is actually fine.
+            }
+
+            writesln!(
+                w,
+                "{indent1}{}_{} = {},",
+                self.name,
+                fix_variant_name(var.name),
+                var.value
+            );
+        }
+
+        writesln!(w, "{indent}}};");
+    }
+
     pub fn emit_rust_conversion(&self, w: &mut String, level: u32, from: Builtin, default: &str) {
         let indent = Indent(level);
         let indent1 = Indent(level + 1);
@@ -140,5 +166,77 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
         }
 
         writesln!(w, "{indent1}}}\n{indent}}}");
+    }
+
+    pub fn emit_cpp(&self, enum_binding: &EnumBinding<'ast>, w: &mut String, level: u32) {
+        let indent = Indent(level);
+        let indent1 = Indent(level + 1);
+        writesln!(w, "{indent}enum physx_{} : {} {{", self.name, self.storage_type.c_type());
+
+        // Since C declaration order matters, we do the non-combined flag variants first,
+        // then we do the combined versions afterwards.
+        
+        for var in &enum_binding.variants {
+            // If used as flags, ignore emitting any zero value, see
+            // https://docs.rs/bitflags/1.3.2/bitflags/#zero-flags
+            if var.value == 0 {
+                continue;
+            }
+
+
+            // Since bitflags are made up of power of 2 values that can
+            // be combined, and the PhysX API sometimes defines named
+            // combinations of flags, reconstruct the bitflags to be
+            // easier to read
+            let val = var.value as u64;
+            if val & (val - 1) == 0 {
+                writes!(w, "{indent1}{}_{} = ", self.name, fix_variant_name(var.name));
+                writes!(w, "1 << {}", val.ilog2());
+                writesln!(w, ",");
+            }
+
+        }
+
+        for var in &enum_binding.variants {
+            if var.value == 0 {
+                continue;
+            }
+
+            let val = var.value as u64;
+            if val & (val - 1) != 0 {
+                writes!(w, "{indent1}{}_{} = ", self.name, fix_variant_name(var.name));
+
+                let mut is_combo = false;
+                // If we're not a power of 2, we're a combination of flags,
+                // find which ones and emit them in a friendly way
+                for (i, which) in enum_binding
+                    .variants
+                    .iter()
+                    .filter_map(|var| {
+                        let prev = var.value as u64;
+                        (prev & (prev - 1) == 0 && (prev & val) != 0).then_some(var.name)
+                    })
+                    .enumerate()
+                {
+                    is_combo = true;
+                    if i > 0 {
+                        writes!(w, " | ");
+                    }
+
+                    writes!(w, "{}_{}", self.name, fix_variant_name(which));
+                }
+
+                // There are a couple of cases where they're not combos, so just
+                // emit the raw value
+                if !is_combo {
+                    writes!(w, "0x{val:08x}");
+                }
+
+                writesln!(w, ",");
+            }
+
+        }
+
+        writesln!(w, "{indent}}};");
     }
 }

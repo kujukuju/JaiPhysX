@@ -985,8 +985,8 @@ impl<'qt, 'ast> fmt::Display for CType<'qt, 'ast> {
             QualType::Array { element, len } => {
                 panic!("C array `{}[{len}]` breaks the pattern of every other type by have elements on both sides of an identifier", element.c_type());
             }
-            QualType::Enum { repr, .. } | QualType::Flags { repr, .. } => {
-                f.write_str(repr.c_type())
+            QualType::Enum { name, .. } | QualType::Flags { name, .. } => {
+                write!(f, "physx_{}", name)
             }
             QualType::Record { name } => write!(f, "physx_{name}"),
             QualType::TemplateTypedef { name } => write!(f, "physx_{name}"),
