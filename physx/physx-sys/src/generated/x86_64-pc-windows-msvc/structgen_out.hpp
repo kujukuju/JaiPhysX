@@ -364,7 +364,7 @@ struct physx_PxConvexMeshGeometry {
     physx_PxMeshScale scale;
     char structgen_pad1[4];
     physx_PxConvexMesh* convexMesh;
-    uint8_t meshFlags;
+    physx_PxConvexMeshGeometryFlags meshFlags;
     char structgen_pad2[7];
 };
 struct physx_PxSphereGeometry {
@@ -380,7 +380,7 @@ struct physx_PxTriangleMeshGeometry {
     char structgen_pad0[4];
     float mTypePadding;
     physx_PxMeshScale scale;
-    uint8_t meshFlags;
+    physx_PxMeshGeometryFlags meshFlags;
     char structgen_pad1[3];
     physx_PxTriangleMesh* triangleMesh;
 };
@@ -391,13 +391,13 @@ struct physx_PxHeightFieldGeometry {
     float heightScale;
     float rowScale;
     float columnScale;
-    uint8_t heightFieldFlags;
+    physx_PxMeshGeometryFlags heightFieldFlags;
     char structgen_pad1[3];
 };
 struct physx_PxParticleSystemGeometry {
     char structgen_pad0[4];
     float mTypePadding;
-    int32_t mSolverType;
+    physx_PxParticleSolverType mSolverType;
 };
 struct physx_PxHairSystemGeometry {
     char structgen_pad0[4];
@@ -413,7 +413,7 @@ struct physx_PxQueryHit {
 };
 struct physx_PxLocationHit {
     uint32_t faceIndex;
-    uint16_t flags;
+    physx_PxHitFlags flags;
     char structgen_pad0[2];
     physx_PxVec3 position;
     physx_PxVec3 normal;
@@ -421,7 +421,7 @@ struct physx_PxLocationHit {
 };
 struct physx_PxGeomRaycastHit {
     uint32_t faceIndex;
-    uint16_t flags;
+    physx_PxHitFlags flags;
     char structgen_pad0[2];
     physx_PxVec3 position;
     physx_PxVec3 normal;
@@ -434,7 +434,7 @@ struct physx_PxGeomOverlapHit {
 };
 struct physx_PxGeomSweepHit {
     uint32_t faceIndex;
-    uint16_t flags;
+    physx_PxHitFlags flags;
     char structgen_pad0[2];
     physx_PxVec3 position;
     physx_PxVec3 normal;
@@ -479,11 +479,11 @@ struct physx_PxHeightField {
 struct physx_PxHeightFieldDesc {
     uint32_t nbRows;
     uint32_t nbColumns;
-    int32_t format;
+    physx_PxHeightFieldFormat format;
     char structgen_pad0[4];
     physx_PxStridedData samples;
     float convexEdgeThreshold;
-    uint16_t flags;
+    physx_PxHeightFieldFlags flags;
     char structgen_pad1[2];
 };
 struct physx_PxTriangle;
@@ -493,7 +493,7 @@ struct physx_PxMeshQuery {
 struct physx_PxSimpleTriangleMesh {
     physx_PxBoundedData points;
     physx_PxBoundedData triangles;
-    uint16_t flags;
+    physx_PxMeshFlags flags;
     char structgen_pad0[6];
 };
 struct physx_PxTriangle {
@@ -652,8 +652,8 @@ struct physx_PxSolverConstraintPrepDescBase {
     physx_PxSolverBodyData const* data1;
     physx_PxTransform bodyFrame0;
     physx_PxTransform bodyFrame1;
-    int32_t bodyState0;
-    int32_t bodyState1;
+    physx_BodyState bodyState0;
+    physx_BodyState bodyState1;
     char structgen_pad0[8];
 };
 struct physx_PxSolverConstraintPrepDesc {
@@ -665,8 +665,8 @@ struct physx_PxSolverConstraintPrepDesc {
     physx_PxSolverBodyData const* data1;
     physx_PxTransform bodyFrame0;
     physx_PxTransform bodyFrame1;
-    int32_t bodyState0;
-    int32_t bodyState1;
+    physx_BodyState bodyState0;
+    physx_BodyState bodyState1;
     char structgen_pad0[8];
     physx_Px1DConstraint* rows;
     uint32_t numRows;
@@ -692,8 +692,8 @@ struct physx_PxSolverContactDesc {
     physx_PxSolverBodyData const* data1;
     physx_PxTransform bodyFrame0;
     physx_PxTransform bodyFrame1;
-    int32_t bodyState0;
-    int32_t bodyState1;
+    physx_BodyState bodyState0;
+    physx_BodyState bodyState1;
     char structgen_pad0[8];
     void* shapeInteraction;
     physx_PxContactPoint* contacts;
@@ -727,7 +727,7 @@ struct physx_PxArticulationDrive {
     float stiffness;
     float damping;
     float maxForce;
-    int32_t driveType;
+    physx_PxArticulationDriveType driveType;
 };
 struct physx_PxTGSSolverBodyVel {
     physx_PxVec3 linearVelocity;
@@ -767,8 +767,8 @@ struct physx_PxTGSSolverConstraintPrepDescBase {
     physx_PxTGSSolverBodyData const* bodyData1;
     physx_PxTransform bodyFrame0;
     physx_PxTransform bodyFrame1;
-    int32_t bodyState0;
-    int32_t bodyState1;
+    physx_BodyState bodyState0;
+    physx_BodyState bodyState1;
     char structgen_pad0[8];
 };
 struct physx_PxTGSSolverConstraintPrepDesc {
@@ -782,8 +782,8 @@ struct physx_PxTGSSolverConstraintPrepDesc {
     physx_PxTGSSolverBodyData const* bodyData1;
     physx_PxTransform bodyFrame0;
     physx_PxTransform bodyFrame1;
-    int32_t bodyState0;
-    int32_t bodyState1;
+    physx_BodyState bodyState0;
+    physx_BodyState bodyState1;
     char structgen_pad0[8];
     physx_Px1DConstraint* rows;
     uint32_t numRows;
@@ -813,8 +813,8 @@ struct physx_PxTGSSolverContactDesc {
     physx_PxTGSSolverBodyData const* bodyData1;
     physx_PxTransform bodyFrame0;
     physx_PxTransform bodyFrame1;
-    int32_t bodyState0;
-    int32_t bodyState1;
+    physx_BodyState bodyState0;
+    physx_BodyState bodyState1;
     char structgen_pad0[8];
     void* shapeInteraction;
     physx_PxContactPoint* contacts;
@@ -952,7 +952,7 @@ struct physx_PxConstraintShaderTable {
     void * solverPrep;
     char structgen_pad0[8];
     void * visualize;
-    int32_t flag;
+    physx_PxConstraintFlag flag;
     char structgen_pad1[4];
 };
 struct physx_PxConstraint {
@@ -1015,7 +1015,7 @@ struct physx_PxContactStreamIterator {
     uint32_t nextPatchIndex;
     uint32_t contactPatchHeaderSize;
     uint32_t contactPointSize;
-    int32_t mStreamFormat;
+    physx_StreamFormat mStreamFormat;
     uint32_t forceNoResponse;
     bool pointStepped;
     char structgen_pad1[3];
@@ -1129,7 +1129,7 @@ struct physx_PxActorShape {
 };
 struct physx_PxRaycastHit {
     uint32_t faceIndex;
-    uint16_t flags;
+    physx_PxHitFlags flags;
     char structgen_pad0[2];
     physx_PxVec3 position;
     physx_PxVec3 normal;
@@ -1148,7 +1148,7 @@ struct physx_PxOverlapHit {
 };
 struct physx_PxSweepHit {
     uint32_t faceIndex;
-    uint16_t flags;
+    physx_PxHitFlags flags;
     char structgen_pad0[2];
     physx_PxVec3 position;
     physx_PxVec3 normal;
@@ -1219,7 +1219,7 @@ struct physx_PxQueryCache {
 };
 struct physx_PxQueryFilterData {
     physx_PxFilterData data;
-    uint16_t flags;
+    physx_PxQueryFlags flags;
     char structgen_pad0[2];
 };
 struct physx_PxQueryFilterCallback {
@@ -1235,15 +1235,15 @@ struct physx_PxRigidStatic {
 };
 struct physx_PxSceneQuerySystem;
 struct physx_PxSceneQueryDesc {
-    int32_t staticStructure;
-    int32_t dynamicStructure;
+    physx_PxPruningStructureType staticStructure;
+    physx_PxPruningStructureType dynamicStructure;
     uint32_t dynamicTreeRebuildRateHint;
-    int32_t dynamicTreeSecondaryPruner;
-    int32_t staticBVHBuildStrategy;
-    int32_t dynamicBVHBuildStrategy;
+    physx_PxDynamicTreeSecondaryPruner dynamicTreeSecondaryPruner;
+    physx_PxBVHBuildStrategy staticBVHBuildStrategy;
+    physx_PxBVHBuildStrategy dynamicBVHBuildStrategy;
     uint32_t staticNbObjectsPerNode;
     uint32_t dynamicNbObjectsPerNode;
-    int32_t sceneQueryUpdateMode;
+    physx_PxSceneQueryUpdateMode sceneQueryUpdateMode;
 };
 struct physx_PxSceneQuerySystemBase {
     void* vtable_;
@@ -1270,7 +1270,7 @@ struct physx_PxBroadPhaseCaps {
     uint32_t mMaxNbRegions;
 };
 struct physx_PxBroadPhaseDesc {
-    int32_t mType;
+    physx_PxBroadPhaseType mType;
     char structgen_pad0[4];
     uint64_t mContextID;
     char structgen_pad1[8];
@@ -1343,15 +1343,15 @@ struct physx_PxgDynamicsMemoryConfig {
     uint32_t maxHairContacts;
 };
 struct physx_PxSceneDesc {
-    int32_t staticStructure;
-    int32_t dynamicStructure;
+    physx_PxPruningStructureType staticStructure;
+    physx_PxPruningStructureType dynamicStructure;
     uint32_t dynamicTreeRebuildRateHint;
-    int32_t dynamicTreeSecondaryPruner;
-    int32_t staticBVHBuildStrategy;
-    int32_t dynamicBVHBuildStrategy;
+    physx_PxDynamicTreeSecondaryPruner dynamicTreeSecondaryPruner;
+    physx_PxBVHBuildStrategy staticBVHBuildStrategy;
+    physx_PxBVHBuildStrategy dynamicBVHBuildStrategy;
     uint32_t staticNbObjectsPerNode;
     uint32_t dynamicNbObjectsPerNode;
-    int32_t sceneQueryUpdateMode;
+    physx_PxSceneQueryUpdateMode sceneQueryUpdateMode;
     physx_PxVec3 gravity;
     physx_PxSimulationEventCallback* simulationEventCallback;
     physx_PxContactModifyCallback* contactModifyCallback;
@@ -1361,18 +1361,18 @@ struct physx_PxSceneDesc {
     char structgen_pad0[4];
     void * filterShader;
     physx_PxSimulationFilterCallback* filterCallback;
-    int32_t kineKineFilteringMode;
-    int32_t staticKineFilteringMode;
-    int32_t broadPhaseType;
+    physx_PxPairFilteringMode kineKineFilteringMode;
+    physx_PxPairFilteringMode staticKineFilteringMode;
+    physx_PxBroadPhaseType broadPhaseType;
     char structgen_pad1[4];
     physx_PxBroadPhaseCallback* broadPhaseCallback;
     physx_PxSceneLimits limits;
-    int32_t frictionType;
-    int32_t solverType;
+    physx_PxFrictionType frictionType;
+    physx_PxSolverType solverType;
     float bounceThresholdVelocity;
     float frictionOffsetThreshold;
     float frictionCorrelationDistance;
-    uint32_t flags;
+    physx_PxSceneFlags flags;
     physx_PxCpuDispatcher* cpuDispatcher;
     char structgen_pad2[8];
     void* userData;
@@ -1515,7 +1515,7 @@ struct physx_PxContactPairHeader {
     physx_PxActor* actors[2];
     uint8_t const* extraDataStream;
     uint16_t extraDataStreamSize;
-    uint16_t flags;
+    physx_PxContactPairHeaderFlags flags;
     char structgen_pad0[4];
     physx_PxContactPair const* pairs;
     uint32_t nbPairs;
@@ -1538,8 +1538,8 @@ struct physx_PxContactPair {
     uint8_t contactCount;
     uint8_t patchCount;
     uint16_t contactStreamSize;
-    uint16_t flags;
-    uint16_t events;
+    physx_PxContactPairFlags flags;
+    physx_PxPairFlags events;
     uint32_t internalData[2];
     char structgen_pad0[4];
 };
@@ -1548,8 +1548,8 @@ struct physx_PxTriggerPair {
     physx_PxActor* triggerActor;
     physx_PxShape* otherShape;
     physx_PxActor* otherActor;
-    int32_t status;
-    uint8_t flags;
+    physx_PxPairFlag status;
+    physx_PxTriggerPairFlags flags;
     char structgen_pad0[3];
 };
 struct physx_PxConstraintInfo {
@@ -1670,7 +1670,7 @@ struct physx_PxControllerFilterCallback {
 struct physx_PxControllerFilters {
     physx_PxFilterData const* mFilterData;
     physx_PxQueryFilterCallback* mFilterCallback;
-    uint16_t mFilterFlags;
+    physx_PxQueryFlags mFilterFlags;
     char structgen_pad0[6];
     physx_PxControllerFilterCallback* mCCTFilterCallback;
 };
@@ -1689,7 +1689,7 @@ struct physx_PxControllerDesc {
     char structgen_pad1[4];
     physx_PxUserControllerHitReport* reportCallback;
     physx_PxControllerBehaviorCallback* behaviorCallback;
-    int32_t nonWalkableMode;
+    physx_PxControllerNonWalkableMode nonWalkableMode;
     char structgen_pad2[4];
     physx_PxMaterial* material;
     bool registerDeletionListener;
@@ -1716,7 +1716,7 @@ struct physx_PxBoxControllerDesc {
     char structgen_pad1[4];
     physx_PxUserControllerHitReport* reportCallback;
     physx_PxControllerBehaviorCallback* behaviorCallback;
-    int32_t nonWalkableMode;
+    physx_PxControllerNonWalkableMode nonWalkableMode;
     char structgen_pad2[4];
     physx_PxMaterial* material;
     bool registerDeletionListener;
@@ -1747,7 +1747,7 @@ struct physx_PxCapsuleControllerDesc {
     char structgen_pad1[4];
     physx_PxUserControllerHitReport* reportCallback;
     physx_PxControllerBehaviorCallback* behaviorCallback;
-    int32_t nonWalkableMode;
+    physx_PxControllerNonWalkableMode nonWalkableMode;
     char structgen_pad2[4];
     physx_PxMaterial* material;
     bool registerDeletionListener;
@@ -1757,7 +1757,7 @@ struct physx_PxCapsuleControllerDesc {
     char structgen_pad4[8];
     float radius;
     float height;
-    int32_t climbingMode;
+    physx_PxCapsuleClimbingMode climbingMode;
     char structgen_pad5[4];
 };
 struct physx_PxCapsuleController {
@@ -1780,7 +1780,7 @@ struct physx_PxSDFDesc {
     physx_PxVec3 meshLower;
     float spacing;
     uint32_t subgridSize;
-    int32_t bitsPerSubgridPixel;
+    physx_PxSdfBitsPerSubgridPixel bitsPerSubgridPixel;
     physx_PxDim3 sdfSubgrids3DTexBlockDim;
     physx_PxBoundedData sdfSubgrids;
     physx_PxBoundedData sdfStartSlots;
@@ -1794,7 +1794,7 @@ struct physx_PxConvexMeshDesc {
     physx_PxBoundedData points;
     physx_PxBoundedData polygons;
     physx_PxBoundedData indices;
-    uint16_t flags;
+    physx_PxConvexFlags flags;
     uint16_t vertexLimit;
     uint16_t polygonLimit;
     uint16_t quantizedCount;
@@ -1803,7 +1803,7 @@ struct physx_PxConvexMeshDesc {
 struct physx_PxTriangleMeshDesc {
     physx_PxBoundedData points;
     physx_PxBoundedData triangles;
-    uint16_t flags;
+    physx_PxMeshFlags flags;
     char structgen_pad0[22];
     physx_PxSDFDesc* sdfDesc;
 };
@@ -1811,7 +1811,7 @@ struct physx_PxTetrahedronMeshDesc {
     char structgen_pad0[16];
     physx_PxBoundedData points;
     physx_PxBoundedData tetrahedrons;
-    uint16_t flags;
+    physx_PxMeshFlags flags;
     uint16_t tetsPerElement;
     char structgen_pad1[4];
 };
@@ -1820,7 +1820,7 @@ struct physx_PxSoftBodySimulationDataDesc {
 };
 struct physx_PxBVH34MidphaseDesc {
     uint32_t numPrimsPerLeaf;
-    int32_t buildStrategy;
+    physx_PxBVH34BuildStrategy buildStrategy;
     bool quantized;
     char structgen_pad0[3];
 };
@@ -1831,19 +1831,19 @@ struct physx_PxBVHDesc {
     physx_PxBoundedData bounds;
     float enlargement;
     uint32_t numPrimsPerLeaf;
-    int32_t buildStrategy;
+    physx_PxBVHBuildStrategy buildStrategy;
     char structgen_pad0[4];
 };
 struct physx_PxCookingParams {
     float areaTestEpsilon;
     float planeTolerance;
-    int32_t convexMeshCookingType;
+    physx_PxConvexMeshCookingType convexMeshCookingType;
     bool suppressTriangleMeshRemapTable;
     bool buildTriangleAdjacencies;
     bool buildGPUData;
     char structgen_pad0[1];
     physx_PxTolerancesScale scale;
-    uint32_t meshPreprocessParams;
+    physx_PxMeshPreprocessingFlags meshPreprocessParams;
     float meshWeldTolerance;
     physx_PxMidphaseDesc midphaseDesc;
     uint32_t gaussMapLimit;
@@ -1969,7 +1969,7 @@ struct physx_PxD6JointDrive {
     float stiffness;
     float damping;
     float forceLimit;
-    uint32_t flags;
+    physx_PxD6JointDriveFlags flags;
 };
 struct physx_PxD6Joint {
     char structgen_pad0[16];
