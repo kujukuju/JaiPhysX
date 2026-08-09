@@ -1804,7 +1804,8 @@ struct physx_PxTriangleMeshDesc {
     physx_PxBoundedData points;
     physx_PxBoundedData triangles;
     uint16_t flags;
-    char structgen_pad0[22];
+    char structgen_pad0[6];
+    physx_PxStridedData materialIndices;
     physx_PxSDFDesc* sdfDesc;
 };
 struct physx_PxTetrahedronMeshDesc {

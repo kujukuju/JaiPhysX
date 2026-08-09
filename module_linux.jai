@@ -966,7 +966,7 @@ PxBase :: struct {
 
 PxRefCounted :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as base: PxBase = ---;
+#overlay (structgen_pad0) #as base: PxBase = ---;
 }
 
 PxTolerancesScale :: struct {
@@ -1026,7 +1026,7 @@ PxBoxGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     halfExtents:    Vector3;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxBVHRaycastCallback :: struct {
@@ -1050,7 +1050,7 @@ PxCapsuleGeometry :: struct {
     mTypePadding:   float;
     radius:         float;
     halfHeight:     float;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxHullPolygon :: struct {
@@ -1061,7 +1061,7 @@ PxHullPolygon :: struct {
 
 PxConvexMesh :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxMeshScale :: struct {
@@ -1077,20 +1077,20 @@ PxConvexMeshGeometry :: struct {
     convexMesh:     *PxConvexMesh;
     meshFlags:      u8;
     structgen_pad2: [7] u8;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxSphereGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     radius:         float;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxPlaneGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxTriangleMeshGeometry :: struct {
@@ -1100,7 +1100,7 @@ PxTriangleMeshGeometry :: struct {
     meshFlags:      u8;
     structgen_pad1: [3] u8;
     triangleMesh:   *PxTriangleMesh;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxHeightFieldGeometry :: struct {
@@ -1112,27 +1112,27 @@ PxHeightFieldGeometry :: struct {
     columnScale:      float;
     heightFieldFlags: u8;
     structgen_pad1:   [3] u8;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxParticleSystemGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     mSolverType:    s32;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxHairSystemGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxTetrahedronMeshGeometry :: struct {
     structgen_pad0:  [4] u8;
     mTypePadding:    float;
     tetrahedronMesh: *PxTetrahedronMesh;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxQueryHit :: struct {
@@ -1196,7 +1196,7 @@ PxCustomGeometry :: struct {
     structgen_pad0: [4] u8;
     mTypePadding:   float;
     callbacks:      *PxCustomGeometryCallbacks;
-#place structgen_pad0; #as geometry: PxGeometry = ---;
+#overlay (structgen_pad0) #as geometry: PxGeometry = ---;
 }
 
 PxGeometryHolder :: struct {
@@ -1215,7 +1215,7 @@ PxHeightFieldSample :: struct {
 
 PxHeightField :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxHeightFieldDesc :: struct {
@@ -1251,7 +1251,7 @@ PxTrianglePadded :: struct {
 
 PxTriangleMesh :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxBVH34TriangleMesh :: struct {
@@ -1264,17 +1264,17 @@ PxTetrahedron :: struct {
 
 PxSoftBodyAuxData :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxTetrahedronMesh :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxSoftBodyMesh :: struct {
     structgen_pad0: [16] u8;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxCollisionMeshMappingData :: struct {
@@ -1712,13 +1712,13 @@ PxArticulationJointReducedCoordinate :: struct {
 PxShape :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxRigidActor :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as actor: PxActor = ---;
+#overlay (structgen_pad0) #as actor: PxActor = ---;
 }
 
 PxNodeIndex :: struct {
@@ -1728,13 +1728,13 @@ PxNodeIndex :: struct {
 PxRigidBody :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as rigid_actor: PxRigidActor = ---;
+#overlay (structgen_pad0) #as rigid_actor: PxRigidActor = ---;
 }
 
 PxArticulationLink :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as rigid_body: PxRigidBody = ---;
+#overlay (structgen_pad0) #as rigid_body: PxRigidBody = ---;
 }
 
 PxConeLimitedConstraint :: struct {
@@ -1871,7 +1871,7 @@ PxDeletionListener :: struct {
 PxBaseMaterial :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as ref_counted: PxRefCounted = ---;
+#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;
 }
 
 PxFEMMaterial :: struct {
@@ -1902,7 +1902,7 @@ PxLockedData :: struct {
 PxMaterial :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as base_material: PxBaseMaterial = ---;
+#overlay (structgen_pad0) #as base_material: PxBaseMaterial = ---;
 }
 
 PxGpuParticleBufferIndexPair :: struct {
@@ -2069,13 +2069,13 @@ PxQueryFilterCallback :: struct {
 PxRigidDynamic :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as rigid_body: PxRigidBody = ---;
+#overlay (structgen_pad0) #as rigid_body: PxRigidBody = ---;
 }
 
 PxRigidStatic :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as rigid_actor: PxRigidActor = ---;
+#overlay (structgen_pad0) #as rigid_actor: PxRigidActor = ---;
 }
 
 PxSceneQueryDesc :: struct {
@@ -2620,12 +2620,12 @@ PxBoxControllerDesc :: struct {
     halfHeight:               float;
     halfSideExtent:           float;
     halfForwardExtent:        float;
-#place structgen_pad0; #as controller_desc: PxControllerDesc = ---;
+#overlay (structgen_pad0) #as controller_desc: PxControllerDesc = ---;
 }
 
 PxBoxController :: struct {
     vtable_: *void;
-#place vtable_; #as controller: PxController = ---;
+#overlay (vtable_) #as controller: PxController = ---;
 }
 
 PxCapsuleControllerDesc :: struct {
@@ -2654,12 +2654,12 @@ PxCapsuleControllerDesc :: struct {
     radius:                   float;
     height:                   float;
     climbingMode:             s32;
-#place structgen_pad0; #as controller_desc: PxControllerDesc = ---;
+#overlay (structgen_pad0) #as controller_desc: PxControllerDesc = ---;
 }
 
 PxCapsuleController :: struct {
     vtable_: *void;
-#place vtable_; #as controller: PxController = ---;
+#overlay (vtable_) #as controller: PxController = ---;
 }
 
 PxControllerBehaviorCallback :: struct {
@@ -2708,9 +2708,10 @@ PxTriangleMeshDesc :: struct {
     points:         PxBoundedData;
     triangles:      PxBoundedData;
     flags:          u16;
-    structgen_pad0: [22] u8;
+    materials:      PxStridedData;
     sdfDesc:        *PxSDFDesc;
 }
+#assert size_of(PxTriangleMeshDesc) == 80;
 
 PxTetrahedronMeshDesc :: struct {
     structgen_pad0: [16] u8;
@@ -2762,12 +2763,12 @@ PxCookingParams :: struct {
 
 PxDefaultMemoryOutputStream :: struct {
     structgen_pad0: [32] u8;
-#place structgen_pad0; #as output_stream: PxOutputStream = ---;
+#overlay (structgen_pad0) #as output_stream: PxOutputStream = ---;
 }
 
 PxDefaultMemoryInputData :: struct {
     structgen_pad0: [32] u8;
-#place structgen_pad0; #as input_stream: PxInputStream = ---;
+#overlay (structgen_pad0) #as input_stream: PxInputStream = ---;
 }
 
 PxDefaultFileOutputStream :: struct {
@@ -2785,7 +2786,7 @@ PxDefaultAllocator :: struct {
 PxJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as base: PxBase = ---;
+#overlay (structgen_pad0) #as base: PxBase = ---;
 }
 
 PxSpring :: struct {
@@ -2796,7 +2797,7 @@ PxSpring :: struct {
 PxDistanceJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxJacobianRow :: struct {
@@ -2809,13 +2810,13 @@ PxJacobianRow :: struct {
 PxContactJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxFixedJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxJointLimitParameters :: struct {
@@ -2880,19 +2881,19 @@ PxJointLimitPyramid :: struct {
 PxPrismaticJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxRevoluteJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxSphericalJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxD6JointDrive :: struct {
@@ -2905,13 +2906,13 @@ PxD6JointDrive :: struct {
 PxD6Joint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxGearJoint :: struct {
     structgen_pad0: [16] u8;
     userData:       *void;
-#place structgen_pad0; #as joint: PxJoint = ---;
+#overlay (structgen_pad0) #as joint: PxJoint = ---;
 }
 
 PxRackAndPinionJoint :: struct {
