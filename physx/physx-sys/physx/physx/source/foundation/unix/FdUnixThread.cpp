@@ -89,7 +89,7 @@ static void setTid(ThreadImpl& threadImpl)
 // query TID
 // AM: TODO: neither of the below are implemented
 #if PX_APPLE_FAMILY
-	threadImpl.tid = syscall(SYS_gettid);
+	threadImpl.tid = static_cast<pid_t>(pthread_mach_thread_np(pthread_self()));
 #elif PX_EMSCRIPTEN
 	threadImpl.tid = pthread_self();
 #else

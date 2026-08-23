@@ -60,12 +60,20 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
 
 #import "Bindings_Generator";
 #import "Basic";
+#import "Compiler";
 #import "File";
 #import "String";
 #import "BuildCpp";
 #import "File_Utilities";
 
+#if OS == .MACOS {
+    #import "macOS/Toolchain";
+}
+
 #run {
+    set_build_options_dc(.{do_output = false});
+    set_working_directory(#filepath);
+
     using opts: Generate_Bindings_Options;
     // array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
 
@@ -74,6 +82,10 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         dependency_path = "physx/physx-sys-extract/target/release/deps";
     } else #if OS == .LINUX {
         dependency_path = "physx/physx-build/build";
+    } else #if OS == .MACOS {
+        dependency_path = "macos";
+    } else {
+        #assert false "Unsupported PhysX bindings platform.\n";
     }
 
     found_lib_name: string;
@@ -89,6 +101,10 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         } else #if OS == .LINUX {
             print("Checking %\n", filename);
             if starts_with(filename, "libphysx") && ends_with(filename, ".so") {
+                found_lib_name = file;
+            }
+        } else #if OS == .MACOS {
+            if starts_with(filename, "libphysx") && ends_with(filename, ".dylib") {
                 found_lib_name = file;
             }
         }
@@ -110,21 +126,26 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
             print("Physx library doesn't exist, and could not find extracted physx library to copy.\n");
             return;
         }
+    } else #if OS == .MACOS {
+        if !file_exists("macos/libphysx.dylib") {
+            print("PhysX macOS library doesn't exist. Run the CMake Release build first.\n");
+            return;
+        }
     }
 
     #if OS == .WINDOWS {
-        array_add(*libpaths, "windows");
-        array_add(*libnames, "physx");
+        array_add(*library_search_paths, "windows");
+        array_add(*libraries, Library.{"physx", "physx"});
 
         array_add(*include_paths, "physx/physx-sys/src/generated/x86_64-pc-windows-msvc/");
         array_add(*extra_clang_arguments, "-D_MSC_VER=1939");
         array_add(*system_include_paths, "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/lib/clang/17/include\"");
     } else #if OS == .LINUX {
-        array_add(*libpaths, "linux");
-        array_add(*libnames, "libphysx");
+        array_add(*library_search_paths, "linux");
+        array_add(*libraries, Library.{"libphysx", "physx"});
 
         array_add(*extra_clang_arguments, "-D__clang__");
-        array_add(*extra_clang_arguments, "-std=c++14");
+        array_add(*extra_clang_arguments, "-std=c++17");
 
         array_add(*include_paths, "physx/physx-sys/src/generated/unix/");
         // array_add(*source_files, "/usr/include/linux/types.h");
@@ -134,6 +155,17 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         // array_add(*system_include_paths, "/usr/include/c++/14/tr1");
         // array_add(*system_include_paths, "/usr/include/linux");
         // array_add(*system_include_paths, "/usr/include/x86_64-linux-gnu");
+    } else #if OS == .MACOS {
+        array_add(*library_search_paths, "macos");
+        array_add(*libraries, Library.{"libphysx", "physx"});
+
+        array_add(*extra_clang_arguments, "-std=c++17");
+        array_add(*include_paths, "physx/physx-sys/src/generated/unix/");
+
+        sdk_path := get_macos_sdk_path();
+        array_add(*extra_clang_arguments, "-isysroot", sdk_path);
+        array_add(*system_include_paths, tprint("%/usr/include/c++/v1", sdk_path));
+        array_add(*system_include_paths, ..get_default_system_include_paths());
     }
 
     array_add(*include_paths, "physx/physx-sys/src/");
@@ -146,7 +178,7 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
     array_add(*source_files, "physx/physx-sys/src/physx_api.cpp");
 
     array_add(*extra_clang_arguments, "-x", "c++");
-    generate_compile_time_struct_checks = false;
+    generate_compile_time_struct_checks = OS == .MACOS;
 
     convlist :: [2] string.[
         .["physx_PxVec2", "Vector2"],
@@ -200,7 +232,7 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
     opts.visitor = (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Visit_Result {
         filename_clang := clang_getFileName(decl.location.file);
         defer clang_disposeString(filename_clang);
-        filename := to_lower_copy_new(to_string(clang_getCString(filename_clang)),, temp);
+        filename := to_string(clang_getCString(filename_clang));
 
         // things to allow through no matter what, but it won't recurse to these necessarily since I stop in some cases
         okay_things :: string.[
@@ -313,7 +345,8 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
 #import "Socket";
     ___jai
 
-    string_builder := generate_bindings(opts, true);
+    string_builder, success := generate_bindings(opts, true);
+    assert(success, "Could not generate PhysX bindings.\n");
     output := builder_to_string(*string_builder);
     output = replace_and_free(output, "physx.PxFilterObjectAttributes", "u32");
     output = replace_and_free(output, "physx.PxFilterObjectAttributes", "u32");
@@ -350,7 +383,7 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
     output = replace_and_free(output, "__pod", "");
     output = replace_and_free(output, "_pod", "");
     output = replace_and_free(output, "context:", "context_pod:");
-    output = force_inheritance(output, "#place structgen_pad0; #as geometry: PxGeometry = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as geometry: PxGeometry = ---;", .[
         "PxBoxGeometry",
         "PxCapsuleGeometry",
         "PxConvexMeshGeometry",
@@ -363,25 +396,25 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         "PxTetrahedronMeshGeometry",
         "PxCustomGeometry",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as actor: PxActor = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as actor: PxActor = ---;", .[
         "PxRigidActor",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as rigid_actor: PxRigidActor = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as rigid_actor: PxRigidActor = ---;", .[
         "PxRigidStatic",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as rigid_actor: PxRigidActor = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as rigid_actor: PxRigidActor = ---;", .[
         "PxRigidBody",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as rigid_body: PxRigidBody = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as rigid_body: PxRigidBody = ---;", .[
         "PxRigidDynamic",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as rigid_body: PxRigidBody = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as rigid_body: PxRigidBody = ---;", .[
         "PxArticulationLink",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as base: PxBase = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as base: PxBase = ---;", .[
         "PxRefCounted",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as ref_counted: PxRefCounted = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as ref_counted: PxRefCounted = ---;", .[
         "PxBaseMaterial",
         "PxConvexMesh",
         "PxHeightField",
@@ -391,21 +424,21 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         "PxTetrahedronMesh",
         "PxTriangleMesh",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as base_material: PxBaseMaterial = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as base_material: PxBaseMaterial = ---;", .[
         "PxMaterial",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as controller_desc: PxControllerDesc = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as controller_desc: PxControllerDesc = ---;", .[
         "PxBoxControllerDesc",
         "PxCapsuleControllerDesc",
     ]);
-    output = force_inheritance(output, "#place vtable_; #as controller: PxController = ---;", .[
+    output = force_inheritance(output, "#overlay (vtable_) #as controller: PxController = ---;", .[
         "PxBoxController",
         "PxCapsuleController",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as base: PxBase = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as base: PxBase = ---;", .[
         "PxJoint",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as joint: PxJoint = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as joint: PxJoint = ---;", .[
         "PxContactJoint",
         "PxD6Joint",
         "PxDistanceJoint",
@@ -415,10 +448,10 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         "PxSphericalJoint",
         "PxGearJoint",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as output_stream: PxOutputStream = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as output_stream: PxOutputStream = ---;", .[
         "PxDefaultMemoryOutputStream",
     ]);
-    output = force_inheritance(output, "#place structgen_pad0; #as input_stream: PxInputStream = ---;", .[
+    output = force_inheritance(output, "#overlay (structgen_pad0) #as input_stream: PxInputStream = ---;", .[
         "PxDefaultMemoryInputData",
     ]);
 
@@ -426,6 +459,8 @@ warning: 483    /mnt/c/Users/Kuju/Projects/FatGoblinsServer/../FatGoblins/src/sh
         write_entire_file("module_windows.jai", output);
     } else #if OS == .LINUX {
         write_entire_file("module_linux.jai", output);
+    } else #if OS == .MACOS {
+        write_entire_file("module_macos_new.jai", output);
     }
 }
 

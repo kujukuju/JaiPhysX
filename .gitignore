@@ -1,3 +1,4 @@
 .build/
 .idea/
 cmake-*
+module_macos_new.jai

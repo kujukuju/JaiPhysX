@@ -17,10 +17,14 @@ Nearly complete jai physx bindings. Based on the rust physx-sys bindings.
 
 ### Build
 
-I built this project piggy backing off of rust physx-sys which does a crazy autogen thing to create functions and structs.
+The native wrapper now builds directly from C++ with `physx/physx-build/CMakeLists.txt`; Rust and Cargo are not part of the native build.
 
-To build it again `cargo build --release` while inside the physx-sys-extract folder. Then the lib is in `target/release/deps/`.
+On macOS, run:
 
-If you need to change the generated bindings you'll need to rerun the pxbind rust script.
+```sh
+./build_macos.sh
+```
 
-On linux I'm manually swapping the cargo.toml file in physx-sys from "staticlib" to "cdylib" to try and get back a shared library since the static doesn't seem to work.
+This produces a Release, macOS 11+, universal `arm64` + `x86_64` dylib at `macos/libphysx.dylib`. The build compiles the retained `physx-sys` generated C++ API and validates its 323 generated POD sizes with native `static_assert` checks.
+
+To regenerate Jai declarations, run `jai generate.jai` from this directory. macOS generation writes `module_macos_new.jai` for ABI checking and manual comparison; do not overwrite the reviewed platform modules without preserving their inheritance and padding corrections.
